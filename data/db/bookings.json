@@ -1,0 +1,89 @@
+{
+  "_note": "ข้อมูลจำลองทั้งหมดเพื่อใช้ในรายวิชา 06048308 ไม่ใช่ข้อมูลของบุคคลหรือธุรกิจจริง",
+  "items": [
+    {
+      "id": "BK-0001",
+      "member_id": "FN-10001",
+      "slot_id": "SL-03",
+      "date": "2026-09-28",
+      "status": "booked"
+    },
+    {
+      "id": "BK-0002",
+      "member_id": "FN-10002",
+      "slot_id": "SL-02",
+      "date": "2026-09-28",
+      "status": "booked"
+    },
+    {
+      "id": "BK-0003",
+      "member_id": "FN-10003",
+      "slot_id": "SL-04",
+      "date": "2026-09-28",
+      "status": "booked"
+    },
+    {
+      "id": "BK-0004",
+      "member_id": "FN-10005",
+      "slot_id": "SL-08",
+      "date": "2026-09-29",
+      "status": "booked"
+    },
+    {
+      "id": "BK-0005",
+      "member_id": "FN-10007",
+      "slot_id": "SL-09",
+      "date": "2026-09-29",
+      "status": "cancelled"
+    },
+    {
+      "id": "BK-0006",
+      "member_id": "FN-10011",
+      "slot_id": "SL-12",
+      "date": "2026-09-30",
+      "status": "booked"
+    },
+    {
+      "id": "BK-0007",
+      "member_id": "FN-10012",
+      "slot_id": "SL-14",
+      "date": "2026-09-30",
+      "status": "booked"
+    },
+    {
+      "id": "BK-0008",
+      "member_id": "FN-10014",
+      "slot_id": "SL-17",
+      "date": "2026-10-01",
+      "status": "booked"
+    },
+    {
+      "id": "BK-0009",
+      "member_id": "FN-10017",
+      "slot_id": "SL-22",
+      "date": "2026-10-03",
+      "status": "booked"
+    },
+    {
+      "id": "BK-0010",
+      "member_id": "FN-10020",
+      "slot_id": "SL-26",
+      "date": "2026-10-04",
+      "status": "booked"
+    },
+    {
+      "id": "BK-0011",
+      "member_id": "FN-10004",
+      "slot_id": "SL-24",
+      "date": "2026-09-19",
+      "status": "no_show"
+    },
+    {
+      "id": "BK-0012",
+      "member_id": "FN-10006",
+      "slot_id": "SL-23",
+      "date": "2026-10-03",
+      "status": "booked"
+    }
+  ]
+}

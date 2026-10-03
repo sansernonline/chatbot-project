@@ -1,0 +1,1321 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X Fitness — Train Sharp. Live Strong.</title>
+<meta name="description" content="Interactive mockup: เว็บไซต์ฟิตเนสจำลองพร้อมแชตบอท สำหรับ Final Project วิชา 06048308">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#09090a; --bg-2:#101012; --bg-3:#17171a; --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.18);
+  --text:#f5f5f4; --muted:#a3a3a8; --dim:#6b6b72;
+  --red:#e10613; --red-hot:#ff2536; --red-deep:#8e0a12; --red-glow:rgba(225,6,19,.35);
+  --ok:#22c55e; --warn:#f59e0b;
+  --display:"Chakra Petch","IBM Plex Sans Thai",system-ui,sans-serif;
+  --body:"IBM Plex Sans Thai",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --gutter:clamp(16px,4vw,56px); --max:1280px;
+  --cut:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--red-hot);outline-offset:2px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+.mono{font-family:var(--mono)}
+.eyebrow{font:600 12px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--red-hot);display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:2px;background:var(--red)}
+h2.sec{font:700 clamp(34px,5.4vw,68px)/1 var(--display);letter-spacing:-.01em;text-transform:uppercase;margin:16px 0 14px}
+h2.sec em{font-style:normal;color:transparent;-webkit-text-stroke:1.5px var(--text)}
+.lead{color:var(--muted);max-width:620px}
+section{padding:clamp(72px,10vw,130px) 0;position:relative;border-top:1px solid var(--line)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;font:600 15px var(--display);letter-spacing:.06em;text-transform:uppercase;
+  clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,var(--cut) 100%,0 calc(100% - var(--cut)));transition:.2s}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:var(--red-hot);box-shadow:0 0 40px var(--red-glow)}
+.btn-ghost{background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px var(--line-2)}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
+.btn-sm{padding:9px 14px;font-size:13px;--cut:9px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;box-shadow:none}
+.arrow{width:16px;height:16px}
+
+/* nav */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;transition:.3s;border-bottom:1px solid transparent}
+.nav.scrolled{background:rgba(9,9,10,.82);backdrop-filter:blur(14px);border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.brand{display:flex;align-items:center;gap:12px;font:700 20px var(--display);letter-spacing:.14em}
+.brand small{display:block;font:500 10px var(--mono);letter-spacing:.3em;color:var(--muted);margin-top:-2px}
+.brand .wm{font:700 20px/1 var(--display);letter-spacing:.1em}
+.brand .wm b{color:var(--red);font-size:1.25em;line-height:.8;letter-spacing:0;margin-right:3px;-webkit-text-stroke:1.6px var(--red)}
+.brand .wm small{margin-top:4px}
+.brand svg{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.brand:hover svg{transform:translateX(3px) skewX(-6deg)}
+.nav ul{display:flex;gap:28px;list-style:none}
+.nav ul a{font:500 14px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);position:relative;padding:6px 0}
+.nav ul a:hover,.nav ul a.active{color:var(--text)}
+.nav ul a.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--red)}
+.nav-cta{display:flex;gap:10px;align-items:center}
+.burger{display:none;width:44px;height:44px;box-shadow:inset 0 0 0 1px var(--line-2);place-items:center}
+.burger span{display:block;width:18px;height:2px;background:var(--text);position:relative}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--text);transition:.2s}
+.burger span::before{top:-6px}.burger span::after{top:6px}
+.menu-open .burger span{background:transparent}
+.menu-open .burger span::before{top:0;transform:rotate(45deg)}.menu-open .burger span::after{top:0;transform:rotate(-45deg)}
+.mobile-menu{display:none}
+
+/* hero */
+.hero{min-height:100svh;display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 0 80px;border:0}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse at 70% 40%,#000 20%,transparent 75%);opacity:.6}
+.slashes{position:absolute;right:-10vw;top:-10%;height:120%;width:60vw;pointer-events:none}
+.slashes i{position:absolute;top:0;bottom:0;background:linear-gradient(180deg,var(--red),var(--red-deep));transform:skewX(-20deg);animation:slide 1.2s cubic-bezier(.2,.8,.2,1) both}
+.slashes i:nth-child(1){right:8vw;width:16vw;box-shadow:0 0 120px var(--red-glow)}
+.slashes i:nth-child(2){right:27vw;width:2.4vw;opacity:.7;animation-delay:.12s}
+.slashes i:nth-child(3){right:32vw;width:.6vw;opacity:.5;animation-delay:.22s}
+@keyframes slide{from{transform:skewX(-20deg) translateY(-110%)}to{transform:skewX(-20deg) translateY(0)}}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.status-pill{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;box-shadow:inset 0 0 0 1px var(--line-2);background:rgba(0,0,0,.4);font:500 13px var(--mono);letter-spacing:.06em}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:ping 1.8s infinite}
+.dot.off{background:var(--dim);animation:none}
+@keyframes ping{70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+.hero h1{font:700 clamp(56px,11vw,168px)/.86 var(--display);letter-spacing:-.03em;text-transform:uppercase;margin:28px 0 26px}
+.hero h1 .o{color:transparent;-webkit-text-stroke:2px var(--text)}
+.hero h1 .r{color:var(--red)}
+.hero h1 span{display:block;animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 span:nth-child(2){animation-delay:.1s}
+@keyframes rise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+.hero p.th{font-size:clamp(17px,1.6vw,21px);color:#d4d4d8;max-width:560px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:clamp(48px,8vw,96px);border-top:1px solid var(--line-2);max-width:880px}
+.stat{padding:22px 20px 0 0}
+.stat b{display:block;font:700 clamp(34px,4vw,54px)/1 var(--display)}
+.stat b sup{font-size:.45em;color:var(--red-hot);margin-left:2px}
+.stat > span{font-size:13px;color:var(--muted)}
+
+/* marquee */
+.marquee{background:var(--red);overflow:hidden;border:0;padding:0;transform:skewY(-1.5deg);margin:-10px 0 20px}
+.marquee div{display:flex;gap:40px;white-space:nowrap;padding:16px 0;animation:mq 28s linear infinite;width:max-content}
+.marquee span{font:700 26px var(--display);letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:40px}
+.marquee span::after{content:"";width:12px;height:12px;background:#000;transform:rotate(45deg)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* membership */
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:44px}
+.toggle{display:inline-flex;box-shadow:inset 0 0 0 1px var(--line-2)}
+.toggle button{padding:10px 16px;font:500 13px var(--display);letter-spacing:.06em;color:var(--muted)}
+.toggle button[aria-pressed=true]{background:var(--text);color:#000}
+.plans{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.plan{background:var(--bg);padding:28px 22px;display:flex;flex-direction:column;gap:14px;position:relative;transition:.25s}
+.plan:hover{background:var(--bg-2)}
+.plan.hot{background:linear-gradient(180deg,rgba(225,6,19,.16),var(--bg) 60%);box-shadow:inset 0 2px 0 var(--red)}
+.tag{position:absolute;top:0;right:0;background:var(--red);color:#fff;font:600 11px var(--mono);letter-spacing:.12em;padding:6px 10px;text-transform:uppercase}
+.plan h3{font:700 22px/1.1 var(--display);text-transform:uppercase;letter-spacing:.02em}
+.plan .thn{color:var(--muted);font-size:14px;margin-top:4px}
+.price{font:700 44px/1 var(--display);letter-spacing:-.02em}
+.price small{font:500 14px var(--body);color:var(--muted);margin-left:4px}
+.plan ul{list-style:none;display:grid;gap:9px;font-size:14px;color:#d4d4d8;flex:1}
+.plan li{display:flex;gap:10px}
+.plan li::before{content:"";flex:none;width:8px;height:8px;margin-top:8px;background:var(--red);clip-path:polygon(0 0,100% 50%,0 100%)}
+.plan .btn{justify-content:center}
+.note{font-size:13px;color:var(--dim);margin-top:18px}
+
+/* classes */
+.days{display:flex;gap:0;overflow-x:auto;box-shadow:inset 0 -1px 0 var(--line);scrollbar-width:none}
+.days button{flex:1;min-width:92px;padding:16px 10px;text-align:left;border-bottom:2px solid transparent;color:var(--muted);transition:.2s}
+.days button b{display:block;font:700 18px var(--display);text-transform:uppercase}
+.days button small{font:400 12px var(--mono)}
+.days button[aria-selected=true]{color:var(--text);border-color:var(--red);background:linear-gradient(0deg,rgba(225,6,19,.12),transparent)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}
+.chip{padding:8px 14px;font:500 13px var(--body);box-shadow:inset 0 0 0 1px var(--line-2);color:var(--muted);transition:.15s}
+.chip:hover{color:var(--text)}
+.chip[aria-pressed=true]{background:var(--red);color:#fff;box-shadow:none}
+.slots{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.slot{display:grid;grid-template-columns:110px 1.4fr 1fr 1fr 150px 130px;align-items:center;gap:16px;background:var(--bg);padding:18px 22px;transition:.2s}
+.slot:hover{background:var(--bg-2)}
+.slot .t{font:700 26px var(--display)}
+.slot .t small{display:block;font:400 12px var(--mono);color:var(--dim)}
+.slot .n{font:700 19px var(--display);text-transform:uppercase}
+.slot .n small{display:block;font:400 13px var(--body);color:var(--muted);text-transform:none}
+.slot .m{font-size:14px;color:var(--muted)}
+.seats{font:500 12px var(--mono);color:var(--muted)}
+.seats .bar{height:3px;background:var(--line-2);margin-top:6px;position:relative}
+.seats .bar i{position:absolute;left:0;top:0;bottom:0;background:var(--red)}
+.empty{padding:40px;text-align:center;color:var(--muted);background:var(--bg)}
+
+/* PT */
+.pt-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(24px,4vw,56px);align-items:start}
+.pt-list{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.pt-row{background:var(--bg);display:grid;grid-template-columns:1fr auto auto;gap:18px;align-items:center;padding:20px 22px}
+.pt-row b{font:700 20px var(--display)}
+.pt-row .per{font:500 13px var(--mono);color:var(--muted);text-align:right}
+.pt-row .pp{font:700 26px var(--display);text-align:right;min-width:110px}
+.coaches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.coach{background:var(--bg);padding:20px;display:grid;gap:10px;cursor:pointer;text-align:left;transition:.2s;min-height:150px}
+.coach:hover,.coach[aria-pressed=true]{background:var(--bg-3)}
+.coach[aria-pressed=true]{box-shadow:inset 0 -2px 0 var(--red)}
+.mono-mark{width:48px;height:48px;display:grid;place-items:center;font:700 18px var(--display);box-shadow:inset 0 0 0 1.5px var(--line-2);position:relative}
+.mono-mark::after{content:"";position:absolute;right:-1px;top:-1px;width:10px;height:10px;background:var(--red)}
+.coach b{font:700 17px var(--display)}
+.coach small{color:var(--muted);font-size:13px}
+.coach-detail{margin-top:16px;padding:18px 20px;background:var(--bg-2);box-shadow:inset 3px 0 0 var(--red);font-size:14px;color:#d4d4d8;min-height:80px}
+
+/* rewards / CRM */
+.crm{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(24px,4vw,56px)}
+.rw-list{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:26px}
+.rw{background:var(--bg);display:flex;justify-content:space-between;align-items:center;padding:14px 18px;gap:12px}
+.rw b{font:700 18px var(--display);color:var(--red-hot)}
+.panel{background:var(--bg-2);border:1px solid var(--line);padding:clamp(20px,3vw,32px);position:relative}
+.panel::before{content:"";position:absolute;left:-1px;top:-1px;width:40px;height:40px;border-left:2px solid var(--red);border-top:2px solid var(--red)}
+.field{display:grid;gap:6px;margin-bottom:14px}
+.field label{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.field input,.field select,.field textarea{background:var(--bg);border:1px solid var(--line-2);padding:12px 14px;border-radius:0;outline:none;transition:.15s;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--red)}
+.field .hint{font-size:12px;color:var(--dim)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.alert{padding:12px 14px;font-size:14px;margin:12px 0;display:flex;gap:10px;align-items:flex-start}
+.alert.err{background:rgba(225,6,19,.12);box-shadow:inset 3px 0 0 var(--red);color:#fecaca}
+.alert.ok{background:rgba(34,197,94,.1);box-shadow:inset 3px 0 0 var(--ok);color:#bbf7d0}
+.alert.info{background:rgba(255,255,255,.05);box-shadow:inset 3px 0 0 var(--muted);color:#e4e4e7}
+.demo-hint{font:400 12px var(--mono);color:var(--dim);margin-top:10px}
+.demo-hint button{color:var(--red-hot);text-decoration:underline;text-underline-offset:3px}
+.card-member{display:grid;gap:18px}
+.mc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.mc-name{font:700 24px var(--display)}
+.badge{display:inline-block;padding:4px 10px;font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.badge.active{background:rgba(34,197,94,.15);color:#86efac}
+.badge.frozen{background:rgba(96,165,250,.15);color:#93c5fd}
+.badge.expired{background:rgba(255,255,255,.08);color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}
+.kpi{background:var(--bg);padding:14px}
+.kpi b{display:block;font:700 30px/1.1 var(--display)}
+.kpi span{font-size:12px;color:var(--muted)}
+.redeem{display:grid;gap:8px}
+.redeem .rw{background:var(--bg);border:1px solid var(--line)}
+
+/* promos */
+.promos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.promo{border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;background:var(--bg-2)}
+.promo::after{content:"";position:absolute;right:-30px;top:-30px;width:90px;height:90px;background:var(--red);transform:rotate(45deg)}
+.promo.expired{opacity:.5}
+.promo.expired::after{background:var(--dim)}
+.promo h3{font:700 20px/1.25 var(--display);padding-right:40px}
+.promo p{color:var(--muted);font-size:14px;flex:1}
+.code{display:flex;align-items:center;justify-content:space-between;border:1px dashed var(--line-2);padding:10px 12px;font:600 16px var(--mono);letter-spacing:.12em}
+.code button{font:500 12px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--red-hot)}
+.promo .dates{font:400 12px var(--mono);color:var(--dim)}
+
+/* visit */
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px)}
+.hours{width:100%;border-collapse:collapse}
+.hours td{padding:14px 0;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right;font:600 18px var(--display)}
+.hours tr.today td{color:var(--red-hot)}
+.hours tr.today td:first-child::after{content:"วันนี้";font:600 10px var(--mono);letter-spacing:.1em;background:var(--red);color:#fff;padding:2px 6px;margin-left:10px;vertical-align:middle}
+.map{aspect-ratio:4/3;background:var(--bg-2);border:1px solid var(--line);position:relative;overflow:hidden}
+.map svg{width:100%;height:100%;display:block}
+.contact{display:grid;gap:10px;margin-top:22px;font-size:15px}
+.contact div{display:flex;gap:14px}
+.contact span:first-child{font:500 12px var(--mono);letter-spacing:.12em;color:var(--dim);width:80px;flex:none;padding-top:3px;text-transform:uppercase}
+
+/* faq */
+.faq{border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;cursor:pointer;font:600 clamp(17px,1.6vw,20px) var(--body)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .n{font:500 13px var(--mono);color:var(--red-hot);margin-right:16px}
+.faq summary .pm{width:28px;height:28px;flex:none;position:relative;box-shadow:inset 0 0 0 1px var(--line-2)}
+.faq summary .pm::before,.faq summary .pm::after{content:"";position:absolute;left:8px;right:8px;top:13px;height:2px;background:var(--text);transition:.2s}
+.faq summary .pm::after{transform:rotate(90deg)}
+.faq details[open] .pm::after{transform:rotate(0)}
+.faq details[open] .pm{background:var(--red);box-shadow:none}
+.faq .ans{padding:0 0 22px 44px;color:#d4d4d8;max-width:820px}
+.faq .ans .btn{margin-top:12px}
+
+footer{border-top:1px solid var(--line);padding:56px 0 110px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.big-foot{font:700 clamp(48px,10vw,150px)/.9 var(--display);color:transparent;-webkit-text-stroke:1px var(--line-2);text-transform:uppercase;letter-spacing:-.02em;padding:0 var(--gutter);max-width:var(--max);margin:0 auto 40px;user-select:none}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.72);backdrop-filter:blur(6px)}
+.modal.open{display:flex;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.modal-box{width:min(520px,100%);max-height:calc(100svh - 32px);overflow:auto;background:var(--bg-2);border:1px solid var(--line-2);position:relative;animation:pop .25s cubic-bezier(.2,.8,.2,1)}
+@keyframes pop{from{transform:translateY(16px);opacity:0}}
+.modal-head{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid var(--line)}
+.modal-head h3{font:700 22px var(--display);text-transform:uppercase}
+.x{width:36px;height:36px;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--line-2)}
+.x:hover{background:var(--red)}
+.modal-body{padding:22px 24px 26px}
+.summary{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:14px;padding:14px 16px;background:var(--bg);border:1px solid var(--line);margin-bottom:16px}
+.summary span{color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--text);color:#000;padding:12px 18px;font:600 14px var(--body);z-index:120;transition:.3s;max-width:calc(100% - 32px)}
+.toast.show{transform:translate(-50%,0)}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ============ CHAT ============ */
+.fab{position:fixed;right:24px;bottom:24px;z-index:90;width:64px;height:64px;background:var(--red);display:grid;place-items:center;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));transition:.2s;box-shadow:0 0 60px var(--red-glow)}
+.fab:hover{background:var(--red-hot);transform:translateY(-2px)}
+.fab .badge-n{position:absolute;top:8px;right:8px;width:10px;height:10px;background:#fff;border-radius:50%}
+.fab-label{position:fixed;right:98px;bottom:40px;z-index:89;background:var(--text);color:#000;font:600 13px var(--body);padding:8px 12px;transition:.3s;pointer-events:none}
+.chat-open .fab-label{opacity:0;transform:translateX(10px)}
+.chat{position:fixed;right:24px;bottom:100px;z-index:95;width:min(480px,calc(100vw - 48px));height:min(680px,calc(100svh - 124px));background:var(--bg-2);border:1px solid var(--line-2);display:flex;flex-direction:column;
+  transform:translateY(20px) scale(.98);opacity:0;pointer-events:none;transition:.25s cubic-bezier(.2,.8,.2,1);box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.chat-open .chat{transform:none;opacity:1;pointer-events:auto}
+.chat::before{content:"";position:absolute;inset:-1px -1px auto -1px;height:3px;background:linear-gradient(90deg,var(--red),var(--red-hot),var(--red))}
+.c-head{display:flex;align-items:center;gap:12px;padding:16px 14px 14px 18px;border-bottom:1px solid var(--line)}
+.c-av{width:40px;height:40px;background:var(--bg);box-shadow:inset 0 0 0 1px var(--line-2);display:grid;place-items:center;flex:none}
+.c-title{flex:1;min-width:0}
+.c-title b{display:block;font:700 16px var(--display);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c-title span{display:flex;align-items:center;gap:6px;font:400 12px var(--mono);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.c-title .dot{width:6px;height:6px;flex:none}
+.icon-btn{width:34px;height:34px;display:grid;place-items:center;color:var(--muted);transition:.15s}
+.icon-btn:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.icon-btn[aria-pressed=true]{color:var(--red-hot)}
+.member-bar{display:none;align-items:center;justify-content:space-between;gap:10px;padding:8px 18px;background:rgba(34,197,94,.08);border-bottom:1px solid var(--line);font-size:12px;color:#bbf7d0}
+.member-bar.show{display:flex}
+.member-bar button{font:500 12px var(--mono);color:var(--muted);text-decoration:underline}
+.c-body{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+.c-body::-webkit-scrollbar{width:6px}.c-body::-webkit-scrollbar-thumb{background:var(--line-2)}
+.msg{max-width:88%;display:flex;flex-direction:column;gap:6px;animation:rise .3s both}
+.msg .b{padding:12px 14px;font-size:14.5px;line-height:1.6;word-wrap:break-word}
+.msg.bot .b{background:var(--bg-3);border:1px solid var(--line)}
+.msg.user{align-self:flex-end;align-items:flex-end}
+.msg.user .b{background:var(--red);color:#fff}
+.msg.user img{max-width:180px;border:1px solid var(--line-2);display:block}
+.msg .b ul{margin:6px 0 2px 18px}.msg .b li{margin:2px 0}
+.msg .b table{border-collapse:collapse;margin:6px 0;font-size:13px;width:100%}
+.msg .b td{padding:4px 6px;border-bottom:1px solid var(--line)}
+.msg .b td:last-child{text-align:right;white-space:nowrap}
+.msg .b strong{color:#fff}
+.meta-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.src{font:500 11px var(--mono);padding:3px 7px;box-shadow:inset 0 0 0 1px var(--line-2);color:var(--muted);cursor:help}
+.lat{font:400 11px var(--mono);color:var(--dim)}
+.rule{font:500 11px var(--mono);padding:3px 7px;background:rgba(225,6,19,.15);color:#fca5a5}
+.qr{display:flex;flex-wrap:wrap;gap:6px}
+.qr button{padding:7px 11px;font-size:13px;box-shadow:inset 0 0 0 1px var(--red);color:#fecaca;transition:.15s}
+.qr button:hover{background:var(--red);color:#fff}
+.checks{display:grid;gap:4px;margin:8px 0;font-size:13px}
+.checks div{display:flex;gap:8px}
+.checks .y{color:#86efac}.checks .n{color:#fca5a5}
+.vision summary{cursor:pointer;color:var(--text);font-family:var(--body);font-size:12px}
+.vision{margin-top:8px;padding:10px;background:var(--bg);border:1px solid var(--line);font:400 12px/1.55 var(--mono);color:var(--muted);white-space:pre-wrap}
+.thinking{align-self:flex-start;padding:12px 14px;background:var(--bg-3);border:1px solid var(--line);display:grid;gap:7px;font-size:13px;min-width:230px}
+.thinking .st{display:flex;gap:10px;align-items:center;color:var(--dim)}
+.thinking .st i{width:14px;height:14px;flex:none;border:1.5px solid var(--dim);display:grid;place-items:center}
+.thinking .st.run{color:var(--text)}
+.thinking .st.run i{border-color:var(--red-hot);border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+.thinking .st.done{color:var(--muted)}
+.thinking .st.done i{border:0;background:var(--ok);clip-path:polygon(14% 52%,0 66%,38% 100%,100% 22%,86% 8%,38% 72%)}
+.err-b{background:rgba(225,6,19,.1)!important;border:1px solid rgba(225,6,19,.5)!important;color:#fecaca}
+.err-b b{color:#fff;display:block;margin-bottom:2px}
+.handoff{padding:10px 12px;background:var(--bg);border:1px dashed var(--line-2);font-size:13px;color:var(--muted)}
+.c-foot{border-top:1px solid var(--line);padding:10px 12px 12px}
+.preview{display:none;align-items:center;gap:10px;padding:8px;margin-bottom:8px;background:var(--bg);border:1px solid var(--line);font-size:12px;color:var(--muted)}
+.preview.show{display:flex}
+.preview img{width:44px;height:44px;object-fit:cover}
+.preview span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.composer{display:flex;align-items:flex-end;gap:6px;background:var(--bg);border:1px solid var(--line-2);padding:6px;transition:.15s}
+.composer:focus-within{border-color:var(--red)}
+.composer textarea{flex:1;background:none;border:0;outline:none;resize:none;padding:8px 6px;max-height:120px;font-size:14.5px;line-height:1.5}
+.send{width:40px;height:40px;background:var(--red);display:grid;place-items:center;flex:none;transition:.15s}
+.send:hover{background:var(--red-hot)}
+.send[disabled]{background:var(--bg-3);color:var(--dim);cursor:not-allowed}
+.c-sub{display:flex;justify-content:space-between;margin-top:6px;font:400 11px var(--mono);color:var(--dim)}
+.c-sub .over{color:var(--red-hot)}
+.attach-menu{position:absolute;left:12px;right:12px;bottom:76px;background:var(--bg-3);border:1px solid var(--line-2);padding:12px;display:none;z-index:3}
+.attach-menu.show{display:block;animation:rise .2s}
+.attach-menu h4{font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.samples{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px}
+.samples button{aspect-ratio:1;background:var(--bg) center/cover no-repeat;border:1px solid var(--line-2);position:relative;overflow:hidden;font:500 10px var(--mono);color:var(--muted);display:flex;align-items:flex-end;justify-content:center;padding:3px}
+.samples button:hover{border-color:var(--red)}
+.samples button span{background:rgba(0,0,0,.75);padding:1px 4px}
+.settings{position:absolute;inset:66px 0 0 0;background:var(--bg-2);z-index:4;padding:20px;overflow:auto;display:none}
+.settings.show{display:block;animation:fade .2s}
+.settings h4{font:700 15px var(--display);text-transform:uppercase;letter-spacing:.06em;margin:4px 0 12px}
+.switch{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+.switch small{display:block;color:var(--dim);font-size:12px}
+.sw{position:relative;width:44px;height:24px;flex:none;background:var(--bg-3);box-shadow:inset 0 0 0 1px var(--line-2);transition:.2s}
+.sw::after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;background:var(--muted);transition:.2s}
+.sw[aria-checked=true]{background:var(--red)}
+.sw[aria-checked=true]::after{left:23px;background:#fff}
+.seg{display:flex;box-shadow:inset 0 0 0 1px var(--line-2);margin:8px 0 12px}
+.seg button{flex:1;padding:9px;font-size:13px;color:var(--muted)}
+.seg button[aria-pressed=true]{background:var(--text);color:#000}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:.8s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* responsive */
+@media (max-width:1100px){
+  .plans{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .plan.hot{grid-column:span 2}
+  .promos{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .slot{grid-template-columns:90px 1fr 1fr 120px;grid-template-areas:"t n c b" "t m s b"}
+  .slot .t{grid-area:t}.slot .n{grid-area:n}.slot .m.coachc{grid-area:c}.slot .m.room{grid-area:m}.slot .seats{grid-area:s}.slot .act{grid-area:b}
+}
+@media (max-width:860px){
+  .nav ul,.nav-cta .btn{display:none}
+  .burger{display:grid}
+  .mobile-menu{display:block;position:fixed;inset:72px 0 auto 0;background:rgba(9,9,10,.97);border-bottom:1px solid var(--line);transform:translateY(-120%);transition:.3s;z-index:49;padding:10px var(--gutter) 24px}
+  .menu-open .mobile-menu{transform:none}
+  .mobile-menu a{display:block;padding:14px 0;border-bottom:1px solid var(--line);font:600 20px var(--display);text-transform:uppercase}
+  .mobile-menu .btn{margin-top:18px;width:100%;justify-content:center}
+  .pt-grid,.crm,.visit{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .slot{grid-template-columns:72px 1fr;grid-template-areas:"t n" "t c" "t m" "t s" "b b";gap:6px 14px}
+  .slot .act{margin-top:8px}.slot .act .btn{width:100%;justify-content:center}
+  .coaches{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .slashes{width:90vw;right:-40vw;opacity:.8}
+}
+@media (max-width:560px){
+  .plans,.promos{grid-template-columns:1fr}.plan.hot{grid-column:auto}
+  .pt-row{grid-template-columns:1fr auto}.pt-row .per{grid-column:1;text-align:left}
+  .kpis{grid-template-columns:1fr 1fr 1fr}
+  .row2{grid-template-columns:1fr}
+  .chat{right:0;bottom:0;width:100%;height:100svh;border:0}
+  .fab{right:16px;bottom:16px}
+  .fab-label{display:none}
+  .faq .ans{padding-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="X Fitness หน้าแรก">
+      <svg width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><g transform="translate(24 24) skewX(-14) translate(-24 -24)"><polygon points="30,6 40,6 18,42 8,42" fill="currentColor"/><polygon points="8,6 18,6 40,42 30,42" fill="#e10613" stroke="#09090a" stroke-width="3" paint-order="stroke"/></g></svg>
+      <span class="wm"><b>X</b> FITNESS<small>SRIRACHA</small></span>
+    </a>
+    <nav aria-label="เมนูหลัก">
+      <ul>
+        <li><a href="#membership">สมาชิก</a></li>
+        <li><a href="#classes">คลาส</a></li>
+        <li><a href="#pt">เทรนเนอร์</a></li>
+        <li><a href="#rewards">แต้มสะสม</a></li>
+        <li><a href="#promos">โปรโมชัน</a></li>
+        <li><a href="#visit">ติดต่อ</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <button class="btn btn-red btn-sm" data-open="trial">ทดลองฟรี 1 วัน</button>
+      <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#membership">สมาชิก</a><a href="#classes">คลาส</a><a href="#pt">เทรนเนอร์</a><a href="#rewards">แต้มสะสม</a><a href="#promos">โปรโมชัน</a><a href="#visit">ติดต่อ</a>
+  <button class="btn btn-red" data-open="trial">ทดลองฟรี 1 วัน</button>
+</div>
+
+<main id="top">
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="slashes" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="wrap">
+    <div class="status-pill"><span class="dot" id="openDot"></span><span id="openText">กำลังตรวจสอบเวลาเปิด…</span></div>
+    <h1><span>Train <span class="r" style="display:inline">Sharp.</span></span><span class="o">Live Strong.</span></h1>
+    <p class="th">สตูดิโอฟิตเนสขนาดเล็กใจกลางศรีราชา คลาสกลุ่ม 29 รอบต่อสัปดาห์ โค้ชดูแลใกล้ชิด เหมาะทั้งมือใหม่และคนที่จริงจัง</p>
+    <div class="ctas">
+      <a href="#membership" class="btn btn-red">ดูแพ็กเกจ <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h11M9 4l4 4-4 4"/></svg></a>
+      <button class="btn btn-ghost" data-ask="แนะนำคลาสสำหรับมือใหม่หน่อย">ถามผู้ช่วย AI</button>
+    </div>
+    <div class="stats">
+      <div class="stat"><b data-count="29">0</b><span>คลาสต่อสัปดาห์</span></div>
+      <div class="stat"><b data-count="8">0</b><span>ประเภทคลาส</span></div>
+      <div class="stat"><b data-count="6">0</b><span>โค้ชประจำ</span></div>
+      <div class="stat"><b><span data-count="825">0</span><sup>฿</sup></b><span>เฉลี่ยต่อเดือน (รายปี)</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true"><div id="marquee"></div></div>
+
+<!-- ============ MEMBERSHIP ============ -->
+<section id="membership">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><div class="eyebrow">Membership</div><h2 class="sec">เลือก<em>แพ็กเกจ</em></h2><p class="lead">ทุกแพ็กเกจใช้โซนเวทและคาร์ดิโอได้ไม่จำกัดตามเวลาเปิด-ปิด</p></div>
+      <div class="toggle" role="group" aria-label="รูปแบบราคา">
+        <button aria-pressed="true" data-price="list">ราคาตามแพ็กเกจ</button>
+        <button aria-pressed="false" data-price="avg">เฉลี่ยต่อเดือน</button>
+      </div>
+    </div>
+    <div class="plans rv" id="plans"></div>
+    <p class="note" id="planNote"></p>
+  </div>
+</section>
+
+<!-- ============ CLASSES ============ -->
+<section id="classes">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><div class="eyebrow">Group Classes</div><h2 class="sec">ตาราง<em>คลาส</em></h2><p class="lead">จองล่วงหน้าได้ 7 วัน ยกเลิกได้ถึง 2 ชั่วโมงก่อนคลาส ต้องยืนยันตัวตนด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้าย</p></div>
+    </div>
+    <div class="days rv" role="tablist" id="days"></div>
+    <div class="chips" id="classChips" role="group" aria-label="กรองประเภทคลาส"></div>
+    <div class="slots" id="slots"></div>
+  </div>
+</section>
+
+<!-- ============ PT ============ -->
+<section id="pt">
+  <div class="wrap">
+    <div class="sec-head rv"><div><div class="eyebrow">Personal Training</div><h2 class="sec">เทรนเนอร์<em>ส่วนตัว</em></h2><p class="lead">ครั้งละ 60 นาที วางโปรแกรมตามเป้าหมาย สมาชิกใหม่ทดลองฟรี 1 ครั้ง (30 นาที) ภายใน 30 วันแรก</p></div></div>
+    <div class="pt-grid">
+      <div class="rv">
+        <div class="pt-list" id="ptList"></div>
+        <p class="note">ยกเลิกหรือเลื่อนนัดต้องแจ้งล่วงหน้า 12 ชั่วโมง · แพ็กเกจ PT ไม่คืนเงิน โอนให้สมาชิกอื่นได้ 1 ครั้ง</p>
+      </div>
+      <div class="rv">
+        <div class="coaches" id="coaches"></div>
+        <div class="coach-detail" id="coachDetail">เลือกโค้ชเพื่อดูความถนัดและคลาสที่สอน</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REWARDS / CRM ============ -->
+<section id="rewards">
+  <div class="wrap crm">
+    <div class="rv">
+      <div class="eyebrow">X Points</div>
+      <h2 class="sec">สะสม<em>แต้ม</em><br>แลกของ</h2>
+      <p class="lead">เช็กอินรับ 5 แต้ม ใช้จ่ายทุก 10 บาทรับ 1 แต้ม ชวนเพื่อนรับ 300 แต้ม แลกโปรตีนเชคฟรีได้ตั้งแต่ 150 แต้ม</p>
+      <div class="rw-list" id="rwList"></div>
+    </div>
+    <div class="rv">
+      <div class="panel" id="memberPanel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROMOS ============ -->
+<section id="promos">
+  <div class="wrap">
+    <div class="sec-head rv"><div><div class="eyebrow">Promotions</div><h2 class="sec">โปร<em>โมชัน</em></h2><p class="lead">ใช้ได้ 1 โปรโมชันต่อการสมัคร 1 ครั้ง ไม่รวมกับส่วนลดอื่น</p></div></div>
+    <div class="promos rv" id="promoList"></div>
+  </div>
+</section>
+
+<!-- ============ VISIT ============ -->
+<section id="visit">
+  <div class="wrap visit">
+    <div class="rv">
+      <div class="eyebrow">Visit Us</div>
+      <h2 class="sec">เวลา<em>เปิด</em></h2>
+      <table class="hours" id="hoursTable"></table>
+      <div class="contact" id="contact"></div>
+    </div>
+    <div class="rv">
+      <div class="map" aria-label="แผนที่จำลอง">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <defs><pattern id="g" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs>
+          <rect width="400" height="300" fill="url(#g)"/>
+          <path d="M-10 190 L410 120" stroke="rgba(255,255,255,.22)" stroke-width="14"/>
+          <path d="M140 -10 L180 310" stroke="rgba(255,255,255,.12)" stroke-width="8"/>
+          <path d="M290 -10 L250 310" stroke="rgba(255,255,255,.08)" stroke-width="6"/>
+          <path d="M0 260 Q120 230 200 250 T410 220" stroke="rgba(56,120,200,.35)" stroke-width="18" fill="none"/>
+          <text x="20" y="182" fill="rgba(255,255,255,.4)" font-size="10" font-family="IBM Plex Mono" transform="rotate(-9 20 182)">SUKHUMVIT RD.</text>
+          <text x="20" y="286" fill="rgba(120,170,230,.55)" font-size="10" font-family="IBM Plex Mono">GULF OF THAILAND</text>
+          <g transform="translate(214 150)"><circle r="34" fill="rgba(225,6,19,.15)"><animate attributeName="r" values="18;38;18" dur="2.4s" repeatCount="indefinite"/></circle>
+          <rect x="-11" y="-11" width="22" height="22" fill="#e10613" transform="rotate(45)"/><circle r="4" fill="#fff"/></g>
+          <text x="240" y="138" fill="#fff" font-size="12" font-weight="700" font-family="Chakra Petch">X FITNESS</text>
+          <text x="240" y="152" fill="rgba(255,255,255,.5)" font-size="9" font-family="IBM Plex Mono">88/8 SRIRACHA</text>
+        </svg>
+      </div>
+      <p class="note">แผนที่จำลองสำหรับ mockup · ที่จอดรถใต้อาคาร 40 คัน จอดฟรี 3 ชั่วโมง</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head rv"><div><div class="eyebrow">FAQ</div><h2 class="sec">คำถาม<em>ที่พบบ่อย</em></h2></div>
+    <button class="btn btn-ghost" data-ask="">ถามเรื่องอื่นกับผู้ช่วย</button></div>
+    <div class="faq rv" id="faqList"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="big-foot" aria-hidden="true">Train Sharp.</div>
+  <div class="wrap">
+    <div><b style="color:var(--text);font-family:var(--display);letter-spacing:.12em">X FITNESS</b><br>ธุรกิจจำลองสำหรับ Final Project วิชา 06048308 Intelligent Chatbot Development<br>ข้อมูลทั้งหมดเป็นข้อมูลจำลอง</div>
+    <div class="mono" style="font-size:12px">MOCKUP v1 · <span id="year"></span></div>
+  </div>
+</footer>
+
+<!-- ============ MODALS ============ -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal-box">
+    <div class="modal-head"><h3 id="modalTitle"></h3><button class="x" data-close aria-label="ปิด">✕</button></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<!-- ============ CHAT ============ -->
+<span class="fab-label">ถามเอ็กซ์ได้ตลอด 24 ชม.</span>
+<button class="fab" id="fab" aria-label="เปิดแชต" aria-expanded="false">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 4h16v12H9l-5 4z" stroke-linejoin="miter"/><path d="M8 9h8M8 12h5"/></svg>
+  <span class="badge-n"></span>
+</button>
+<aside class="chat" id="chat" aria-label="แชตผู้ช่วย X Fitness">
+  <div class="c-head">
+    <div class="c-av"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><g transform="translate(24 24) skewX(-14) translate(-24 -24)"><polygon points="30,6 40,6 18,42 8,42" fill="#fff"/><polygon points="8,6 18,6 40,42 30,42" fill="#e10613" stroke="#09090a" stroke-width="3" paint-order="stroke"/></g></svg></div>
+    <div class="c-title"><b>X · ผู้ช่วย X Fitness</b><span><i class="dot" id="cDot"></i><em id="cMode" style="font-style:normal">โหมดจำลอง · ตอบจากคลังความรู้</em></span></div>
+    <button class="icon-btn" id="btnSettings" aria-label="ตั้งค่าและโหมดสาธิต" aria-pressed="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><rect x="14" y="5" width="4" height="4"/><rect x="8" y="15" width="4" height="4"/></svg></button>
+    <button class="icon-btn" id="btnReset" aria-label="เริ่มแชตใหม่"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"/></svg></button>
+    <button class="icon-btn" id="btnClose" aria-label="ปิดแชต"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="member-bar" id="memberBar"><span id="memberBarText"></span><button id="btnLogout">ออกจากระบบ</button></div>
+  <div class="c-body" id="cBody" aria-live="polite"></div>
+  <div class="c-foot" style="position:relative">
+    <div class="attach-menu" id="attachMenu">
+      <h4>แนบภาพ</h4>
+      <button class="btn btn-ghost btn-sm" id="btnUpload" style="width:100%;justify-content:center">อัปโหลดจากเครื่อง (JPG / PNG / WEBP ไม่เกิน 5 MB)</button>
+      <h4 style="margin-top:14px">ภาพทดสอบ 5 ภาพ</h4>
+      <div class="samples" id="samples"></div>
+    </div>
+    <div class="preview" id="preview"><img id="previewImg" alt=""><span id="previewName"></span><button class="icon-btn" id="btnRemoveImg" aria-label="ลบภาพ">✕</button></div>
+    <div class="composer">
+      <button class="icon-btn" id="btnAttach" aria-label="แนบภาพ" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></button>
+      <textarea id="input" rows="1" placeholder="พิมพ์คำถาม เช่น ราคาสมาชิกรายเดือน" aria-label="ข้อความ"></textarea>
+      <button class="send" id="btnSend" aria-label="ส่ง" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="c-sub"><span>Enter ส่ง · Shift+Enter ขึ้นบรรทัดใหม่</span><span id="counter">0/500</span></div>
+    <input type="file" id="file" accept="image/*,.pdf" hidden>
+  </div>
+  <div class="settings" id="settings">
+    <h4>แหล่งคำตอบ</h4>
+    <div class="seg" role="group"><button aria-pressed="true" data-mode="mock">โหมดจำลอง</button><button aria-pressed="false" data-mode="api">เชื่อม Backend API</button></div>
+    <div class="field" id="apiField" style="display:none"><label for="apiBase">API Base URL</label><input id="apiBase" value="http://localhost:8000"><span class="hint">เรียก POST /api/chat, POST /api/vision, GET /api/health</span><button class="btn btn-ghost btn-sm" id="btnHealth" style="margin-top:8px">ทดสอบ /api/health</button><div id="healthResult"></div></div>
+    <h4 style="margin-top:18px">จำลองสถานการณ์ (สำหรับทดสอบ UI)</h4>
+    <div class="switch"><div>จำลองเครือข่ายล่ม<small>ข้อความถัดไปจะได้ error พร้อมปุ่มลองใหม่</small></div><button class="sw" role="switch" aria-checked="false" data-sim="network" aria-label="จำลองเครือข่ายล่ม"></button></div>
+    <div class="switch"><div>จำลองหมดเวลา (15 วินาที)<small>แสดงสถานะรอ แล้วแจ้งหมดเวลา</small></div><button class="sw" role="switch" aria-checked="false" data-sim="timeout" aria-label="จำลองหมดเวลา"></button></div>
+    <div class="switch"><div>แสดงขั้นตอนประมวลผล<small>ตรวจความปลอดภัย → ค้นคลังความรู้ → เรียบเรียงคำตอบ</small></div><button class="sw" role="switch" aria-checked="true" data-sim="pipeline" aria-label="แสดงขั้นตอนประมวลผล"></button></div>
+    <div class="switch"><div>แสดงรหัสกฎที่ใช้<small>เช่น N-02 เมื่อบอทปฏิเสธส่วนลด</small></div><button class="sw" role="switch" aria-checked="true" data-sim="rules" aria-label="แสดงรหัสกฎ"></button></div>
+    <h4 style="margin-top:18px">บัญชีทดสอบ</h4>
+    <div class="demo-hint" style="line-height:1.9">FN-10003 / 5531 · มียอดค้าง 990 บาท (ใช้กับสลิปภาพ 1)<br>FN-10007 / 3364 · มียอดค้าง 1,290 บาท (ใช้กับสลิปภาพ 2)<br>FN-10008 / 6158 · พักสมาชิกอยู่<br>FN-10004 / 7702 · นักศึกษา (จองคลาส Ride ไม่ได้)</div>
+    <button class="btn btn-red btn-sm" id="btnSettingsDone" style="margin-top:18px">เสร็จ</button>
+  </div>
+</aside>
+
+<script>
+/* ================= DATA (generated from data/db/*.json) ================= */
+const DB = {"business": {"name_th": "เอ็กซ์ ฟิตเนส", "name_en": "X Fitness", "company": "บริษัท เอ็กซ์ ฟิตเนส จำกัด (จำลอง)", "tagline": "Train Sharp. Live Strong.", "address": "88/8 ถนนสุขุมวิท ตำบลศรีราชา อำเภอศรีราชา จังหวัดชลบุรี 20110 (ที่อยู่จำลอง)", "phone": "038-000-888", "line_oa": "@xfitness.demo", "email": "hello@xfitness.example", "hours": [{"days": "จันทร์–ศุกร์", "open": "06:00", "close": "22:00"}, {"days": "เสาร์–อาทิตย์ และวันหยุดนักขัตฤกษ์", "open": "08:00", "close": "20:00"}], "closed_days": ["1 มกราคม", "วันสงกรานต์ 13–14 เมษายน", "31 ธันวาคม (ปิด 17:00)"], "last_entry": "เข้าได้ถึง 30 นาทีก่อนปิด", "parking": "ลานจอดใต้อาคาร 40 คัน จอดฟรี 3 ชั่วโมงเมื่อสแกนบัตรสมาชิกที่เคาน์เตอร์", "bank": {"bank": "ธนาคารจำลอง (DemoBank)", "account_no": "123-4-54521-0", "account_name": "บจก. เอ็กซ์ ฟิตเนส", "promptpay_id": "0-1055-00000-12-3 (จำลอง)"}, "facilities": ["โซนเวทฟรี (Free weight)", "โซนเครื่องเล่นเวท 18 เครื่อง", "โซนคาร์ดิโอ ลู่วิ่ง 10 เครื่อง จักรยาน 6 เครื่อง", "สตูดิโอคลาส 1 (Studio A) 25 คน", "ห้องปั่นจักรยาน (Ride Room) 20 คัน", "ห้องชกมวย (Fight Room)", "ห้องอาบน้ำชาย–หญิง พร้อมล็อกเกอร์", "เครื่องวัดองค์ประกอบร่างกาย", "มุมโปรตีนและเครื่องดื่ม"]}, "packages": [{"id": "PKG-DAY", "name": "Day Pass", "name_th": "บัตรรายวัน", "price": 150, "unit": "ครั้ง", "contract_months": 0, "joining_fee": 0, "class_access": "ไม่รวมคลาส (ซื้อคลาสเพิ่มครั้งละ 150 บาท)", "notes": "ใช้ได้ 1 วันตามเวลาเปิด-ปิด ต้องแสดงบัตรประชาชน"}, {"id": "PKG-FLEX", "name": "Monthly Flex", "name_th": "รายเดือนไม่มีสัญญา", "price": 1290, "unit": "เดือน", "contract_months": 0, "joining_fee": 500, "class_access": "ไม่จำกัดคลาส", "notes": "ตัดบัตรเครดิตอัตโนมัติทุกเดือน ยกเลิกได้โดยแจ้งล่วงหน้า 30 วัน"}, {"id": "PKG-12M", "name": "Monthly 12-Month", "name_th": "รายเดือนสัญญา 12 เดือน", "price": 990, "unit": "เดือน", "contract_months": 12, "joining_fee": 500, "class_access": "ไม่จำกัดคลาส", "notes": "ยกเลิกก่อนครบสัญญามีค่าธรรมเนียม 1,500 บาท"}, {"id": "PKG-STU", "name": "Student", "name_th": "นักเรียน/นักศึกษา", "price": 790, "unit": "เดือน", "contract_months": 6, "joining_fee": 0, "class_access": "ไม่จำกัดคลาส ยกเว้นคลาส Ride", "notes": "อายุ 15–25 ปี แสดงบัตรนักศึกษาที่ยังไม่หมดอายุทุกครั้งที่ต่ออายุ"}, {"id": "PKG-ANNUAL", "name": "Annual Prepaid", "name_th": "รายปีจ่ายครั้งเดียว", "price": 9900, "unit": "ปี", "contract_months": 12, "joining_fee": 0, "class_access": "ไม่จำกัดคลาส + วัดองค์ประกอบร่างกายฟรีเดือนละ 1 ครั้ง + พาเพื่อนฟรีเดือนละ 1 ครั้ง", "notes": "เฉลี่ยเดือนละ 825 บาท ไม่คืนเงินหลังเริ่มใช้งาน แต่โอนสิทธิ์ได้ 1 ครั้ง (ค่าธรรมเนียม 500 บาท)"}], "classes": [{"id": "CL-HIIT", "name": "HIIT Blast", "name_th": "ฮิตบลาสต์", "minutes": 45, "level": "กลาง–สูง", "room": "Studio A", "capacity": 25, "kcal": "450–600", "desc": "เวทสลับคาร์ดิโอแบบเข้มข้นเป็นช่วง เผาผลาญสูง"}, {"id": "CL-RIDE", "name": "Ride", "name_th": "ปั่นจักรยาน", "minutes": 45, "level": "ทุกระดับ", "room": "Ride Room", "capacity": 20, "kcal": "400–550", "desc": "ปั่นจักรยานตามจังหวะเพลงในห้องไฟ"}, {"id": "CL-YOGA", "name": "Yoga Flow", "name_th": "โยคะโฟลว์", "minutes": 60, "level": "ผู้เริ่มต้น", "room": "Studio A", "capacity": 25, "kcal": "200–300", "desc": "โยคะต่อเนื่องเน้นลมหายใจและความยืดหยุ่น"}, {"id": "CL-PILATES", "name": "Pilates Core", "name_th": "พิลาทิสคอร์", "minutes": 50, "level": "ผู้เริ่มต้น–กลาง", "room": "Studio A", "capacity": 20, "kcal": "250–350", "desc": "พิลาทิสบนเสื่อ เน้นแกนกลางลำตัวและท่าทาง"}, {"id": "CL-BOX", "name": "Boxing Fit", "name_th": "บ็อกซิ่งฟิต", "minutes": 45, "level": "ทุกระดับ", "room": "Fight Room", "capacity": 16, "kcal": "500–650", "desc": "ชกกระสอบและเป้าล่อ ไม่มีการปะทะกับคู่"}, {"id": "CL-MUAY", "name": "Muay Thai Basic", "name_th": "มวยไทยพื้นฐาน", "minutes": 60, "level": "ผู้เริ่มต้น", "room": "Fight Room", "capacity": 16, "kcal": "550–700", "desc": "ท่าพื้นฐานหมัด เท้า เข่า ศอก มีนวมและผ้าพันมือให้ยืม"}, {"id": "CL-DANCE", "name": "Dance Cardio", "name_th": "แดนซ์คาร์ดิโอ", "minutes": 45, "level": "ทุกระดับ", "room": "Studio A", "capacity": 25, "kcal": "350–500", "desc": "เต้นแอโรบิกตามเพลงป๊อป ไม่ต้องมีพื้นฐาน"}, {"id": "CL-FUNC", "name": "Functional Strength", "name_th": "ฟังก์ชันนัลสเตรงท์", "minutes": 50, "level": "กลาง", "room": "Studio A", "capacity": 20, "kcal": "350–450", "desc": "เวทด้วยดัมเบล เคตเทิลเบล และน้ำหนักตัว เน้นการเคลื่อนไหวในชีวิตจริง"}], "trainers": [{"id": "TR-01", "nickname": "โค้ชเก่ง", "specialty": ["ลดไขมัน", "HIIT"], "classes": ["CL-HIIT", "CL-FUNC"], "cert": "ใบรับรองผู้ฝึกสอนส่วนบุคคล (จำลอง)"}, {"id": "TR-02", "nickname": "โค้ชมิ้นท์", "specialty": ["โยคะ", "พิลาทิส", "ท่าทาง"], "classes": ["CL-YOGA", "CL-PILATES"], "cert": "ครูโยคะ 200 ชั่วโมง (จำลอง)"}, {"id": "TR-03", "nickname": "โค้ชบอส", "specialty": ["มวยไทย", "บ็อกซิ่ง"], "classes": ["CL-BOX", "CL-MUAY"], "cert": "อดีตนักมวยสมัครเล่น (จำลอง)"}, {"id": "TR-04", "nickname": "โค้ชแพร", "specialty": ["แดนซ์", "คาร์ดิโอ"], "classes": ["CL-DANCE", "CL-RIDE"], "cert": "ผู้สอนแอโรบิก (จำลอง)"}, {"id": "TR-05", "nickname": "โค้ชตั้ม", "specialty": ["เพิ่มกล้ามเนื้อ", "เวทเทรนนิ่ง"], "classes": ["CL-FUNC"], "cert": "ใบรับรองด้านความแข็งแรง (จำลอง)"}, {"id": "TR-06", "nickname": "โค้ชนิว", "specialty": ["ปั่นจักรยาน", "ผู้เริ่มต้น"], "classes": ["CL-RIDE", "CL-HIIT"], "cert": "ผู้สอนปั่นจักรยานในร่ม (จำลอง)"}], "schedule": [{"id": "SL-01", "day": 1, "day_th": "จันทร์", "start": "07:00", "class_id": "CL-RIDE", "trainer_id": "TR-06"}, {"id": "SL-02", "day": 1, "day_th": "จันทร์", "start": "12:15", "class_id": "CL-YOGA", "trainer_id": "TR-02"}, {"id": "SL-03", "day": 1, "day_th": "จันทร์", "start": "18:00", "class_id": "CL-HIIT", "trainer_id": "TR-01"}, {"id": "SL-04", "day": 1, "day_th": "จันทร์", "start": "19:00", "class_id": "CL-BOX", "trainer_id": "TR-03"}, {"id": "SL-05", "day": 1, "day_th": "จันทร์", "start": "19:15", "class_id": "CL-DANCE", "trainer_id": "TR-04"}, {"id": "SL-06", "day": 2, "day_th": "อังคาร", "start": "07:00", "class_id": "CL-FUNC", "trainer_id": "TR-05"}, {"id": "SL-07", "day": 2, "day_th": "อังคาร", "start": "12:15", "class_id": "CL-PILATES", "trainer_id": "TR-02"}, {"id": "SL-08", "day": 2, "day_th": "อังคาร", "start": "18:00", "class_id": "CL-RIDE", "trainer_id": "TR-04"}, {"id": "SL-09", "day": 2, "day_th": "อังคาร", "start": "19:00", "class_id": "CL-MUAY", "trainer_id": "TR-03"}, {"id": "SL-10", "day": 3, "day_th": "พุธ", "start": "07:00", "class_id": "CL-HIIT", "trainer_id": "TR-06"}, {"id": "SL-11", "day": 3, "day_th": "พุธ", "start": "12:15", "class_id": "CL-YOGA", "trainer_id": "TR-02"}, {"id": "SL-12", "day": 3, "day_th": "พุธ", "start": "18:00", "class_id": "CL-FUNC", "trainer_id": "TR-01"}, {"id": "SL-13", "day": 3, "day_th": "พุธ", "start": "19:00", "class_id": "CL-BOX", "trainer_id": "TR-03"}, {"id": "SL-14", "day": 3, "day_th": "พุธ", "start": "19:15", "class_id": "CL-DANCE", "trainer_id": "TR-04"}, {"id": "SL-15", "day": 4, "day_th": "พฤหัสบดี", "start": "07:00", "class_id": "CL-RIDE", "trainer_id": "TR-06"}, {"id": "SL-16", "day": 4, "day_th": "พฤหัสบดี", "start": "12:15", "class_id": "CL-PILATES", "trainer_id": "TR-02"}, {"id": "SL-17", "day": 4, "day_th": "พฤหัสบดี", "start": "18:00", "class_id": "CL-HIIT", "trainer_id": "TR-01"}, {"id": "SL-18", "day": 4, "day_th": "พฤหัสบดี", "start": "19:00", "class_id": "CL-MUAY", "trainer_id": "TR-03"}, {"id": "SL-19", "day": 5, "day_th": "ศุกร์", "start": "07:00", "class_id": "CL-FUNC", "trainer_id": "TR-05"}, {"id": "SL-20", "day": 5, "day_th": "ศุกร์", "start": "18:00", "class_id": "CL-DANCE", "trainer_id": "TR-04"}, {"id": "SL-21", "day": 5, "day_th": "ศุกร์", "start": "19:00", "class_id": "CL-RIDE", "trainer_id": "TR-06"}, {"id": "SL-22", "day": 6, "day_th": "เสาร์", "start": "09:00", "class_id": "CL-YOGA", "trainer_id": "TR-02"}, {"id": "SL-23", "day": 6, "day_th": "เสาร์", "start": "10:30", "class_id": "CL-HIIT", "trainer_id": "TR-01"}, {"id": "SL-24", "day": 6, "day_th": "เสาร์", "start": "13:00", "class_id": "CL-MUAY", "trainer_id": "TR-03"}, {"id": "SL-25", "day": 6, "day_th": "เสาร์", "start": "15:00", "class_id": "CL-DANCE", "trainer_id": "TR-04"}, {"id": "SL-26", "day": 7, "day_th": "อาทิตย์", "start": "09:00", "class_id": "CL-PILATES", "trainer_id": "TR-02"}, {"id": "SL-27", "day": 7, "day_th": "อาทิตย์", "start": "10:30", "class_id": "CL-RIDE", "trainer_id": "TR-06"}, {"id": "SL-28", "day": 7, "day_th": "อาทิตย์", "start": "13:00", "class_id": "CL-BOX", "trainer_id": "TR-03"}, {"id": "SL-29", "day": 7, "day_th": "อาทิตย์", "start": "15:00", "class_id": "CL-FUNC", "trainer_id": "TR-05"}], "pt": [{"id": "PT-1", "name": "PT 1 ครั้ง", "sessions": 1, "price": 900, "per_session": 900, "valid_days": 30, "minutes": 60}, {"id": "PT-10", "name": "PT 10 ครั้ง", "sessions": 10, "price": 8000, "per_session": 800, "valid_days": 90, "minutes": 60}, {"id": "PT-20", "name": "PT 20 ครั้ง", "sessions": 20, "price": 14000, "per_session": 700, "valid_days": 180, "minutes": 60}, {"id": "PT-DUO", "name": "PT คู่ 10 ครั้ง (2 คน)", "sessions": 10, "price": 12000, "per_session": 600, "valid_days": 90, "minutes": 60, "notes": "ราคาต่อคนต่อครั้ง 600 บาท ทั้งสองคนต้องเป็นสมาชิก"}], "products": [{"id": "PD-01", "name": "เวย์โปรตีน X Fitness รสช็อกโกแลต 2 ปอนด์", "price": 1290, "stock": 18, "category": "อาหารเสริม"}, {"id": "PD-02", "name": "เวย์โปรตีน X Fitness รสวานิลลา 2 ปอนด์", "price": 1290, "stock": 0, "category": "อาหารเสริม", "restock": "ประมาณกลางเดือนตุลาคม"}, {"id": "PD-03", "name": "โปรตีนเชคพร้อมดื่ม (แก้ว)", "price": 89, "stock": 99, "category": "เครื่องดื่ม"}, {"id": "PD-04", "name": "ขวดน้ำสแตนเลส X Fitness 750 มล.", "price": 390, "stock": 25, "category": "อุปกรณ์"}, {"id": "PD-05", "name": "เสื้อดรายฟิต X Fitness (S–XL)", "price": 490, "stock": 40, "category": "เสื้อผ้า"}, {"id": "PD-06", "name": "ถุงมือยกเวท", "price": 350, "stock": 12, "category": "อุปกรณ์"}, {"id": "PD-07", "name": "ยางยืดออกกำลังกาย ชุด 3 ระดับ", "price": 290, "stock": 20, "category": "อุปกรณ์"}], "promotions": [{"id": "PR-01", "title": "สมัครรายปี แถมฟรี 1 เดือน", "code": "YEAR13", "applies_to": ["PKG-ANNUAL"], "start": "2026-09-01", "end": "2026-10-31", "status": "active", "detail": "สมัครแพ็กเกจรายปี 9,900 บาท ใช้งานได้ 13 เดือน"}, {"id": "PR-02", "title": "ยกเว้นค่าแรกเข้า 500 บาท", "code": "NOJOIN", "applies_to": ["PKG-FLEX", "PKG-12M"], "start": "2026-09-15", "end": "2026-11-30", "status": "active", "detail": "สมัครรายเดือนแบบไม่มีสัญญาหรือสัญญา 12 เดือน ไม่ต้องจ่ายค่าแรกเข้า"}, {"id": "PR-03", "title": "ชวนเพื่อนสมัคร รับ 300 แต้ม", "code": "FRIEND300", "applies_to": ["ALL"], "start": "2026-01-01", "end": "2026-12-31", "status": "active", "detail": "ผู้ชวนได้ 300 แต้มเมื่อเพื่อนสมัครแพ็กเกจรายเดือนขึ้นไปและชำระเงินแล้ว"}, {"id": "PR-04", "title": "สมัครรายปี แถมฟรี 2 เดือน (Mid-Year Sale)", "code": "MID2", "applies_to": ["PKG-ANNUAL"], "start": "2026-06-01", "end": "2026-07-31", "status": "expired", "detail": "หมดเขตแล้ว ไม่สามารถใช้ได้"}], "rewards": {"earn": [{"action": "เช็กอินเข้ายิม", "points": 5, "limit": "วันละ 1 ครั้ง"}, {"action": "ใช้จ่ายทุก 10 บาท (สินค้า/PT/ต่ออายุ)", "points": 1}, {"action": "ชวนเพื่อนสมัคร", "points": 300}, {"action": "เข้าคลาสครบ 12 ครั้งในเดือนเดียว", "points": 100}], "redeem": [{"id": "RW-01", "name": "โปรตีนเชคฟรี 1 แก้ว", "points": 150}, {"id": "RW-02", "name": "ผ้าเช็ดตัว X Fitness", "points": 300}, {"id": "RW-03", "name": "ขวดน้ำสแตนเลส X Fitness", "points": 450}, {"id": "RW-04", "name": "วัดองค์ประกอบร่างกาย 1 ครั้ง", "points": 200}, {"id": "RW-05", "name": "PT 1 ครั้ง", "points": 900}], "expiry": "แต้มหมดอายุ 31 ธันวาคมของปีถัดไป แลกได้ที่เคาน์เตอร์หรือผ่านแชต (แลกผ่านแชตต้องยืนยันตัวตนก่อน)"}, "members": [{"member_id": "FN-10001", "first_name": "ธนพล", "last_name": "ศรีสว่าง", "phone": "090-000-0417", "phone_last4": "0417", "package_id": "PKG-12M", "start_date": "2026-01-05", "end_date": "2027-01-04", "status": "active", "points": 1240, "pt_sessions_left": 0}, {"member_id": "FN-10002", "first_name": "ณิชา", "last_name": "วงศ์ใหญ่", "phone": "090-000-2285", "phone_last4": "2285", "package_id": "PKG-ANNUAL", "start_date": "2026-03-01", "end_date": "2027-02-28", "status": "active", "points": 860, "pt_sessions_left": 4}, {"member_id": "FN-10003", "first_name": "ภาคิน", "last_name": "สุขเจริญ", "phone": "090-000-5531", "phone_last4": "5531", "package_id": "PKG-12M", "start_date": "2026-02-10", "end_date": "2027-02-09", "status": "active", "points": 410, "pt_sessions_left": 0}, {"member_id": "FN-10004", "first_name": "พิมพ์ลดา", "last_name": "ทองดี", "phone": "090-000-7702", "phone_last4": "7702", "package_id": "PKG-STU", "start_date": "2026-06-01", "end_date": "2026-11-30", "status": "active", "points": 220, "pt_sessions_left": 0}, {"member_id": "FN-10005", "first_name": "กิตติพัฒน์", "last_name": "แก้วมณี", "phone": "090-000-1846", "phone_last4": "1846", "package_id": "PKG-FLEX", "start_date": "2026-08-12", "end_date": "2026-10-11", "status": "active", "points": 95, "pt_sessions_left": 0}, {"member_id": "FN-10006", "first_name": "อรอุมา", "last_name": "ปัญญาดี", "phone": "090-000-9023", "phone_last4": "9023", "package_id": "PKG-ANNUAL", "start_date": "2025-10-01", "end_date": "2026-09-30", "status": "active", "points": 1580, "pt_sessions_left": 0}, {"member_id": "FN-10007", "first_name": "วรเมธ", "last_name": "จันทร์หอม", "phone": "090-000-3364", "phone_last4": "3364", "package_id": "PKG-FLEX", "start_date": "2026-05-20", "end_date": "2026-10-19", "status": "active", "points": 310, "pt_sessions_left": 10}, {"member_id": "FN-10008", "first_name": "ศิริรัตน์", "last_name": "มั่นคง", "phone": "090-000-6158", "phone_last4": "6158", "package_id": "PKG-12M", "start_date": "2025-11-15", "end_date": "2026-11-14", "status": "frozen", "points": 540, "pt_sessions_left": 0, "freeze_until": "2026-10-31"}, {"member_id": "FN-10009", "first_name": "ชยพล", "last_name": "รุ่งเรือง", "phone": "090-000-4410", "phone_last4": "4410", "package_id": "PKG-DAY", "start_date": "2026-09-20", "end_date": "2026-09-20", "status": "expired", "points": 5, "pt_sessions_left": 0}, {"member_id": "FN-10010", "first_name": "กมลชนก", "last_name": "อินทร์แก้ว", "phone": "090-000-8827", "phone_last4": "8827", "package_id": "PKG-STU", "start_date": "2026-04-01", "end_date": "2026-09-30", "status": "active", "points": 180, "pt_sessions_left": 0}, {"member_id": "FN-10011", "first_name": "ธีรวัฒน์", "last_name": "บุญมา", "phone": "090-000-2093", "phone_last4": "2093", "package_id": "PKG-ANNUAL", "start_date": "2026-07-01", "end_date": "2027-06-30", "status": "active", "points": 720, "pt_sessions_left": 15}, {"member_id": "FN-10012", "first_name": "ปวีณา", "last_name": "เพชรงาม", "phone": "090-000-5670", "phone_last4": "5670", "package_id": "PKG-12M", "start_date": "2026-04-18", "end_date": "2027-04-17", "status": "active", "points": 330, "pt_sessions_left": 0}, {"member_id": "FN-10013", "first_name": "อนุชา", "last_name": "ดวงแก้ว", "phone": "090-000-1129", "phone_last4": "1129", "package_id": "PKG-FLEX", "start_date": "2026-01-03", "end_date": "2026-08-02", "status": "expired", "points": 60, "pt_sessions_left": 0}, {"member_id": "FN-10014", "first_name": "สุภาวดี", "last_name": "ทรัพย์สิน", "phone": "090-000-7384", "phone_last4": "7384", "package_id": "PKG-12M", "start_date": "2026-06-25", "end_date": "2027-06-24", "status": "active", "points": 205, "pt_sessions_left": 6}, {"member_id": "FN-10015", "first_name": "ณัฐวุฒิ", "last_name": "ศักดิ์ดี", "phone": "090-000-6641", "phone_last4": "6641", "package_id": "PKG-ANNUAL", "start_date": "2026-09-01", "end_date": "2027-09-30", "status": "active", "points": 150, "pt_sessions_left": 0}, {"member_id": "FN-10016", "first_name": "เบญจมาศ", "last_name": "พึ่งบุญ", "phone": "090-000-0958", "phone_last4": "0958", "package_id": "PKG-FLEX", "start_date": "2026-09-02", "end_date": "2026-10-01", "status": "active", "points": 40, "pt_sessions_left": 0}, {"member_id": "FN-10017", "first_name": "ปกรณ์", "last_name": "สายทอง", "phone": "090-000-3317", "phone_last4": "3317", "package_id": "PKG-12M", "start_date": "2025-12-01", "end_date": "2026-11-30", "status": "active", "points": 920, "pt_sessions_left": 0}, {"member_id": "FN-10018", "first_name": "ลลิตา", "last_name": "ชื่นใจ", "phone": "090-000-4476", "phone_last4": "4476", "package_id": "PKG-STU", "start_date": "2026-08-01", "end_date": "2027-01-31", "status": "active", "points": 75, "pt_sessions_left": 0}, {"member_id": "FN-10019", "first_name": "ศุภกร", "last_name": "มีสุข", "phone": "090-000-8205", "phone_last4": "8205", "package_id": "PKG-ANNUAL", "start_date": "2026-02-14", "end_date": "2027-02-13", "status": "frozen", "points": 610, "pt_sessions_left": 2, "freeze_until": "2026-10-31"}, {"member_id": "FN-10020", "first_name": "จิราพร", "last_name": "ใจเย็น", "phone": "090-000-1592", "phone_last4": "1592", "package_id": "PKG-12M", "start_date": "2026-09-10", "end_date": "2027-09-09", "status": "active", "points": 30, "pt_sessions_left": 1}], "bookings": [{"id": "BK-0001", "member_id": "FN-10001", "slot_id": "SL-03", "date": "2026-09-28", "status": "booked"}, {"id": "BK-0002", "member_id": "FN-10002", "slot_id": "SL-02", "date": "2026-09-28", "status": "booked"}, {"id": "BK-0003", "member_id": "FN-10003", "slot_id": "SL-04", "date": "2026-09-28", "status": "booked"}, {"id": "BK-0004", "member_id": "FN-10005", "slot_id": "SL-08", "date": "2026-09-29", "status": "booked"}, {"id": "BK-0005", "member_id": "FN-10007", "slot_id": "SL-09", "date": "2026-09-29", "status": "cancelled"}, {"id": "BK-0006", "member_id": "FN-10011", "slot_id": "SL-12", "date": "2026-09-30", "status": "booked"}, {"id": "BK-0007", "member_id": "FN-10012", "slot_id": "SL-14", "date": "2026-09-30", "status": "booked"}, {"id": "BK-0008", "member_id": "FN-10014", "slot_id": "SL-17", "date": "2026-10-01", "status": "booked"}, {"id": "BK-0009", "member_id": "FN-10017", "slot_id": "SL-22", "date": "2026-10-03", "status": "booked"}, {"id": "BK-0010", "member_id": "FN-10020", "slot_id": "SL-26", "date": "2026-10-04", "status": "booked"}, {"id": "BK-0011", "member_id": "FN-10004", "slot_id": "SL-24", "date": "2026-09-19", "status": "no_show"}, {"id": "BK-0012", "member_id": "FN-10006", "slot_id": "SL-23", "date": "2026-10-03", "status": "booked"}], "payments": [{"id": "PAY-2609-003", "member_id": "FN-10003", "description": "ค่าสมาชิกรายเดือน ต.ค. 2569", "amount": 990.0, "due": "2026-10-01", "status": "pending_slip"}, {"id": "PAY-2609-007", "member_id": "FN-10007", "description": "ค่าสมาชิก Monthly Flex ต.ค. 2569", "amount": 1290.0, "due": "2026-10-01", "status": "pending_slip"}, {"id": "PAY-2609-016", "member_id": "FN-10016", "description": "ค่าสมาชิก Monthly Flex ต.ค. 2569", "amount": 1290.0, "due": "2026-10-02", "status": "pending_slip"}, {"id": "PAY-2609-001", "member_id": "FN-10001", "description": "ค่าสมาชิกรายเดือน ก.ย. 2569", "amount": 990.0, "due": "2026-09-01", "status": "paid"}]};
+
+/* ================= HELPERS ================= */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const fmt = n => Number(n).toLocaleString('th-TH');
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const P = id => DB.packages.find(p => p.id === id);
+const C = id => DB.classes.find(c => c.id === id);
+const T = id => DB.trainers.find(t => t.id === id);
+const DAY_SHORT = ['', 'จ.', 'อ.', 'พ.', 'พฤ.', 'ศ.', 'ส.', 'อา.'];
+const DAY_TH = ['', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'];
+const todayNum = () => { const d = new Date().getDay(); return d === 0 ? 7 : d; };
+const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const parseISO = s => { const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); };
+const thDate = d => (typeof d === 'string' ? parseISO(d) : d).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' });
+const thShort = d => d.toLocaleDateString('th-TH', { weekday: 'short', day: 'numeric', month: 'short' });
+function nextDate(dayNum, time) {
+  const now = new Date(); let diff = (dayNum - todayNum() + 7) % 7;
+  const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + diff);
+  if (diff === 0 && time) { const [h, m] = time.split(':').map(Number); if (now.getHours() * 60 + now.getMinutes() > h * 60 + m - 120) d.setDate(d.getDate() + 7); }
+  return d;
+}
+function promoStatus(p) { const t = iso(new Date()); return t < p.start ? 'upcoming' : t > p.end ? 'expired' : 'active'; }
+function seatsTaken(slot) { let h = 0; for (const ch of slot.id + slot.day) h = (h * 31 + ch.charCodeAt(0)) % 997; const cap = C(slot.class_id).capacity; return Math.min(cap, Math.floor(cap * (0.35 + (h % 60) / 100))); }
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 2600); }
+
+/* ================= STATE (in-memory, resets on reload) ================= */
+const S = {
+  member: null,             // verified member (shared by site + chat)
+  bookings: DB.bookings.map(b => ({ ...b })),
+  payments: DB.payments.map(p => ({ ...p })),
+  leads: [], tickets: [],
+  priceMode: 'list', day: todayNum(), filter: 'ALL',
+  mode: 'mock', sim: { network: false, timeout: false, pipeline: true, rules: true },
+  pending: null,            // intent waiting for verification
+  pendingImage: null,       // image waiting for verification
+  image: null,              // attached image {key,name,url,size,type,file}
+  busy: false, lastSend: null, usedRefs: new Set(['DEMO2609010930Z9'])
+};
+
+/* ================= MEMBER VERIFY (code-enforced, rule D-04 / N-04) ================= */
+function verifyMember(id, last4) {
+  id = String(id || '').trim().toUpperCase().replace(/\s/g, ''); if (/^\d{5}$/.test(id)) id = 'FN-' + id; if (/^FN\d{5}$/.test(id)) id = 'FN-' + id.slice(2);
+  last4 = String(last4 || '').trim();
+  if (!/^FN-\d{5}$/.test(id) || !/^\d{4}$/.test(last4)) return { ok: false, error: 'รูปแบบไม่ถูกต้อง: รหัสสมาชิกเช่น FN-10003 และเบอร์โทร 4 ตัวท้าย' };
+  const m = DB.members.find(x => x.member_id === id && x.phone_last4 === last4);
+  if (!m) return { ok: false, error: 'ข้อมูลไม่ตรงกับระบบ กรุณาตรวจสอบรหัสสมาชิกและเบอร์โทร 4 ตัวท้าย' }; // same message whether id exists or not
+  return { ok: true, member: m };
+}
+function setMember(m) { S.member = m; renderMemberPanel(); renderMemberBar(); }
+function memberStatusText(m) {
+  if (m.status === 'frozen') return `พักสมาชิกถึง ${thDate(m.freeze_until)}`;
+  if (m.status === 'expired' || m.end_date < iso(new Date())) return `หมดอายุเมื่อ ${thDate(m.end_date)}`;
+  return `ใช้งานได้ถึง ${thDate(m.end_date)}`;
+}
+function isActive(m) { return m.status === 'active' && m.end_date >= iso(new Date()); }
+function canBook(m, slot, date) {
+  const cls = C(slot.class_id);
+  if (m.status === 'frozen') return 'สมาชิกอยู่ระหว่างพักสมาชิก จองคลาสไม่ได้จนถึง ' + thDate(m.freeze_until);
+  if (!isActive(m)) return 'สมาชิกหมดอายุแล้ว กรุณาต่ออายุที่เคาน์เตอร์';
+  if (m.package_id === 'PKG-DAY') return 'บัตรรายวันจองคลาสล่วงหน้าไม่ได้ ซื้อคลาสเพิ่มได้ที่เคาน์เตอร์คลาสละ 150 บาท';
+  if (m.package_id === 'PKG-STU' && slot.class_id === 'CL-RIDE') return 'แพ็กเกจนักศึกษาไม่รวมคลาส Ride';
+  const t = iso(new Date());
+  const mine = S.bookings.filter(b => b.member_id === m.member_id && b.status === 'booked' && b.date >= t);
+  if (mine.some(b => b.slot_id === slot.id && b.date === iso(date))) return 'คุณจองคลาสนี้ในวันดังกล่าวไว้แล้ว';
+  if (mine.length >= 3) return 'จองค้างได้สูงสุด 3 คลาส กรุณายกเลิกหรือเข้าเรียนก่อน';
+  if (seatsTaken(slot) >= cls.capacity) return 'คลาสเต็มแล้ว ลงชื่อรอคิวได้ที่เคาน์เตอร์';
+  return null;
+}
+function book(m, slot, date) {
+  const err = canBook(m, slot, date); if (err) return { ok: false, error: err };
+  const id = 'BK-' + String(S.bookings.length + 1).padStart(4, '0');
+  S.bookings.push({ id, member_id: m.member_id, slot_id: slot.id, date: iso(date), status: 'booked' });
+  renderSlots(); renderMemberPanel();
+  return { ok: true, id };
+}
+
+/* ================= RENDER: SITE ================= */
+function renderOpen() {
+  const now = new Date(), d = todayNum(), h = DB.business.hours[d <= 5 ? 0 : 1];
+  const [oh, om] = h.open.split(':').map(Number), [ch, cm] = h.close.split(':').map(Number);
+  const mins = now.getHours() * 60 + now.getMinutes(), open = mins >= oh * 60 + om && mins < ch * 60 + cm;
+  $('#openDot').classList.toggle('off', !open);
+  const before = mins < oh * 60 + om, nd = d % 7 + 1, nh = DB.business.hours[nd <= 5 ? 0 : 1];
+  $('#openText').textContent = open ? `เปิดอยู่ตอนนี้ · ปิด ${h.close} น.` : before ? `ยังไม่เปิด · เปิด ${h.open} น. วันนี้` : `ปิดแล้ว · เปิดพรุ่งนี้ ${nh.open} น.`;
+}
+function renderMarquee() {
+  const t = DB.classes.map(c => `<span>${esc(c.name)}</span>`).join('');
+  $('#marquee').innerHTML = t + t;
+}
+function renderPlans() {
+  const feats = {
+    'PKG-DAY': ['ใช้ได้ 1 วัน', 'โซนเวทและคาร์ดิโอ', 'คลาสเพิ่มคลาสละ 150 บาท', 'แสดงบัตรประชาชน'],
+    'PKG-FLEX': ['คลาสไม่จำกัด', 'ไม่มีสัญญา', 'ยกเลิกได้ แจ้ง 30 วัน', 'ค่าแรกเข้า 500 บาท'],
+    'PKG-12M': ['คลาสไม่จำกัด', 'สัญญา 12 เดือน', 'ค่าแรกเข้า 500 บาท', 'ยกเลิกก่อนครบ 1,500 บาท'],
+    'PKG-STU': ['อายุ 15–25 ปี', 'คลาสไม่จำกัด ยกเว้น Ride', 'สัญญา 6 เดือน', 'ไม่มีค่าแรกเข้า'],
+    'PKG-ANNUAL': ['คลาสไม่จำกัด', 'วัดองค์ประกอบร่างกายฟรีทุกเดือน', 'พาเพื่อนฟรีเดือนละ 1 ครั้ง', 'ไม่มีค่าแรกเข้า'],
+  };
+  const order = ['PKG-DAY', 'PKG-STU', 'PKG-ANNUAL', 'PKG-12M', 'PKG-FLEX'];
+  $('#plans').innerHTML = order.map(id => {
+    const p = P(id), hot = id === 'PKG-ANNUAL';
+    let price = p.price, unit = p.unit;
+    if (S.priceMode === 'avg') { if (id === 'PKG-ANNUAL') { price = 825; unit = 'เดือน'; } if (id === 'PKG-DAY') unit = 'ครั้ง'; }
+    return `<article class="plan ${hot ? 'hot' : ''}">${hot ? '<span class="tag">คุ้มที่สุด</span>' : ''}
+      <div><h3>${esc(p.name)}</h3><div class="thn">${esc(p.name_th)}</div></div>
+      <div class="price">${fmt(price)}<small>บาท / ${unit}</small></div>
+      <ul>${feats[id].map(f => `<li>${esc(f)}</li>`).join('')}</ul>
+      <button class="btn ${hot ? 'btn-red' : 'btn-ghost'}" data-join="${id}">${id === 'PKG-DAY' ? 'ซื้อที่เคาน์เตอร์' : 'สนใจสมัคร'}</button>
+    </article>`;
+  }).join('');
+  const active = DB.promotions.filter(p => promoStatus(p) === 'active' && p.applies_to[0] !== 'ALL');
+  $('#planNote').textContent = active.length ? 'โปรโมชันที่ใช้ได้ตอนนี้: ' + active.map(p => `${p.title} (${p.code})`).join(' · ') : 'ขณะนี้ไม่มีโปรโมชันสำหรับการสมัคร';
+}
+function renderDays() {
+  $('#days').innerHTML = [1,2,3,4,5,6,7].map(d => {
+    const dt = nextDate(d);
+    return `<button role="tab" aria-selected="${d === S.day}" data-day="${d}"><b>${DAY_SHORT[d]}${d === todayNum() ? ' · วันนี้' : ''}</b><small>${dt.getDate()}/${dt.getMonth()+1}</small></button>`;
+  }).join('');
+  const sel = $('#days [aria-selected=true]'); if (sel) $('#days').scrollLeft = sel.offsetLeft - 16;
+  $('#classChips').innerHTML = [['ALL', 'ทั้งหมด'], ...DB.classes.map(c => [c.id, c.name])].map(([id, n]) => `<button class="chip" aria-pressed="${S.filter === id}" data-filter="${id}">${esc(n)}</button>`).join('');
+}
+function renderSlots() {
+  const list = DB.schedule.filter(s => s.day === S.day && (S.filter === 'ALL' || s.class_id === S.filter)).sort((a, b) => a.start.localeCompare(b.start));
+  if (!list.length) { $('#slots').innerHTML = `<div class="empty">ไม่มีคลาสนี้ในวัน${DAY_TH[S.day]} ลองเลือกวันอื่นหรือดูทั้งหมด</div>`; return; }
+  $('#slots').innerHTML = list.map(s => {
+    const c = C(s.class_id), t = T(s.trainer_id), taken = seatsTaken(s), left = c.capacity - taken, date = nextDate(s.day, s.start);
+    const mine = S.member && S.bookings.some(b => b.member_id === S.member.member_id && b.slot_id === s.id && b.date === iso(date) && b.status === 'booked');
+    const [h, m] = s.start.split(':').map(Number), end = new Date(0, 0, 0, h, m + c.minutes);
+    return `<div class="slot"><div class="t">${s.start}<small>${String(end.getHours()).padStart(2,'0')}:${String(end.getMinutes()).padStart(2,'0')} · ${c.minutes} นาที</small></div>
+      <div class="n">${esc(c.name)}<small>${esc(c.desc)}</small></div>
+      <div class="m coachc">${esc(t.nickname)}</div>
+      <div class="m room">${esc(c.room)} · ${esc(c.level)}</div>
+      <div class="seats">${left > 0 ? `ว่าง ${left}/${c.capacity}` : 'เต็ม'}<div class="bar"><i style="width:${taken / c.capacity * 100}%"></i></div></div>
+      <div class="act">${mine ? '<button class="btn btn-ghost btn-sm" disabled>จองแล้ว</button>' : `<button class="btn ${left > 0 ? 'btn-red' : 'btn-ghost'} btn-sm" data-book="${s.id}" ${left > 0 ? '' : 'disabled'}>${left > 0 ? 'จองคลาส' : 'เต็ม'}</button>`}</div></div>`;
+  }).join('');
+}
+function renderPT() {
+  $('#ptList').innerHTML = DB.pt.map(p => `<div class="pt-row"><div><b>${esc(p.name)}</b><div class="note" style="margin:2px 0 0">ใช้ภายใน ${p.valid_days} วัน</div></div><div class="per">${fmt(p.per_session)} ฿<br>ต่อครั้ง${p.id === 'PT-DUO' ? '/คน' : ''}</div><div class="pp">${fmt(p.price)} ฿</div></div>`).join('');
+  $('#coaches').innerHTML = DB.trainers.map(t => `<button class="coach" data-coach="${t.id}" aria-pressed="false"><div class="mono-mark">${t.id.slice(-2)}</div><b>${esc(t.nickname)}</b><small>${esc(t.specialty.join(' · '))}</small></button>`).join('');
+}
+function renderRewards() {
+  $('#rwList').innerHTML = [...DB.rewards.redeem].sort((a, b) => a.points - b.points).map(r => `<div class="rw"><span>${esc(r.name)}</span><b>${fmt(r.points)} แต้ม</b></div>`).join('');
+}
+function renderMemberPanel() {
+  const el = $('#memberPanel'), m = S.member;
+  if (!m) {
+    el.innerHTML = `<div class="eyebrow" style="margin-bottom:14px">Member Check</div>
+      <h3 style="font:700 26px var(--display);margin-bottom:6px">เช็กแต้มและสถานะสมาชิก</h3>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:18px">ยืนยันตัวตนก่อนดูข้อมูล ระบบแสดงเฉพาะข้อมูลของคุณเท่านั้น</p>
+      <form id="verifyForm" novalidate><div class="row2">
+        <div class="field"><label for="vId">รหัสสมาชิก</label><input id="vId" placeholder="FN-10003" autocomplete="off"></div>
+        <div class="field"><label for="vPh">เบอร์โทร 4 ตัวท้าย</label><input id="vPh" placeholder="5531" inputmode="numeric" maxlength="4"></div></div>
+        <div id="vMsg"></div>
+        <button class="btn btn-red" type="submit" style="width:100%;justify-content:center">ยืนยันตัวตน</button></form>
+      <div class="demo-hint">ทดสอบ: <button type="button" data-fill="FN-10002|2285">FN-10002 / 2285</button> · <button type="button" data-fill="FN-10008|6158">FN-10008 / 6158 (พักสมาชิก)</button></div>`;
+    return;
+  }
+  const p = P(m.package_id), t = iso(new Date());
+  const up = S.bookings.filter(b => b.member_id === m.member_id && b.status === 'booked' && b.date >= t).sort((a, b) => a.date.localeCompare(b.date));
+  const st = m.status === 'frozen' ? 'frozen' : isActive(m) ? 'active' : 'expired';
+  el.innerHTML = `<div class="card-member">
+    <div class="mc-top"><div><div class="eyebrow" style="margin-bottom:10px">${esc(m.member_id)}</div><div class="mc-name">คุณ${esc(m.first_name)} ${esc(m.last_name[0])}.</div><div style="color:var(--muted);font-size:14px">${esc(p.name_th)} · ${esc(memberStatusText(m))}</div></div>
+      <span class="badge ${st}">${{ active: 'ใช้งานอยู่', frozen: 'พักสมาชิก', expired: 'หมดอายุ' }[st]}</span></div>
+    <div class="kpis"><div class="kpi"><b>${fmt(m.points)}</b><span>แต้มสะสม</span></div><div class="kpi"><b>${m.pt_sessions_left}</b><span>PT คงเหลือ</span></div><div class="kpi"><b>${up.length}</b><span>คลาสที่จองไว้</span></div></div>
+    ${up.length ? `<div style="font-size:14px">${up.map(b => { const s = DB.schedule.find(x => x.id === b.slot_id); return `<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)"><span>${esc(C(s.class_id).name)} · ${thShort(parseISO(b.date))} ${s.start}</span><button class="demo-hint" style="margin:0" data-cancel="${b.id}"><u>ยกเลิก</u></button></div>`; }).join('')}</div>` : ''}
+    <div><div style="font:600 12px var(--mono);letter-spacing:.14em;color:var(--muted);margin-bottom:8px">แลกของรางวัล</div>
+    <div class="redeem">${DB.rewards.redeem.map(r => `<div class="rw"><span>${esc(r.name)} <span class="mono" style="color:var(--dim);font-size:12px">${fmt(r.points)} แต้ม</span></span><button class="btn btn-sm ${m.points >= r.points ? 'btn-red' : 'btn-ghost'}" data-redeem="${r.id}" ${m.points >= r.points && m.status !== 'expired' ? '' : 'disabled'}>แลก</button></div>`).join('')}</div></div>
+    <button class="btn btn-ghost btn-sm" data-logout style="justify-self:start">ออกจากระบบ</button></div>`;
+}
+function renderPromos() {
+  $('#promoList').innerHTML = DB.promotions.map(p => {
+    const st = promoStatus(p);
+    return `<article class="promo ${st === 'expired' ? 'expired' : ''}"><span class="badge ${st === 'active' ? 'active' : 'expired'}" style="align-self:flex-start">${{ active: 'ใช้ได้', expired: 'หมดเขตแล้ว', upcoming: 'เร็ว ๆ นี้' }[st]}</span>
+      <h3>${esc(p.title)}</h3><p>${esc(p.detail)}</p>
+      <div class="code"><span>${esc(p.code)}</span>${st === 'active' ? `<button data-copy="${esc(p.code)}">คัดลอก</button>` : '<span style="font-size:12px;color:var(--dim)">ใช้ไม่ได้</span>'}</div>
+      <div class="dates">${thDate(p.start)} – ${thDate(p.end)}</div></article>`;
+  }).join('');
+}
+function renderVisit() {
+  const d = todayNum(), rows = [[1,5,0],[6,7,1]];
+  $('#hoursTable').innerHTML = rows.map(([a, b, i]) => `<tr class="${d >= a && d <= b ? 'today' : ''}"><td>${DB.business.hours[i].days}</td><td>${DB.business.hours[i].open} – ${DB.business.hours[i].close}</td></tr>`).join('') + `<tr><td style="color:var(--muted)">เข้าใช้ได้ถึง 30 นาทีก่อนปิด</td><td style="font:400 13px var(--mono);color:var(--muted)">ปิด 1 ม.ค. · 13–14 เม.ย.</td></tr>`;
+  const b = DB.business;
+  $('#contact').innerHTML = `<div><span>ที่อยู่</span><span>${esc(b.address)}</span></div><div><span>โทร</span><a href="tel:${b.phone.replace(/-/g, '')}">${b.phone}</a></div><div><span>LINE</span><span>${b.line_oa}</span></div><div><span>อีเมล</span><a href="mailto:${b.email}">${b.email}</a></div>`;
+}
+const FAQ = [
+  ['สมาชิกรายเดือนราคาเท่าไหร่', 'รายเดือนไม่มีสัญญา 1,290 บาท, สัญญา 12 เดือน 990 บาท, นักศึกษา 790 บาทต่อเดือน ถ้าจ่ายรายปี 9,900 บาท เฉลี่ยเดือนละ 825 บาท'],
+  ['เปิด-ปิดกี่โมง', 'จันทร์–ศุกร์ 06:00–22:00 น. เสาร์–อาทิตย์และวันหยุดนักขัตฤกษ์ 08:00–20:00 น. เข้าได้ถึง 30 นาทีก่อนปิด'],
+  ['มีคลาสอะไรบ้าง จองอย่างไร', '8 คลาส 29 รอบต่อสัปดาห์ จองผ่านเว็บหรือแชตล่วงหน้าได้ 7 วัน ยกเลิกได้ถึง 2 ชั่วโมงก่อนคลาส'],
+  ['ยกเลิกคลาสไม่ทันจะเป็นอะไรไหม', 'ไม่มาโดยไม่ยกเลิกครบ 3 ครั้งในเดือนเดียว ระงับสิทธิ์จองคลาส 7 วัน'],
+  ['ทดลองเล่นฟรีได้ไหม', 'ผู้ที่ไม่เคยเป็นสมาชิกทดลองฟรี 1 วัน ลงทะเบียนล่วงหน้า และแสดงบัตรประชาชนในวันที่มา'],
+  ['จ้างเทรนเนอร์ส่วนตัวราคาเท่าไหร่', '1 ครั้ง 900 บาท, 10 ครั้ง 8,000 บาท, 20 ครั้ง 14,000 บาท, คู่ 10 ครั้ง 12,000 บาท ครั้งละ 60 นาที'],
+  ['พักสมาชิกได้ไหม', 'พักได้ครั้งละ 1–3 เดือน รวมไม่เกิน 3 เดือนต่อปี ค่าธรรมเนียม 100 บาทต่อเดือน แจ้งล่วงหน้า 7 วัน'],
+  ['ขอคืนเงินได้ไหม', 'คืนเต็มจำนวนถ้ายกเลิกภายใน 7 วันหลังสมัครและยังไม่เคยเข้าใช้ หลังจากนั้นไม่คืนค่าสมาชิก'],
+  ['ชำระเงินช่องทางไหนได้บ้าง', 'เงินสด บัตร พร้อมเพย์ที่เคาน์เตอร์ หรือโอนเข้า ธนาคารจำลอง 123-4-54521-0 บจก. เอ็กซ์ ฟิตเนส แล้วส่งสลิปในแชต ไม่มีผ่อน 0%'],
+  ['ตอนนี้มีโปรอะไรบ้าง', 'ดูโปรโมชันที่ใช้ได้ในส่วนโปรโมชันด้านบน ใช้ได้ 1 โปรต่อการสมัคร 1 ครั้ง'],
+];
+function renderFAQ() {
+  $('#faqList').innerHTML = FAQ.map(([q, a], i) => `<details><summary><span><span class="n">${String(i + 1).padStart(2, '0')}</span>${esc(q)}</span><span class="pm"></span></summary><div class="ans">${esc(a)}<br><button class="btn btn-ghost btn-sm" data-ask="${esc(q)}">ถามต่อกับผู้ช่วย</button></div></details>`).join('');
+}
+
+/* ================= MODALS ================= */
+function openModal(title, html, onMount) { $('#modalTitle').textContent = title; $('#modalBody').innerHTML = html; $('#modal').classList.add('open'); onMount && onMount($('#modalBody')); const f = $('#modalBody input,#modalBody select,#modalBody button'); f && f.focus(); }
+function closeModal() { $('#modal').classList.remove('open'); }
+function verifyFields(prefix) {
+  return S.member ? `<div class="alert ok">ยืนยันตัวตนแล้ว: ${esc(S.member.member_id)} · คุณ${esc(S.member.first_name)}</div>` :
+  `<div class="row2"><div class="field"><label for="${prefix}Id">รหัสสมาชิก</label><input id="${prefix}Id" placeholder="FN-10003"></div><div class="field"><label for="${prefix}Ph">เบอร์โทร 4 ตัวท้าย</label><input id="${prefix}Ph" placeholder="5531" maxlength="4" inputmode="numeric"></div></div>`;
+}
+function openBooking(slotId) {
+  const s = DB.schedule.find(x => x.id === slotId), c = C(s.class_id), date = nextDate(s.day, s.start);
+  openModal('จองคลาส', `<div class="summary"><span>คลาส</span><b>${esc(c.name)}</b><span>วันเวลา</span><b>${thShort(date)} · ${s.start} น.</b><span>โค้ช</span><b>${esc(T(s.trainer_id).nickname)}</b><span>ห้อง</span><b>${esc(c.room)}</b></div>
+    <form id="bookForm" novalidate>${verifyFields('b')}<div id="bMsg"></div><button class="btn btn-red" type="submit" style="width:100%;justify-content:center">ยืนยันการจอง</button></form>
+    ${S.member ? '' : '<div class="demo-hint">ทดสอบ: <button type="button" data-mfill="FN-10003|5531">FN-10003 / 5531</button> · <button type="button" data-mfill="FN-10004|7702">FN-10004 / 7702 (นักศึกษา)</button></div>'}`, body => {
+    $('#bookForm', body).onsubmit = async e => {
+      e.preventDefault(); const btn = $('button[type=submit]', body); const msg = $('#bMsg', body);
+      let m = S.member;
+      if (!m) { const r = verifyMember($('#bId', body).value, $('#bPh', body).value); if (!r.ok) { msg.innerHTML = `<div class="alert err">${esc(r.error)}</div>`; return; } m = r.member; }
+      btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> กำลังจอง…'; await sleep(700);
+      const res = book(m, s, date);
+      if (!res.ok) { msg.innerHTML = `<div class="alert err">${esc(res.error)}</div>`; btn.disabled = false; btn.textContent = 'ยืนยันการจอง'; if (!S.member) setMember(m); return; }
+      if (!S.member) setMember(m);
+      $('#modalBody').innerHTML = `<div class="alert ok">จองสำเร็จ · เลขที่ ${res.id}</div><div class="summary"><span>คลาส</span><b>${esc(c.name)}</b><span>วันเวลา</span><b>${thShort(date)} · ${s.start} น.</b><span>สมาชิก</span><b>${esc(m.member_id)}</b></div><p style="color:var(--muted);font-size:14px">มาถึงก่อนเริ่ม 10 นาที ยกเลิกได้ถึง 2 ชั่วโมงก่อนคลาส</p><button class="btn btn-red" data-close style="margin-top:14px">เสร็จ</button>`;
+    };
+  });
+}
+function openJoin(pkgId) {
+  const p = P(pkgId);
+  if (pkgId === 'PKG-DAY') { openModal('บัตรรายวัน', `<div class="alert info">บัตรรายวัน 150 บาท ซื้อได้ที่เคาน์เตอร์เท่านั้น แสดงบัตรประชาชน ใช้ได้ 1 วันตามเวลาเปิด-ปิด</div><button class="btn btn-ghost" data-close>ปิด</button>`); return; }
+  openModal('สนใจสมัคร', `<div class="summary"><span>แพ็กเกจ</span><b>${esc(p.name)} · ${esc(p.name_th)}</b><span>ราคา</span><b>${fmt(p.price)} บาท / ${p.unit}</b><span>ค่าแรกเข้า</span><b>${p.joining_fee ? fmt(p.joining_fee) + ' บาท' : 'ไม่มี'}</b></div>
+    <form id="joinForm" novalidate>
+      <div class="field"><label for="jName">ชื่อเล่น</label><input id="jName" placeholder="เช่น ต้น" maxlength="30"></div>
+      <div class="field"><label for="jContact">เบอร์โทรหรือ LINE ID</label><input id="jContact" placeholder="ให้พนักงานติดต่อกลับ" maxlength="40"></div>
+      <div class="field"><label for="jCode">โค้ดโปรโมชัน (ถ้ามี)</label><input id="jCode" placeholder="เช่น NOJOIN" style="text-transform:uppercase"><span class="hint">ใช้ได้ 1 โค้ดต่อการสมัคร</span></div>
+      <label style="display:flex;gap:10px;font-size:13px;color:var(--muted);margin:6px 0 14px"><input type="checkbox" id="jConsent"> ยินยอมให้ร้านเก็บชื่อเล่นและช่องทางติดต่อ เพื่อติดต่อกลับเรื่องการสมัครเท่านั้น</label>
+      <div id="jMsg"></div><button class="btn btn-red" type="submit" style="width:100%;justify-content:center">ส่งข้อมูล</button></form>`, body => {
+    $('#joinForm', body).onsubmit = async e => {
+      e.preventDefault(); const msg = $('#jMsg', body), name = $('#jName', body).value.trim(), contact = $('#jContact', body).value.trim(), code = $('#jCode', body).value.trim().toUpperCase();
+      if (!name || !contact) { msg.innerHTML = '<div class="alert err">กรุณากรอกชื่อเล่นและช่องทางติดต่อ</div>'; return; }
+      if (!$('#jConsent', body).checked) { msg.innerHTML = '<div class="alert err">กรุณายินยอมการเก็บข้อมูลก่อนส่ง</div>'; return; }
+      let promo = null;
+      if (code) { const r = checkPromo(code, pkgId); if (!r.ok) { msg.innerHTML = `<div class="alert err">${esc(r.error)}</div>`; return; } promo = r.promo; }
+      const btn = $('button[type=submit]', body); btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> กำลังส่ง…'; await sleep(600);
+      const id = 'LD-' + String(3 + S.leads.length).padStart(3, '0'); S.leads.push({ id, nickname: name, interest: pkgId, promo: promo && promo.code });
+      $('#modalBody').innerHTML = `<div class="alert ok">รับข้อมูลแล้ว · เลขอ้างอิง ${id}</div><p style="color:var(--muted);font-size:14px">พนักงานจะติดต่อกลับภายใน 1 วันทำการ${promo ? ` · โปรที่ใช้: ${esc(promo.title)}` : ''}</p><button class="btn btn-red" data-close style="margin-top:14px">เสร็จ</button>`;
+    };
+  });
+}
+function checkPromo(code, pkgId) {
+  const p = DB.promotions.find(x => x.code === code);
+  if (!p) return { ok: false, error: `ไม่พบโค้ด ${code} ในระบบ` };
+  const st = promoStatus(p);
+  if (st === 'expired') return { ok: false, error: `โค้ด ${code} หมดเขตแล้วเมื่อ ${thDate(p.end)}` };
+  if (st === 'upcoming') return { ok: false, error: `โค้ด ${code} เริ่มใช้ได้ ${thDate(p.start)}` };
+  if (p.applies_to[0] !== 'ALL' && !p.applies_to.includes(pkgId)) return { ok: false, error: `โค้ด ${code} ใช้กับแพ็กเกจนี้ไม่ได้ (ใช้กับ ${p.applies_to.map(i => P(i).name_th).join(', ')})` };
+  return { ok: true, promo: p };
+}
+function openTrial() {
+  openModal('ทดลองฟรี 1 วัน', `<p style="color:var(--muted);font-size:14px;margin-bottom:16px">สำหรับผู้ที่ยังไม่เคยเป็นสมาชิก 1 ครั้งต่อคน แสดงบัตรประชาชนในวันที่มา รวม 1 คลาสถ้ามีที่ว่าง</p>
+    <form id="trialForm" novalidate><div class="row2"><div class="field"><label for="tName">ชื่อเล่น</label><input id="tName" maxlength="30"></div><div class="field"><label for="tDate">วันที่ต้องการมา</label><input id="tDate" type="date"></div></div>
+    <div class="field"><label for="tContact">เบอร์โทรหรือ LINE ID</label><input id="tContact" maxlength="40"></div>
+    <label style="display:flex;gap:10px;font-size:13px;color:var(--muted);margin:6px 0 14px"><input type="checkbox" id="tConsent"> ยินยอมให้ร้านเก็บข้อมูลเพื่อยืนยันการทดลองเท่านั้น</label>
+    <div id="tMsg"></div><button class="btn btn-red" type="submit" style="width:100%;justify-content:center">ลงทะเบียน</button></form>`, body => {
+    const d = $('#tDate', body), t = new Date(); d.min = iso(t); const mx = new Date(t); mx.setDate(t.getDate() + 14); d.max = iso(mx); d.value = iso(t);
+    $('#trialForm', body).onsubmit = async e => {
+      e.preventDefault(); const msg = $('#tMsg', body);
+      if (!$('#tName', body).value.trim() || !$('#tContact', body).value.trim()) { msg.innerHTML = '<div class="alert err">กรุณากรอกชื่อเล่นและช่องทางติดต่อ</div>'; return; }
+      if (!d.value || d.value < d.min || d.value > d.max) { msg.innerHTML = '<div class="alert err">เลือกวันที่ได้ตั้งแต่วันนี้ถึง 14 วันข้างหน้า</div>'; return; }
+      if (!$('#tConsent', body).checked) { msg.innerHTML = '<div class="alert err">กรุณายินยอมการเก็บข้อมูลก่อนส่ง</div>'; return; }
+      const b = $('button[type=submit]', body); b.disabled = true; b.innerHTML = '<span class="spinner"></span> กำลังส่ง…'; await sleep(600);
+      const id = 'TR-' + Math.floor(1000 + Math.random() * 9000);
+      $('#modalBody').innerHTML = `<div class="alert ok">ลงทะเบียนทดลองแล้ว · ${id}</div><div class="summary"><span>วันที่</span><b>${thDate(d.value)}</b><span>เวลา</span><b>ตามเวลาเปิด-ปิดของวันนั้น</b></div><p style="color:var(--muted);font-size:14px">แสดงเลข ${id} และบัตรประชาชนที่เคาน์เตอร์</p><button class="btn btn-red" data-close style="margin-top:14px">เสร็จ</button>`;
+    };
+  });
+}
+
+/* ================= SITE EVENTS ================= */
+document.addEventListener('click', e => {
+  const t = e.target.closest('button,a'); if (!t) return;
+  if (t.matches('[data-close]')) return closeModal();
+  if (t.dataset.open === 'trial') { document.body.classList.remove('menu-open'); return openTrial(); }
+  if (t.dataset.join) return openJoin(t.dataset.join);
+  if (t.dataset.book) return openBooking(t.dataset.book);
+  if (t.dataset.price) { S.priceMode = t.dataset.price; $$('[data-price]').forEach(b => b.setAttribute('aria-pressed', b === t)); return renderPlans(); }
+  if (t.dataset.day) { S.day = +t.dataset.day; renderDays(); return renderSlots(); }
+  if (t.dataset.filter) { S.filter = t.dataset.filter; renderDays(); return renderSlots(); }
+  if (t.dataset.coach) {
+    $$('[data-coach]').forEach(b => b.setAttribute('aria-pressed', b === t)); const c = T(t.dataset.coach);
+    const cls = DB.schedule.filter(s => s.trainer_id === c.id).map(s => `${DAY_SHORT[s.day]} ${s.start} ${C(s.class_id).name}`);
+    $('#coachDetail').innerHTML = `<b style="font-family:var(--display);font-size:18px">${esc(c.nickname)}</b> · ${esc(c.specialty.join(', '))}<br><span style="color:var(--muted)">${esc(c.cert)}</span><br><span class="mono" style="font-size:12px;color:var(--muted)">${esc(cls.join(' / '))}</span><br><button class="btn btn-ghost btn-sm" style="margin-top:10px" data-ask="อยากจ้าง${esc(c.nickname)}เป็นเทรนเนอร์ส่วนตัว ราคาเท่าไหร่">สอบถามเรื่อง PT กับ${esc(c.nickname)}</button>`; return;
+  }
+  if (t.dataset.fill) { const [a, b] = t.dataset.fill.split('|'); $('#vId').value = a; $('#vPh').value = b; return; }
+  if (t.dataset.mfill) { const [a, b] = t.dataset.mfill.split('|'); $('#bId').value = a; $('#bPh').value = b; return; }
+  if (t.dataset.redeem) {
+    const r = DB.rewards.redeem.find(x => x.id === t.dataset.redeem);
+    if (!S.member || S.member.points < r.points) return toast('แต้มไม่พอ');
+    S.member.points -= r.points; renderMemberPanel(); renderMemberBar(); return toast(`แลก ${r.name} แล้ว · รับที่เคาน์เตอร์ภายใน 30 วัน`);
+  }
+  if (t.dataset.cancel) {
+    const b = S.bookings.find(x => x.id === t.dataset.cancel), s = DB.schedule.find(x => x.id === b.slot_id);
+    const [h, m] = s.start.split(':').map(Number), start = parseISO(b.date); start.setHours(h, m);
+    if (start - new Date() < 2 * 3600e3) return toast('ยกเลิกได้ถึง 2 ชั่วโมงก่อนคลาสเท่านั้น');
+    b.status = 'cancelled'; renderMemberPanel(); renderSlots(); return toast(`ยกเลิก ${b.id} แล้ว`);
+  }
+  if (t.matches('[data-logout]')) { setMember(null); renderSlots(); return toast('ออกจากระบบแล้ว'); }
+  if (t.dataset.copy) { navigator.clipboard?.writeText(t.dataset.copy).then(() => toast(`คัดลอก ${t.dataset.copy} แล้ว`), () => toast(`โค้ด: ${t.dataset.copy}`)); return; }
+  if (t.dataset.ask !== undefined && !t.closest('#chat')) { openChat(); if (t.dataset.ask) sendText(t.dataset.ask); else $('#input').focus(); return; }
+  if (t.closest('.mobile-menu') && t.tagName === 'A') { document.body.classList.remove('menu-open'); $('#burger').setAttribute('aria-expanded', 'false'); }
+});
+document.addEventListener('submit', e => {
+  if (e.target.id !== 'verifyForm') return; e.preventDefault();
+  const r = verifyMember($('#vId').value, $('#vPh').value);
+  if (!r.ok) { $('#vMsg').innerHTML = `<div class="alert err">${esc(r.error)}</div>`; return; }
+  setMember(r.member); renderSlots(); toast('ยืนยันตัวตนแล้ว');
+});
+$('#modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { if ($('#modal').classList.contains('open')) closeModal(); else if (document.body.classList.contains('chat-open')) closeChat(); } });
+$('#burger').onclick = () => { const o = document.body.classList.toggle('menu-open'); $('#burger').setAttribute('aria-expanded', o); };
+addEventListener('scroll', () => {
+  $('#nav').classList.toggle('scrolled', scrollY > 20);
+  let cur = ''; $$('main section[id]').forEach(s => { if (s.getBoundingClientRect().top < 120) cur = s.id; });
+  $$('.nav ul a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+}, { passive: true });
+const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { threshold: .12 });
+function countUp() { $$('[data-count]').forEach(el => { const to = +el.dataset.count, t0 = performance.now(); const step = t => { const k = Math.min(1, (t - t0) / 1400); el.textContent = fmt(Math.round(to * (1 - Math.pow(1 - k, 3)))); if (k < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }); }
+
+/* ================= CHAT: UI ================= */
+const body = $('#cBody'), input = $('#input');
+function openChat() { document.body.classList.add('chat-open'); $('#fab').setAttribute('aria-expanded', 'true'); $('.fab .badge-n')?.remove(); if (!body.children.length) greet(); setTimeout(() => input.focus(), 200); }
+function closeChat() { document.body.classList.remove('chat-open'); $('#fab').setAttribute('aria-expanded', 'false'); $('#attachMenu').classList.remove('show'); }
+$('#fab').onclick = () => document.body.classList.contains('chat-open') ? closeChat() : openChat();
+$('#btnClose').onclick = closeChat;
+$('#btnReset').onclick = () => { body.innerHTML = ''; S.pending = null; S.pendingImage = null; clearImage(); greet(); };
+$('#btnSettings').onclick = () => { const s = $('#settings').classList.toggle('show'); $('#btnSettings').setAttribute('aria-pressed', s); };
+$('#btnSettingsDone').onclick = () => { $('#settings').classList.remove('show'); $('#btnSettings').setAttribute('aria-pressed', 'false'); };
+$$('#settings [data-sim]').forEach(b => b.onclick = () => { const k = b.dataset.sim; S.sim[k] = !S.sim[k]; b.setAttribute('aria-checked', S.sim[k]); });
+$$('#settings [data-mode]').forEach(b => b.onclick = () => {
+  S.mode = b.dataset.mode; $$('#settings [data-mode]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  $('#apiField').style.display = S.mode === 'api' ? 'grid' : 'none';
+  $('#cMode').textContent = S.mode === 'api' ? 'เชื่อม Backend API · ' + $('#apiBase').value : 'โหมดจำลอง · ตอบจากคลังความรู้';
+});
+$('#btnHealth').onclick = async () => {
+  const out = $('#healthResult'); out.innerHTML = '<div class="alert info"><span class="spinner"></span>&nbsp; กำลังเรียก /api/health…</div>';
+  try { const r = await fetchT($('#apiBase').value.replace(/\/$/, '') + '/api/health', {}, 5000); const j = await r.json(); out.innerHTML = `<div class="alert ${r.ok ? 'ok' : 'err'}">HTTP ${r.status} · ${esc(JSON.stringify(j))}</div>`; }
+  catch (e) { out.innerHTML = `<div class="alert err">เชื่อมต่อไม่ได้: ${esc(e.message)}</div>`; }
+};
+function renderMemberBar() {
+  const m = S.member; $('#memberBar').classList.toggle('show', !!m);
+  if (m) $('#memberBarText').textContent = `ยืนยันตัวตนแล้ว · ${m.member_id} · คุณ${m.first_name} · ${fmt(m.points)} แต้ม`;
+}
+$('#btnLogout').onclick = () => { setMember(null); renderSlots(); botMsg({ html: 'ออกจากระบบแล้วค่ะ ข้อมูลสมาชิกจะไม่แสดงในแชตนี้อีกจนกว่าจะยืนยันตัวตนใหม่' }); };
+
+input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(120, input.scrollHeight) + 'px'; updateSend(); });
+input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); if (!$('#btnSend').disabled) send(); } });
+$('#btnSend').onclick = () => send();
+function updateSend() {
+  const n = [...input.value].length, over = n > 500;
+  $('#counter').textContent = `${n}/500`; $('#counter').classList.toggle('over', over);
+  $('#btnSend').disabled = S.busy || over || (!input.value.trim() && !S.image);
+}
+$('#btnAttach').onclick = () => { const s = $('#attachMenu').classList.toggle('show'); $('#btnAttach').setAttribute('aria-pressed', s); };
+$('#btnUpload').onclick = () => $('#file').click();
+const SAMPLES = [
+  ['slip_valid', '01_slip_valid.png', 'สลิป ✓'], ['slip_mismatch', '02_slip_amount_mismatch.png', 'สลิป ✗'],
+  ['body_scan', '03_body_scan.png', 'ผลวัด'], ['receipt', '04_receipt.png', 'ใบเสร็จ'], ['promo_expired', '05_promo_poster_expired.png', 'โปสเตอร์']
+];
+$('#samples').innerHTML = SAMPLES.map(([k, f, l]) => `<button data-sample="${k}" title="${f}" style="background-image:url('../test-images/${f}')"><span>${l}</span></button>`).join('');
+$('#samples').onclick = e => { const b = e.target.closest('[data-sample]'); if (!b) return; const s = SAMPLES.find(x => x[0] === b.dataset.sample); setImage({ key: s[0], name: s[1], url: '../test-images/' + s[1], size: 0, type: 'image/png' }); };
+$('#file').onchange = e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+  $('#attachMenu').classList.remove('show'); $('#btnAttach').setAttribute('aria-pressed', 'false');
+  if (!/^image\/(jpeg|png|webp)$/.test(f.type)) return botMsg({ error: true, title: 'ไฟล์ไม่รองรับ', html: `ไฟล์ "${esc(f.name)}" เป็นชนิด ${esc(f.type || 'ไม่ทราบ')} รองรับเฉพาะภาพ JPG, PNG หรือ WEBP` });
+  if (f.size > 5 * 1024 * 1024) return botMsg({ error: true, title: 'ไฟล์ใหญ่เกินไป', html: `ภาพมีขนาด ${(f.size / 1048576).toFixed(1)} MB ขนาดสูงสุดคือ 5 MB กรุณาย่อภาพหรือแคปหน้าจอใหม่` });
+  const key = (SAMPLES.find(s => f.name.toLowerCase().includes(s[1].slice(3, -4))) || [null])[0];
+  setImage({ key, name: f.name, url: URL.createObjectURL(f), size: f.size, type: f.type, file: f });
+};
+function setImage(img) { S.image = img; $('#previewImg').src = img.url; $('#previewName').textContent = img.name; $('#preview').classList.add('show'); $('#attachMenu').classList.remove('show'); $('#btnAttach').setAttribute('aria-pressed', 'false'); updateSend(); input.focus(); }
+function clearImage() { S.image = null; $('#preview').classList.remove('show'); updateSend(); }
+$('#btnRemoveImg').onclick = clearImage;
+
+function userMsg(text, img) {
+  const el = document.createElement('div'); el.className = 'msg user';
+  el.innerHTML = (img ? `<img src="${img.url}" alt="${esc(img.name)}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'b',textContent:'🖼 ${esc(img.name)}'}))">` : '') + (text ? `<div class="b">${esc(text).replace(/\n/g, '<br>')}</div>` : '');
+  body.appendChild(el); scrollDown();
+}
+function botMsg({ html, sources = [], rules = [], quick = [], latency, error, title, retry, vision, handoff }) {
+  const el = document.createElement('div'); el.className = 'msg bot';
+  el.innerHTML = `<div class="b ${error ? 'err-b' : ''}">${title ? `<b>${esc(title)}</b>` : ''}${html}${vision ? `<details class="vision"><summary>ผลวิเคราะห์ภาพที่ดึงได้ (JSON)</summary>${esc(vision)}</details>` : ''}</div>
+    ${handoff ? `<div class="handoff">${handoff}</div>` : ''}
+    <div class="meta-row">${sources.map(s => `<span class="src" title="${esc(KBT[s] || s)}">${s}</span>`).join('')}${S.sim.rules ? rules.map(r => `<span class="rule">${r}</span>`).join('') : ''}${latency != null ? `<span class="lat">${(latency / 1000).toFixed(2)} วินาที</span>` : ''}${retry ? '<button class="btn btn-ghost btn-sm" data-retry>ลองอีกครั้ง</button>' : ''}</div>
+    ${quick.length ? `<div class="qr">${quick.map(q => `<button data-q="${esc(q)}">${esc(q)}</button>`).join('')}</div>` : ''}`;
+  body.appendChild(el); scrollDown(); return el;
+}
+body.addEventListener('click', e => {
+  const q = e.target.closest('[data-q]'); if (q && !S.busy) return sendText(q.dataset.q);
+  const r = e.target.closest('[data-retry]'); if (r && S.lastSend && !S.busy) { r.closest('.msg').remove(); return run(S.lastSend.text, S.lastSend.img, true); }
+  const h = e.target.closest('[data-handoff]'); if (h) { h.disabled = true; const id = 'TK-' + String(101 + S.tickets.length); S.tickets.push({ id, topic: h.dataset.handoff }); botMsg({ html: `ส่งเรื่องให้พนักงานแล้วค่ะ เลขเรื่อง <strong>${id}</strong> พนักงานจะตอบกลับในแชตนี้หรือทาง LINE ภายในเวลาทำการ` }); }
+});
+function scrollDown() { requestAnimationFrame(() => body.scrollTop = body.scrollHeight); }
+function thinking(img) {
+  const el = document.createElement('div'); el.className = 'thinking'; el.setAttribute('role', 'status');
+  el.innerHTML = S.sim.pipeline ? ['ตรวจความปลอดภัยของข้อความ', img ? 'วิเคราะห์ภาพ' : 'ค้นคลังความรู้', 'เรียบเรียงคำตอบ'].map(t => `<div class="st"><i></i>${t}</div>`).join('') : '<div class="st run"><i></i>กำลังพิมพ์…</div>';
+  body.appendChild(el); scrollDown();
+  const steps = $$('.st', el); let i = 0;
+  const tick = () => { if (!S.sim.pipeline) return; steps.forEach((s, j) => s.className = 'st ' + (j < i ? 'done' : j === i ? 'run' : '')); };
+  tick();
+  return { next() { i++; tick(); }, done() { el.remove(); } };
+}
+function greet() {
+  botMsg({ html: 'สวัสดีค่ะ เอ็กซ์เป็นผู้ช่วยของ <strong>X Fitness</strong> ถามเรื่องแพ็กเกจ คลาส เทรนเนอร์ นโยบาย หรือส่งภาพสลิป ผลวัดร่างกาย ใบเสร็จ โปสเตอร์โปรโมชันมาให้ตรวจได้ค่ะ', quick: ['ราคาสมาชิก', 'ตารางคลาสวันนี้', 'โปรโมชันตอนนี้', 'เช็กแต้มของฉัน'] });
+}
+function sendText(t) { input.value = t; updateSend(); send(); }
+function send() {
+  if (S.busy) return; const text = input.value.trim(), img = S.image;
+  if (!text && !img) return;
+  if ([...text].length > 500) return;
+  input.value = ''; input.style.height = 'auto'; clearImage();
+  userMsg(text, img); run(text, img);
+}
+async function run(text, img, isRetry) {
+  S.busy = true; S.lastSend = { text, img }; updateSend();
+  const th = thinking(img), t0 = performance.now();
+  try {
+    if (S.sim.network) { await sleep(900); throw Object.assign(new Error('network'), { kind: 'network' }); }
+    if (S.sim.timeout) { th.next(); await sleep(3000); throw Object.assign(new Error('timeout'), { kind: 'timeout' }); }
+    let res;
+    if (S.mode === 'api') res = await apiAnswer(text, img, th);
+    else { await sleep(350 + Math.random() * 300); th.next(); await sleep(400 + Math.random() * 500); th.next(); res = await mockAnswer(text, img); await sleep(250 + Math.random() * 350); }
+    th.done(); botMsg({ ...res, latency: performance.now() - t0 });
+  } catch (e) {
+    th.done();
+    const k = e.kind || (e.name === 'AbortError' ? 'timeout' : 'network');
+    botMsg({ error: true, retry: true, latency: performance.now() - t0,
+      title: k === 'timeout' ? 'ใช้เวลานานเกินไป' : k === 'http' ? `เซิร์ฟเวอร์ตอบกลับผิดพลาด (${e.status})` : 'เชื่อมต่อไม่ได้',
+      html: k === 'timeout' ? 'ระบบไม่ตอบภายใน 15 วินาที (โหมดจำลองย่อเวลารอเหลือ 3 วินาที) กดลองอีกครั้ง หรือติดต่อ 038-000-888' : k === 'http' ? esc(e.message) : 'ตรวจสอบอินเทอร์เน็ต แล้วกดลองอีกครั้ง ข้อความของคุณยังอยู่' });
+  } finally { S.busy = false; updateSend(); }
+}
+
+/* ================= CHAT: BACKEND API ADAPTER ================= */
+function fetchT(url, opt, ms = 15000) { const c = new AbortController(); const t = setTimeout(() => c.abort(), ms); return fetch(url, { ...opt, signal: c.signal }).finally(() => clearTimeout(t)); }
+async function apiAnswer(text, img, th) {
+  const base = $('#apiBase').value.replace(/\/$/, ''); let vision = null;
+  if (img) {
+    if (!img.file) { const blob = await (await fetch(img.url)).blob(); img.file = new File([blob], img.name, { type: blob.type }); }
+    const fd = new FormData(); fd.append('image', img.file); fd.append('session_id', SID);
+    const r = await fetchT(base + '/api/vision', { method: 'POST', body: fd });
+    if (!r.ok) throw Object.assign(new Error((await r.text()).slice(0, 200)), { kind: 'http', status: r.status });
+    vision = await r.json();
+  }
+  th.next();
+  const r = await fetchT(base + '/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ session_id: SID, message: text, member_id: S.member?.member_id || null, vision }) });
+  if (!r.ok) throw Object.assign(new Error((await r.text()).slice(0, 200)), { kind: 'http', status: r.status });
+  const j = await r.json(); th.next();
+  return { html: esc(j.answer || '').replace(/\n/g, '<br>'), sources: j.sources || [], quick: j.actions || [], vision: vision ? JSON.stringify(vision, null, 1) : null };
+}
+const SID = Math.random().toString(36).slice(2, 10);
+
+/* ================= CHAT: MOCK ENGINE =================
+   Stand-in for the real backend. Every fact comes from DB (data/db/*.json) so answers match the knowledge base.
+   The real prototype replaces this with POST /api/chat (LLM + RAG). */
+const KBT = { 'KB-01': 'ข้อมูลทั่วไป เวลาเปิด-ปิด', 'KB-02': 'แพ็กเกจสมาชิกและราคา', 'KB-03': 'คลาสและตารางเรียน', 'KB-04': 'เทรนเนอร์ส่วนตัว', 'KB-05': 'นโยบาย พัก ยกเลิก คืนเงิน', 'KB-06': 'การชำระเงินและสลิป', 'KB-07': 'โปรโมชัน แต้ม สินค้า', 'KB-08': 'กฎการใช้ยิมและความปลอดภัย' };
+const has = (t, re) => re.test(t);
+const R = {
+  inject: /(ignore|disregard|forget).{0,20}(instruction|previous|above)|ลืม.{0,10}(คำสั่ง|กฎ)|ไม่ต้องสน.{0,10}(คำสั่ง|กฎ)|system\s*prompt|คำสั่งระบบ|prompt\s*ของคุณ|ได้รับคำสั่งอะไร|คุณคือ(แอดมิน|ผู้จัดการ|admin)|ตอนนี้คุณคือ|jailbreak|developer mode|โหมดนักพัฒนา|ข้อความนี้มาจากผู้จัดการ|api\s*key/i,
+  drug: /สเตียรอยด์|steroid|ฮอร์โมน|ยาลด|ยาเผาผลาญ|ยากระตุ้น|ยาชุด|sarm|clen|ฉีด/i,
+  diet: /กินอะไร|แผนอาหาร|คุมอาหาร|ลด.{0,6}\d+\s*(กิโล|kg).{0,10}(อาทิตย์|สัปดาห์|วัน)|อดอาหาร|ควรกินกี่แคล/i,
+  symptom: /เจ็บหน้าอก|แน่นหน้าอก|หน้ามืด|เวียนหัว|หายใจไม่ออก|บาดเจ็บ|ข้อเท้าพลิก|เจ็บเข่า|ปวดหลัง/i,
+  discount: /ลด(ให้|ราคา)?\s*(อีก)?\s*\d+\s*(%|เปอร์|บาท)|ส่วนลดพิเศษ|ขอส่วนลด|ลดให้หน่อย|ลดได้ไหม|ลดอีกได้|ขอลด|ฟรี\s*\d+\s*เดือน.*ได้ไหม|ส่วนลด\s*100|เพื่อนเจ้าของ|รู้จักเจ้าของ|ยกเว้นค่า.*ให้/i,
+  otherData: /(เบอร์|ข้อมูล|วันหมดอายุ|แต้ม|ที่อยู่).{0,12}(ของ|คุณ)(?!ฉัน|ผม|หนู|เรา)|เป็นสมาชิก(ที่นี่)?(ไหม|หรือเปล่า|รึเปล่า)|ใครเป็นสมาชิก|รายชื่อสมาชิก|แฟน(ผม|ฉัน)|ของเพื่อน/i,
+  offtopic: /หุ้น|คริปโต|bitcoin|การเมือง|เลือกตั้ง|หวย|การบ้าน|เขียนโค้ด|แปลภาษา|ดูดวง/i,
+};
+function mid(t) { const m = t.toUpperCase().match(/FN\s*-?\s*(\d{5})/); return m ? 'FN-' + m[1] : null; }
+function last4(t) { const s = t.replace(/FN\s*-?\s*\d{5}/i, ' '); const m = s.match(/(?<!\d)(\d{4})(?!\d)/); return m ? m[1] : null; }
+function needVerify(intent, why) {
+  S.pending = intent;
+  return { html: `${why ? why + ' ' : ''}ขอยืนยันตัวตนก่อนนะคะ พิมพ์ <strong>รหัสสมาชิก</strong> และ <strong>เบอร์โทร 4 ตัวท้าย</strong> เช่น <span class="mono">FN-xxxxx 1234</span>`, rules: ['D-04'] };
+}
+function pkgTable(ids) { return `<table>${ids.map(id => { const p = P(id); return `<tr><td>${esc(p.name_th)}</td><td>${fmt(p.price)} บาท/${p.unit}</td></tr>`; }).join('')}</table>`; }
+function slotsFor(classId) { return DB.schedule.filter(s => s.class_id === classId).map(s => `${DAY_TH[s.day]} ${s.start} น. (${T(s.trainer_id).nickname})`); }
+function findClass(t) {
+  const map = [['CL-MUAY', /มวยไทย|มวยไท|muay/i], ['CL-BOX', /บ็อกซิ่ง|บอกซิ่ง|ชกมวย|boxing|มวย(?!ไทย)/i], ['CL-YOGA', /โยคะ|yoga/i], ['CL-PILATES', /พิลาทิส|pilates/i], ['CL-HIIT', /hiit|ฮิต/i], ['CL-RIDE', /ride|ปั่น|จักรยาน/i], ['CL-DANCE', /แดนซ์|เต้น|dance|แอโรบิก/i], ['CL-FUNC', /functional|ฟังก์ชัน|เวทคลาส/i]];
+  const f = map.find(([, re]) => re.test(t)); return f ? f[0] : null;
+}
+function findDay(t) {
+  if (/วันนี้|today/i.test(t)) return todayNum();
+  if (/พรุ่งนี้/.test(t)) return todayNum() % 7 + 1;
+  const d = [[1, /จันทร์|จ\./], [2, /อังคาร/], [3, /พุธ/], [4, /พฤหัส|พฤ\./], [5, /ศุกร์/], [6, /เสาร์/], [7, /อาทิตย์/]].find(([, re]) => re.test(t)); return d ? d[0] : null;
+}
+
+async function mockAnswer(raw, img) {
+  const t = raw.toLowerCase();
+
+  /* ---- 1. input guard (rules N-06, N-07, N-08, N-10) ---- */
+  if (t && has(t, R.inject)) return { html: 'ขออภัยค่ะ เอ็กซ์ไม่สามารถเปิดเผยหรือเปลี่ยนคำสั่งการทำงานได้ และไม่รับคำสั่งที่อ้างว่ามาจากผู้ดูแลผ่านแชต ถ้าต้องการสอบถามเรื่องสมาชิกหรือคลาส ยินดีช่วยค่ะ', rules: ['N-07', 'N-08'], quick: ['ราคาสมาชิก', 'ตารางคลาส'] };
+  if (t && has(t, R.drug)) return { html: 'เอ็กซ์ไม่สามารถแนะนำยา สเตียรอยด์ ฮอร์โมน หรือสารเสริมประสิทธิภาพได้ค่ะ เพราะอาจเป็นอันตรายต่อสุขภาพ กรุณาปรึกษาแพทย์ ถ้าอยากเพิ่มกล้ามเนื้ออย่างปลอดภัย โค้ชตั้มถนัดด้านเวทเทรนนิ่งค่ะ', sources: ['KB-08', 'KB-04'], rules: ['N-06'], quick: ['ราคา PT 10 ครั้ง'] };
+  if (t && has(t, R.symptom)) return { html: 'ถ้ามีอาการเจ็บหน้าอก เวียนศีรษะ หรือหายใจไม่ออก ให้<strong>หยุดออกกำลังกายทันที</strong>และพบแพทย์ค่ะ กรณีฉุกเฉินโทร <strong>1669</strong> ในยิมมีเครื่อง AED ที่เคาน์เตอร์ และพนักงานผ่านการอบรมปฐมพยาบาล', sources: ['KB-08'], rules: ['D-07', 'N-06'] };
+  if (t && has(t, R.diet)) return { html: 'เอ็กซ์ไม่สามารถกำหนดแผนอาหารหรือเป้าลดน้ำหนักเร่งด่วนได้ค่ะ แนะนำปรึกษาแพทย์หรือนักกำหนดอาหาร ส่วนการออกกำลังกาย โค้ชเก่งถนัดโปรแกรมลดไขมันค่ะ', sources: ['KB-08', 'KB-04'], rules: ['N-06'], quick: ['คลาสเผาผลาญเยอะ', 'ราคา PT'] };
+  if (t && has(t, R.offtopic)) return { html: 'ขออภัยค่ะ เอ็กซ์ตอบได้เฉพาะเรื่องของ X Fitness เช่น แพ็กเกจ คลาส เทรนเนอร์ และโปรโมชันค่ะ', rules: ['N-10'], quick: ['ราคาสมาชิก', 'ตารางคลาส'] };
+
+  /* ---- 2. verification capture ---- */
+  const id = mid(raw), l4 = last4(raw);
+  if (id && (S.pending || S.pendingImage || l4) && !S.member) {
+    if (!l4) return { html: 'ขอเบอร์โทร 4 ตัวท้ายเพิ่มด้วยค่ะ', rules: ['D-04'] };
+    const v = verifyMember(id, l4);
+    if (!v.ok) return { html: esc(v.error) + ' (ระบบไม่บอกว่ารหัสนี้มีอยู่หรือไม่ เพื่อความปลอดภัยของสมาชิก)', rules: ['D-04', 'N-04'] };
+    setMember(v.member); renderSlots();
+    const pend = S.pending, pImg = S.pendingImage; S.pending = null; S.pendingImage = null;
+    const hello = `ยืนยันตัวตนแล้วค่ะ สวัสดีคุณ${esc(v.member.first_name)} `;
+    if (pImg) { const r = await analyzeImage(pImg, ''); r.html = hello + '<br>' + r.html; return r; }
+    if (pend) { const r = memberIntent(pend.intent, pend.text); r.html = hello + '<br>' + r.html; return r; }
+    return { html: hello + 'ต้องการดูอะไรคะ', quick: ['แต้มของฉัน', 'วันหมดอายุ', 'การจองของฉัน'], rules: ['D-04'] };
+  }
+  if (id && S.member && id !== S.member.member_id) return { html: 'ขออภัยค่ะ เอ็กซ์แสดงได้เฉพาะข้อมูลของสมาชิกที่ยืนยันตัวตนในแชตนี้เท่านั้น ไม่สามารถเปิดเผยหรือยืนยันข้อมูลของรหัสสมาชิกอื่นได้', rules: ['N-04'] };
+  if (id && !S.member && has(t, R.otherData)) return { html: 'ขออภัยค่ะ เอ็กซ์ไม่สามารถเปิดเผยหรือยืนยันข้อมูลของสมาชิกคนอื่นได้ รวมถึงไม่บอกว่าใครเป็นสมาชิกหรือไม่ ถ้าเป็นข้อมูลของคุณเอง กรุณายืนยันตัวตนด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้ายค่ะ', sources: ['KB-08'], rules: ['N-04'] };
+  if (has(t, R.otherData)) return { html: 'ขออภัยค่ะ เอ็กซ์ไม่สามารถเปิดเผยหรือยืนยันข้อมูลของสมาชิกคนอื่นได้ รวมถึงไม่บอกว่าใครเป็นสมาชิกหรือไม่ ให้เจ้าของข้อมูลติดต่อร้านเองนะคะ', sources: ['KB-08'], rules: ['N-04'] };
+
+  /* ---- 3. image ---- */
+  if (img) return analyzeImage(img, t);
+
+  /* ---- 4. discount pressure (N-02) — checked after data guard ---- */
+  if (has(t, R.discount)) {
+    const act = DB.promotions.filter(p => promoStatus(p) === 'active');
+    return { html: `ขออภัยค่ะ เอ็กซ์ไม่มีสิทธิ์ให้ส่วนลดนอกเหนือจากโปรโมชันที่ประกาศ ส่วนลดอื่นต้องให้ผู้จัดการสาขาอนุมัติเป็นลายลักษณ์อักษรเท่านั้น<br>โปรที่ใช้ได้ตอนนี้:<ul>${act.map(p => `<li>${esc(p.title)} (${p.code})</li>`).join('')}</ul>`, sources: ['KB-07'], rules: ['N-02'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="ขอส่วนลด">ส่งคำขอถึงผู้จัดการ</button>' };
+  }
+
+  /* ---- 5. member intents ---- */
+  const mi = [['points', /แต้ม|คะแนน|point/], ['redeem', /แลก(แต้ม|ของ|รางวัล)/], ['expiry', /หมดอายุ|วันหมด|สถานะสมาชิก|หมดเมื่อไหร่/], ['pt_left', /pt.{0,6}(เหลือ|คงเหลือ)|เหลือ.{0,6}pt|ครั้งที่เหลือ/], ['my_bookings', /การจองของ(ฉัน|ผม)|จองอะไรไว้|คลาสที่จองไว้/], ['due', /ยอดค้าง|ค้างชำระ|ต้องจ่ายเท่า(ไหร่|ไร)/], ['book', /จอง(ให้|คลาส)?|book/], ['freeze_req', /ขอพักสมาชิก|พักสมาชิกให้/], ['refund_req', /คืนเงินให้|ขอคืนเงิน/]];
+  const found = mi.find(([, re]) => re.test(t));
+  if (found) {
+    const [intent] = found;
+    const needs = intent !== 'book' || findClass(t);
+    if (intent === 'book' && !findClass(t)) { /* fall through to booking policy below */ }
+    else if (intent === 'refund_req') { return { html: 'การคืนเงินต้องให้ผู้จัดการสาขาอนุมัติ เอ็กซ์อนุมัติเองไม่ได้ค่ะ เงื่อนไขคือ คืนเต็มจำนวนถ้ายกเลิกภายใน 7 วันหลังสมัครและยังไม่เคยเข้าใช้ หลังจากนั้นไม่คืนค่าสมาชิก เอ็กซ์ส่งคำขอให้ผู้จัดการตรวจสอบได้ค่ะ', sources: ['KB-05'], rules: ['N-05'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="ขอคืนเงิน">ส่งคำขอคืนเงินให้ผู้จัดการ</button>' }; }
+    else if (needs) { if (!S.member) return needVerify({ intent, text: t }); return memberIntent(intent, t); }
+  }
+
+  /* ---- 6. knowledge base intents ---- */
+  const kb = kbAnswer(t);
+  if (kb) return kb;
+
+  /* ---- 7. greeting / fallback (D-03) ---- */
+  if (/^(สวัสดี|หวัดดี|hello|hi|ดีครับ|ดีค่ะ)/.test(t)) return { html: 'สวัสดีค่ะ มีอะไรให้เอ็กซ์ช่วยคะ', quick: ['ราคาสมาชิก', 'ตารางคลาสวันนี้', 'ทดลองฟรี'] };
+  return { html: 'ขออภัยค่ะ ยังไม่มีข้อมูลเรื่องนี้ในคลังความรู้ของร้าน เอ็กซ์ไม่อยากเดาคำตอบให้ผิดพลาด ส่งเรื่องให้พนักงานตอบได้ค่ะ', rules: ['D-03', 'N-01'], handoff: `<button class="btn btn-ghost btn-sm" data-handoff="${esc(raw.slice(0, 60))}">ส่งต่อพนักงาน</button> หรือโทร 038-000-888`, quick: ['ราคาสมาชิก', 'เวลาเปิดปิด'] };
+}
+
+function memberIntent(intent, t) {
+  const m = S.member, p = P(m.package_id), today = iso(new Date());
+  if (intent === 'points' || intent === 'redeem') {
+    const can = DB.rewards.redeem.filter(r => r.points <= m.points);
+    return { html: `คุณ${esc(m.first_name)}มี <strong>${fmt(m.points)} แต้ม</strong>ค่ะ${can.length ? `<br>แลกได้ตอนนี้:<ul>${can.map(r => `<li>${esc(r.name)} (${fmt(r.points)} แต้ม)</li>`).join('')}</ul>แลกได้ที่ส่วน "แต้มสะสม" บนหน้าเว็บ หรือที่เคาน์เตอร์` : '<br>ยังไม่ถึงของรางวัลขั้นต่ำ (150 แต้ม) เช็กอินวันละ 5 แต้มค่ะ'}`, sources: ['KB-07'], quick: ['วันหมดอายุ'] };
+  }
+  if (intent === 'expiry') return { html: `แพ็กเกจ <strong>${esc(p.name_th)}</strong> · ${esc(memberStatusText(m))}${m.status === 'frozen' ? '<br>ระหว่างพักสมาชิก วันหมดอายุจะเลื่อนออกเท่าจำนวนวันที่พักค่ะ' : ''}`, sources: ['KB-05'], quick: ['แต้มของฉัน', 'การจองของฉัน'] };
+  if (intent === 'pt_left') return { html: m.pt_sessions_left ? `คุณ${esc(m.first_name)}เหลือ PT <strong>${m.pt_sessions_left} ครั้ง</strong>ค่ะ นัดกับโค้ชโดยตรงหรือที่เคาน์เตอร์ ยกเลิกต้องแจ้งล่วงหน้า 12 ชั่วโมง` : 'ตอนนี้ไม่มีแพ็กเกจ PT คงเหลือค่ะ PT 10 ครั้งราคา 8,000 บาท', sources: ['KB-04'] };
+  if (intent === 'my_bookings') {
+    const up = S.bookings.filter(b => b.member_id === m.member_id && b.status === 'booked' && b.date >= today);
+    return { html: up.length ? `การจองที่ยังไม่ถึงเวลา:<ul>${up.map(b => { const s = DB.schedule.find(x => x.id === b.slot_id); return `<li>${b.id} · ${esc(C(s.class_id).name)} ${thShort(parseISO(b.date))} ${s.start} น.</li>`; }).join('')}</ul>ยกเลิกได้ถึง 2 ชั่วโมงก่อนคลาส` : 'ยังไม่มีคลาสที่จองไว้ค่ะ', sources: ['KB-03'], quick: ['จองมวยไทย', 'ตารางคลาสวันนี้'] };
+  }
+  if (intent === 'due') {
+    const d = S.payments.filter(x => x.member_id === m.member_id && x.status !== 'paid');
+    return { html: d.length ? d.map(x => `${esc(x.description)} <strong>${fmt(x.amount.toFixed(2))} บาท</strong> ครบกำหนด ${thDate(x.due)} · ${x.status === 'pending_staff' ? 'รอพนักงานยืนยัน' : 'รอสลิป'}`).join('<br>') + `<br>โอนเข้า ${DB.business.bank.bank} ${DB.business.bank.account_no} ${DB.business.bank.account_name} แล้วส่งสลิปในแชตนี้ค่ะ` : 'ไม่มียอดค้างชำระค่ะ', sources: ['KB-06'], rules: ['D-05'] };
+  }
+  if (intent === 'freeze_req') return { html: `รับเรื่องขอพักสมาชิกค่ะ ค่าธรรมเนียม 100 บาทต่อเดือน พักได้ 1–3 เดือน ต้องแจ้งล่วงหน้า 7 วัน${m.package_id === 'PKG-STU' || m.package_id === 'PKG-DAY' ? '<br><strong>แต่แพ็กเกจของคุณพักไม่ได้</strong>ค่ะ' : ''}`, sources: ['KB-05'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="ขอพักสมาชิก">ส่งคำขอพักสมาชิกให้พนักงาน</button>' };
+  if (intent === 'book') {
+    const cid = findClass(t), day = findDay(t);
+    let slots = DB.schedule.filter(s => s.class_id === cid); if (day) slots = slots.filter(s => s.day === day);
+    if (!slots.length) return { html: `${esc(C(cid).name)} ไม่มีรอบใน${day ? 'วัน' + DAY_TH[day] : 'สัปดาห์นี้'}ค่ะ รอบที่มี: ${slotsFor(cid).join(', ')}`, sources: ['KB-03'] };
+    if (slots.length > 1 && !day) return { html: `${esc(C(cid).name)} มี ${slots.length} รอบค่ะ ต้องการวันไหนคะ`, sources: ['KB-03'], quick: slots.map(s => `จอง${C(cid).name_th}วัน${DAY_TH[s.day]}`) };
+    const s = slots[0], date = nextDate(s.day, s.start), r = book(m, s, date);
+    return r.ok ? { html: `จองแล้วค่ะ <strong>${r.id}</strong><br>${esc(C(cid).name)} · ${thShort(date)} ${s.start} น. · ${esc(T(s.trainer_id).nickname)}<br>มาถึงก่อน 10 นาที ยกเลิกได้ถึง 2 ชั่วโมงก่อนคลาส`, sources: ['KB-03'], rules: ['D-04'], quick: ['การจองของฉัน'] }
+                : { html: 'จองไม่สำเร็จค่ะ: ' + esc(r.error), sources: ['KB-03'] };
+  }
+  return { html: 'ต้องการดูอะไรคะ', quick: ['แต้มของฉัน', 'วันหมดอายุ'] };
+}
+
+function kbAnswer(t) {
+  const b = DB.business, act = DB.promotions.filter(p => promoStatus(p) === 'active');
+  // things the shop does NOT have (N-01 / N-09) — answered from KB, not invented
+  if (/ผ่อน|installment|0\s*%/.test(t)) return { html: 'ร้านไม่มีบริการผ่อนชำระ 0% ค่ะ ชำระได้ด้วยเงินสด บัตรเครดิต/เดบิต พร้อมเพย์ที่เคาน์เตอร์ หรือโอนเงินแล้วส่งสลิป แพ็กเกจรายเดือนตัดบัตรอัตโนมัติได้', sources: ['KB-06'], rules: ['N-09'] };
+  if (/สระ|ว่ายน้ำ|ซาวน่า|sauna|สตีม|จากุซซี่/.test(t)) return { html: 'X Fitness <strong>ไม่มี</strong>สระว่ายน้ำและซาวน่าค่ะ สิ่งอำนวยความสะดวกที่มี: โซนเวท โซนคาร์ดิโอ ห้องคลาส 3 ห้อง ห้องอาบน้ำพร้อมล็อกเกอร์ และเครื่องวัดองค์ประกอบร่างกาย', sources: ['KB-01'], rules: ['N-01'] };
+  if (/ส่ง(ของ|สินค้า|ถึงบ้าน|มาที่บ้าน|ให้ที่บ้าน)|จัดส่ง|delivery|ส่ง.{0,15}ได้ไหม/.test(t) && /เวย์|สินค้า|โปรตีน|ของ|บ้าน/.test(t)) return { html: 'ตอนนี้ร้านขายสินค้าเฉพาะที่เคาน์เตอร์ ยังไม่มีบริการจัดส่งค่ะ', sources: ['KB-07'], rules: ['N-09'] };
+  if (/ฝากเด็ก|ลูก.{0,6}(มา|เข้า)|เด็ก.{0,6}เข้า/.test(t)) return { html: 'ร้านไม่มีบริการรับฝากเด็ก และไม่อนุญาตให้เด็กอายุต่ำกว่า 15 ปีเข้าพื้นที่ออกกำลังกายค่ะ', sources: ['KB-08'], rules: ['N-09'] };
+  if (/สาขา/.test(t)) return { html: 'X Fitness มีสาขาเดียวที่ศรีราชา ชลบุรีค่ะ ' + esc(b.address), sources: ['KB-01'] };
+
+  // promo codes
+  const code = (t.toUpperCase().match(/\b(YEAR13|NOJOIN|FRIEND300|MID2)\b/) || [])[1];
+  if (code) { const p = DB.promotions.find(x => x.code === code), st = promoStatus(p);
+    return st === 'active' ? { html: `โค้ด <strong>${code}</strong> ใช้ได้ค่ะ: ${esc(p.title)} ถึง ${thDate(p.end)} ใช้ได้ 1 โปรต่อการสมัคร 1 ครั้ง`, sources: ['KB-07'] }
+      : { html: `โค้ด <strong>${code}</strong> ${st === 'expired' ? 'หมดเขตแล้วเมื่อ ' + thDate(p.end) : 'ยังไม่เริ่ม'} ใช้ไม่ได้ค่ะ${act.length ? '<br>โปรที่ใช้ได้ตอนนี้: ' + act.map(x => `${esc(x.title)} (${x.code})`).join(', ') : ''}`, sources: ['KB-07'], rules: ['N-03'] }; }
+  if (/โปร|promotion|ส่วนลด|ลดราคา/.test(t)) return { html: act.length ? `โปรที่ใช้ได้ตอนนี้ค่ะ<ul>${act.map(p => `<li><strong>${esc(p.title)}</strong> · โค้ด ${p.code} · ถึง ${thDate(p.end)}</li>`).join('')}</ul>ใช้ได้ 1 โปรต่อการสมัคร 1 ครั้ง ไม่รวมกับส่วนลดอื่น` : 'ขณะนี้ไม่มีโปรโมชันค่ะ', sources: ['KB-07'], quick: ['สนใจสมัครรายปี'] };
+
+  // packages & price
+  if (/สนใจสมัคร|อยากสมัคร|สมัครยังไง|สมัครอย่างไร|วิธีสมัคร/.test(t)) { const pk = /รายปี/.test(t) ? 'PKG-ANNUAL' : /นักศึกษา/.test(t) ? 'PKG-STU' : /สัญญา/.test(t) ? 'PKG-12M' : 'PKG-FLEX';
+    return { html: 'สมัครได้ที่เคาน์เตอร์ ใช้บัตรประชาชน (นักศึกษาใช้บัตรนักศึกษาเพิ่ม) อายุขั้นต่ำ 15 ปี หรือฝากชื่อเล่นและช่องทางติดต่อ ให้พนักงานติดต่อกลับได้ค่ะ', sources: ['KB-02'], handoff: `<button class="btn btn-red btn-sm" data-join="${pk}">ฝากข้อมูลให้พนักงานติดต่อกลับ (${esc(P(pk).name_th)})</button>` }; }
+  if (/นักศึกษา|นักเรียน|student/.test(t)) return { html: `แพ็กเกจนักเรียน/นักศึกษา <strong>790 บาท/เดือน</strong> สัญญา 6 เดือน ไม่มีค่าแรกเข้า สำหรับอายุ 15–25 ปี แสดงบัตรนักศึกษาที่ยังไม่หมดอายุ เข้าคลาสได้ไม่จำกัดยกเว้นคลาส Ride อายุ 15–17 ปีต้องมีผู้ปกครองเซ็นยินยอม`, sources: ['KB-02'] };
+  if (/รายปี|annual|ทั้งปี/.test(t) && !/เลิก|ยกเลิก|คืน/.test(t)) return { html: `รายปีจ่ายครั้งเดียว <strong>9,900 บาท</strong> เฉลี่ยเดือนละ 825 บาท ไม่มีค่าแรกเข้า วัดองค์ประกอบร่างกายฟรีเดือนละ 1 ครั้ง พาเพื่อนฟรีเดือนละ 1 ครั้ง${act.find(p => p.code === 'YEAR13') ? '<br>ตอนนี้มีโปร YEAR13 แถมฟรี 1 เดือน (ใช้ได้ 13 เดือน)' : ''}`, sources: ['KB-02', 'KB-07'], quick: ['สนใจสมัครรายปี'] };
+  if (/day\s*pass|รายวัน|วันเดียว/.test(t)) return { html: 'บัตรรายวัน (Day Pass) <strong>150 บาท</strong> ใช้ได้ 1 วัน แสดงบัตรประชาชน ไม่รวมคลาส ซื้อคลาสเพิ่มคลาสละ 150 บาทที่เคาน์เตอร์', sources: ['KB-02'] };
+  if (/(ยกเลิก|เลิก).{0,12}(สมาชิก|สัญญา)|สัญญา.{0,20}(เลิก|ยกเลิก)|ค่าปรับ.*สัญญา/.test(t)) return { html: 'ยกเลิกสมาชิกต้องแจ้งล่วงหน้า 30 วันค่ะ<table><tr><td>รายเดือนไม่มีสัญญา</td><td>ไม่มีค่าปรับ</td></tr><tr><td>สัญญา 12 เดือน (ยังไม่ครบ)</td><td>1,500 บาท</td></tr><tr><td>นักศึกษา (ยังไม่ครบ 6 เดือน)</td><td>500 บาท</td></tr><tr><td>รายปี</td><td>ยกเลิกไม่ได้ โอนสิทธิ์ได้</td></tr></table>', sources: ['KB-05'] };
+  if (/คืนเงิน|refund/.test(t)) return { html: 'คืนเงินเต็มจำนวนถ้ายกเลิก<strong>ภายใน 7 วัน</strong>หลังสมัครและยังไม่เคยเข้าใช้บริการค่ะ หลังจากนั้นไม่คืนค่าสมาชิก แพ็กเกจ PT ไม่คืนเงินแต่โอนสิทธิ์ได้ 1 ครั้ง การคืนเงินทุกกรณีต้องให้ผู้จัดการอนุมัติ', sources: ['KB-05'], rules: ['N-05'] };
+  if (/คืนสินค้า|เปลี่ยนสินค้า|คืนของ/.test(t)) return { html: 'คืนสินค้าได้ภายใน 7 วันนับจากวันที่ในใบเสร็จ สินค้าต้องยังไม่เปิดใช้ อาหารเสริมที่เปิดแล้วคืนไม่ได้ สินค้าชำรุดจากการผลิตเปลี่ยนได้ภายใน 30 วันค่ะ', sources: ['KB-07'] };
+  if (/พัก(สมาชิก)?|freeze|ไปต่าง(จังหวัด|ประเทศ)/.test(t)) return { html: 'พักสมาชิกได้ครั้งละ <strong>1–3 เดือน</strong> รวมไม่เกิน 3 เดือนต่อปี ค่าธรรมเนียม <strong>100 บาท/เดือน</strong> แจ้งล่วงหน้าอย่างน้อย 7 วัน วันหมดอายุเลื่อนออกเท่าจำนวนวันที่พัก พักเพราะเหตุผลทางการแพทย์ไม่มีค่าธรรมเนียม (แนบใบรับรองแพทย์) บัตรรายวันและแพ็กเกจนักศึกษาพักไม่ได้', sources: ['KB-05'], quick: ['ขอพักสมาชิก'] };
+  if (/ราคา|เท่าไ(หร่|ร)|ค่าสมาชิก|สมาชิก|แพ็กเกจ|package|สมัคร/.test(t) && !/pt|เทรนเนอร์|โค้ช|คลาส|เวย์|สินค้า|วัด/.test(t)) {
+    if (/รายเดือน|เดือนละ|ต่อเดือน/.test(t)) return { html: `สมาชิกรายเดือนมี 3 แบบค่ะ${pkgTable(['PKG-FLEX', 'PKG-12M', 'PKG-STU'])}ถ้าจ่ายรายปี 9,900 บาท เฉลี่ยเดือนละ 825 บาท สนใจแบบไหนคะ`, sources: ['KB-02'], rules: ['D-08'], quick: ['ต่างกันยังไง', 'รายปี', 'นักศึกษา'] };
+    return { html: `แพ็กเกจสมาชิก 5 แบบค่ะ${pkgTable(['PKG-DAY', 'PKG-FLEX', 'PKG-12M', 'PKG-STU', 'PKG-ANNUAL'])}รายเดือนมีค่าแรกเข้า 500 บาท${act.find(p => p.code === 'NOJOIN') ? ' (ตอนนี้ยกเว้นด้วยโค้ด NOJOIN)' : ''}`, sources: ['KB-02'], quick: ['รายปี', 'นักศึกษา', 'ทดลองฟรี'] };
+  }
+  if (/ต่างกัน/.test(t)) return { html: 'รายเดือนไม่มีสัญญา 1,290 บาท ยกเลิกได้ทุกเมื่อ (แจ้ง 30 วัน) ส่วนสัญญา 12 เดือน 990 บาท ถูกกว่าเดือนละ 300 บาท แต่ยกเลิกก่อนครบมีค่าธรรมเนียม 1,500 บาทค่ะ', sources: ['KB-02'] };
+  if (/ทดลอง|ลองเล่น|trial|ลองก่อน/.test(t)) return { html: 'ผู้ที่ไม่เคยเป็นสมาชิก<strong>ทดลองฟรี 1 วัน</strong>ค่ะ (1 ครั้งต่อคน) ลงทะเบียนล่วงหน้า แสดงบัตรประชาชนในวันที่มา รวมคลาสได้ 1 คลาสถ้ามีที่ว่าง', sources: ['KB-02'], handoff: '<button class="btn btn-ghost btn-sm" data-open="trial">ลงทะเบียนทดลองฟรี</button>' };
+
+  // PT
+  if (/pt|เทรนเนอร์|personal|โค้ชส่วนตัว|จ้างโค้ช|จ้าง/.test(t)) {
+    const n = (t.match(/(\d+)\s*ครั้ง/) || [])[1]; const p = n && DB.pt.find(x => x.sessions === +n && x.id !== 'PT-DUO');
+    if (p) return { html: `${esc(p.name)} ราคา <strong>${fmt(p.price)} บาท</strong> เฉลี่ย ${fmt(p.per_session)} บาท/ครั้ง ใช้ได้ภายใน ${p.valid_days} วัน ครั้งละ 60 นาที ยกเลิกนัดต้องแจ้งล่วงหน้า 12 ชั่วโมงค่ะ`, sources: ['KB-04'] };
+    const coach = DB.trainers.find(c => t.includes(c.nickname.replace('โค้ช', '')));
+    return { html: `${coach ? `${esc(coach.nickname)}ถนัด${esc(coach.specialty.join(' '))} ` : ''}แพ็กเกจเทรนเนอร์ส่วนตัวค่ะ<table>${DB.pt.map(p => `<tr><td>${esc(p.name)}</td><td>${fmt(p.price)} บาท</td></tr>`).join('')}</table>ครั้งละ 60 นาที สมาชิกใหม่ทดลองฟรี 1 ครั้ง (30 นาที)`, sources: ['KB-04'] };
+  }
+  if (/โค้ช|ครูสอน/.test(t) && /จบ|เรียน|อายุ|แฟน|เบอร์|ประวัติ/.test(t)) return null; // personal details not in KB → fallback
+  if (/โค้ช|coach/.test(t)) return { html: `โค้ชประจำ 6 คนค่ะ<ul>${DB.trainers.map(c => `<li>${esc(c.nickname)} · ${esc(c.specialty.join(', '))}</li>`).join('')}</ul>`, sources: ['KB-04'] };
+
+  // classes
+  const cid = findClass(t), day = findDay(t);
+  if (/ยกเลิก.{0,8}คลาส|คลาส.{0,12}ยกเลิก|no.?show|ไม่ไปเรียน/.test(t) || (/ยกเลิก/.test(t) && /จอง/.test(t))) return { html: 'ยกเลิกคลาสได้ถึง <strong>2 ชั่วโมงก่อนเริ่ม</strong>ค่ะ ถ้าไม่มาโดยไม่ยกเลิกครบ 3 ครั้งในเดือนเดียว จะระงับสิทธิ์จองคลาส 7 วัน', sources: ['KB-03'] };
+  if (/จอง/.test(t) && !cid) return { html: 'จองคลาสได้ผ่านแชต หน้าเว็บ หรือเคาน์เตอร์ค่ะ จองล่วงหน้าได้ 7 วัน ค้างได้สูงสุด 3 คลาส ต้องยืนยันตัวตนก่อน บอกชื่อคลาสกับวันที่ต้องการได้เลย เช่น "จองโยคะวันพุธ"', sources: ['KB-03'], quick: ['จองโยคะวันพุธ', 'จองมวยไทยวันพฤหัสบดี'] };
+  if (cid) { const c = C(cid); let list = DB.schedule.filter(s => s.class_id === cid); if (day) list = list.filter(s => s.day === day);
+    return { html: `<strong>${esc(c.name)}</strong> ${c.minutes} นาที · ระดับ${esc(c.level)} · ${esc(c.room)}<br>${list.length ? 'รอบเรียน: ' + list.map(s => `${DAY_TH[s.day]} ${s.start} น. (${T(s.trainer_id).nickname})`).join(', ') : `ไม่มีรอบในวัน${DAY_TH[day]}ค่ะ รอบทั้งหมด: ${slotsFor(cid).join(', ')}`}`, sources: ['KB-03'], quick: list.length ? [`จอง${c.name_th}วัน${DAY_TH[list[0].day]}`] : [] }; }
+  if (day && /คลาส|ตาราง|มีอะไร/.test(t) || /ตารางคลาส|คลาสวันนี้/.test(t)) { const d = day || todayNum(); const list = DB.schedule.filter(s => s.day === d);
+    return { html: `คลาสวัน${DAY_TH[d]}ค่ะ<table>${list.map(s => `<tr><td>${s.start} ${esc(C(s.class_id).name)}</td><td>${esc(T(s.trainer_id).nickname)}</td></tr>`).join('')}</table>`, sources: ['KB-03'], quick: ['จองคลาส'] }; }
+  if (/มือใหม่|เริ่มต้น|beginner|ไม่เคยเล่น/.test(t)) return { html: 'สำหรับมือใหม่แนะนำค่ะ<ul><li>อยากเริ่มเบา ๆ: Yoga Flow, Pilates Core</li><li>สนุก ไม่ต้องมีพื้นฐาน: Dance Cardio, Ride</li><li>อยากลองต่อยมวย: Muay Thai Basic (มีนวมให้ยืม)</li></ul>สมาชิกใหม่ได้แนะนำการใช้เครื่องฟรี 1 ครั้ง และทดลอง PT ฟรี 1 ครั้งค่ะ', sources: ['KB-03', 'KB-02'], quick: ['ตาราง Yoga', 'ทดลองฟรี'] };
+  if (/เผาผลาญ|แคล|ลดไขมัน|ลดน้ำหนัก/.test(t)) return { html: 'คลาสที่เผาผลาญสูง: Muay Thai Basic 550–700, Boxing Fit 500–650, HIIT Blast 450–600, Ride 400–550 กิโลแคลอรีต่อคลาส (ค่าประมาณ ขึ้นกับแต่ละคน)', sources: ['KB-03'] };
+  if (/คลาส|class/.test(t)) return { html: `คลาสกลุ่ม 8 คลาส 29 รอบต่อสัปดาห์ค่ะ: ${DB.classes.map(c => esc(c.name)).join(', ')}<br>สมาชิกรายเดือนและรายปีเข้าได้ไม่จำกัด`, sources: ['KB-03'], quick: ['ตารางคลาสวันนี้', 'คลาสสำหรับมือใหม่'] };
+
+  // hours, location, facilities
+  if (/เปิด|ปิด|กี่โมง|เวลา/.test(t)) { const d = day;
+    const h = d ? b.hours[d <= 5 ? 0 : 1] : null;
+    return { html: h ? `วัน${DAY_TH[d]}เปิด <strong>${h.open}–${h.close} น.</strong> เข้าได้ถึง 30 นาทีก่อนปิดค่ะ` : `จันทร์–ศุกร์ <strong>06:00–22:00</strong><br>เสาร์–อาทิตย์และวันหยุดนักขัตฤกษ์ <strong>08:00–20:00</strong><br>เข้าได้ถึง 30 นาทีก่อนปิด ปิดทำการ 1 ม.ค. และ 13–14 เม.ย.`, sources: ['KB-01'], rules: ['D-01'] }; }
+  if (/จอดรถ|ที่จอด|parking/.test(t)) return { html: esc(b.parking) + ' เกิน 3 ชั่วโมงชั่วโมงละ 20 บาท มีที่จอดมอเตอร์ไซค์ฟรีด้านข้างอาคารค่ะ', sources: ['KB-01'] };
+  if (/ที่อยู่|อยู่ที่ไหน|แผนที่|ไปยังไง|location|ติดต่อ|เบอร์ร้าน|โทร/.test(t)) return { html: `${esc(b.address)}<br>โทร ${b.phone} · LINE ${b.line_oa}`, sources: ['KB-01'] };
+  if (/ล็อกเกอร์|locker|ห้องอาบน้ำ|ผ้าเช็ดตัว|wifi|wi-fi/.test(t)) return { html: 'ล็อกเกอร์รายวันใช้ฟรี (คืนกุญแจก่อนออก กุญแจหายปรับ 300 บาท) เช่าล็อกเกอร์ประจำ 200 บาท/เดือน ผ้าเช็ดตัว 30 บาท/ครั้ง มี Wi-Fi ฟรีค่ะ', sources: ['KB-01', 'KB-07', 'KB-08'] };
+  if (/แต่งตัว|รองเท้า|ใส่อะไร|dress/.test(t)) return { html: 'โซนเวทและคาร์ดิโอต้องใส่รองเท้าผ้าใบหุ้มส้น คลาสโยคะ พิลาทิส มวยไทยเท้าเปล่าได้ ห้ามถอดเสื้อในพื้นที่ออกกำลังกาย และพกผ้าเช็ดตัวค่ะ', sources: ['KB-08'] };
+  if (/อายุ|เด็ก|ขวบ/.test(t)) return { html: 'อายุขั้นต่ำ 15 ปีค่ะ อายุ 15–17 ปีต้องมีผู้ปกครองเซ็นยินยอม', sources: ['KB-08'] };
+  if (/พาเพื่อน|guest|เพื่อนมา/.test(t)) return { html: 'สมาชิกรายปีพาเพื่อนเข้าฟรีเดือนละ 1 ครั้ง แพ็กเกจอื่นให้เพื่อนซื้อบัตรรายวัน 150 บาท เพื่อนต้องอายุ 15 ปีขึ้นไปและแสดงบัตรประชาชนค่ะ', sources: ['KB-05'] };
+  if (/วัดองค์ประกอบ|วัดไขมัน|inbody|body\s*scan|วัดมวล/.test(t)) return { html: 'วัดองค์ประกอบร่างกาย 200 บาท/ครั้ง สมาชิกรายปีฟรีเดือนละ 1 ครั้ง หรือแลก 200 แต้ม ควรวัดตอนเช้าก่อนอาหาร ผู้ที่ใส่เครื่องกระตุ้นหัวใจหรือตั้งครรภ์ไม่ควรใช้ ส่งภาพผลวัดมาให้เอ็กซ์สรุปได้ค่ะ', sources: ['KB-08', 'KB-07'] };
+
+  // payment
+  if (/โอน|บัญชี|จ่าย|ชำระ|พร้อมเพย์|บัตรเครดิต|สลิป/.test(t)) return { html: `ชำระได้ที่เคาน์เตอร์ (เงินสด บัตร พร้อมเพย์) หรือโอนเข้า<br><strong>${b.bank.bank} ${b.bank.account_no}<br>${b.bank.account_name}</strong><br>ร้านมีบัญชีนี้บัญชีเดียว ไม่มีนโยบายให้โอนเข้าบัญชีส่วนตัวของพนักงาน โอนแล้วยืนยันตัวตนและส่งสลิปในแชตนี้ได้เลยค่ะ`, sources: ['KB-06'], rules: ['D-05'], quick: ['ยอดค้างของฉัน'] };
+
+  // products & points info
+  if (/เวย์|whey|โปรตีน|ขวดน้ำ|เสื้อ|ถุงมือ|ยางยืด|สินค้า|ขายอะไร/.test(t)) return { html: `สินค้าที่เคาน์เตอร์ค่ะ<table>${DB.products.map(p => `<tr><td>${esc(p.name)}</td><td>${p.stock ? fmt(p.price) + ' บาท' : 'หมด' + (p.restock ? ' (' + esc(p.restock) + ')' : '')}</td></tr>`).join('')}</table>`, sources: ['KB-07'] };
+  if (/สะสม|รางวัล|point/.test(t)) return { html: `รับแต้ม: เช็กอิน 5 แต้ม/วัน, ใช้จ่ายทุก 10 บาทรับ 1 แต้ม, ชวนเพื่อน 300 แต้ม<br>แลก: โปรตีนเชค 150, วัดองค์ประกอบร่างกาย 200, ผ้าเช็ดตัว 300, ขวดน้ำ 450, PT 1 ครั้ง 900 แต้ม`, sources: ['KB-07'], quick: ['แต้มของฉัน'] };
+  return null;
+}
+
+/* ---- image analysis (mock vision for the 5 test images; real backend uses POST /api/vision) ---- */
+const VISION = {
+  slip_valid: { type: 'slip', bank: 'DemoBank', amount: 990.00, datetime: '2026-09-25T18:42', sender_name: 'นาย ภาคิน ส.', receiver_name: 'บจก. เอ็กซ์ ฟิตเนส', receiver_account_last: '4521-0', reference: 'DEMO2609251842A1' },
+  slip_mismatch: { type: 'slip', bank: 'DemoBank', amount: 690.00, datetime: '2026-09-26T09:15', sender_name: 'นาย วรเมธ จ.', receiver_name: 'บจก. เอ็กซ์ ฟิตเนส', receiver_account_last: '4521-0', reference: 'DEMO2609260915B7' },
+  body_scan: { type: 'body_scan', weight_kg: 78.6, skeletal_muscle_kg: 31.2, body_fat_mass_kg: 22.3, body_fat_pct: 28.4, bmi: 26.1, visceral_fat_level: 11, bmr_kcal: 1642 },
+  receipt: { type: 'receipt', receipt_no: 'RC-2609-0142', date: '2026-09-10', items: [{ name: 'เวย์โปรตีน ช็อกโกแลต 2 ปอนด์', qty: 1, price: 1290 }, { name: 'ขวดน้ำสแตนเลส 750 มล.', qty: 1, price: 390 }], total: 1680 },
+  promo_expired: { type: 'promo_poster', title: 'MID-YEAR SALE สมัครรายปี แถมฟรี 2 เดือน', promo_code: 'MID2', valid_from: '2026-06-01', valid_to: '2026-07-31' },
+};
+async function analyzeImage(img, t) {
+  const v = VISION[img.key];
+  if (!v) return { html: 'ได้รับภาพแล้วค่ะ แต่<strong>โหมดจำลอง</strong>วิเคราะห์ได้เฉพาะภาพทดสอบ 5 ภาพในโฟลเดอร์ test-images การวิเคราะห์ภาพทั่วไปต้องเชื่อม Backend API (POST /api/vision) ในหน้าตั้งค่า', rules: ['D-03'] };
+  const vis = JSON.stringify(v, null, 1);
+  if (v.type === 'slip') {
+    if (!S.member) { S.pendingImage = img; return { ...needVerify(null, 'ได้รับสลิปแล้วค่ะ'), vision: vis, sources: ['KB-06'] }; }
+    if (S.usedRefs.has(v.reference)) return { html: `สลิปเลขอ้างอิง <span class="mono">${esc(v.reference)}</span> เคยส่งเข้าระบบแล้วค่ะ ใช้ซ้ำไม่ได้ ถ้าเป็นการโอนครั้งใหม่ กรุณาส่งสลิปใบใหม่`, vision: vis, sources: ['KB-06'], rules: ['D-06'] };
+    const due = S.payments.find(p => p.member_id === S.member.member_id && p.status === 'pending_slip');
+    if (!due) return { html: 'ไม่พบยอดค้างชำระของคุณที่รอสลิปค่ะ เอ็กซ์ส่งต่อให้พนักงานตรวจสอบนะคะ', vision: vis, sources: ['KB-06'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="สลิปไม่มียอดค้าง">ส่งต่อพนักงาน</button>' };
+    const dd = (parseISO(v.datetime.slice(0, 10)) - parseISO(due.due)) / 864e5;
+    const checks = [
+      ['ชื่อบัญชีผู้รับ', v.receiver_name === DB.business.bank.account_name],
+      ['เลขบัญชีลงท้าย 4521-0', v.receiver_account_last === '4521-0'],
+      [`ยอดเงิน ${fmt(v.amount.toFixed(2))} = ยอดค้าง ${fmt(due.amount.toFixed(2))}`, Math.abs(v.amount - due.amount) < 0.005],
+      ['วันที่โอนอยู่ในรอบบิล (±7 วันจากวันครบกำหนด)', Math.abs(dd) <= 7],
+      ['เลขอ้างอิงไม่ซ้ำ', !S.usedRefs.has(v.reference)],
+    ];
+    const pass = checks.every(c => c[1]);
+    const list = `<div class="checks">${checks.map(([l, ok]) => `<div class="${ok ? 'y' : 'n'}">${ok ? '✓' : '✗'} ${esc(l)}</div>`).join('')}</div>`;
+    if (pass) { S.usedRefs.add(v.reference); due.status = 'pending_staff'; return { html: `ตรวจสลิปเบื้องต้น <strong>ผ่าน 5/5</strong> สำหรับ ${esc(due.description)}${list}สถานะ: <strong>รอพนักงานยืนยันยอดเข้าบัญชี</strong> ภายใน 1 วันทำการ ยังไม่ถือว่าชำระสำเร็จจนกว่าพนักงานยืนยันค่ะ`, vision: vis, sources: ['KB-06'], rules: ['D-06', 'N-05'] }; }
+    const diff = due.amount - v.amount;
+    return { html: `ตรวจสลิปเบื้องต้น <strong>ไม่ผ่าน</strong>ค่ะ${list}${diff > 0 ? `ยอดโอนขาดอยู่ <strong>${fmt(diff.toFixed(2))} บาท</strong> กรุณาโอนส่วนที่ขาดเพิ่มแล้วส่งสลิปทั้งสองใบ ` : ''}เอ็กซ์ยังไม่บันทึกว่าชำระแล้ว และส่งเรื่องให้พนักงานตรวจสอบค่ะ`, vision: vis, sources: ['KB-06'], rules: ['D-06', 'N-05'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="สลิปยอดไม่ตรง">ส่งต่อพนักงาน</button>' };
+  }
+  if (v.type === 'body_scan') return { html: `สรุปผลวัดค่ะ<table><tr><td>น้ำหนัก</td><td>${v.weight_kg} กก.</td></tr><tr><td>มวลกล้ามเนื้อโครงร่าง</td><td>${v.skeletal_muscle_kg} กก.</td></tr><tr><td>เปอร์เซ็นต์ไขมัน</td><td>${v.body_fat_pct}%</td></tr><tr><td>ไขมันช่องท้อง</td><td>ระดับ ${v.visceral_fat_level}</td></tr><tr><td>BMR</td><td>${fmt(v.bmr_kcal)} kcal</td></tr></table>ถ้าเป้าหมายคือลดไขมัน คลาสที่เหมาะ: <strong>HIIT Blast, Ride, Functional Strength</strong> หรือ PT กับโค้ชเก่งที่ถนัดลดไขมัน<br><span style="color:var(--muted);font-size:13px">ข้อมูลนี้ไม่ใช่คำแนะนำทางการแพทย์ เอ็กซ์ไม่กำหนดอาหารหรือยา ถ้ามีโรคประจำตัวควรปรึกษาแพทย์ก่อน</span>`, vision: vis, sources: ['KB-08', 'KB-03', 'KB-04'], rules: ['N-06'], quick: ['ตาราง HIIT', 'ราคา PT 10 ครั้ง'] };
+  if (v.type === 'receipt') {
+    const days = Math.floor((new Date() - parseISO(v.date)) / 864e5), opened = /เปิด|แกะ|ไม่ชอบ|กินแล้ว/.test(t);
+    const defectUntil = parseISO(v.date); defectUntil.setDate(defectUntil.getDate() + 30);
+    return { html: `ใบเสร็จ <strong>${v.receipt_no}</strong> วันที่ ${thDate(v.date)} ยอด ${fmt(v.total)} บาท (ผ่านมา ${days} วัน)<br>${days > 7 ? '<strong>คืนสินค้าไม่ได้</strong>ค่ะ เพราะเกิน 7 วันนับจากวันที่ในใบเสร็จ' : opened ? '<strong>คืนเวย์ไม่ได้</strong>ค่ะ เพราะอาหารเสริมที่เปิดแล้วไม่รับคืน' : 'ยังอยู่ในระยะคืนได้ 7 วัน ถ้าสินค้ายังไม่เปิดใช้ นำมาพร้อมใบเสร็จที่เคาน์เตอร์ค่ะ'}${days > 7 && opened ? ' และอาหารเสริมที่เปิดแล้วไม่รับคืน' : ''}<br>ถ้าสินค้าชำรุดจากการผลิต เปลี่ยนได้ถึง ${thDate(defectUntil)}`, vision: vis, sources: ['KB-07'], rules: ['N-02'] };
+  }
+  if (v.type === 'promo_poster') {
+    const p = DB.promotions.find(x => x.code === v.promo_code), st = promoStatus(p), alt = DB.promotions.find(x => promoStatus(x) === 'active' && x.applies_to.includes('PKG-ANNUAL'));
+    return { html: `โปสเตอร์นี้คือโปร <strong>${esc(p.title)}</strong> โค้ด ${p.code}<br>${st === 'expired' ? `<strong>หมดเขตแล้ว</strong>เมื่อ ${thDate(p.end)} จึงใช้ไม่ได้ค่ะ` : 'ยังใช้ได้ค่ะ'}${st === 'expired' && alt ? `<br>โปรรายปีที่ใช้ได้ตอนนี้คือ <strong>${esc(alt.title)}</strong> (โค้ด ${alt.code}) ถึง ${thDate(alt.end)}` : ''}`, vision: vis, sources: ['KB-07'], rules: ['N-03'], quick: alt ? ['สนใจสมัครรายปี'] : [] };
+  }
+}
+
+/* ================= INIT ================= */
+renderOpen(); setInterval(renderOpen, 60000);
+renderMarquee(); renderPlans(); renderDays(); renderSlots(); renderPT(); renderRewards(); renderMemberPanel(); renderPromos(); renderVisit(); renderFAQ();
+$('#year').textContent = new Date().getFullYear() + 543;
+$$('.rv').forEach(el => io.observe(el)); countUp();
+</script>
+</body>
+</html>

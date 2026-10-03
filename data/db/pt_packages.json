@@ -1,0 +1,43 @@
+{
+  "_note": "ข้อมูลจำลองทั้งหมดเพื่อใช้ในรายวิชา 06048308 ไม่ใช่ข้อมูลของบุคคลหรือธุรกิจจริง",
+  "trial": "สมาชิกใหม่ทดลอง PT ฟรี 1 ครั้ง (30 นาที) ภายใน 30 วันแรก",
+  "items": [
+    {
+      "id": "PT-1",
+      "name": "PT 1 ครั้ง",
+      "sessions": 1,
+      "price": 900,
+      "per_session": 900,
+      "valid_days": 30,
+      "minutes": 60
+    },
+    {
+      "id": "PT-10",
+      "name": "PT 10 ครั้ง",
+      "sessions": 10,
+      "price": 8000,
+      "per_session": 800,
+      "valid_days": 90,
+      "minutes": 60
+    },
+    {
+      "id": "PT-20",
+      "name": "PT 20 ครั้ง",
+      "sessions": 20,
+      "price": 14000,
+      "per_session": 700,
+      "valid_days": 180,
+      "minutes": 60
+    },
+    {
+      "id": "PT-DUO",
+      "name": "PT คู่ 10 ครั้ง (2 คน)",
+      "sessions": 10,
+      "price": 12000,
+      "per_session": 600,
+      "valid_days": 90,
+      "minutes": 60,
+      "notes": "ราคาต่อคนต่อครั้ง 600 บาท ทั้งสองคนต้องเป็นสมาชิก"
+    }
+  ]
+}

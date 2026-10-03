@@ -1,0 +1,93 @@
+{
+  "_note": "ข้อมูลจำลองทั้งหมดเพื่อใช้ในรายวิชา 06048308 ไม่ใช่ข้อมูลของบุคคลหรือธุรกิจจริง",
+  "items": [
+    {
+      "id": "CL-HIIT",
+      "name": "HIIT Blast",
+      "name_th": "ฮิตบลาสต์",
+      "minutes": 45,
+      "level": "กลาง–สูง",
+      "room": "Studio A",
+      "capacity": 25,
+      "kcal": "450–600",
+      "desc": "เวทสลับคาร์ดิโอแบบเข้มข้นเป็นช่วง เผาผลาญสูง"
+    },
+    {
+      "id": "CL-RIDE",
+      "name": "Ride",
+      "name_th": "ปั่นจักรยาน",
+      "minutes": 45,
+      "level": "ทุกระดับ",
+      "room": "Ride Room",
+      "capacity": 20,
+      "kcal": "400–550",
+      "desc": "ปั่นจักรยานตามจังหวะเพลงในห้องไฟ"
+    },
+    {
+      "id": "CL-YOGA",
+      "name": "Yoga Flow",
+      "name_th": "โยคะโฟลว์",
+      "minutes": 60,
+      "level": "ผู้เริ่มต้น",
+      "room": "Studio A",
+      "capacity": 25,
+      "kcal": "200–300",
+      "desc": "โยคะต่อเนื่องเน้นลมหายใจและความยืดหยุ่น"
+    },
+    {
+      "id": "CL-PILATES",
+      "name": "Pilates Core",
+      "name_th": "พิลาทิสคอร์",
+      "minutes": 50,
+      "level": "ผู้เริ่มต้น–กลาง",
+      "room": "Studio A",
+      "capacity": 20,
+      "kcal": "250–350",
+      "desc": "พิลาทิสบนเสื่อ เน้นแกนกลางลำตัวและท่าทาง"
+    },
+    {
+      "id": "CL-BOX",
+      "name": "Boxing Fit",
+      "name_th": "บ็อกซิ่งฟิต",
+      "minutes": 45,
+      "level": "ทุกระดับ",
+      "room": "Fight Room",
+      "capacity": 16,
+      "kcal": "500–650",
+      "desc": "ชกกระสอบและเป้าล่อ ไม่มีการปะทะกับคู่"
+    },
+    {
+      "id": "CL-MUAY",
+      "name": "Muay Thai Basic",
+      "name_th": "มวยไทยพื้นฐาน",
+      "minutes": 60,
+      "level": "ผู้เริ่มต้น",
+      "room": "Fight Room",
+      "capacity": 16,
+      "kcal": "550–700",
+      "desc": "ท่าพื้นฐานหมัด เท้า เข่า ศอก มีนวมและผ้าพันมือให้ยืม"
+    },
+    {
+      "id": "CL-DANCE",
+      "name": "Dance Cardio",
+      "name_th": "แดนซ์คาร์ดิโอ",
+      "minutes": 45,
+      "level": "ทุกระดับ",
+      "room": "Studio A",
+      "capacity": 25,
+      "kcal": "350–500",
+      "desc": "เต้นแอโรบิกตามเพลงป๊อป ไม่ต้องมีพื้นฐาน"
+    },
+    {
+      "id": "CL-FUNC",
+      "name": "Functional Strength",
+      "name_th": "ฟังก์ชันนัลสเตรงท์",
+      "minutes": 50,
+      "level": "กลาง",
+      "room": "Studio A",
+      "capacity": 20,
+      "kcal": "350–450",
+      "desc": "เวทด้วยดัมเบล เคตเทิลเบล และน้ำหนักตัว เน้นการเคลื่อนไหวในชีวิตจริง"
+    }
+  ]
+}
