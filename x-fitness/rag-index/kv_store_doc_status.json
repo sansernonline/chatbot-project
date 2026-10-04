@@ -3,138 +3,94 @@
     "status": "processed",
     "content_summary": "[KB-01] ข้อมูลทั่วไป เวลาเปิด-ปิด ที่ตั้ง และสิ่งอำนวยความสะดวก\n\n\n# เอ็กซ์ ฟิตเนส (X Fitness)\n\nเอ็กซ์ ฟิตเนส เป็นสตูดิโอฟิตเนสขนาดเล็ก สาขาเดียว ตั้งอยู่ใจกลางศรีราชา จังหวัดชลบุรี เปิดให้บริการตั้งแต่ปี 2567 เน้นคลาสกลุ่มขนาดเล็ก เทรนเนอร์ดูแลใกล้ชิ...",
     "content_length": 2466,
-    "created_at": "2026-10-04T05:16:18.394657+00:00",
-    "updated_at": "2026-10-04T05:17:36.155360+00:00",
+    "created_at": "2026-10-04T08:21:23.993142+00:00",
+    "updated_at": "2026-10-04T08:22:39.142964+00:00",
     "file_path": "KB-01",
-    "track_id": "insert_20261004_121618_2b929990",
+    "track_id": "insert_20261004_152123_4a12d262",
     "content_hash": "b6d25a3df49e3596493260a5f380fb19",
     "metadata": {
-      "parse_start_time": 1791090978,
+      "parse_start_time": 1791102083,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791090978,
+      "analyzing_start_time": 1791102084,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791090978,
-      "process_end_time": 1791091056,
+      "process_start_time": 1791102084,
+      "process_end_time": 1791102159,
       "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=1200, split_only=False, overlap=100",
-      "llm_truncation": {
-        "events": 2,
-        "affected": 1,
-        "stages": {
-          "initial": 1,
-          "gleaning": 1
-        },
-        "samples": [
-          "KB-01-chunk-000"
-        ]
-      }
+      "chunk_opts": "size=500, split_only=False, overlap=100"
     },
-    "chunks_count": 1,
+    "chunks_count": 3,
     "chunks_list": [
-      "KB-01-chunk-000"
-    ]
-  },
-  "KB-02": {
-    "status": "processed",
-    "content_summary": "[KB-02] แพ็กเกจสมาชิก ราคา และเงื่อนไขการสมัคร\n\n\n# แพ็กเกจสมาชิก\n\nเอ็กซ์ ฟิตเนส มีแพ็กเกจสมาชิก 5 แบบ ทุกแบบใช้โซนเวทและคาร์ดิโอได้ไม่จำกัดตามเวลาเปิด-ปิด\n\n| รหัส | แพ็กเกจ | ราคา | สัญญา | ค่าแรกเข้า | สิทธิ์คลาส |\n|---|---|---|---|---|---|\n| PKG-DA...",
-    "content_length": 3336,
-    "created_at": "2026-10-04T05:17:36.159833+00:00",
-    "updated_at": "2026-10-04T05:18:46.527933+00:00",
-    "file_path": "KB-02",
-    "track_id": "insert_20261004_121736_48a44c9e",
-    "content_hash": "d3b62c5a62bfe84bdc40f08e351ea5de",
-    "metadata": {
-      "parse_start_time": 1791091056,
-      "parse_stage_skipped": true,
-      "parse_format": "raw",
-      "parse_engine": "legacy",
-      "analyzing_start_time": 1791091056,
-      "analyzing_stage_skipped": true,
-      "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791091056,
-      "process_end_time": 1791091126,
-      "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=1200, split_only=False, overlap=100",
-      "llm_truncation": {
-        "events": 2,
-        "affected": 1,
-        "stages": {
-          "initial": 1,
-          "gleaning": 1
-        },
-        "samples": [
-          "KB-02-chunk-000"
-        ]
-      }
-    },
-    "chunks_count": 2,
-    "chunks_list": [
-      "KB-02-chunk-000",
-      "KB-02-chunk-001"
+      "KB-01-chunk-000",
+      "KB-01-chunk-001",
+      "KB-01-chunk-002"
     ]
   },
   "KB-03": {
     "status": "processed",
     "content_summary": "[KB-03] คลาสกลุ่ม ตารางเรียน และการจองคลาส\n\n\n# คลาสกลุ่ม 8 คลาส\n\n| รหัส | คลาส | เวลา | ระดับ | ห้อง | รับได้ | เผาผลาญโดยประมาณ |\n|---|---|---|---|---|---|---|\n| CL-HIIT | HIIT Blast | 45 นาที | กลาง–สูง | Studio A | 25 คน | 450–600 กิโลแคลอรี |\n| C...",
     "content_length": 4262,
-    "created_at": "2026-10-04T05:18:46.540314+00:00",
-    "updated_at": "2026-10-04T05:19:22.937377+00:00",
+    "created_at": "2026-10-04T08:22:39.170244+00:00",
+    "updated_at": "2026-10-04T08:24:40.258184+00:00",
     "file_path": "KB-03",
-    "track_id": "insert_20261004_121846_b2fa3c31",
+    "track_id": "insert_20261004_152239_5e0b9945",
     "content_hash": "72a0dc7ea54a3febc1e53d577137909b",
     "metadata": {
-      "parse_start_time": 1791091126,
+      "parse_start_time": 1791102159,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791091126,
+      "analyzing_start_time": 1791102159,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791091126,
-      "process_end_time": 1791091162,
+      "process_start_time": 1791102159,
+      "process_end_time": 1791102280,
       "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=1200, split_only=False, overlap=100",
+      "chunk_opts": "size=500, split_only=False, overlap=100",
       "llm_truncation": {
-        "events": 1,
+        "events": 2,
         "affected": 1,
         "stages": {
-          "initial": 1
+          "initial": 1,
+          "gleaning": 1
         },
         "samples": [
-          "KB-03-chunk-000"
+          "KB-03-chunk-002"
         ]
       }
     },
-    "chunks_count": 2,
+    "chunks_count": 5,
     "chunks_list": [
       "KB-03-chunk-000",
-      "KB-03-chunk-001"
+      "KB-03-chunk-001",
+      "KB-03-chunk-002",
+      "KB-03-chunk-003",
+      "KB-03-chunk-004"
     ]
   },
   "KB-04": {
     "status": "processed",
     "content_summary": "[KB-04] เทรนเนอร์ส่วนตัว (Personal Trainer) แพ็กเกจและเงื่อนไข\n\n\n# เทรนเนอร์ส่วนตัว (Personal Trainer: PT)\n\nเทรนเนอร์ส่วนตัวช่วยวางโปรแกรมให้ตรงเป้าหมาย เช่น ลดไขมัน เพิ่มกล้ามเนื้อ ปรับท่าทาง หรือเตรียมร่างกายสำหรับกีฬา แต่ละครั้งยาว 60 นาที\n\n## แพ็...",
     "content_length": 2287,
-    "created_at": "2026-10-04T05:19:22.948971+00:00",
-    "updated_at": "2026-10-04T05:19:53.420982+00:00",
+    "created_at": "2026-10-04T08:24:40.333605+00:00",
+    "updated_at": "2026-10-04T08:25:44.060524+00:00",
     "file_path": "KB-04",
-    "track_id": "insert_20261004_121922_e62ed368",
+    "track_id": "insert_20261004_152440_2e88ba5e",
     "content_hash": "f638bfd53ce56fb4a95edc3a5110c856",
     "metadata": {
-      "parse_start_time": 1791091162,
+      "parse_start_time": 1791102280,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791091162,
+      "analyzing_start_time": 1791102280,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791091162,
-      "process_end_time": 1791091193,
+      "process_start_time": 1791102280,
+      "process_end_time": 1791102344,
       "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=1200, split_only=False, overlap=100",
+      "chunk_opts": "size=500, split_only=False, overlap=100",
       "llm_truncation": {
         "events": 1,
         "affected": 1,
@@ -142,36 +98,38 @@
           "initial": 1
         },
         "samples": [
-          "KB-04-chunk-000"
+          "KB-04-chunk-001"
         ]
       }
     },
-    "chunks_count": 1,
+    "chunks_count": 3,
     "chunks_list": [
-      "KB-04-chunk-000"
+      "KB-04-chunk-000",
+      "KB-04-chunk-001",
+      "KB-04-chunk-002"
     ]
   },
   "KB-05": {
     "status": "processed",
     "content_summary": "[KB-05] นโยบายการพักสมาชิก ยกเลิก คืนเงิน และโอนสิทธิ์\n\n\n# นโยบายสมาชิก\n\n## การพักสมาชิก (Freeze)\n\n- พักได้ครั้งละ 1–3 เดือน รวมไม่เกิน 3 เดือนต่อปีสมาชิก\n- ค่าธรรมเนียม 100 บาทต่อเดือนที่พัก ชำระครั้งเดียวตอนแจ้งพัก ที่เคาน์เตอร์หรือโอนแล้วส่งสลิป\n-...",
     "content_length": 2094,
-    "created_at": "2026-10-04T05:19:53.436781+00:00",
-    "updated_at": "2026-10-04T05:20:55.763506+00:00",
+    "created_at": "2026-10-04T08:25:44.064436+00:00",
+    "updated_at": "2026-10-04T08:27:31.773967+00:00",
     "file_path": "KB-05",
-    "track_id": "insert_20261004_121953_170729ed",
+    "track_id": "insert_20261004_152544_3c31409a",
     "content_hash": "930ec59945bd7d8835ad3001d319c88a",
     "metadata": {
-      "parse_start_time": 1791091193,
+      "parse_start_time": 1791102344,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791091193,
+      "analyzing_start_time": 1791102344,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791091193,
-      "process_end_time": 1791091255,
+      "process_start_time": 1791102344,
+      "process_end_time": 1791102451,
       "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=1200, split_only=False, overlap=100",
+      "chunk_opts": "size=500, split_only=False, overlap=100",
       "llm_truncation": {
         "events": 2,
         "affected": 1,
@@ -184,146 +142,104 @@
         ]
       }
     },
-    "chunks_count": 1,
+    "chunks_count": 3,
     "chunks_list": [
-      "KB-05-chunk-000"
+      "KB-05-chunk-000",
+      "KB-05-chunk-001",
+      "KB-05-chunk-002"
     ]
   },
   "KB-06": {
     "status": "processed",
     "content_summary": "[KB-06] การชำระเงิน การส่งสลิป และการออกใบเสร็จ\n\n\n# การชำระเงิน\n\n## ช่องทางชำระเงิน\n\n1. เงินสดหรือบัตรเครดิต/เดบิตที่เคาน์เตอร์ (บัตรเครดิตขั้นต่ำ 300 บาท)\n2. สแกนคิวอาร์พร้อมเพย์ที่เคาน์เตอร์\n3. โอนเงินเข้าบัญชีร้าน แล้วส่งสลิปผ่านแชตหรือ LINE Offic...",
     "content_length": 1913,
-    "created_at": "2026-10-04T05:20:55.776885+00:00",
-    "updated_at": "2026-10-04T05:21:40.868923+00:00",
+    "created_at": "2026-10-04T08:27:31.780673+00:00",
+    "updated_at": "2026-10-04T08:28:33.958614+00:00",
     "file_path": "KB-06",
-    "track_id": "insert_20261004_122055_5916e878",
+    "track_id": "insert_20261004_152731_b472b602",
     "content_hash": "415826f83c8f3c791ad54ef2e628121e",
     "metadata": {
-      "parse_start_time": 1791091255,
+      "parse_start_time": 1791102451,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791091255,
+      "analyzing_start_time": 1791102451,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791091255,
-      "process_end_time": 1791091300,
+      "process_start_time": 1791102451,
+      "process_end_time": 1791102513,
       "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=1200, split_only=False, overlap=100",
+      "chunk_opts": "size=500, split_only=False, overlap=100",
       "llm_truncation": {
-        "events": 1,
-        "affected": 1,
+        "events": 2,
+        "affected": 2,
         "stages": {
-          "initial": 1
+          "initial": 2
         },
         "samples": [
+          "KB-06-chunk-001",
           "KB-06-chunk-000"
         ]
       }
     },
-    "chunks_count": 1,
+    "chunks_count": 3,
     "chunks_list": [
-      "KB-06-chunk-000"
+      "KB-06-chunk-000",
+      "KB-06-chunk-001",
+      "KB-06-chunk-002"
     ]
   },
   "KB-07": {
     "status": "processed",
     "content_summary": "[KB-07] โปรโมชัน ระบบแต้มสะสม และสินค้าในร้าน\n\n\n# โปรโมชัน\n\nโปรใช้ได้เมื่อวันที่วันนี้อยู่ระหว่างวันเริ่มและวันสิ้นสุด (รวมทั้งสองวัน) เลยวันสิ้นสุดแล้วถือว่าหมดเขต\n\n| รหัส | โปรโมชัน | โค้ด | ใช้กับ | เริ่ม | สิ้นสุด |\n|---|---|---|---|---|---|\n| PR...",
     "content_length": 3431,
-    "created_at": "2026-10-04T05:21:40.908559+00:00",
-    "updated_at": "2026-10-04T05:22:52.174907+00:00",
+    "created_at": "2026-10-04T08:28:33.964884+00:00",
+    "updated_at": "2026-10-04T08:29:00.604423+00:00",
     "file_path": "KB-07",
-    "track_id": "insert_20261004_122140_2ef25a2c",
+    "track_id": "insert_20261004_152833_6295cc86",
     "content_hash": "28c02822bb70ba6f5603fba7388836d0",
     "metadata": {
-      "parse_start_time": 1791091300,
+      "parse_start_time": 1791102513,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791091300,
+      "analyzing_start_time": 1791102514,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791091300,
-      "process_end_time": 1791091372,
+      "process_start_time": 1791102514,
+      "process_end_time": 1791102540,
       "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=1200, split_only=False, overlap=100",
-      "llm_truncation": {
-        "events": 2,
-        "affected": 1,
-        "stages": {
-          "initial": 1,
-          "gleaning": 1
-        },
-        "samples": [
-          "KB-07-chunk-000"
-        ]
-      }
+      "chunk_opts": "size=500, split_only=False, overlap=100"
     },
-    "chunks_count": 2,
+    "chunks_count": 4,
     "chunks_list": [
       "KB-07-chunk-000",
-      "KB-07-chunk-001"
+      "KB-07-chunk-001",
+      "KB-07-chunk-002",
+      "KB-07-chunk-003"
     ]
   },
   "KB-08": {
     "status": "processed",
     "content_summary": "[KB-08] กฎการใช้ยิม ความปลอดภัย การวัดองค์ประกอบร่างกาย และข้อมูลส่วนบุคคล\n\n\n# กฎการใช้ยิม\n\n## การแต่งกาย\n\n- สวมรองเท้าผ้าใบหุ้มส้นในโซนเวทและคาร์ดิโอ (ห้ามรองเท้าแตะ)\n- คลาสโยคะ พิลาทิส และมวยไทย เท้าเปล่าได้\n- สวมเสื้อที่มีแขนหรือเสื้อกล้าม ห้ามถอด...",
     "content_length": 2473,
-    "created_at": "2026-10-04T05:22:52.183104+00:00",
-    "updated_at": "2026-10-04T05:24:10.861609+00:00",
+    "created_at": "2026-10-04T08:29:00.608079+00:00",
+    "updated_at": "2026-10-04T08:29:58.486327+00:00",
     "file_path": "KB-08",
-    "track_id": "insert_20261004_122252_5e3465a0",
+    "track_id": "insert_20261004_152900_fb613698",
     "content_hash": "eef32ffb5f464589a093cb899f6d057f",
     "metadata": {
-      "parse_start_time": 1791091372,
+      "parse_start_time": 1791102540,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791091372,
+      "analyzing_start_time": 1791102540,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791091372,
-      "process_end_time": 1791091450,
+      "process_start_time": 1791102540,
+      "process_end_time": 1791102598,
       "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=1200, split_only=False, overlap=100",
-      "llm_truncation": {
-        "events": 2,
-        "affected": 1,
-        "stages": {
-          "initial": 1,
-          "gleaning": 1
-        },
-        "samples": [
-          "KB-08-chunk-000"
-        ]
-      }
-    },
-    "chunks_count": 1,
-    "chunks_list": [
-      "KB-08-chunk-000"
-    ]
-  },
-  "KB-09": {
-    "status": "processed",
-    "content_summary": "[KB-09] บริการลูกค้า ติดต่อพนักงาน เช็กอิน และบัตรสมาชิก\n\n\n# บริการลูกค้า\n\n## ติดต่อพนักงานและเวลาตอบ\n\n- แชตบอท \"เอ็กซ์\" ตอบได้ตลอด 24 ชั่วโมง\n- พิมพ์ \"คุยกับพนักงาน\" ในแชตเพื่อส่งเรื่องให้พนักงาน ระหว่างนั้นบอทจะหยุดตอบจนพนักงานปิดเรื่อง\n- พนักงานตอ...",
-    "content_length": 1443,
-    "created_at": "2026-10-04T05:24:10.868161+00:00",
-    "updated_at": "2026-10-04T05:24:41.207593+00:00",
-    "file_path": "KB-09",
-    "track_id": "insert_20261004_122410_00df909f",
-    "content_hash": "1eb94fcd11f52bfd61601d6500ed075b",
-    "metadata": {
-      "parse_start_time": 1791091450,
-      "parse_stage_skipped": true,
-      "parse_format": "raw",
-      "parse_engine": "legacy",
-      "analyzing_start_time": 1791091450,
-      "analyzing_stage_skipped": true,
-      "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791091450,
-      "process_end_time": 1791091481,
-      "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=1200, split_only=False, overlap=100",
+      "chunk_opts": "size=500, split_only=False, overlap=100",
       "llm_truncation": {
         "events": 1,
         "affected": 1,
@@ -331,13 +247,84 @@
           "initial": 1
         },
         "samples": [
-          "KB-09-chunk-000"
+          "KB-08-chunk-000"
         ]
       }
     },
-    "chunks_count": 1,
+    "chunks_count": 3,
     "chunks_list": [
-      "KB-09-chunk-000"
+      "KB-08-chunk-000",
+      "KB-08-chunk-001",
+      "KB-08-chunk-002"
+    ]
+  },
+  "KB-09": {
+    "status": "processed",
+    "content_summary": "[KB-09] บริการลูกค้า ติดต่อพนักงาน เช็กอิน และบัตรสมาชิก\n\n\n# บริการลูกค้า\n\n## ติดต่อพนักงานและเวลาตอบ\n\n- แชตบอท \"เอ็กซ์\" ตอบได้ตลอด 24 ชั่วโมง\n- พิมพ์ \"คุยกับพนักงาน\" ในแชตเพื่อส่งเรื่องให้พนักงาน ระหว่างนั้นบอทจะหยุดตอบจนพนักงานปิดเรื่อง\n- พนักงานตอ...",
+    "content_length": 1443,
+    "created_at": "2026-10-04T08:29:58.490125+00:00",
+    "updated_at": "2026-10-04T08:30:19.024271+00:00",
+    "file_path": "KB-09",
+    "track_id": "insert_20261004_152958_caa1e2b2",
+    "content_hash": "1eb94fcd11f52bfd61601d6500ed075b",
+    "metadata": {
+      "parse_start_time": 1791102598,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1791102598,
+      "analyzing_stage_skipped": true,
+      "kg_write_state": "graph_mutation_started",
+      "process_start_time": 1791102598,
+      "process_end_time": 1791102619,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=500, split_only=False, overlap=100"
+    },
+    "chunks_count": 2,
+    "chunks_list": [
+      "KB-09-chunk-000",
+      "KB-09-chunk-001"
+    ]
+  },
+  "KB-02": {
+    "status": "processed",
+    "content_summary": "[KB-02] แพ็กเกจสมาชิก ราคา และเงื่อนไขการสมัคร\n\n\n# แพ็กเกจสมาชิก\n\nค่าสมาชิก (ราคาแพ็กเกจ) ค่าสมาชิกรายเดือน รายปี และรายวัน มีดังนี้ เอ็กซ์ ฟิตเนส มีแพ็กเกจสมาชิก 5 แบบ ทุกแบบใช้โซนเวทและคาร์ดิโอได้ไม่จำกัดตามเวลาเปิด-ปิด\n\n| รหัส | แพ็กเกจ | ราคา | ส...",
+    "content_length": 3403,
+    "created_at": "2026-10-04T08:31:14.281253+00:00",
+    "updated_at": "2026-10-04T08:33:20.477859+00:00",
+    "file_path": "KB-02",
+    "track_id": "insert_20261004_153114_dc858879",
+    "content_hash": "9e59c597108523531bf7af1d7f2e86aa",
+    "metadata": {
+      "parse_start_time": 1791102674,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1791102674,
+      "analyzing_stage_skipped": true,
+      "kg_write_state": "graph_mutation_started",
+      "process_start_time": 1791102674,
+      "process_end_time": 1791102800,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=500, split_only=False, overlap=100",
+      "llm_truncation": {
+        "events": 2,
+        "affected": 2,
+        "stages": {
+          "initial": 2
+        },
+        "samples": [
+          "KB-02-chunk-002",
+          "KB-02-chunk-001"
+        ]
+      }
+    },
+    "chunks_count": 4,
+    "chunks_list": [
+      "KB-02-chunk-000",
+      "KB-02-chunk-001",
+      "KB-02-chunk-002",
+      "KB-02-chunk-003"
     ]
   }
 }

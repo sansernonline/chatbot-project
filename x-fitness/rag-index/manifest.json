@@ -1,14 +1,14 @@
 {
- "embedder": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2:384",
+ "embedder": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2:384:chunk500",
  "docs": {
   "KB-01": "a5e83929e1b77e5ef60d78492498d190",
-  "KB-02": "c27ad31475b3219f82eda24fe119d9bf",
   "KB-03": "dc0a376800a94074f3f07581e0cd15df",
   "KB-04": "86bcae54c7c8c7745984a9e3c4a54d65",
   "KB-05": "d0b55ea304ea45c438042fc375a78ffd",
   "KB-06": "e7a84189a1ef61a1051e51572e0974cc",
   "KB-07": "1a61e723bf308bc07a633f8bf7bd6d0f",
   "KB-08": "7d96fd5329c66fd25ca2818d99ad1901",
-  "KB-09": "29b5cfb8ac74d9f24a596fc1fa11855d"
+  "KB-09": "29b5cfb8ac74d9f24a596fc1fa11855d",
+  "KB-02": "f20419994d9ff51b49af189f5f699ed8"
  }
 }

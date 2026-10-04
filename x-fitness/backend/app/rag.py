@@ -37,7 +37,7 @@ def kb_files() -> dict[str, dict]:
     (both would otherwise become chunk text and entities)."""
     docs = {}
     for path in sorted(config.KB_DIR.glob("*.md")):
-        text = path.read_text(encoding="utf-8")
+        text = path.read_text(encoding="utf-8").replace("\r\n", "\n")    # same hash on Windows (CRLF) and Linux (LF)
         meta, body = keyword_search._front_matter(text)
         doc_id, title = meta.get("doc_id", path.stem), meta.get("title", path.stem)
         body = "\n".join(line for line in body.splitlines() if not line.startswith("> ข้อมูลจำลอง"))
@@ -70,7 +70,7 @@ async def _get() -> LightRAG:
     async with _lock:
         if _rag is None:
             config.RAG_DIR.mkdir(parents=True, exist_ok=True)
-            rag = LightRAG(working_dir=str(config.RAG_DIR), llm_model_func=_llm, llm_model_name=config.CHAT_MODEL,
+            rag = LightRAG(working_dir=str(config.RAG_DIR), llm_model_func=_llm, llm_model_name=config.CHAT_MODEL, chunk_token_size=config.RAG_CHUNK_TOKENS,
                            embedding_func=EmbeddingFunc(embedding_dim=config.EMBED_DIM, max_token_size=8192, func=_embed),
                            addon_params={"language": "Thai"})
             await rag.initialize_storages()
@@ -79,7 +79,8 @@ async def _get() -> LightRAG:
 
 
 def _embedder() -> str:
-    return f"{config.EMBED_MODEL}:{config.EMBED_DIM}"
+    """Settings an index is built with; when they change, the whole index is rebuilt."""
+    return f"{config.EMBED_MODEL}:{config.EMBED_DIM}:chunk{config.RAG_CHUNK_TOKENS}"
 
 
 def _manifest() -> dict:
@@ -111,6 +112,11 @@ async def reindex() -> None:
         for doc_id, d in docs.items():
             if doc_id not in done:
                 await rag.ainsert(d["index_text"], ids=doc_id, file_paths=doc_id)   # no front matter / disclaimer
+                status = str((await rag.doc_status.get_by_id(doc_id) or {}).get("status", "")).lower()
+                if not status.endswith("processed"):         # ainsert logs failures instead of raising
+                    log.error("LightRAG could not index %s (status %s); will retry on next start", doc_id, status)
+                    await rag.adelete_by_doc_id(doc_id)
+                    continue
                 done[doc_id] = d["hash"]
                 _save(done)
     except Exception:

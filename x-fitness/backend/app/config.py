@@ -42,5 +42,6 @@ else:
 MODELS_DIR = PROJECT_ROOT / "backend" / "data" / "models"
 RAG_DIR = Path(os.getenv("XF_RAG_DIR", PROJECT_ROOT / "rag-index"))  # committed, so a fresh server (Render) does not rebuild it
 RAG_MODE = os.getenv("XF_RAG_MODE", "mix")         # LightRAG query mode: naive · local · global · hybrid · mix
-RAG_LLM_MAX_TOKENS = int(os.getenv("XF_RAG_LLM_MAX_TOKENS", "4096"))  # answer length for LightRAG extraction calls
+RAG_LLM_MAX_TOKENS = int(os.getenv("XF_RAG_LLM_MAX_TOKENS", "8192"))  # answer length for LightRAG extraction calls
+RAG_CHUNK_TOKENS = int(os.getenv("XF_RAG_CHUNK_TOKENS", "500"))       # small chunks: Thai entity lists fit in one answer
 RAG_TOP_K = int(os.getenv("XF_RAG_TOP_K", "4"))
