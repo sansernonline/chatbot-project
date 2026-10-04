@@ -32,7 +32,7 @@ npm test                        # 40 กรณี ~3 นาที · เปิ�
 | ดูเบราว์เซอร์ทำงานจริง | `npm run test:headed` |
 | เฉพาะบางชุด | `E2E_SUITES=questions,images npm test` (ชุด: questions · images · safety · rules) |
 | สุ่มรายการต้องทำ/ห้ามทำ 10 ข้อ | `E2E_RULES=10 npm test` · รันชุดเดิมซ้ำด้วย `E2E_SEED=<เลขที่รายงานบอก>` |
-| ทดสอบเว็บที่ deploy แล้ว | `E2E_BASE_URL=https://<ชื่อ>.onrender.com npm test` |
+| ทดสอบเว็บที่ deploy แล้ว | `E2E_BASE_URL=https://x-fitness-chatbot.onrender.com npm test` |
 | ดูกรณีที่ไม่ผ่านแบบละเอียด | `npx playwright show-trace test-results/<โฟลเดอร์ของกรณีนั้น>/trace.zip` |
 
 PowerShell ตั้งตัวแปรแบบนี้: `$env:E2E_SUITES="questions"; npm test`

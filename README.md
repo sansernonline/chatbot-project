@@ -2,6 +2,7 @@
 
 > วิชา 06048308 Intelligent Chatbot Development · ส่ง 17 ต.ค. 2569 · **แจ้งชื่อธุรกิจภายใน 3 ต.ค. 2569**
 > ธุรกิจ: สตูดิโอฟิตเนสขนาดเล็ก "เอ็กซ์ ฟิตเนส (X Fitness)" ศรีราชา · ข้อมูลทั้งหมดเป็นข้อมูลจำลอง
+> **เว็บหลัก (Render):** https://x-fitness-chatbot.onrender.com · หลังบ้าน https://x-fitness-chatbot.onrender.com/admin/ · LINE webhook `https://x-fitness-chatbot.onrender.com/api/line/webhook`
 
 ## โครงสร้างโฟลเดอร์
 

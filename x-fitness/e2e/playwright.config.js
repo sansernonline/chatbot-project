@@ -1,5 +1,5 @@
 // Playwright settings. The site under test is the running X Fitness backend (it serves the website).
-// E2E_BASE_URL=https://xxx.onrender.com npm test  → test a deployed site instead of starting one locally.
+// E2E_BASE_URL=https://x-fitness-chatbot.onrender.com npm test  → test a deployed site instead of starting one locally.
 const { defineConfig } = require('@playwright/test');
 
 const baseURL = process.env.E2E_BASE_URL || 'http://localhost:8000';

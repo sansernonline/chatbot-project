@@ -2,6 +2,8 @@
 
 แชตบอทของสตูดิโอฟิตเนส "เอ็กซ์ ฟิตเนส" ตอบจากคลังความรู้ด้วย LightRAG · อ่านภาพสลิป/ใบเสร็จ/ผลวัดด้วย vision LLM · มี guardrail ก่อนและหลัง LLM · ใช้ Typhoon key ตัวเดียว · คุยได้ทั้งหน้าเว็บและ LINE Official Account
 
+**เว็บหลัก (Render):** https://x-fitness-chatbot.onrender.com · หลังบ้าน https://x-fitness-chatbot.onrender.com/admin/ · สถานะ https://x-fitness-chatbot.onrender.com/api/health
+
 ```text
 ข้อความ → guard ขาเข้า → LightRAG ค้นคลังความรู้ → Typhoon ตอบ → guard ขาออก → ลูกค้า
 ภาพ    → typhoon-ocr อ่านเป็น JSON → (สลิป) ตรวจ 5 ข้อด้วยโค้ด → รวมเข้าข้อความข้างบน
@@ -135,7 +137,7 @@ python -m eval.run --rules all  # ทดสอบกฎครบ 20 ข้อ
 3. ใส่ใน `backend/.env`: `LINE_CHANNEL_SECRET=...` และ `LINE_CHANNEL_ACCESS_TOKEN=...` แล้วเปิดเซิร์ฟเวอร์ใหม่ (`/api/health` ต้องได้ `"line": true`)
 4. LINE ต้องเรียกเซิร์ฟเวอร์ผ่าน **HTTPS สาธารณะ**:
    - ในเครื่อง: `cloudflared tunnel --url http://localhost:8000` (ได้ URL `https://….trycloudflare.com` ฟรี ไม่ต้องสมัคร)
-   - หรือใช้ URL ของ Render
+   - หรือใช้ Render (ตัวหลัก): `https://x-fitness-chatbot.onrender.com` — ใส่ key ข้อ 3 ใน Render → **Environment** แทน `.env` แล้ว deploy ใหม่
 5. แท็บ Messaging API → Webhook URL = `https://<URL ข้อ 4>/api/line/webhook` → กด **Verify** ต้องขึ้น Success → เปิด **Use webhook**
 6. LINE Official Account Manager → การตอบกลับ → **ปิด**ข้อความตอบกลับอัตโนมัติและข้อความทักทาย (ไม่งั้นลูกค้าได้ 2 คำตอบ)
 7. สแกน QR ในแท็บ Messaging API เพิ่มเพื่อน แล้วลองพิมพ์
@@ -158,8 +160,8 @@ python -m app.rag          # สร้าง/อัปเดต ../rag-index/ �
 **3. สร้างบริการบน Render**
 
 1. https://dashboard.render.com → **New** → **Blueprint** → เลือก repo นี้
-2. Render อ่าน `render.yaml` แล้วถามค่า: `TYPHOON_API_KEY` · `XF_ADMIN_PASS` (ตั้งใหม่ อย่าใช้ 1234) · `XF_EMBED_API_KEY` และค่าของ LINE เว้นว่างได้
-3. รอ build เสร็จ แล้วเปิด `https://<ชื่อบริการ>.onrender.com/api/health` ต้องเห็น `"llm": true` และ `"rag": "lightrag"`
+2. Render อ่าน `render.yaml` แล้วถามค่า: `TYPHOON_API_KEY` · `XF_ADMIN_PASS` (ตั้งใหม่ อย่าใช้ 1234) · `XF_EMBED_API_KEY` และค่าของ LINE เว้นว่างได้ (ใส่ทีหลังใน **Environment** · ถ้าเว้นไว้ LINE webhook ตอบ 503)
+3. รอ build เสร็จ แล้วเปิด `https://x-fitness-chatbot.onrender.com/api/health` ต้องเห็น `"llm": true` และ `"rag": "lightrag"`
 4. เปิด `/admin/` → **คลังความรู้** ทุกเอกสารต้องเป็น `พร้อมใช้` — ถ้าเป็น `กำลังสร้างดัชนี` แปลว่า embedding บน Render ไม่ตรงกับตอนสร้าง กลับไปทำข้อ 1
 
 **ข้อจำกัดของแผนฟรี**
