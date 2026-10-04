@@ -32,7 +32,7 @@ x-fitness/
 ├── e2e/           ทดสอบผ่านหน้าเว็บด้วย Playwright (ไม่แตะโค้ดแชตบอท) — ดู e2e/README.md
 ├── frontend/      ← copy จาก ../mockup/      (หน้าเว็บลูกค้า + admin/)
 ├── data/          ← copy จาก ../data/        (knowledge-base/ + db/)
-├── test-images/   ← copy จาก ../test-images/
+├── test-images/   ← copy จาก ../qa/test-images/
 └── rag-index/      ดัชนี LightRAG ที่สร้างไว้แล้ว (commit ขึ้น git ให้ Render ไม่ต้องสร้างใหม่)
 ```
 
@@ -42,7 +42,7 @@ x-fitness/
 # รันจากรากโปรเจกต์ (chatbot-project/)
 cp -r mockup/. x-fitness/frontend/
 cp -r data/. x-fitness/data/
-cp -r test-images/. x-fitness/test-images/
+cp -r qa/test-images/. x-fitness/test-images/
 ```
 
 ## รันในเครื่อง
@@ -132,15 +132,44 @@ python -m eval.run --rules all  # ทดสอบกฎครบ 20 ข้อ
 
 **ตั้งค่า (ครั้งเดียว)**
 
-1. https://developers.line.biz/console/ → สร้าง Provider → สร้าง channel แบบ **Messaging API** (ได้ LINE OA มาด้วย)
-2. แท็บ Basic settings → คัดลอก **Channel secret** · แท็บ Messaging API → กด Issue **Channel access token (long-lived)**
-3. ใส่ใน `backend/.env`: `LINE_CHANNEL_SECRET=...` และ `LINE_CHANNEL_ACCESS_TOKEN=...` แล้วเปิดเซิร์ฟเวอร์ใหม่ (`/api/health` ต้องได้ `"line": true`)
-4. LINE ต้องเรียกเซิร์ฟเวอร์ผ่าน **HTTPS สาธารณะ**:
+1. **สร้าง LINE Official Account:** https://manager.line.biz/ → ล็อกอินด้วยบัญชี LINE → **สร้างบัญชีใหม่** (แผนฟรี) → กรอกชื่อบัญชี เช่น "X Fitness Chatbot"
+2. **เปิด Messaging API:** LINE Official Account Manager (https://manager.line.biz/) → เลือกบัญชี → **ตั้งค่า → Messaging API → ใช้ Messaging API** → สร้าง Provider ใหม่ (เลือกแล้วเปลี่ยนไม่ได้) — ตั้งแต่ 4 ก.ย. 2024 สร้าง channel ตรงใน LINE Developers ไม่ได้แล้ว ต้องผ่านขั้นนี้
+3. **เอา key 2 ตัว:** LINE Developers Console (https://developers.line.biz/console/) → Provider → channel ของบัญชี
+   - แท็บ **Basic settings** → คัดลอก **Channel secret**
+   - แท็บ **Messaging API** → ล่างสุด **Channel access token (long-lived)** → กด **Issue** → คัดลอก
+4. ใส่ใน `backend/.env`: `LINE_CHANNEL_SECRET=...` และ `LINE_CHANNEL_ACCESS_TOKEN=...` แล้วเปิดเซิร์ฟเวอร์ใหม่ (`/api/health` ต้องได้ `"line": true`)
+5. LINE ต้องเรียกเซิร์ฟเวอร์ผ่าน **HTTPS สาธารณะ**:
    - ในเครื่อง: `cloudflared tunnel --url http://localhost:8000` (ได้ URL `https://….trycloudflare.com` ฟรี ไม่ต้องสมัคร)
    - หรือใช้ Render (ตัวหลัก): `https://x-fitness-chatbot.onrender.com` — ใส่ key ข้อ 3 ใน Render → **Environment** แทน `.env` แล้ว deploy ใหม่
-5. แท็บ Messaging API → Webhook URL = `https://<URL ข้อ 4>/api/line/webhook` → กด **Verify** ต้องขึ้น Success → เปิด **Use webhook**
-6. LINE Official Account Manager → การตอบกลับ → **ปิด**ข้อความตอบกลับอัตโนมัติและข้อความทักทาย (ไม่งั้นลูกค้าได้ 2 คำตอบ)
-7. สแกน QR ในแท็บ Messaging API เพิ่มเพื่อน แล้วลองพิมพ์
+6. แท็บ Messaging API → Webhook URL = `https://<URL ข้อ 5>/api/line/webhook` → กด **Verify** ต้องขึ้น Success → เปิด **Use webhook**
+7. LINE Official Account Manager → การตอบกลับ → **ปิด**ข้อความตอบกลับอัตโนมัติและข้อความทักทาย (ไม่งั้นลูกค้าได้ 2 คำตอบ)
+8. สแกน QR ในแท็บ Messaging API เพิ่มเพื่อน แล้วลองพิมพ์
+
+**ทดสอบ LINE จากเครื่องตัวเอง (ทำทุกครั้ง)** — ใช้ Cloudflare Tunnel ฟรี ไม่ต้องสมัครบัญชี
+
+ติดตั้งครั้งแรก (PowerShell) แล้วเปิดหน้าต่าง terminal ใหม่:
+
+```powershell
+winget install --id Cloudflare.cloudflared
+```
+
+| ขั้น | ทำอะไร |
+|---|---|
+| 1 | หน้าต่างที่ 1: `cd x-fitness/backend` แล้ว `uvicorn app.main:app --port 8000` · เปิด http://localhost:8000/api/health ต้องได้ `"line": true` |
+| 2 | หน้าต่างที่ 2: `cloudflared tunnel --url http://localhost:8000` · รอกรอบ "Your quick Tunnel has been created" แล้วคัดลอก URL `https://….trycloudflare.com` |
+| 3 | LINE Developers → channel → แท็บ Messaging API → Webhook URL = `<URL ข้อ 2>/api/line/webhook` → **Verify** ต้องขึ้น Success |
+| 4 | เลิกใช้: กด `Ctrl+C` ทั้งสองหน้าต่าง |
+
+- คำสั่ง `cloudflared` ไม่รู้จัก → เปิด terminal ใหม่ หรือใช้ path เต็ม `& "C:\Program Files (x86)\cloudflared\cloudflared.exe" tunnel --url http://localhost:8000`
+- **URL เปลี่ยนทุกครั้งที่เปิด tunnel ใหม่** ต้องทำข้อ 3 ใหม่ทุกครั้ง · ถ้าอยากได้ URL ถาวรใช้ Render `https://x-fitness-chatbot.onrender.com/api/line/webhook`
+- ระหว่าง tunnel เปิด ใครมี URL ก็เข้าหน้าเว็บและหลังบ้านได้ · ตั้ง `XF_ADMIN_PASS` ก่อนถ้าจะเปิดทิ้งไว้ · เลิกใช้แล้วปิดทันที
+
+| Verify ไม่ผ่าน | สาเหตุ | แก้ |
+|---|---|---|
+| 503 | backend ไม่เห็น `LINE_CHANNEL_SECRET` | ตรวจ `.env` แล้วเปิด uvicorn ใหม่ |
+| 401 | secret ไม่ตรงกับ channel | คัดลอก Channel secret ใหม่จาก OA Manager → ตั้งค่า → Messaging API |
+| 404 | path ผิด | ต้องลงท้ายด้วย `/api/line/webhook` |
+| ติดต่อไม่ได้ / timeout | tunnel ปิดอยู่ หรือเพิ่งเปิด | รอ ~30 วินาทีแล้ว Verify ใหม่ · ถ้าปิดไปแล้วเปิดใหม่ (URL เปลี่ยน) |
 
 ความปลอดภัย: ทุกคำขอต้องมีลายเซ็น `X-Line-Signature` ที่ถูกต้อง ไม่มี secret = ปิดช่องทาง LINE (ตอบ 503) ไม่รับคำขอใดเลย
 

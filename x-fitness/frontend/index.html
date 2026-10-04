@@ -988,8 +988,10 @@ const SAMPLES = [
   ['slip_valid', '01_slip_valid.png', 'สลิป ✓'], ['slip_mismatch', '02_slip_amount_mismatch.png', 'สลิป ✗'],
   ['body_scan', '03_body_scan.png', 'ผลวัด'], ['receipt', '04_receipt.png', 'ใบเสร็จ'], ['promo_expired', '05_promo_poster_expired.png', 'โปสเตอร์']
 ];
-$('#samples').innerHTML = SAMPLES.map(([k, f, l]) => `<button data-sample="${k}" title="${f}" style="background-image:url('../test-images/${f}')"><span>${l}</span></button>`).join('');
-$('#samples').onclick = e => { const b = e.target.closest('[data-sample]'); if (!b) return; const s = SAMPLES.find(x => x[0] === b.dataset.sample); setImage({ key: s[0], name: s[1], url: '../test-images/' + s[1], size: 0, type: 'image/png' }); };
+// test images: served by the backend at /test-images; opened straight from disk they live in ../qa/test-images
+const TEST_IMG = location.protocol === 'file:' ? '../qa/test-images/' : '../test-images/';
+$('#samples').innerHTML = SAMPLES.map(([k, f, l]) => `<button data-sample="${k}" title="${f}" style="background-image:url('${TEST_IMG}${f}')"><span>${l}</span></button>`).join('');
+$('#samples').onclick = e => { const b = e.target.closest('[data-sample]'); if (!b) return; const s = SAMPLES.find(x => x[0] === b.dataset.sample); setImage({ key: s[0], name: s[1], url: TEST_IMG + s[1], size: 0, type: 'image/png' }); };
 $('#file').onchange = e => {
   const f = e.target.files[0]; e.target.value = ''; if (!f) return;
   $('#attachMenu').classList.remove('show'); $('#btnAttach').setAttribute('aria-pressed', 'false');

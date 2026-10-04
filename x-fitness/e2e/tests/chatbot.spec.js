@@ -7,7 +7,7 @@ const path = require('path');
 const testcases = require('../lib/testcases');
 const runFile = require('../lib/run-file');
 
-const IMAGES_DIR = path.resolve(__dirname, '../../test-images');
+const IMAGES_DIR = path.join(testcases.QA_DIR, 'test-images');   // test assets live with the test cases
 const suites = (process.env.E2E_SUITES || 'questions,images,safety,rules').split(',');
 const seed = Number(process.env.E2E_SEED || Math.floor(Math.random() * 1000));
 

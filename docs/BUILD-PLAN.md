@@ -27,7 +27,7 @@
 ## ประวัติสถานะ
 
 - 5 ต.ค. 2569 · เว็บหลักคือ https://x-fitness-chatbot.onrender.com (อัปเดตใน README · x-fitness/README · e2e · 07 · 08) · แก้ LINE reply/push 404 (path ขาด message/) · สร้างดัชนี LightRAG ใหม่ทั้งหมด 9/9 ready (ดัชนีเดิมอยู่ _to_delete/rag-index-backup) · pytest 63/63 · LINE webhook บน Render ยังได้ 503 จนกว่าจะใส่ key LINE ใน Render → Environment
-- 4 ต.ค. 2569 · เอกสารพัฒนาโครงการ docs/08_project-report.md → docs/deliverables/ .docx+.pdf (13 หน้า) และงานนำเสนอ .pptx+.pdf (17 สไลด์) · แผนภาพสถาปัตยกรรม docs/figures/architecture.png · สร้างใหม่ได้ด้วย python docs/tools/build_deliverables.py · ตารางบทบาทเป็นร่าง (รอยืนยัน)
+- 4 ต.ค. 2569 · เอกสารพัฒนาโครงการ docs/08_project-report.md → docs/ .docx+.pdf (13 หน้า) และงานนำเสนอ .pptx+.pdf (17 สไลด์) · แผนภาพสถาปัตยกรรม docs/architecture.png · สคริปต์สร้างไฟล์ย้ายไป _to_delete/docs-build/ แล้ว (ไม่อยู่ใน git) · ตารางบทบาทเป็นร่าง (รอยืนยัน)
 - 4 ต.ค. 2569 · สคริปต์คลิป docs/07_demo-script.md (3:50 นาที ตามกำหนดไม่เกิน 4 นาที) · ใส่ชื่อผู้พัฒนาในเอกสาร/รายงานทดสอบ
 - 4 ต.ค. 2569 · Playwright x-fitness/e2e/ อ่าน qa/x-fitness-test-cases.md ทดสอบผ่านหน้าเว็บจริง → qa/results/x-fitness-ui-results.md + ภาพหน้าจอ 40 ภาพ · 40/40 · สคริปต์ API อ่านเอกสารเดียวกัน 30/30 · Playwright เจอบั๊กหน้าเว็บส่งต่อพนักงานทุกข้อความที่มีคำว่า แอดมิน/พนักงาน (แก้แล้ว)
 - 4 ต.ค. 2569 · เอกสาร qa/x-fitness-test-cases.md (test case + ผล) สร้างจาก python -m eval.run · ผลล่าสุด 30/30 (seed 606) · เพิ่ม guard N-04 ข้อมูลสมาชิกคนอื่น และกฎร้าน จัดส่ง/ผ่อน/ฝากเด็ก หลังเจอบอทแต่งว่า "ส่งถึงบ้านได้ 3–5 วัน" · pytest 63/63

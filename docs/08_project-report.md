@@ -100,7 +100,7 @@ meta: ฉบับ 1.0 · 4 ตุลาคม 2569
 
 # 3. แผนภาพสถาปัตยกรรมระบบ
 
-![แผนภาพสถาปัตยกรรมระบบ X Fitness Chatbot](figures/architecture.png)
+![แผนภาพสถาปัตยกรรมระบบ X Fitness Chatbot](architecture.png)
 
 **การไหลของข้อความ 1 ข้อความ (ตามเลขในภาพ)**
 

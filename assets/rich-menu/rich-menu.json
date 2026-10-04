@@ -1,0 +1,14 @@
+{
+  "size": { "width": 2500, "height": 1686 },
+  "selected": true,
+  "name": "X Fitness main menu",
+  "chatBarText": "เมนู X Fitness",
+  "areas": [
+    { "bounds": { "x": 0,    "y": 0,   "width": 833, "height": 843 }, "action": { "type": "message", "label": "แพ็กเกจและราคา", "text": "แพ็กเกจและราคา" } },
+    { "bounds": { "x": 833,  "y": 0,   "width": 833, "height": 843 }, "action": { "type": "message", "label": "ตารางคลาส", "text": "ตารางคลาส" } },
+    { "bounds": { "x": 1666, "y": 0,   "width": 834, "height": 843 }, "action": { "type": "message", "label": "โปรโมชัน", "text": "โปรโมชันตอนนี้มีอะไรบ้าง" } },
+    { "bounds": { "x": 0,    "y": 843, "width": 833, "height": 843 }, "action": { "type": "message", "label": "ส่งสลิปชำระเงิน", "text": "ส่งสลิปชำระเงิน" } },
+    { "bounds": { "x": 833,  "y": 843, "width": 833, "height": 843 }, "action": { "type": "message", "label": "ข้อมูลสมาชิก", "text": "ขอดูข้อมูลสมาชิกของฉัน" } },
+    { "bounds": { "x": 1666, "y": 843, "width": 834, "height": 843 }, "action": { "type": "message", "label": "คุยกับพนักงาน", "text": "คุยกับพนักงาน" } }
+  ]
+}

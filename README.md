@@ -16,14 +16,18 @@ final-project/
 │   ├── 03_bot-rules.md           ข้อกำหนดต้องทำ 10 ข้อ / ห้ามทำ 10 ข้อ (มีรหัส D-xx, N-xx)
 │   ├── 04_system-prompt.md       คำสั่งระบบฉบับร่าง + คำสั่งวิเคราะห์ภาพ
 │   ├── 05_test-plan.md           (ยังไม่มี) ใช้ชุดทดสอบใน qa/ แทน
-│   └── 06_diagrams.md            แผนภาพสถาปัตยกรรม + การไหลของข้อมูล 1 ข้อความ (Mermaid)
+│   ├── 06_diagrams.md            แผนภาพสถาปัตยกรรม + การไหลของข้อมูล 1 ข้อความ (Mermaid)
+│   ├── 07_demo-script.md         สคริปต์คลิปนำเสนอ
+│   ├── 08_project-report.md      ต้นฉบับเอกสารพัฒนาโครงการ
+│   ├── XFitness-Chatbot_*.docx/.pdf/.pptx   ไฟล์ส่งมอบ: เอกสารพัฒนาโครงการ + งานนำเสนอ
+│   └── architecture.png          แผนภาพสถาปัตยกรรม (ใช้ในเอกสารและสไลด์)
 ├── qa/
+│   ├── test-images/              ภาพทดสอบ 5 ภาพ (มีลายน้ำ "ภาพจำลองเพื่อการทดสอบ")
 │   ├── x-fitness-test-cases.md   เอกสาร test case 40 กรณี (ต้นฉบับ แก้ได้): คำถาม 10 · ภาพ 5 · ความปลอดภัย 5 · ต้องทำ/ห้ามทำ 20
 │   └── results/                  ผลทดสอบ: x-fitness-ui-results.md (Playwright + ภาพหน้าจอ) · x-fitness-api-results.md (สคริปต์ API)
 ├── data/
 │   ├── knowledge-base/           คลังความรู้ 8 เอกสาร (~15 หน้า) สำหรับทำ RAG
 │   └── db/                       ข้อมูลธุรกิจแบบ JSON 14 ไฟล์ (แพ็กเกจ คลาส ตาราง สมาชิกจำลอง 20 คน ฯลฯ)
-├── test-images/                  ภาพทดสอบ 5 ภาพ (มีลายน้ำ "ภาพจำลองเพื่อการทดสอบ")
 ├── mockup/
 │   ├── index.html                เว็บไซต์ต้นแบบพร้อมวิดเจ็ตแชต เปิดด้วยเบราว์เซอร์ได้เลย
 │   ├── admin/                    ระบบหลังบ้าน (login admin / 1234 · ไม่รัน backend = โหมดดูตัวอย่าง)
@@ -32,12 +36,12 @@ final-project/
     ├── backend/                  FastAPI: บอท LightRAG + vision LLM + guardrail (/api/chat, /api/vision) + กล่องแชตใน SQLite + เสิร์ฟหน้าเว็บ
     ├── frontend/                 สำเนาของ mockup/ ที่ backend เสิร์ฟ
     ├── data/                     สำเนาของ data/
-    └── test-images/              สำเนาของ test-images/
+    └── test-images/              สำเนาของ qa/test-images/
 ```
 
 ## วิธีเปิด mockup
 
-ดับเบิลคลิก `mockup/index.html` (ต้องต่ออินเทอร์เน็ตเพื่อโหลดฟอนต์) และเก็บโฟลเดอร์ `test-images` ไว้ข้าง `mockup` เพราะแชตดึงภาพทดสอบจากที่นั่น
+ดับเบิลคลิก `mockup/index.html` (ต้องต่ออินเทอร์เน็ตเพื่อโหลดฟอนต์) แชตดึงภาพทดสอบจาก `qa/test-images/`
 
 - แชตเริ่มใน **โหมดจำลอง**: ตอบจากข้อมูลใน `data/db` ด้วยกฎในหน้าเว็บ ใช้ซ้อมและถ่ายคลิปสาธิต UI ได้ทันที
 - เมื่อมี backend จริง กดไอคอนตั้งค่าในแชต → **เชื่อม Backend API** → ใส่ URL หน้าเว็บจะเรียก `POST /api/chat`, `POST /api/vision`, `GET /api/health` ตามแผนภาพ
@@ -47,7 +51,7 @@ final-project/
 
 - **ดูหน้าตาอย่างเดียว:** ดับเบิลคลิก `mockup/admin/index.html` ล็อกอิน admin / 1234 ได้เลย เข้า**โหมดดูตัวอย่าง** มีแชตตัวอย่างให้ลองตอบ แต่ไม่บันทึกอะไร
 - **ใช้งานจริง:** รัน backend ก่อน แล้วกล่องแชตจะอ่าน/เขียน SQLite
-- `x-fitness/` เป็น source code ที่รันได้ในตัว: `frontend/` `data/` `test-images/` ในนั้น**คัดลอกมาจากราก** ถ้าแก้ `mockup/` หรือ `data/` ที่ราก ให้คัดลอกไปทับอีกครั้ง เช่น `cp -r mockup/. x-fitness/frontend/` และ `cp -r data/. x-fitness/data/`
+- `x-fitness/` เป็น source code ที่รันได้ในตัว: `frontend/` `data/` `test-images/` ในนั้น**คัดลอกมาจากราก** (`mockup/` `data/` `qa/test-images/`) ถ้าแก้ `mockup/` หรือ `data/` ที่ราก ให้คัดลอกไปทับอีกครั้ง เช่น `cp -r mockup/. x-fitness/frontend/` และ `cp -r data/. x-fitness/data/`
 
 ```bash
 cd x-fitness/backend
@@ -57,6 +61,17 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 เปิด `http://localhost:8000/` (หน้าเว็บ) และ `http://localhost:8000/admin/` (หลังบ้าน ล็อกอิน **admin / 1234** ตรวจที่เซิร์ฟเวอร์) · ลูกค้าเปิดจากมือถือได้ที่ `http://<IP เครื่องนี้>:8000/` ถ้าอยู่ Wi-Fi เดียวกัน
+
+**LINE OA ตัวจริง** ใช้ Webhook URL = `https://x-fitness-chatbot.onrender.com/api/line/webhook` · ต้องใส่ `LINE_CHANNEL_SECRET` และ `LINE_CHANNEL_ACCESS_TOKEN` ใน Render → Environment ก่อน ไม่งั้น Verify ได้ 503
+
+**ทดสอบ LINE OA จากเครื่องตัวเอง (Cloudflare Tunnel)** — ติดตั้งครั้งแรก `winget install --id Cloudflare.cloudflared` แล้วทำทุกครั้ง:
+
+1. หน้าต่างที่ 1: `cd x-fitness/backend` แล้ว `uvicorn app.main:app --port 8000`
+2. หน้าต่างที่ 2: `cloudflared tunnel --url http://localhost:8000` แล้วคัดลอก URL `https://….trycloudflare.com`
+3. LINE Developers → Messaging API → Webhook URL = `<URL>/api/line/webhook` → **Verify**
+4. เลิกใช้: `Ctrl+C` ทั้งสองหน้าต่าง
+
+URL เปลี่ยนทุกครั้งที่เปิด tunnel ใหม่ · ขั้นตอนตั้งค่า LINE ครั้งแรก (สร้าง OA, Channel secret, access token) และวิธีแก้เมื่อ Verify ไม่ผ่าน ดู `x-fitness/README.md` หัวข้อ "เชื่อม LINE Official Account"
 
 | เมนู | เชื่อม API | ทำอะไร |
 |---|---|---|
