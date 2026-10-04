@@ -20,8 +20,15 @@ final-project/
 │   ├── knowledge-base/           คลังความรู้ 8 เอกสาร (~15 หน้า) สำหรับทำ RAG
 │   └── db/                       ข้อมูลธุรกิจแบบ JSON 14 ไฟล์ (แพ็กเกจ คลาส ตาราง สมาชิกจำลอง 20 คน ฯลฯ)
 ├── test-images/                  ภาพทดสอบ 5 ภาพ (มีลายน้ำ "ภาพจำลองเพื่อการทดสอบ")
-└── mockup/
-    └── index.html                เว็บไซต์ต้นแบบพร้อมวิดเจ็ตแชต เปิดด้วยเบราว์เซอร์ได้เลย
+├── mockup/
+│   ├── index.html                เว็บไซต์ต้นแบบพร้อมวิดเจ็ตแชต เปิดด้วยเบราว์เซอร์ได้เลย
+│   ├── admin/                    ระบบหลังบ้าน (login admin / 1234 · ไม่รัน backend = โหมดดูตัวอย่าง)
+│   └── shared/                   db.js (ข้อมูลจาก data/db) + chat-store.js (ต่อ API กล่องแชต ใช้ร่วมกันทั้งหน้าเว็บและหลังบ้าน)
+└── x-fitness/                    source code (รันได้ในตัว)
+    ├── backend/                  FastAPI: บอท LightRAG + vision LLM + guardrail (/api/chat, /api/vision) + กล่องแชตใน SQLite + เสิร์ฟหน้าเว็บ
+    ├── frontend/                 สำเนาของ mockup/ ที่ backend เสิร์ฟ
+    ├── data/                     สำเนาของ data/
+    └── test-images/              สำเนาของ test-images/
 ```
 
 ## วิธีเปิด mockup
@@ -31,6 +38,69 @@ final-project/
 - แชตเริ่มใน **โหมดจำลอง**: ตอบจากข้อมูลใน `data/db` ด้วยกฎในหน้าเว็บ ใช้ซ้อมและถ่ายคลิปสาธิต UI ได้ทันที
 - เมื่อมี backend จริง กดไอคอนตั้งค่าในแชต → **เชื่อม Backend API** → ใส่ URL หน้าเว็บจะเรียก `POST /api/chat`, `POST /api/vision`, `GET /api/health` ตามแผนภาพ
 - หน้าตั้งค่าในแชตมีสวิตช์จำลองเครือข่ายล่มและหมดเวลา ไว้ทดสอบสถานะ error
+
+### ระบบหลังบ้าน (admin) และ backend
+
+- **ดูหน้าตาอย่างเดียว:** ดับเบิลคลิก `mockup/admin/index.html` ล็อกอิน admin / 1234 ได้เลย เข้า**โหมดดูตัวอย่าง** มีแชตตัวอย่างให้ลองตอบ แต่ไม่บันทึกอะไร
+- **ใช้งานจริง:** รัน backend ก่อน แล้วกล่องแชตจะอ่าน/เขียน SQLite
+- `x-fitness/` เป็น source code ที่รันได้ในตัว: `frontend/` `data/` `test-images/` ในนั้น**คัดลอกมาจากราก** ถ้าแก้ `mockup/` หรือ `data/` ที่ราก ให้คัดลอกไปทับอีกครั้ง เช่น `cp -r mockup/. x-fitness/frontend/` และ `cp -r data/. x-fitness/data/`
+
+```bash
+cd x-fitness/backend
+pip install -r requirements.txt
+cp .env.example .env          # ใส่ TYPHOON_API_KEY ในไฟล์ .env (ไฟล์นี้ไม่ถูก commit)
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+เปิด `http://localhost:8000/` (หน้าเว็บ) และ `http://localhost:8000/admin/` (หลังบ้าน ล็อกอิน **admin / 1234** ตรวจที่เซิร์ฟเวอร์) · ลูกค้าเปิดจากมือถือได้ที่ `http://<IP เครื่องนี้>:8000/` ถ้าอยู่ Wi-Fi เดียวกัน
+
+| เมนู | เชื่อม API | ทำอะไร |
+|---|---|---|
+| กล่องแชตลูกค้า | ✓ | รับเรื่อง ตอบลูกค้า ข้อความสำเร็จรูป ปิดเรื่องคืนให้บอท ดูข้อมูลสมาชิกข้างแชต |
+| ภาพรวม · Leads · สมาชิก · การชำระเงิน · การจองคลาส · โปรโมชัน · ตั้งค่าบอท · รายงาน · ผู้ใช้และสิทธิ์ | ยัง | แสดงข้อมูลจาก `data/db` ปุ่มที่ยังไม่ต่อ API แจ้ง "เร็ว ๆ นี้" |
+| คลังความรู้ (RAG) | ✓ | รายการเอกสารและสถานะดัชนี · ทดสอบค้น · อัปโหลด `.md` · สร้างดัชนีใหม่ |
+
+**แชตลูกค้า**
+- แชตใหม่ได้เลขเรื่อง (ticket) 10 ตัว ตัวอักษรสลับตัวเลข เช่น `K3M8P2Q7R5` เก็บใน localStorage ของลูกค้า รีโหลดหน้าแล้วกลับมาแชตเดิม ปุ่ม "เริ่มแชตใหม่" ออกเลขใหม่
+- ข้อความทุกข้อความเก็บใน SQLite `x-fitness/backend/data/chat.sqlite3` · ไม่รัน backend บอทยังตอบได้ (โหมดจำลอง) แต่ส่งต่อพนักงานไม่ได้
+- ทดสอบ: ลูกค้าพิมพ์ "คุยกับพนักงาน" → เข้ากล่องของ admin ภายใน 1–2 วินาที → admin ตอบ ข้อความขึ้นในแชตลูกค้า ระหว่างนั้นบอทหยุดตอบ จนกว่า admin จะกด "ปิดเรื่อง · คืนให้บอท"
+
+**บอท** — เมื่อ `.env` มี `TYPHOON_API_KEY` หน้าเว็บสลับไปตอบด้วย LLM จริงเอง (ไม่มี key = โหมดจำลอง) · ใช้ key ของ Typhoon ตัวเดียว (แชต · อ่านภาพ · สร้างดัชนี LightRAG)
+
+```text
+ข้อความ (หน้าเว็บ หรือ LINE OA) → guard ขาเข้า → LightRAG ค้นคลังความรู้ → LLM ตอบ → guard ขาออก → ลูกค้า
+ภาพ    → vision LLM อ่านเป็น JSON → (สลิป) ตรวจ 5 ข้อด้วยโค้ด → รวมเข้าข้อความข้างบน
+```
+
+| ส่วน | ไฟล์ | ทำอะไร |
+|---|---|---|
+| Guardrail | `x-fitness/backend/app/guard.py` | **ขาเข้า** ข้อความเปลี่ยนคำสั่งระบบ (N-07, N-08) · อาการฉุกเฉิน (D-07) · ยา/สารกระตุ้น (N-06) · นอกเรื่อง (N-10) ตอบด้วยข้อความตายตัว ไม่เรียก LLM · **ขาออก** ตัดคำว่า "ชำระสำเร็จ" (N-05) · ปิดเบอร์โทรที่ไม่ใช่ของร้าน (N-04) · ตัดคำประเมินสุขภาพเช่น "อยู่ในเกณฑ์ปกติ" (N-06) · คำตอบที่มีเลขบัญชีอื่น หลุดคำสั่งระบบ หรือมีจำนวนเงินที่ไม่มีในคลังความรู้ (G-NUM) เปลี่ยนเป็นข้อความปลอดภัยและเสนอส่งต่อพนักงาน · รหัสกฎส่งกลับใน `rules` |
+| RAG | `x-fitness/backend/app/rag.py` | LightRAG สร้างกราฟความรู้ + เวกเตอร์จาก `data/knowledge-base` ตอนเปิดเซิร์ฟเวอร์ (ทำเฉพาะเอกสารที่เปลี่ยน เก็บใน `x-fitness/backend/data/lightrag/`) · embedding ใช้โมเดลในเครื่อง `paraphrase-multilingual-MiniLM-L12-v2` (โหลดครั้งแรก ~220 MB ไม่ต้องใช้ key) · ไม่มี `TYPHOON_API_KEY` = ค้นด้วยคำแทน (`keyword_search.py`) |
+| Vision | `x-fitness/backend/app/chat.py` `/api/vision` | `typhoon-ocr` อ่านข้อความในภาพ (`prompts/ocr.md` · ตอบ error ลองใหม่ 1 ครั้ง) → LLM แชตจัดเป็น JSON ตาม `prompts/vision.md` · typhoon-ocr ใช้คำสั่งให้ตอบ JSON ตรง ๆ ไม่ได้ (ทดสอบแล้ว error) · สลิปตรวจ 5 ข้อตาม KB-06 ด้วยโค้ด (`business.py`) |
+| คำสั่งระบบ | `x-fitness/backend/app/prompts/system.md` | กฎต้องทำ/ห้ามทำ + ข้อมูลสมาชิกที่ยืนยันแล้ว + ประวัติแชต 8 ข้อความ |
+
+ตั้งค่าผ่าน `x-fitness/backend/.env` (ดูตัวอย่างใน `.env.example`): `TYPHOON_API_KEY`, `XF_CHAT_MODEL`, `XF_VISION_MODEL`, `LINE_CHANNEL_SECRET` `LINE_CHANNEL_ACCESS_TOKEN`, `XF_EMBED_MODEL` `XF_EMBED_DIM` (หรือ `XF_EMBED_API_KEY` `XF_EMBED_BASE_URL` ถ้าจะใช้ embedding API), `XF_RAG_MODE`, `XF_ADMIN_USER`, `XF_ADMIN_PASS`, `XF_DB_PATH`, `XF_CORS_ORIGINS` · ทดสอบ backend: `cd x-fitness/backend && python -m pytest` (ไม่ต้องใช้ key — LightRAG ทดสอบด้วย LLM และ embedding ปลอม)
+
+> เปลี่ยน `XF_EMBED_MODEL` หรือ `XF_EMBED_DIM` แล้วต้องลบโฟลเดอร์ `x-fitness/backend/data/lightrag/` ก่อนเปิดใหม่ เพราะดัชนีเดิมใช้ขนาดเวกเตอร์เดิม
+
+| Method | Path | ใช้ทำอะไร |
+|---|---|---|
+| GET | `/api/health` | ตรวจว่า backend ทำงาน และมี key ของ Typhoon หรือไม่ |
+| POST | `/api/chat` | บอทตอบ (Typhoon + RAG) |
+| POST | `/api/vision` | อ่านภาพ (Typhoon OCR) → JSON |
+| GET | `/api/conversations/{ticket}` | ลูกค้าดึงแชตของตัวเอง |
+| POST | `/api/conversations/{ticket}/messages` | บันทึกข้อความลูกค้า/บอท |
+| POST | `/api/conversations/{ticket}/handoff` | ขอคุยกับพนักงาน |
+| POST | `/api/admin/login` | ล็อกอิน ได้ token |
+| GET | `/api/admin/conversations` | รายการแชตทั้งหมด |
+| POST | `/api/admin/conversations/{ticket}/messages` | พนักงานตอบ |
+| PATCH | `/api/admin/conversations/{ticket}` | รับเรื่อง / ปิดเรื่อง / อ่านแล้ว |
+| DELETE | `/api/admin/conversations[/{ticket}]` | ลบแชต |
+| POST | `/api/line/webhook` | รับข้อความ/รูปจาก LINE OA (ตรวจลายเซ็น) แล้วตอบกลับทาง LINE |
+| GET | `/api/admin/kb` | รายการเอกสารคลังความรู้ + สถานะดัชนี |
+| POST | `/api/admin/kb/search` | ทดสอบค้นคลังความรู้ (3 ส่วนที่ใกล้ที่สุด) |
+| POST | `/api/admin/kb` | อัปโหลดเอกสาร `.md` (ไม่เกิน 200 KB) แล้วสร้างดัชนี |
+| POST | `/api/admin/kb/reindex` | สร้างดัชนีใหม่เฉพาะเอกสารที่เปลี่ยน |
 
 บัญชีทดสอบ (สมาชิกจำลอง)
 
@@ -51,9 +121,9 @@ final-project/
 | LLM: ตอบชุดคำถามทดสอบถูกต้อง | ชุดคำถาม 10 ข้อพร้อมเฉลย `docs/05_test-plan.md` ส่วนที่ 1 | ต่อ LLM จริงแล้วรันเก็บผล |
 | API: ทุก endpoint ในแผนภาพทำงาน | กำหนด 6 endpoint + ตัวอย่างคำขอ/ผลที่คาดหวัง (ส่วนที่ 6) | เขียน backend FastAPI |
 | UI: สถานะกำลังประมวลผล + error | mockup แสดง 3 ขั้นตอนประมวลผล, error เครือข่าย/หมดเวลา/ไฟล์ใหญ่/ชนิดไฟล์ผิด/ข้อความยาวเกิน + ปุ่มลองใหม่ | ต่อกับ API จริง |
-| RAG: ตอบจากคลังความรู้ภาษาไทย | คลังความรู้ภาษาไทย 8 เอกสาร มีรหัส KB-01 ถึง KB-08 สำหรับอ้างอิง | สร้างดัชนีเวกเตอร์ |
+| RAG: ตอบจากคลังความรู้ภาษาไทย | คลังความรู้ภาษาไทย 8 เอกสาร มีรหัส KB-01 ถึง KB-08 สำหรับอ้างอิง | ใส่ `TYPHOON_API_KEY` แล้วรันเก็บผล (LightRAG เขียนแล้ว) |
 | Prompt: สุ่มทดสอบต้องทำ/ห้ามทำ | กฎ 20 ข้อมีรหัส + ข้อความทดสอบครบทุกข้อ + คำสั่งสุ่ม (ส่วนที่ 5) | รันสุ่มแล้วกรอกผล |
-| Safety: มาตรการป้องกัน | มาตรการ 4 ชั้น + ชุดทดสอบ 5 กรณี (ส่วนที่ 3) | ยืนยันกับระบบจริง |
+| Safety: มาตรการป้องกัน | มาตรการ 4 ชั้น + ชุดทดสอบ 5 กรณี (ส่วนที่ 3) | guardrail ขาเข้า/ขาออกใน `x-fitness/backend/app/guard.py` มี test แล้ว · ยืนยันกับ LLM จริง |
 
 ### เอกสารและหลักฐานการทดสอบ
 
@@ -65,7 +135,7 @@ final-project/
 | บันทึกผลทดสอบ (คำถาม 10 · ภาพ 5 · ความปลอดภัย 5 · ปรับปรุง 3) | `docs/05_test-plan.md` |
 | แผนภาพสถาปัตยกรรม | `docs/06_diagrams.md` แผนภาพที่ 1 |
 | แผนภาพการไหลของข้อมูล | `docs/06_diagrams.md` แผนภาพที่ 2 |
-| Source code ที่ทำงานซ้ำได้ | ยังไม่มี backend: เมื่อเขียนแล้วให้เพิ่ม `backend/` + `requirements.txt` + วิธีรันใน README นี้ |
+| Source code ที่ทำงานซ้ำได้ | `x-fitness/backend/` + `requirements.txt` + วิธีรันในหัวข้อ "ระบบหลังบ้าน (admin) และ backend" |
 
 ## หมายเหตุสำหรับการทดสอบจริง
 

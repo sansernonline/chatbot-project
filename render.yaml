@@ -1,0 +1,25 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Deploys x-fitness/ (backend + frontend copy + data + prebuilt rag-index) as one free web service.
+services:
+  - name: x-fitness-chatbot
+    type: web
+    runtime: python
+    plan: free
+    region: singapore
+    rootDir: x-fitness
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.5            # the version the code was tested with
+      - key: TYPHOON_API_KEY
+        sync: false              # asked for in the Render dashboard, never stored in git
+      - key: XF_EMBED_API_KEY    # Gemini key; must match the embedding that built rag-index/
+        sync: false
+      - key: XF_ADMIN_PASS
+        sync: false
+      - key: LINE_CHANNEL_SECRET        # optional: leave empty to keep the LINE channel off
+        sync: false
+      - key: LINE_CHANNEL_ACCESS_TOKEN
+        sync: false

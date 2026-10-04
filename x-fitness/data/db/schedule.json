@@ -1,0 +1,238 @@
+{
+  "_note": "ข้อมูลจำลองทั้งหมดเพื่อใช้ในรายวิชา 06048308 ไม่ใช่ข้อมูลของบุคคลหรือธุรกิจจริง",
+  "booking_rule": "จองล่วงหน้าได้ 7 วัน ยกเลิกได้ถึง 2 ชั่วโมงก่อนคลาส",
+  "items": [
+    {
+      "id": "SL-01",
+      "day": 1,
+      "day_th": "จันทร์",
+      "start": "07:00",
+      "class_id": "CL-RIDE",
+      "trainer_id": "TR-06"
+    },
+    {
+      "id": "SL-02",
+      "day": 1,
+      "day_th": "จันทร์",
+      "start": "12:15",
+      "class_id": "CL-YOGA",
+      "trainer_id": "TR-02"
+    },
+    {
+      "id": "SL-03",
+      "day": 1,
+      "day_th": "จันทร์",
+      "start": "18:00",
+      "class_id": "CL-HIIT",
+      "trainer_id": "TR-01"
+    },
+    {
+      "id": "SL-04",
+      "day": 1,
+      "day_th": "จันทร์",
+      "start": "19:00",
+      "class_id": "CL-BOX",
+      "trainer_id": "TR-03"
+    },
+    {
+      "id": "SL-05",
+      "day": 1,
+      "day_th": "จันทร์",
+      "start": "19:15",
+      "class_id": "CL-DANCE",
+      "trainer_id": "TR-04"
+    },
+    {
+      "id": "SL-06",
+      "day": 2,
+      "day_th": "อังคาร",
+      "start": "07:00",
+      "class_id": "CL-FUNC",
+      "trainer_id": "TR-05"
+    },
+    {
+      "id": "SL-07",
+      "day": 2,
+      "day_th": "อังคาร",
+      "start": "12:15",
+      "class_id": "CL-PILATES",
+      "trainer_id": "TR-02"
+    },
+    {
+      "id": "SL-08",
+      "day": 2,
+      "day_th": "อังคาร",
+      "start": "18:00",
+      "class_id": "CL-RIDE",
+      "trainer_id": "TR-04"
+    },
+    {
+      "id": "SL-09",
+      "day": 2,
+      "day_th": "อังคาร",
+      "start": "19:00",
+      "class_id": "CL-MUAY",
+      "trainer_id": "TR-03"
+    },
+    {
+      "id": "SL-10",
+      "day": 3,
+      "day_th": "พุธ",
+      "start": "07:00",
+      "class_id": "CL-HIIT",
+      "trainer_id": "TR-06"
+    },
+    {
+      "id": "SL-11",
+      "day": 3,
+      "day_th": "พุธ",
+      "start": "12:15",
+      "class_id": "CL-YOGA",
+      "trainer_id": "TR-02"
+    },
+    {
+      "id": "SL-12",
+      "day": 3,
+      "day_th": "พุธ",
+      "start": "18:00",
+      "class_id": "CL-FUNC",
+      "trainer_id": "TR-01"
+    },
+    {
+      "id": "SL-13",
+      "day": 3,
+      "day_th": "พุธ",
+      "start": "19:00",
+      "class_id": "CL-BOX",
+      "trainer_id": "TR-03"
+    },
+    {
+      "id": "SL-14",
+      "day": 3,
+      "day_th": "พุธ",
+      "start": "19:15",
+      "class_id": "CL-DANCE",
+      "trainer_id": "TR-04"
+    },
+    {
+      "id": "SL-15",
+      "day": 4,
+      "day_th": "พฤหัสบดี",
+      "start": "07:00",
+      "class_id": "CL-RIDE",
+      "trainer_id": "TR-06"
+    },
+    {
+      "id": "SL-16",
+      "day": 4,
+      "day_th": "พฤหัสบดี",
+      "start": "12:15",
+      "class_id": "CL-PILATES",
+      "trainer_id": "TR-02"
+    },
+    {
+      "id": "SL-17",
+      "day": 4,
+      "day_th": "พฤหัสบดี",
+      "start": "18:00",
+      "class_id": "CL-HIIT",
+      "trainer_id": "TR-01"
+    },
+    {
+      "id": "SL-18",
+      "day": 4,
+      "day_th": "พฤหัสบดี",
+      "start": "19:00",
+      "class_id": "CL-MUAY",
+      "trainer_id": "TR-03"
+    },
+    {
+      "id": "SL-19",
+      "day": 5,
+      "day_th": "ศุกร์",
+      "start": "07:00",
+      "class_id": "CL-FUNC",
+      "trainer_id": "TR-05"
+    },
+    {
+      "id": "SL-20",
+      "day": 5,
+      "day_th": "ศุกร์",
+      "start": "18:00",
+      "class_id": "CL-DANCE",
+      "trainer_id": "TR-04"
+    },
+    {
+      "id": "SL-21",
+      "day": 5,
+      "day_th": "ศุกร์",
+      "start": "19:00",
+      "class_id": "CL-RIDE",
+      "trainer_id": "TR-06"
+    },
+    {
+      "id": "SL-22",
+      "day": 6,
+      "day_th": "เสาร์",
+      "start": "09:00",
+      "class_id": "CL-YOGA",
+      "trainer_id": "TR-02"
+    },
+    {
+      "id": "SL-23",
+      "day": 6,
+      "day_th": "เสาร์",
+      "start": "10:30",
+      "class_id": "CL-HIIT",
+      "trainer_id": "TR-01"
+    },
+    {
+      "id": "SL-24",
+      "day": 6,
+      "day_th": "เสาร์",
+      "start": "13:00",
+      "class_id": "CL-MUAY",
+      "trainer_id": "TR-03"
+    },
+    {
+      "id": "SL-25",
+      "day": 6,
+      "day_th": "เสาร์",
+      "start": "15:00",
+      "class_id": "CL-DANCE",
+      "trainer_id": "TR-04"
+    },
+    {
+      "id": "SL-26",
+      "day": 7,
+      "day_th": "อาทิตย์",
+      "start": "09:00",
+      "class_id": "CL-PILATES",
+      "trainer_id": "TR-02"
+    },
+    {
+      "id": "SL-27",
+      "day": 7,
+      "day_th": "อาทิตย์",
+      "start": "10:30",
+      "class_id": "CL-RIDE",
+      "trainer_id": "TR-06"
+    },
+    {
+      "id": "SL-28",
+      "day": 7,
+      "day_th": "อาทิตย์",
+      "start": "13:00",
+      "class_id": "CL-BOX",
+      "trainer_id": "TR-03"
+    },
+    {
+      "id": "SL-29",
+      "day": 7,
+      "day_th": "อาทิตย์",
+      "start": "15:00",
+      "class_id": "CL-FUNC",
+      "trainer_id": "TR-05"
+    }
+  ]
+}

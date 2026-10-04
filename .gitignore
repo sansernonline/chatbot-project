@@ -1,0 +1,6 @@
+_to_delete/
+__pycache__/
+.pytest_cache/
+x-fitness/backend/data/
+x-fitness/backend/.env
+.venv/

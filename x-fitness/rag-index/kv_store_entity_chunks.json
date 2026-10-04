@@ -1,0 +1,3987 @@
+{
+  "เอ็กซ์ ฟิตเนส": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-02-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091121,
+    "_id": "เอ็กซ์ ฟิตเนส"
+  },
+  "ศรีราชา": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "ศรีราชา"
+  },
+  "ชลบุรี": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "ชลบุรี"
+  },
+  "ถนนสุขุมวิท": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "ถนนสุขุมวิท"
+  },
+  "หอนาฬิกาศรีราชา": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "หอนาฬิกาศรีราชา"
+  },
+  "LINE Official Account": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-06-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091300,
+    "_id": "LINE Official Account"
+  },
+  "โทรศัพท์": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "โทรศัพท์"
+  },
+  "อีเมล": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "อีเมล"
+  },
+  "Wi-Fi": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "Wi-Fi"
+  },
+  "InBody": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-08-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091444,
+    "_id": "InBody"
+  },
+  "ลานจอดรถ": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "ลานจอดรถ"
+  },
+  "ที่จอดรถจักรยานยนต์": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "ที่จอดรถจักรยานยนต์"
+  },
+  "โซนเวทฟรี": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "โซนเวทฟรี"
+  },
+  "โซนเครื่องเล่นเวท": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "โซนเครื่องเล่นเวท"
+  },
+  "โซนคาร์ดิโอ": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-08-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091444,
+    "_id": "โซนคาร์ดิโอ"
+  },
+  "Studio A": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-03-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091160,
+    "_id": "Studio A"
+  },
+  "Ride Room": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-03-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091160,
+    "_id": "Ride Room"
+  },
+  "Fight Room": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-03-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091160,
+    "_id": "Fight Room"
+  },
+  "ห้องอาบน้ำชาย–หญิง": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "ห้องอาบน้ำชาย–หญิง"
+  },
+  "ล็อกเกอร์รายวัน": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-08-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091444,
+    "_id": "ล็อกเกอร์รายวัน"
+  },
+  "มุมโปรตีนและเครื่องดื่ม": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "มุมโปรตีนและเครื่องดื่ม"
+  },
+  "บัตรสมาชิก": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-09-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091480,
+    "_id": "บัตรสมาชิก"
+  },
+  "ใบเสร็จ": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-07-chunk-001"
+    ],
+    "count": 2,
+    "update_time": 1791091371,
+    "_id": "ใบเสร็จ"
+  },
+  "ชั่วโมงละ 20 บาท": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "ชั่วโมงละ 20 บาท"
+  },
+  "วันปิดทำการประจำปี": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-06-chunk-000",
+      "KB-09-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091480,
+    "_id": "วันปิดทำการประจำปี"
+  },
+  "วันหยุดนักขัตฤกษ์": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "วันหยุดนักขัตฤกษ์"
+  },
+  "วันที่ 31 ธันวาคม": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "วันที่ 31 ธันวาคม"
+  },
+  "การปิดปรับปรุงชั่วคราว": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "การปิดปรับปรุงชั่วคราว"
+  },
+  "คลาสกลุ่ม": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-03-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091160,
+    "_id": "คลาสกลุ่ม"
+  },
+  "เทรนเนอร์": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "เทรนเนอร์"
+  },
+  "ผู้เริ่มต้นออกกำลังกาย": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "ผู้เริ่มต้นออกกำลังกาย"
+  },
+  "คนทำงานออฟฟิศ": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "คนทำงานออฟฟิศ"
+  },
+  "นักเรียนนักศึกษา": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "นักเรียนนักศึกษา"
+  },
+  "สมาชิก": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-04-chunk-000",
+      "KB-05-chunk-000",
+      "KB-08-chunk-000"
+    ],
+    "count": 4,
+    "update_time": 1791091444,
+    "_id": "สมาชิก"
+  },
+  "ผู้ใช้บริการรายวัน": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "ผู้ใช้บริการรายวัน"
+  },
+  "ผู้ทดลองใช้ฟรี": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-09-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091480,
+    "_id": "ผู้ทดลองใช้ฟรี"
+  },
+  "ตั้งอยู่ที่": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091046,
+    "update_time": 1791091046,
+    "_id": "ตั้งอยู่ที่"
+  },
+  "มี": {
+    "chunk_ids": [
+      "KB-01-chunk-000",
+      "KB-08-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091444,
+    "_id": "มี"
+  },
+  "เปิดให้บริการ": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091055,
+    "update_time": 1791091055,
+    "_id": "เปิดให้บริการ"
+  },
+  "ประกาศผ่าน": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091055,
+    "update_time": 1791091055,
+    "_id": "ประกาศผ่าน"
+  },
+  "ปิดทำการ": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091055,
+    "update_time": 1791091055,
+    "_id": "ปิดทำการ"
+  },
+  "ปิดเร็ว": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091055,
+    "update_time": 1791091055,
+    "_id": "ปิดเร็ว"
+  },
+  "ปิดชั่วคราว": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091055,
+    "update_time": 1791091055,
+    "_id": "ปิดชั่วคราว"
+  },
+  "ให้บริการฟรี": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091055,
+    "update_time": 1791091055,
+    "_id": "ให้บริการฟรี"
+  },
+  "คิดค่าบริการ": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091055,
+    "update_time": 1791091055,
+    "_id": "คิดค่าบริการ"
+  },
+  "ตั้งอยู่ใกล้": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091055,
+    "update_time": 1791091055,
+    "_id": "ตั้งอยู่ใกล้"
+  },
+  "มีการเดินทาง": {
+    "chunk_ids": [
+      "KB-01-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091055,
+    "update_time": 1791091055,
+    "_id": "มีการเดินทาง"
+  },
+  "บัตรรายวัน (Day Pass)": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "บัตรรายวัน (Day Pass)"
+  },
+  "รายเดือนไม่มีสัญญา (Monthly Flex)": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "รายเดือนไม่มีสัญญา (Monthly Flex)"
+  },
+  "รายเดือนสัญญา 12 เดือน (Monthly 12-Month)": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "รายเดือนสัญญา 12 เดือน (Monthly 12-Month)"
+  },
+  "นักเรียน/นักศึกษา (Student)": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "นักเรียน/นักศึกษา (Student)"
+  },
+  "รายปีจ่ายครั้งเดียว (Annual Prepaid)": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "รายปีจ่ายครั้งเดียว (Annual Prepaid)"
+  },
+  "ค่าแรกเข้า": {
+    "chunk_ids": [
+      "KB-02-chunk-000",
+      "KB-02-chunk-001",
+      "KB-05-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091254,
+    "_id": "ค่าแรกเข้า"
+  },
+  "ค่าธรรมเนียมยกเลิก": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ค่าธรรมเนียมยกเลิก"
+  },
+  "คลาส Ride": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "คลาส Ride"
+  },
+  "การวัดองค์ประกอบร่างกาย": {
+    "chunk_ids": [
+      "KB-02-chunk-000",
+      "KB-08-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091444,
+    "_id": "การวัดองค์ประกอบร่างกาย"
+  },
+  "พาเพื่อนเข้าใช้ฟรี": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "พาเพื่อนเข้าใช้ฟรี"
+  },
+  "การโอนสิทธิ์": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "การโอนสิทธิ์"
+  },
+  "การแนะนำการใช้เครื่อง": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "การแนะนำการใช้เครื่อง"
+  },
+  "ทดลองเทรนกับเทรนเนอร์ส่วนตัว": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ทดลองเทรนกับเทรนเนอร์ส่วนตัว"
+  },
+  "บัตรประชาชน": {
+    "chunk_ids": [
+      "KB-02-chunk-000",
+      "KB-02-chunk-001",
+      "KB-05-chunk-000",
+      "KB-09-chunk-000"
+    ],
+    "count": 4,
+    "update_time": 1791091480,
+    "_id": "บัตรประชาชน"
+  },
+  "บัตรนักเรียน/นักศึกษา": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "บัตรนักเรียน/นักศึกษา"
+  },
+  "ผู้ปกครอง": {
+    "chunk_ids": [
+      "KB-02-chunk-000",
+      "KB-08-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091444,
+    "_id": "ผู้ปกครอง"
+  },
+  "เคาน์เตอร์": {
+    "chunk_ids": [
+      "KB-02-chunk-000",
+      "KB-02-chunk-001",
+      "KB-03-chunk-001",
+      "KB-05-chunk-000",
+      "KB-08-chunk-000",
+      "KB-09-chunk-000"
+    ],
+    "count": 6,
+    "update_time": 1791091480,
+    "_id": "เคาน์เตอร์"
+  },
+  "แชต": {
+    "chunk_ids": [
+      "KB-02-chunk-000",
+      "KB-02-chunk-001",
+      "KB-03-chunk-001",
+      "KB-05-chunk-000",
+      "KB-06-chunk-000"
+    ],
+    "count": 5,
+    "update_time": 1791091300,
+    "_id": "แชต"
+  },
+  "บัตรเครดิต": {
+    "chunk_ids": [
+      "KB-02-chunk-000",
+      "KB-06-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091300,
+    "_id": "บัตรเครดิต"
+  },
+  "บัญชีร้าน": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "บัญชีร้าน"
+  },
+  "สลิปการโอน": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "สลิปการโอน"
+  },
+  "อายุ 15–17 ปี": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "อายุ 15–17 ปี"
+  },
+  "อายุ 15–25 ปี": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "อายุ 15–25 ปี"
+  },
+  "เวลาเปิด-ปิด": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "เวลาเปิด-ปิด"
+  },
+  "บัตรรายวัน": {
+    "chunk_ids": [
+      "KB-02-chunk-001",
+      "KB-03-chunk-001",
+      "KB-05-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091254,
+    "_id": "บัตรรายวัน"
+  },
+  "บัตรรายเดือน": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "บัตรรายเดือน"
+  },
+  "สัญญา 12 เดือน": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "สัญญา 12 เดือน"
+  },
+  "รายปี": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "รายปี"
+  },
+  "แพ็กเกจใหม่": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "แพ็กเกจใหม่"
+  },
+  "รอบบิลปัจจุบัน": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "รอบบิลปัจจุบัน"
+  },
+  "โปรโมชัน": {
+    "chunk_ids": [
+      "KB-02-chunk-001",
+      "KB-07-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091371,
+    "_id": "โปรโมชัน"
+  },
+  "KB-05": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "KB-05"
+  },
+  "KB-07": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "KB-07"
+  },
+  "ทดลองใช้ฟรี": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ทดลองใช้ฟรี"
+  },
+  "คลาส": {
+    "chunk_ids": [
+      "KB-02-chunk-001",
+      "KB-03-chunk-001"
+    ],
+    "count": 2,
+    "update_time": 1791091160,
+    "_id": "คลาส"
+  },
+  "เสนอแพ็กเกจ": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "เสนอแพ็กเกจ"
+  },
+  "มีค่าใช้จ่าย": {
+    "chunk_ids": [
+      "KB-02-chunk-000",
+      "KB-08-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091444,
+    "_id": "มีค่าใช้จ่าย"
+  },
+  "มีสิทธิ์เข้าคลาสไม่จำกัด": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "มีสิทธิ์เข้าคลาสไม่จำกัด"
+  },
+  "ไม่รวมสิทธิ์เข้าคลาส": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ไม่รวมสิทธิ์เข้าคลาส"
+  },
+  "สามารถยกเลิกได้": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "สามารถยกเลิกได้"
+  },
+  "ต้องใช้ต่อเนื่อง": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ต้องใช้ต่อเนื่อง"
+  },
+  "ต้องมีผู้ปกครองเซ็นยินยอม": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ต้องมีผู้ปกครองเซ็นยินยอม"
+  },
+  "มีสิทธิประโยชน์พิเศษ": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "มีสิทธิประโยชน์พิเศษ"
+  },
+  "ต้องแสดงบัตรประชาชนหรือหนังสือเดินทาง": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ต้องแสดงบัตรประชาชนหรือหนังสือเดินทาง"
+  },
+  "สามารถชำระผ่านบัตรเครดิต": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "สามารถชำระผ่านบัตรเครดิต"
+  },
+  "ต้องแสดงเอกสาร": {
+    "chunk_ids": [
+      "KB-02-chunk-000",
+      "KB-05-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091254,
+    "_id": "ต้องแสดงเอกสาร"
+  },
+  "ต้องจ่ายครั้งเดียว": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ต้องจ่ายครั้งเดียว"
+  },
+  "สามารถชำระผ่านโอนเงิน": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "สามารถชำระผ่านโอนเงิน"
+  },
+  "สมาชิกใหม่ทุกแพ็กเกจรายเดือนขึ้นไป": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "สมาชิกใหม่ทุกแพ็กเกจรายเดือนขึ้นไป"
+  },
+  "ไม่สามารถขอคืนเงิน": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ไม่สามารถขอคืนเงิน"
+  },
+  "ได้รับบริการฟรี": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ได้รับบริการฟรี"
+  },
+  "ใช้ได้ 1 วัน": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ใช้ได้ 1 วัน"
+  },
+  "สามารถอัปเกรดได้": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "สามารถอัปเกรดได้"
+  },
+  "สามารถโอนสิทธิ์": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "สามารถโอนสิทธิ์"
+  },
+  "มีสัญญา 6 เดือน": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "มีสัญญา 6 เดือน"
+  },
+  "มีค่าธรรมเนียมโอนสิทธิ์": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "มีค่าธรรมเนียมโอนสิทธิ์"
+  },
+  "การอัปเกรดแพ็กเกจ": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "การอัปเกรดแพ็กเกจ"
+  },
+  "ไม่ต้องจ่ายค่าแรกเข้าซ้ำ": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ไม่ต้องจ่ายค่าแรกเข้าซ้ำ"
+  },
+  "การเปลี่ยนหรืออัปเกรดแพ็กเกจ": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "การเปลี่ยนหรืออัปเกรดแพ็กเกจ"
+  },
+  "ทำได้ที่เคาน์เตอร์หรือแชต": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ทำได้ที่เคาน์เตอร์หรือแชต"
+  },
+  "ไม่รวมในสิทธิ์": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ไม่รวมในสิทธิ์"
+  },
+  "ไม่สามารถยกเลิก": {
+    "chunk_ids": [
+      "KB-02-chunk-000",
+      "KB-05-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091254,
+    "_id": "ไม่สามารถยกเลิก"
+  },
+  "ฟรีเดือนละ 1 ครั้ง": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ฟรีเดือนละ 1 ครั้ง"
+  },
+  "เริ่มใช้แพ็กเกจใหม่": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "เริ่มใช้แพ็กเกจใหม่"
+  },
+  "ได้ 1 ครั้ง": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ได้ 1 ครั้ง"
+  },
+  "ฟรี 1 ครั้ง": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ฟรี 1 ครั้ง"
+  },
+  "เริ่มใช้งานหลังชำระเงิน": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "เริ่มใช้งานหลังชำระเงิน"
+  },
+  "การสมัคร": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "การสมัคร"
+  },
+  "ทำได้ที่เคาน์เตอร์": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ทำได้ที่เคาน์เตอร์"
+  },
+  "ต้องแสดงเมื่อสมัคร": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ต้องแสดงเมื่อสมัคร"
+  },
+  "ต้องแจ้งยกเลิกล่วงหน้า 30 วัน": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ต้องแจ้งยกเลิกล่วงหน้า 30 วัน"
+  },
+  "เริ่มวันถัดจากวันสิ้นสุดรอบบิลปัจจุบัน": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "เริ่มวันถัดจากวันสิ้นสุดรอบบิลปัจจุบัน"
+  },
+  "ทำได้ผ่านแชต": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ทำได้ผ่านแชต"
+  },
+  "ภายใน 30 วันแรก": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ภายใน 30 วันแรก"
+  },
+  "ต้องเสียค่าธรรมเนียม 500 บาท": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ต้องเสียค่าธรรมเนียม 500 บาท"
+  },
+  "ทำได้ทุกเมื่อ": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ทำได้ทุกเมื่อ"
+  },
+  "ต้องแจ้งผ่านเคาน์เตอร์หรือแชต": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ต้องแจ้งผ่านเคาน์เตอร์หรือแชต"
+  },
+  "ต้องซื้อเพิ่ม": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ต้องซื้อเพิ่ม"
+  },
+  "ซื้อได้ที่เคาน์เตอร์": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ซื้อได้ที่เคาน์เตอร์"
+  },
+  "เฉลี่ยเดือนละ 825 บาท": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "เฉลี่ยเดือนละ 825 บาท"
+  },
+  "ราคาต่อเดือนถูกกว่าแบบไม่มีสัญญา": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ราคาต่อเดือนถูกกว่าแบบไม่มีสัญญา"
+  },
+  "ราคา 1,290 บาทต่อเดือน": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ราคา 1,290 บาทต่อเดือน"
+  },
+  "ราคา 790 บาทต่อเดือน": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ราคา 790 บาทต่อเดือน"
+  },
+  "ราคา 150 บาทต่อครั้ง": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ราคา 150 บาทต่อครั้ง"
+  },
+  "ราคา 9,900 บาทต่อปี": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ราคา 9,900 บาทต่อปี"
+  },
+  "มีสำหรับบางแพ็กเกจ": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "มีสำหรับบางแพ็กเกจ"
+  },
+  "ราคา 990 บาทต่อเดือน": {
+    "chunk_ids": [
+      "KB-02-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ราคา 990 บาทต่อเดือน"
+  },
+  "อัปเกรดเป็น": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "อัปเกรดเป็น"
+  },
+  "เริ่มหลัง": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "เริ่มหลัง"
+  },
+  "ใช้สำหรับ": {
+    "chunk_ids": [
+      "KB-02-chunk-001",
+      "KB-05-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091254,
+    "_id": "ใช้สำหรับ"
+  },
+  "ต้องลงทะเบียนผ่าน": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ต้องลงทะเบียนผ่าน"
+  },
+  "ใช้ร่วมกับ": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ใช้ร่วมกับ"
+  },
+  "ต้องแสดงใน": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ต้องแสดงใน"
+  },
+  "เริ่มใน": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "เริ่มใน"
+  },
+  "จำกัดจำนวน": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "จำกัดจำนวน"
+  },
+  "อ้างอิงถึง": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "อ้างอิงถึง"
+  },
+  "ไม่ต้องจ่าย": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ไม่ต้องจ่าย"
+  },
+  "รวมคลาสได้": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "รวมคลาสได้"
+  },
+  "เปลี่ยนเป็น": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "เปลี่ยนเป็น"
+  },
+  "มีที่ว่าง": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "มีที่ว่าง"
+  },
+  "แพ็กเกจที่มีสัญญา": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "แพ็กเกจที่มีสัญญา"
+  },
+  "ต้องลงทะเบียน": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ต้องลงทะเบียน"
+  },
+  "ใช้เงื่อนไข": {
+    "chunk_ids": [
+      "KB-02-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091121,
+    "update_time": 1791091121,
+    "_id": "ใช้เงื่อนไข"
+  },
+  "HIIT Blast": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "HIIT Blast"
+  },
+  "Ride": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "Ride"
+  },
+  "Yoga Flow": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "Yoga Flow"
+  },
+  "Pilates Core": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "Pilates Core"
+  },
+  "Boxing Fit": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "Boxing Fit"
+  },
+  "Muay Thai Basic": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "Muay Thai Basic"
+  },
+  "Dance Cardio": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "Dance Cardio"
+  },
+  "Functional Strength": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "Functional Strength"
+  },
+  "โค้ชนิว": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "โค้ชนิว"
+  },
+  "โค้ชมิ้นท์": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "โค้ชมิ้นท์"
+  },
+  "โค้ชบอส": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "โค้ชบอส"
+  },
+  "โค้ชตั้ม": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "โค้ชตั้ม"
+  },
+  "โค้ชเก่ง": {
+    "chunk_ids": [
+      "KB-03-chunk-000",
+      "KB-03-chunk-001",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "โค้ชเก่ง"
+  },
+  "ค่าเผาผลาญ": {
+    "chunk_ids": [
+      "KB-03-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "ค่าเผาผลาญ"
+  },
+  "ตารางคลาสประจำสัปดาห์": {
+    "chunk_ids": [
+      "KB-03-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "ตารางคลาสประจำสัปดาห์"
+  },
+  "วันจันทร์": {
+    "chunk_ids": [
+      "KB-03-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "วันจันทร์"
+  },
+  "วันอังคาร": {
+    "chunk_ids": [
+      "KB-03-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "วันอังคาร"
+  },
+  "วันพุธ": {
+    "chunk_ids": [
+      "KB-03-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "วันพุธ"
+  },
+  "วันพฤหัสบดี": {
+    "chunk_ids": [
+      "KB-03-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "วันพฤหัสบดี"
+  },
+  "KB-01": {
+    "chunk_ids": [
+      "KB-03-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "KB-01"
+  },
+  "KB-03": {
+    "chunk_ids": [
+      "KB-03-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "KB-03"
+  },
+  "โค้ชแพร": {
+    "chunk_ids": [
+      "KB-03-chunk-001",
+      "KB-03-chunk-000",
+      "KB-04-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091192,
+    "_id": "โค้ชแพร"
+  },
+  "หน้าเว็บ": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "หน้าเว็บ"
+  },
+  "LINE": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "LINE"
+  },
+  "รหัสสมาชิก": {
+    "chunk_ids": [
+      "KB-03-chunk-001",
+      "KB-06-chunk-000",
+      "KB-09-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091480,
+    "_id": "รหัสสมาชิก"
+  },
+  "เบอร์โทร 4 ตัวท้าย": {
+    "chunk_ids": [
+      "KB-03-chunk-001",
+      "KB-06-chunk-000",
+      "KB-09-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091480,
+    "_id": "เบอร์โทร 4 ตัวท้าย"
+  },
+  "การจองคลาส": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "การจองคลาส"
+  },
+  "การยกเลิกคลาส": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "การยกเลิกคลาส"
+  },
+  "การรอคิว": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "การรอคิว"
+  },
+  "การมาถึงก่อนเริ่มคลาส": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "การมาถึงก่อนเริ่มคลาส"
+  },
+  "การไม่มาเรียนโดยไม่ยกเลิก": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "การไม่มาเรียนโดยไม่ยกเลิก"
+  },
+  "ยกเลิกได้ถึง 2 ชั่วโมงก่อนเริ่มคลาส": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "ยกเลิกได้ถึง 2 ชั่วโมงก่อนเริ่มคลาส"
+  },
+  "ระงับสิทธิ์จองคลาส 7 วัน": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "ระงับสิทธิ์จองคลาส 7 วัน"
+  },
+  "มาถึงก่อนเริ่มคลาส 10 นาที": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "มาถึงก่อนเริ่มคลาส 10 นาที"
+  },
+  "ผู้ถือบัตรรายวัน": {
+    "chunk_ids": [
+      "KB-03-chunk-001",
+      "KB-09-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091480,
+    "_id": "ผู้ถือบัตรรายวัน"
+  },
+  "ที่นั่ง": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "ที่นั่ง"
+  },
+  "จองล่วงหน้าได้สูงสุด 7 วัน": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "จองล่วงหน้าได้สูงสุด 7 วัน"
+  },
+  "จองได้พร้อมกันสูงสุด 3 คลาส": {
+    "chunk_ids": [
+      "KB-03-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091160,
+    "update_time": 1791091160,
+    "_id": "จองได้พร้อมกันสูงสุด 3 คลาส"
+  },
+  "เทรนเนอร์ส่วนตัว": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "เทรนเนอร์ส่วนตัว"
+  },
+  "แพ็กเกจ PT": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "แพ็กเกจ PT"
+  },
+  "ยิม": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "ยิม"
+  },
+  "เวลาเปิด-ปิดของยิม": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "เวลาเปิด-ปิดของยิม"
+  },
+  "การยกเลิกนัด": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การยกเลิกนัด"
+  },
+  "การเปลี่ยนโค้ช": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การเปลี่ยนโค้ช"
+  },
+  "การขยายเวลาแพ็กเกจ": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การขยายเวลาแพ็กเกจ"
+  },
+  "การโอนแพ็กเกจ": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การโอนแพ็กเกจ"
+  },
+  "ใบรับรองแพทย์": {
+    "chunk_ids": [
+      "KB-04-chunk-000",
+      "KB-05-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091254,
+    "_id": "ใบรับรองแพทย์"
+  },
+  "PT-1": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "PT-1"
+  },
+  "PT-10": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "PT-10"
+  },
+  "PT-20": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "PT-20"
+  },
+  "PT-DUO": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "PT-DUO"
+  },
+  "การลดไขมัน": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การลดไขมัน"
+  },
+  "การเพิ่มกล้ามเนื้อ": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การเพิ่มกล้ามเนื้อ"
+  },
+  "การปรับท่าทาง": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การปรับท่าทาง"
+  },
+  "การปั่นจักรยาน": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การปั่นจักรยาน"
+  },
+  "การออกกำลังกายเพื่อเตรียมร่างกายสำหรับกีฬา": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การออกกำลังกายเพื่อเตรียมร่างกายสำหรับกีฬา"
+  },
+  "การฝึก HIIT": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การฝึก HIIT"
+  },
+  "การฝึกมวยไทย": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การฝึกมวยไทย"
+  },
+  "การฝึกบ็อกซิ่ง": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การฝึกบ็อกซิ่ง"
+  },
+  "การฝึกโยคะ": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การฝึกโยคะ"
+  },
+  "การฝึกพิลาทิส": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การฝึกพิลาทิส"
+  },
+  "การฝึกเวทเทรนนิ่ง": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การฝึกเวทเทรนนิ่ง"
+  },
+  "การฝึกแอโรบิก": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การฝึกแอโรบิก"
+  },
+  "การฝึกคาร์ดิโอ": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "การฝึกคาร์ดิโอ"
+  },
+  "มีความถนัด": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "มีความถนัด"
+  },
+  "ให้บริการ": {
+    "chunk_ids": [
+      "KB-04-chunk-000",
+      "KB-08-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091444,
+    "_id": "ให้บริการ"
+  },
+  "สอน": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "สอน"
+  },
+  "มีราคา": {
+    "chunk_ids": [
+      "KB-04-chunk-000",
+      "KB-07-chunk-001"
+    ],
+    "count": 2,
+    "update_time": 1791091371,
+    "_id": "มีราคา"
+  },
+  "ต้องเป็น": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "ต้องเป็น"
+  },
+  "มีระยะเวลาใช้ได้": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "มีระยะเวลาใช้ได้"
+  },
+  "สามารถโอนให้": {
+    "chunk_ids": [
+      "KB-04-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091192,
+    "update_time": 1791091192,
+    "_id": "สามารถโอนให้"
+  },
+  "การพักสมาชิก": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "การพักสมาชิก"
+  },
+  "การยกเลิกสมาชิก": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "การยกเลิกสมาชิก"
+  },
+  "การคืนเงิน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "การคืนเงิน"
+  },
+  "การโอนสิทธิ์สมาชิก": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "การโอนสิทธิ์สมาชิก"
+  },
+  "การต่ออายุ": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "การต่ออายุ"
+  },
+  "การพาเพื่อน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "การพาเพื่อน"
+  },
+  "ค่าธรรมเนียมการพัก": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ค่าธรรมเนียมการพัก"
+  },
+  "ค่าธรรมเนียมการยกเลิก": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ค่าธรรมเนียมการยกเลิก"
+  },
+  "ค่าธรรมเนียมการโอนสิทธิ์": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ค่าธรรมเนียมการโอนสิทธิ์"
+  },
+  "รายเดือนไม่มีสัญญา": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "รายเดือนไม่มีสัญญา"
+  },
+  "รายเดือนสัญญา 12 เดือน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "รายเดือนสัญญา 12 เดือน"
+  },
+  "นักเรียน/นักศึกษา": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "นักเรียน/นักศึกษา"
+  },
+  "รายปีจ่ายครั้งเดียว": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "รายปีจ่ายครั้งเดียว"
+  },
+  "แพ็กเกจเทรนเนอร์ส่วนตัว": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "แพ็กเกจเทรนเนอร์ส่วนตัว"
+  },
+  "แพ็กเกจนักศึกษา": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "แพ็กเกจนักศึกษา"
+  },
+  "บอทแชต": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "บอทแชต"
+  },
+  "ผู้จัดการสาขา": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ผู้จัดการสาขา"
+  },
+  "เพื่อน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "เพื่อน"
+  },
+  "มีค่าธรรมเนียม": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "มีค่าธรรมเนียม"
+  },
+  "มีข้อจำกัด": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "มีข้อจำกัด"
+  },
+  "ต้องแจ้งล่วงหน้า": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ต้องแจ้งล่วงหน้า"
+  },
+  "ไม่สามารถทำได้": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ไม่สามารถทำได้"
+  },
+  "มีข้อยกเว้น": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "มีข้อยกเว้น"
+  },
+  "อนุญาตให้โอน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "อนุญาตให้โอน"
+  },
+  "ต้องได้รับการอนุมัติ": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ต้องได้รับการอนุมัติ"
+  },
+  "อนุญาตให้ต่ออายุล่วงหน้า": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "อนุญาตให้ต่ออายุล่วงหน้า"
+  },
+  "ใช้ช่องทางเดียวกัน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ใช้ช่องทางเดียวกัน"
+  },
+  "อนุญาตให้พาเข้าฟรี": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "อนุญาตให้พาเข้าฟรี"
+  },
+  "ไม่สามารถใช้กับ": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ไม่สามารถใช้กับ"
+  },
+  "ต้องดำเนินการที่": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ต้องดำเนินการที่"
+  },
+  "ไม่ต้องจ่ายค่าแรกเข้า": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ไม่ต้องจ่ายค่าแรกเข้า"
+  },
+  "ต้องซื้อบัตรรายวัน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ต้องซื้อบัตรรายวัน"
+  },
+  "ใช้เพื่อยืนยันตัวตน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ใช้เพื่อยืนยันตัวตน"
+  },
+  "บันทึกคำขอ": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "บันทึกคำขอ"
+  },
+  "อนุมัติ": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "อนุมัติ"
+  },
+  "เป็นผู้ใช้": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "เป็นผู้ใช้"
+  },
+  "ต้องมีอายุ": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ต้องมีอายุ"
+  },
+  "ขยายวันหมดอายุ": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ขยายวันหมดอายุ"
+  },
+  "ต้องจ่ายราคา": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ต้องจ่ายราคา"
+  },
+  "ไม่สามารถใช้บริการ": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ไม่สามารถใช้บริการ"
+  },
+  "ไม่สามารถคืน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ไม่สามารถคืน"
+  },
+  "มีอำนาจ": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "มีอำนาจ"
+  },
+  "ไม่สามารถอนุมัติ": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ไม่สามารถอนุมัติ"
+  },
+  "ไม่มี": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ไม่มี"
+  },
+  "ต้องใช้เวลา": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ต้องใช้เวลา"
+  },
+  "ต้องใช้เอกสาร": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ต้องใช้เอกสาร"
+  },
+  "ไม่เก็บค่าสมาชิกรายเดือน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ไม่เก็บค่าสมาชิกรายเดือน"
+  },
+  "ต้องใช้ช่องทางเดียวกัน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ต้องใช้ช่องทางเดียวกัน"
+  },
+  "ต้องดำเนินการร่วมกัน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ต้องดำเนินการร่วมกัน"
+  },
+  "ต้องยืนยันตัวตน": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "ต้องยืนยันตัวตน"
+  },
+  "เริ่มเก็บค่าสมาชิก": {
+    "chunk_ids": [
+      "KB-05-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091254,
+    "update_time": 1791091254,
+    "_id": "เริ่มเก็บค่าสมาชิก"
+  },
+  "การชำระเงิน": {
+    "chunk_ids": [
+      "KB-06-chunk-000",
+      "KB-08-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091444,
+    "_id": "การชำระเงิน"
+  },
+  "ช่องทางชำระเงิน": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ช่องทางชำระเงิน"
+  },
+  "เงินสด": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "เงินสด"
+  },
+  "บัตรเดบิต": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "บัตรเดบิต"
+  },
+  "พร้อมเพย์": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "พร้อมเพย์"
+  },
+  "โอนเงินเข้าบัญชีร้าน": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "โอนเงินเข้าบัญชีร้าน"
+  },
+  "ตัดบัตรเครดิตอัตโนมัติรายเดือน": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ตัดบัตรเครดิตอัตโนมัติรายเดือน"
+  },
+  "บัญชีธนาคาร": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "บัญชีธนาคาร"
+  },
+  "ธนาคารจำลอง (DemoBank)": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ธนาคารจำลอง (DemoBank)"
+  },
+  "เลขที่บัญชี": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "เลขที่บัญชี"
+  },
+  "ชื่อบัญชี": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ชื่อบัญชี"
+  },
+  "บจก. เอ็กซ์ ฟิตเนส": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "บจก. เอ็กซ์ ฟิตเนส"
+  },
+  "การส่งสลิปผ่านแชต": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "การส่งสลิปผ่านแชต"
+  },
+  "บอทตรวจสลิป": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "บอทตรวจสลิป"
+  },
+  "ภาพสลิป": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ภาพสลิป"
+  },
+  "สถานะ \"รอพนักงานยืนยัน\"": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "สถานะ \"รอพนักงานยืนยัน\""
+  },
+  "พนักงานยืนยันยอด": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "พนักงานยืนยันยอด"
+  },
+  "ใบเสร็จอิเล็กทรอนิกส์": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ใบเสร็จอิเล็กทรอนิกส์"
+  },
+  "ใบกำกับภาษี": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ใบกำกับภาษี"
+  },
+  "เดือนที่ชำระ": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "เดือนที่ชำระ"
+  },
+  "โอนขาด": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "โอนขาด"
+  },
+  "โอนเกิน": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "โอนเกิน"
+  },
+  "เครดิตสำหรับเดือนถัดไป": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "เครดิตสำหรับเดือนถัดไป"
+  },
+  "ขอคืนเงิน": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ขอคืนเงิน"
+  },
+  "ระยะเวลา 14 วันทำการ": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ระยะเวลา 14 วันทำการ"
+  },
+  "ชำระล่าช้า": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ชำระล่าช้า"
+  },
+  "ระบบระงับการเข้าใช้ชั่วคราว": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ระบบระงับการเข้าใช้ชั่วคราว"
+  },
+  "ไม่มีค่าปรับชำระล่าช้า": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ไม่มีค่าปรับชำระล่าช้า"
+  },
+  "วันครบกำหนดชำระ": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "วันครบกำหนดชำระ"
+  },
+  "รอบบิล": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "รอบบิล"
+  },
+  "พนักงาน": {
+    "chunk_ids": [
+      "KB-06-chunk-000",
+      "KB-08-chunk-000",
+      "KB-09-chunk-000"
+    ],
+    "count": 3,
+    "update_time": 1791091480,
+    "_id": "พนักงาน"
+  },
+  "ร้าน": {
+    "chunk_ids": [
+      "KB-06-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091300,
+    "update_time": 1791091300,
+    "_id": "ร้าน"
+  },
+  "ระบบแต้มสะสม": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "ระบบแต้มสะสม"
+  },
+  "โปรตีนเชคฟรี 1 แก้ว": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "โปรตีนเชคฟรี 1 แก้ว"
+  },
+  "ผ้าเช็ดตัว X Fitness": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "ผ้าเช็ดตัว X Fitness"
+  },
+  "ขวดน้ำสแตนเลส X Fitness": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "ขวดน้ำสแตนเลส X Fitness"
+  },
+  "วัดองค์ประกอบร่างกาย 1 ครั้ง": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "วัดองค์ประกอบร่างกาย 1 ครั้ง"
+  },
+  "PT 1 ครั้ง": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "PT 1 ครั้ง"
+  },
+  "เวย์โปรตีน X Fitness รสช็อกโกแลต 2 ปอนด์": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "เวย์โปรตีน X Fitness รสช็อกโกแลต 2 ปอนด์"
+  },
+  "เวย์โปรตีน X Fitness รสวานิลลา 2 ปอนด์": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "เวย์โปรตีน X Fitness รสวานิลลา 2 ปอนด์"
+  },
+  "โปรตีนเชคพร้อมดื่ม (แก้ว)": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "โปรตีนเชคพร้อมดื่ม (แก้ว)"
+  },
+  "ขวดน้ำสแตนเลส X Fitness 750 มล.": {
+    "chunk_ids": [
+      "KB-07-chunk-000",
+      "KB-07-chunk-001"
+    ],
+    "count": 2,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "ขวดน้ำสแตนเลส X Fitness 750 มล."
+  },
+  "เสื้อดรายฟิต X Fitness (S–XL)": {
+    "chunk_ids": [
+      "KB-07-chunk-000",
+      "KB-07-chunk-001"
+    ],
+    "count": 2,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "เสื้อดรายฟิต X Fitness (S–XL)"
+  },
+  "ถุงมือยกเวท": {
+    "chunk_ids": [
+      "KB-07-chunk-000",
+      "KB-07-chunk-001"
+    ],
+    "count": 2,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "ถุงมือยกเวท"
+  },
+  "PR-01": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "PR-01"
+  },
+  "PR-02": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "PR-02"
+  },
+  "PR-03": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "PR-03"
+  },
+  "PR-04": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "PR-04"
+  },
+  "YEAR13": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "YEAR13"
+  },
+  "NOJOIN": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "NOJOIN"
+  },
+  "FRIEND300": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "FRIEND300"
+  },
+  "MID2": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "MID2"
+  },
+  "RW-01": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "RW-01"
+  },
+  "RW-02": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "RW-02"
+  },
+  "RW-03": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "RW-03"
+  },
+  "RW-04": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "RW-04"
+  },
+  "RW-05": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "RW-05"
+  },
+  "PD-01": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "PD-01"
+  },
+  "PD-02": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "PD-02"
+  },
+  "PD-03": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "PD-03"
+  },
+  "PD-04": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "PD-04"
+  },
+  "PD-05": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "PD-05"
+  },
+  "PD-06": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "PD-06"
+  },
+  "1 กันยายน 2569": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "1 กันยายน 2569"
+  },
+  "31 ตุลาคม 2569": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "31 ตุลาคม 2569"
+  },
+  "15 กันยายน 2569": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "15 กันยายน 2569"
+  },
+  "30 พฤศจิกายน 2569": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "30 พฤศจิกายน 2569"
+  },
+  "1 มกราคม 2569": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "1 มกราคม 2569"
+  },
+  "31 ธันวาคม 2569": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "31 ธันวาคม 2569"
+  },
+  "1 มิถุนายน 2569": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "1 มิถุนายน 2569"
+  },
+  "31 กรกฎาคม 2569": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "31 กรกฎาคม 2569"
+  },
+  "15 ตุลาคม 2569": {
+    "chunk_ids": [
+      "KB-07-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "15 ตุลาคม 2569"
+  },
+  "น้ำดื่มพร้อมดื่ม (แก้ว)": {
+    "chunk_ids": [
+      "KB-07-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "น้ำดื่มพร้อมดื่ม (แก้ว)"
+  },
+  "ยางยืดออกกำลังกาย ชุด 3 ระดับ": {
+    "chunk_ids": [
+      "KB-07-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "ยางยืดออกกำลังกาย ชุด 3 ระดับ"
+  },
+  "วัดองค์ประกอบร่างกาย (InBody, body scan)": {
+    "chunk_ids": [
+      "KB-07-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "วัดองค์ประกอบร่างกาย (InBody, body scan)"
+  },
+  "เช่าล็อกเกอร์ประจำ": {
+    "chunk_ids": [
+      "KB-07-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "เช่าล็อกเกอร์ประจำ"
+  },
+  "บริการผ้าเช็ดตัว": {
+    "chunk_ids": [
+      "KB-07-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "บริการผ้าเช็ดตัว"
+  },
+  "คลาสเดี่ยวสำหรับผู้ถือบัตรรายวัน": {
+    "chunk_ids": [
+      "KB-07-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "คลาสเดี่ยวสำหรับผู้ถือบัตรรายวัน"
+  },
+  "การคืนและเปลี่ยนสินค้า": {
+    "chunk_ids": [
+      "KB-07-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "การคืนและเปลี่ยนสินค้า"
+  },
+  "ร้านขายเฉพาะที่เคาน์เตอร์": {
+    "chunk_ids": [
+      "KB-07-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "ร้านขายเฉพาะที่เคาน์เตอร์"
+  },
+  "กำหนดเงื่อนไข": {
+    "chunk_ids": [
+      "KB-07-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "กำหนดเงื่อนไข"
+  },
+  "ต้องใช้": {
+    "chunk_ids": [
+      "KB-07-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "ต้องใช้"
+  },
+  "ไม่มีบริการ": {
+    "chunk_ids": [
+      "KB-07-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "ไม่มีบริการ"
+  },
+  "มีสิทธิประโยชน์": {
+    "chunk_ids": [
+      "KB-07-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1791091371,
+    "update_time": 1791091371,
+    "_id": "มีสิทธิประโยชน์"
+  },
+  "กฎการใช้ยิม": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "กฎการใช้ยิม"
+  },
+  "การแต่งกาย": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "การแต่งกาย"
+  },
+  "มารยาทในยิม": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "มารยาทในยิม"
+  },
+  "ข้อมูลส่วนบุคคล": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ข้อมูลส่วนบุคคล"
+  },
+  "ความปลอดภัยและสุขภาพ": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ความปลอดภัยและสุขภาพ"
+  },
+  "เครื่องกระตุกหัวใจไฟฟ้าอัตโนมัติ (AED)": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "เครื่องกระตุกหัวใจไฟฟ้าอัตโนมัติ (AED)"
+  },
+  "แชตบอท": {
+    "chunk_ids": [
+      "KB-08-chunk-000",
+      "KB-09-chunk-000"
+    ],
+    "count": 2,
+    "update_time": 1791091480,
+    "_id": "แชตบอท"
+  },
+  "โค้ช": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "โค้ช"
+  },
+  "อายุขั้นต่ำ 15 ปี": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "อายุขั้นต่ำ 15 ปี"
+  },
+  "การจอง": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "การจอง"
+  },
+  "แต้ม": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "แต้ม"
+  },
+  "ผลการวัดร่างกาย": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ผลการวัดร่างกาย"
+  },
+  "ภาพผลวัดร่างกาย": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ภาพผลวัดร่างกาย"
+  },
+  "สลิป": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "สลิป"
+  },
+  "พระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "พระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)"
+  },
+  "โซนเวท": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "โซนเวท"
+  },
+  "คลาสยูนิตี้": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "คลาสยูนิตี้"
+  },
+  "การออกกำลังกาย": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "การออกกำลังกาย"
+  },
+  "การใช้เครื่องคาร์ดิโอ": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "การใช้เครื่องคาร์ดิโอ"
+  },
+  "การแจ้งเหตุฉุกเฉิน": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "การแจ้งเหตุฉุกเฉิน"
+  },
+  "การเปิดเผยข้อมูล": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "การเปิดเผยข้อมูล"
+  },
+  "การลบข้อมูล": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "การลบข้อมูล"
+  },
+  "การยืนยันตัวตน": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "การยืนยันตัวตน"
+  },
+  "การแลกแต้ม": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "การแลกแต้ม"
+  },
+  "การส่งภาพผ่านแชต": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "การส่งภาพผ่านแชต"
+  },
+  "การให้คำแนะนำคลาสหรือ PT": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "การให้คำแนะนำคลาสหรือ PT"
+  },
+  "ต้อง": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ต้อง"
+  },
+  "ครอบคลุม": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ครอบคลุม"
+  },
+  "กำหนดให้": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "กำหนดให้"
+  },
+  "มีค่าปรับ": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "มีค่าปรับ"
+  },
+  "จำกัด": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "จำกัด"
+  },
+  "อนุญาตให้": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "อนุญาตให้"
+  },
+  "ต้องคืน": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ต้องคืน"
+  },
+  "อายุผู้ใช้บริการ": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "อายุผู้ใช้บริการ"
+  },
+  "ต้องมี": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ต้องมี"
+  },
+  "ห้าม": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ห้าม"
+  },
+  "ไม่รับผิดชอบ": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ไม่รับผิดชอบ"
+  },
+  "เก็บ": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "เก็บ"
+  },
+  "พนักงานต้อง": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "พนักงานต้อง"
+  },
+  "ห้ามใช้": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ห้ามใช้"
+  },
+  "ถูกเก็บ": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ถูกเก็บ"
+  },
+  "ภาพที่ส่งในแชต": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ภาพที่ส่งในแชต"
+  },
+  "เปิดเผย": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "เปิดเผย"
+  },
+  "ไม่เปิดเผย": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ไม่เปิดเผย"
+  },
+  "ฟรี": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "ฟรี"
+  },
+  "แลก": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "แลก"
+  },
+  "แสดงผล": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091444,
+    "update_time": 1791091444,
+    "_id": "แสดงผล"
+  },
+  "ไม่สามารถ": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091449,
+    "update_time": 1791091449,
+    "_id": "ไม่สามารถ"
+  },
+  "สามารถ": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091449,
+    "update_time": 1791091449,
+    "_id": "สามารถ"
+  },
+  "ใช้": {
+    "chunk_ids": [
+      "KB-08-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091449,
+    "update_time": 1791091449,
+    "_id": "ใช้"
+  },
+  "บริการลูกค้า": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "บริการลูกค้า"
+  },
+  "เอ็กซ์": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "เอ็กซ์"
+  },
+  "เวลาตอบ": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "เวลาตอบ"
+  },
+  "1 วันทำการ": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "1 วันทำการ"
+  },
+  "เช็กอินเข้ายิม": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "เช็กอินเข้ายิม"
+  },
+  "การส่งภาพในแชต": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "การส่งภาพในแชต"
+  },
+  "ภาพสลิปโอนเงิน": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "ภาพสลิปโอนเงิน"
+  },
+  "ผลวัดองค์ประกอบร่างกาย": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "ผลวัดองค์ประกอบร่างกาย"
+  },
+  "ใบเสร็จของร้าน": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "ใบเสร็จของร้าน"
+  },
+  "โปสเตอร์โปรโมชัน": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "โปสเตอร์โปรโมชัน"
+  },
+  "คิวอาร์โค้ด": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "คิวอาร์โค้ด"
+  },
+  "เครื่องหน้าเคาน์เตอร์": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "เครื่องหน้าเคาน์เตอร์"
+  },
+  "เรื่องเร่งด่วน": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "เรื่องเร่งด่วน"
+  },
+  "การแจ้งรหัสสมาชิก": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "การแจ้งรหัสสมาชิก"
+  },
+  "การสแกนคิวอาร์โค้ด": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "การสแกนคิวอาร์โค้ด"
+  },
+  "การเปลี่ยนเบอร์โทร": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "การเปลี่ยนเบอร์โทร"
+  },
+  "การทำบัตรใหม่": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "การทำบัตรใหม่"
+  },
+  "ค่าธรรมเนียม 100 บาท": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "ค่าธรรมเนียม 100 บาท"
+  },
+  "การถ่ายภาพใหม่": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "การถ่ายภาพใหม่"
+  },
+  "เบอร์โทร 038-000-888": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "เบอร์โทร 038-000-888"
+  },
+  "FN-": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "FN-"
+  },
+  "5 หลัก": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "5 หลัก"
+  },
+  "แต้ม 5 แต้ม": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "แต้ม 5 แต้ม"
+  },
+  "ภาพที่ไม่ชัด": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "ภาพที่ไม่ชัด"
+  },
+  "ลืมรหัสสมาชิก": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "ลืมรหัสสมาชิก"
+  },
+  "JPG": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "JPG"
+  },
+  "ทำบัตรใหม่": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "ทำบัตรใหม่"
+  },
+  "บัตรหายหรือชำรุด": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "บัตรหายหรือชำรุด"
+  },
+  "PNG": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "PNG"
+  },
+  "5 MB": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "5 MB"
+  },
+  "บอทอ่านได้": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "บอทอ่านได้"
+  },
+  "บอทอ่านไม่ได้": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "บอทอ่านไม่ได้"
+  },
+  "ภาพไม่ชัด": {
+    "chunk_ids": [
+      "KB-09-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1791091480,
+    "update_time": 1791091480,
+    "_id": "ภาพไม่ชัด"
+  }
+}
