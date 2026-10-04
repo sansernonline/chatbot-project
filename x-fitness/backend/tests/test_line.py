@@ -41,7 +41,7 @@ def text(t):
 
 
 def replies(sent):
-    return [p["messages"][0]["text"] for path, p in sent if path == "reply"]
+    return [p["messages"][0]["text"] for path, p in sent if path == "message/reply"]
 
 
 def test_signature_required(client, sent):
@@ -83,7 +83,7 @@ def test_handoff_then_staff_reply_pushed(client, sent):
     token = client.post("/api/admin/login", json={"user": "admin", "password": "1234"}).json()["token"]
     client.post(f"/api/admin/conversations/{cid}/messages", json={"from": "agent", "text": "สวัสดีค่ะ พนักงานรับเรื่องแล้ว"},
                 headers={"Authorization": f"Bearer {token}"})
-    assert ("push", {"to": USER, "messages": [{"type": "text", "text": "สวัสดีค่ะ พนักงานรับเรื่องแล้ว"}]}) in sent
+    assert ("message/push", {"to": USER, "messages": [{"type": "text", "text": "สวัสดีค่ะ พนักงานรับเรื่องแล้ว"}]}) in sent
 
 
 def test_image_read_and_answered(client, sent, monkeypatch):

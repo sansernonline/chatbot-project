@@ -67,7 +67,7 @@ async def handle(event: dict) -> None:
         log.warning("LINE answer failed: %s", e)
         result = ERROR_REPLY
     db.add_message(cid, "bot", result["answer"])
-    send("reply", {"replyToken": event["replyToken"], "messages": [message(result["answer"], result.get("actions", []))]})
+    send("message/reply", {"replyToken": event["replyToken"], "messages": [message(result["answer"], result.get("actions", []))]})
 
 
 async def on_text(cid: str, user_id: str, text: str, conv: dict) -> dict:
@@ -89,7 +89,7 @@ async def on_text(cid: str, user_id: str, text: str, conv: dict) -> dict:
 def push(cid: str, text: str) -> None:
     """Send a staff reply from the admin inbox to the customer's LINE (no-op for website chats)."""
     if user_id := db.line_user(cid):
-        send("push", {"to": user_id, "messages": [message(text, [])]})
+        send("message/push", {"to": user_id, "messages": [message(text, [])]})
 
 
 def ticket(user_id: str) -> str:
