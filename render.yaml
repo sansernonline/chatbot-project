@@ -15,7 +15,7 @@ services:
         value: 3.13.5            # the version the code was tested with
       - key: TYPHOON_API_KEY
         sync: false              # asked for in the Render dashboard, never stored in git
-      - key: XF_EMBED_API_KEY    # Gemini key; must match the embedding that built rag-index/
+      - key: XF_EMBED_API_KEY    # optional, leave empty: built-in hash embedding (must match how rag-index/ was built)
         sync: false
       - key: XF_ADMIN_PASS
         sync: false

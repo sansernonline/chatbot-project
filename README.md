@@ -75,13 +75,12 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 | ส่วน | ไฟล์ | ทำอะไร |
 |---|---|---|
 | Guardrail | `x-fitness/backend/app/guard.py` | **ขาเข้า** ข้อความเปลี่ยนคำสั่งระบบ (N-07, N-08) · อาการฉุกเฉิน (D-07) · ยา/สารกระตุ้น (N-06) · นอกเรื่อง (N-10) ตอบด้วยข้อความตายตัว ไม่เรียก LLM · **ขาออก** ตัดคำว่า "ชำระสำเร็จ" (N-05) · ปิดเบอร์โทรที่ไม่ใช่ของร้าน (N-04) · ตัดคำประเมินสุขภาพเช่น "อยู่ในเกณฑ์ปกติ" (N-06) · คำตอบที่มีเลขบัญชีอื่น หลุดคำสั่งระบบ หรือมีจำนวนเงินที่ไม่มีในคลังความรู้ (G-NUM) เปลี่ยนเป็นข้อความปลอดภัยและเสนอส่งต่อพนักงาน · รหัสกฎส่งกลับใน `rules` |
-| RAG | `x-fitness/backend/app/rag.py` | LightRAG สร้างกราฟความรู้ + เวกเตอร์จาก `data/knowledge-base` ตอนเปิดเซิร์ฟเวอร์ (ทำเฉพาะเอกสารที่เปลี่ยน เก็บใน `x-fitness/backend/data/lightrag/`) · embedding ใช้โมเดลในเครื่อง `paraphrase-multilingual-MiniLM-L12-v2` (โหลดครั้งแรก ~220 MB ไม่ต้องใช้ key) · ไม่มี `TYPHOON_API_KEY` = ค้นด้วยคำแทน (`keyword_search.py`) |
+| RAG | `x-fitness/backend/app/rag.py` | LightRAG: Typhoon สร้างกราฟความรู้ + เวกเตอร์จาก `data/knowledge-base` · embedding แบบ feature hashing ของกลุ่มตัวอักษร 2–3 ตัว (ไม่มีโมเดล ไม่ใช้ key) · ดัชนีสร้างไว้แล้วใน `x-fitness/rag-index/` ทำใหม่เฉพาะเอกสารที่เปลี่ยน · ไม่มี `TYPHOON_API_KEY` = ค้นด้วยคำแทน (`keyword_search.py`) |
 | Vision | `x-fitness/backend/app/chat.py` `/api/vision` | `typhoon-ocr` อ่านข้อความในภาพ (`prompts/ocr.md` · ตอบ error ลองใหม่ 1 ครั้ง) → LLM แชตจัดเป็น JSON ตาม `prompts/vision.md` · typhoon-ocr ใช้คำสั่งให้ตอบ JSON ตรง ๆ ไม่ได้ (ทดสอบแล้ว error) · สลิปตรวจ 5 ข้อตาม KB-06 ด้วยโค้ด (`business.py`) |
 | คำสั่งระบบ | `x-fitness/backend/app/prompts/system.md` | กฎต้องทำ/ห้ามทำ + ข้อมูลสมาชิกที่ยืนยันแล้ว + ประวัติแชต 8 ข้อความ |
 
 ตั้งค่าผ่าน `x-fitness/backend/.env` (ดูตัวอย่างใน `.env.example`): `TYPHOON_API_KEY`, `XF_CHAT_MODEL`, `XF_VISION_MODEL`, `LINE_CHANNEL_SECRET` `LINE_CHANNEL_ACCESS_TOKEN`, `XF_EMBED_MODEL` `XF_EMBED_DIM` (หรือ `XF_EMBED_API_KEY` `XF_EMBED_BASE_URL` ถ้าจะใช้ embedding API), `XF_RAG_MODE`, `XF_ADMIN_USER`, `XF_ADMIN_PASS`, `XF_DB_PATH`, `XF_CORS_ORIGINS` · ทดสอบ backend: `cd x-fitness/backend && python -m pytest` (ไม่ต้องใช้ key — LightRAG ทดสอบด้วย LLM และ embedding ปลอม)
 
-> เปลี่ยน `XF_EMBED_MODEL` หรือ `XF_EMBED_DIM` แล้วต้องลบโฟลเดอร์ `x-fitness/backend/data/lightrag/` ก่อนเปิดใหม่ เพราะดัชนีเดิมใช้ขนาดเวกเตอร์เดิม
 
 | Method | Path | ใช้ทำอะไร |
 |---|---|---|

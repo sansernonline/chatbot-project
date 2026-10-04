@@ -25,7 +25,7 @@ def _post(payload: dict) -> str:
     return r.json()["choices"][0]["message"]["content"] or ""
 
 
-def chat(messages: list[dict], max_tokens: int = 700, temperature: float = 0.3, json_mode: bool = False) -> str:
+def chat(messages: list[dict], max_tokens: int = 700, temperature: float = 0.1, json_mode: bool = False) -> str:
     payload = {"model": config.CHAT_MODEL, "messages": messages, "max_tokens": max_tokens, "temperature": temperature}
     if json_mode:
         payload["response_format"] = {"type": "json_object"}

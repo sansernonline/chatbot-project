@@ -1,6 +1,5 @@
-"""Knowledge base admin API, and LightRAG wiring run offline with a fake LLM and fake embeddings."""
+"""Knowledge base admin API, and LightRAG wiring run offline with a fake LLM and the real hash embedding."""
 import asyncio
-import hashlib
 
 import numpy as np
 import pytest
@@ -42,15 +41,11 @@ def test_lightrag_index_and_context_offline(tmp_path, monkeypatch):
     async def fake_llm(prompt, system_prompt=None, history_messages=None, **kw):
         return "<|COMPLETE|>"                       # no entities: LightRAG still indexes the text chunks
 
-    async def fake_embed(texts):                    # same text → same vector, so the query finds its own words
-        return np.array([np.random.default_rng(int(hashlib.md5(t[:30].encode()).hexdigest()[:8], 16)).random(32) for t in texts])
-
     monkeypatch.setattr(config, "TYPHOON_API_KEY", "test")    # turns LightRAG on; the LLM itself is faked below
     monkeypatch.setattr(config, "EMBED_DIM", 32)
     monkeypatch.setattr(config, "RAG_DIR", tmp_path / "lightrag")
     monkeypatch.setattr(config, "RAG_MODE", "naive")
     monkeypatch.setattr(rag, "_llm", fake_llm)
-    monkeypatch.setattr(rag, "_embed", fake_embed)
     monkeypatch.setattr(rag, "_rag", None)
 
     async def run():
@@ -68,3 +63,9 @@ def test_lightrag_index_and_context_offline(tmp_path, monkeypatch):
         assert all(d["status"] == "ready" for d in rag.docs())
         await rag._rag.finalize_storages()
     asyncio.run(run())
+
+
+def test_hash_embed_similar_wording_scores_higher():
+    v = rag.hash_embed(["ค่าสมาชิกรายเดือน 1,290 บาท", "ค่าสมาชิกรายเดือนเท่าไหร่", "ห้ามถ่ายรูปสมาชิกคนอื่น"], dim=1024)
+    assert np.allclose(np.linalg.norm(v, axis=1), 1) and v[0] @ v[1] > v[0] @ v[2] + 0.2
+    assert np.array_equal(v, rag.hash_embed(["ค่าสมาชิกรายเดือน 1,290 บาท", "ค่าสมาชิกรายเดือนเท่าไหร่", "ห้ามถ่ายรูปสมาชิกคนอื่น"], dim=1024))

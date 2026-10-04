@@ -43,14 +43,14 @@ cp -r test-images/. x-fitness/test-images/
 
 ## รันในเครื่อง
 
-ต้องมี Python 3.12 ขึ้นไป (ทดสอบกับ 3.13) และ API key สองตัว: Typhoon (https://playground.opentyphoon.ai) และ Gemini สำหรับ embedding (https://aistudio.google.com/apikey · ฟรี)
+ต้องมี Python 3.12 ขึ้นไป (ทดสอบกับ 3.13) และ API key ตัวเดียวของ Typhoon (https://playground.opentyphoon.ai)
 
 ```bash
 cd x-fitness/backend
 python -m venv .venv
 .venv\Scripts\activate            # Windows  (macOS/Linux: source .venv/bin/activate)
 pip install -r requirements.txt
-cp .env.example .env              # แล้วใส่ TYPHOON_API_KEY และ XF_EMBED_API_KEY ในไฟล์ .env
+cp .env.example .env              # แล้วใส่ TYPHOON_API_KEY ในไฟล์ .env
 uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
@@ -76,7 +76,7 @@ cd x-fitness/backend
 python -m pytest
 ```
 
-ไม่ต้องใช้ key และไม่ต่อเน็ต — test ปลอม LLM และ embedding เอง แม้ใน `.env` จะมี key ก็ไม่เรียก Typhoon จริง
+ไม่ต้องใช้ key และไม่ต่อเน็ต — test ปลอม LLM และ LINE เอง (embedding ใช้ของจริงเพราะเป็นสูตรคำนวณ) แม้ใน `.env` จะมี key ก็ไม่เรียก Typhoon จริง
 
 ## ตั้งค่า (`backend/.env`)
 
@@ -85,8 +85,8 @@ python -m pytest
 | `TYPHOON_API_KEY` | — (ต้องใส่) | แชต · อ่านภาพ · สร้างดัชนี LightRAG |
 | `XF_CHAT_MODEL` | `typhoon-v2.5-30b-a3b-instruct` | โมเดลตอบแชต |
 | `XF_VISION_MODEL` | `typhoon-ocr` | โมเดลอ่านภาพ |
-| `XF_EMBED_API_KEY` | — | key ของ Gemini สำหรับ embedding · ไม่ใส่ = รันโมเดลในเครื่องแทน (ใช้ RAM เพิ่ม ~560 MB เกินแผนฟรีของ Render) |
-| `XF_EMBED_MODEL` / `XF_EMBED_DIM` | `gemini-embedding-001` / `3072` | ใช้ตอนมี `XF_EMBED_API_KEY` · เปลี่ยนแล้วดัชนีสร้างใหม่เอง |
+| `XF_EMBED_API_KEY` | — (ไม่ต้องใส่) | ไม่ใส่ = embedding แบบนับกลุ่มตัวอักษร (`rag.hash_embed` ไม่มีโมเดล ไม่ใช้ RAM) · ใส่ key ของ Gemini = ค้นตามความหมายผ่าน API · เปลี่ยนแล้วดัชนีสร้างใหม่เอง |
+| `XF_RAG_CHUNK_TOKENS` / `XF_RAG_LLM_MAX_TOKENS` | `500` / `8192` | ขนาดท่อนเอกสาร และความยาวคำตอบตอน Typhoon ดึงความรู้ · เปลี่ยนขนาดท่อนแล้วดัชนีสร้างใหม่เอง |
 | `XF_RAG_MODE` | `mix` | โหมดค้นของ LightRAG: `naive` `local` `global` `hybrid` `mix` |
 | `XF_ADMIN_USER` / `XF_ADMIN_PASS` | `admin` / `1234` | บัญชีหลังบ้าน |
 | `XF_DB_PATH` | `backend/data/chat.sqlite3` | ที่เก็บแชต |
@@ -97,7 +97,6 @@ python -m pytest
 |---|---|---|
 | `backend/data/chat.sqlite3` | แชตทั้งหมด | ได้ — แชตหาย |
 | `rag-index/` (**commit**) | ดัชนี LightRAG + `manifest.json` (จำว่าสร้างด้วย embedding ตัวไหน) | ได้ — เปิดใหม่สร้างใหม่ (เรียก Typhoon อีกรอบ) |
-| `backend/data/models/` | โมเดล embedding ในเครื่อง (เฉพาะตอนไม่มี `XF_EMBED_API_KEY`) | ได้ |
 
 ## แก้ปัญหา
 
@@ -106,7 +105,6 @@ python -m pytest
 | แชตตอบ "ยังไม่ได้ตั้งค่า TYPHOON_API_KEY" | ไม่มีไฟล์ `.env` หรือ key ว่าง | ใส่ key ใน `backend/.env` แล้วเปิดเซิร์ฟเวอร์ใหม่ |
 | หน้า admin คลังความรู้ขึ้น "ยังไม่มีดัชนี" | สร้างดัชนีไม่สำเร็จ | ดู log ในหน้าต่าง uvicorn แล้วกด **สร้างดัชนีใหม่** |
 | ขึ้น "ระบบไม่ตอบภายในเวลาที่กำหนด" | Typhoon ตอบช้าเกิน 40 วินาที | กดลองอีกครั้ง · ถ้าเป็นบ่อยลอง `XF_RAG_MODE=naive` (ไม่ต้องให้ LLM แยกคำค้นก่อน) |
-| Gemini ตอบ 429 | เกินโควตาฟรี (100 ครั้ง/นาที · 1,000 ครั้ง/วัน) | รอแล้วลองใหม่ · ช่วงสร้างดัชนีเรียกถี่ที่สุด |
 
 ## เชื่อม LINE Official Account
 
@@ -135,9 +133,9 @@ python -m pytest
 
 ## นำขึ้น Render (ฟรี)
 
-ใช้แผนฟรี (RAM 512 MB · แอปนี้ใช้ราว 160 MB เมื่อ embedding เรียก Gemini) · ไฟล์ตั้งค่าคือ `render.yaml` ที่**รากของ repo** (Render อ่านจากตรงนั้น)
+ใช้แผนฟรี (RAM 512 MB · แอปนี้ใช้ราว 160 MB เพราะ embedding เป็นสูตรคำนวณ ไม่ต้องโหลดโมเดล) · ไฟล์ตั้งค่าคือ `render.yaml` ที่**รากของ repo** (Render อ่านจากตรงนั้น)
 
-**1. สร้างดัชนีในเครื่อง ด้วย key ชุดเดียวกับที่จะใส่บน Render**
+**1. สร้างดัชนีในเครื่อง** (ตั้งค่า embedding ให้เหมือนบน Render — ปกติคือไม่ใส่ `XF_EMBED_API_KEY` ทั้งสองที่)
 
 ```bash
 cd x-fitness/backend
@@ -149,7 +147,7 @@ python -m app.rag          # สร้าง/อัปเดต ../rag-index/ �
 **3. สร้างบริการบน Render**
 
 1. https://dashboard.render.com → **New** → **Blueprint** → เลือก repo นี้
-2. Render อ่าน `render.yaml` แล้วถามค่า 3 ตัว: `TYPHOON_API_KEY` · `XF_EMBED_API_KEY` (ตัวเดียวกับข้อ 1) · `XF_ADMIN_PASS` (ตั้งใหม่ อย่าใช้ 1234)
+2. Render อ่าน `render.yaml` แล้วถามค่า: `TYPHOON_API_KEY` · `XF_ADMIN_PASS` (ตั้งใหม่ อย่าใช้ 1234) · `XF_EMBED_API_KEY` และค่าของ LINE เว้นว่างได้
 3. รอ build เสร็จ แล้วเปิด `https://<ชื่อบริการ>.onrender.com/api/health` ต้องเห็น `"llm": true` และ `"rag": "lightrag"`
 4. เปิด `/admin/` → **คลังความรู้** ทุกเอกสารต้องเป็น `พร้อมใช้` — ถ้าเป็น `กำลังสร้างดัชนี` แปลว่า embedding บน Render ไม่ตรงกับตอนสร้าง กลับไปทำข้อ 1
 
@@ -174,3 +172,21 @@ python -m app.rag          # สร้าง/อัปเดต ../rag-index/ �
 ถ้าต้องใช้ Vercel ต้องแก้: สร้างดัชนี LightRAG ในเครื่องแล้ว commit ขึ้นไปแบบอ่านอย่างเดียว (แบบที่ repo chacharin/light-rag ทำ) · ย้ายแชตไปฐานข้อมูลภายนอก (เช่น Postgres) · เปลี่ยน login เป็น token ที่ตรวจได้โดยไม่ต้องจำ
 
 **ใช้ Render ตามหัวข้อข้างบนแทน** — ไม่ต้องแก้โค้ด
+
+## ความรู้: embedding แบบ "Feature hashing ของ character n-gram"
+
+LightRAG ต้องแปลงข้อความเป็นชุดตัวเลข (embedding) เพื่อค้นหา ระบบนี้ใช้สูตรคำนวณแทนโมเดล AI:
+
+1. ตัดข้อความเป็นกลุ่มตัวอักษรต่อกันทีละ 2 และ 3 ตัว (character n-gram) เช่น "ค่าสมา" → `ค่` `่า` `าส` `สม` `มา` `ค่า` `่าส` …
+2. แต่ละกลุ่มผ่านฟังก์ชันแฮช (crc32) ได้เลขช่อง 1 ใน 1,024 ช่อง แล้วบวกหรือลบ 1 ในช่องนั้น (เครื่องหมายมาจากแฮชเช่นกัน ช่วยให้กลุ่มที่บังเอิญชนช่องเดียวกันหักล้างกันแทนที่จะสะสม) — นี่คือ **feature hashing** หรือ **hashing trick**
+3. ปรับความยาวเวกเตอร์เป็น 1 แล้ววัดความใกล้ด้วย **cosine similarity** — ข้อความที่มีกลุ่มตัวอักษรร่วมกันมากจะได้คะแนนสูง
+
+| | Feature hashing (ใช้อยู่) | Embedding จากโมเดล (เช่น Gemini, MiniLM) |
+|---|---|---|
+| ประเภท | lexical / sparse — วัด "คำที่ใช้" | dense / semantic — วัด "ความหมาย" |
+| ต้องมี | สูตร ~15 บรรทัดใน `rag.py` | โมเดล AI (รันเองใช้ RAM ~560 MB หรือเรียก API) |
+| ภาษาไทย | ได้ ไม่ต้องตัดคำ | ได้ |
+| จุดอ่อน | ถามด้วยคำที่ไม่มีในเอกสารเลยจะไม่เจอ → เอกสารจึงใส่ "ชื่อเรียกอื่น" ไว้ | ใหญ่ หรือต้องมี key |
+| วัดกับคำถามทดสอบ 12 ข้อ | ถูก 12/12 | MiniLM ถูก 11/12 |
+
+คำค้นที่เกี่ยวข้อง: hashing vectorizer (scikit-learn `HashingVectorizer(analyzer="char", ngram_range=(2, 3))`), bag of character n-grams, TF-IDF, BM25, sparse retrieval

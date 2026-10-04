@@ -1,7 +1,7 @@
 """Retrieval over data/knowledge-base/*.md with LightRAG (knowledge graph + vector search).
 
 LightRAG uses the chat LLM (Typhoon) to pull entities and relations out of each document once, at indexing time,
-and a local multilingual embedding model for vectors. Index files live in backend/data/lightrag/ and are reused
+and hash_embed() (character n-gram hashing, no model) for vectors. Index files live in x-fitness/rag-index/ (committed) and are reused
 across restarts; only documents whose content changed are indexed again (tracked in manifest.json).
 Without TYPHOON_API_KEY the same functions fall back to keyword search (keyword_search.py).
 """
@@ -9,8 +9,9 @@ import asyncio
 import hashlib
 import json
 import logging
+import re
 import shutil
-from functools import lru_cache
+import zlib
 
 import numpy as np
 from lightrag import LightRAG, QueryParam
@@ -53,16 +54,28 @@ async def _llm(prompt, system_prompt=None, history_messages=None, keyword_extrac
                                           base_url=config.TYPHOON_BASE_URL, **kwargs)
 
 
-@lru_cache(maxsize=1)
-def _local_model():
-    from fastembed import TextEmbedding
-    return TextEmbedding(config.EMBED_MODEL, cache_dir=str(config.MODELS_DIR))
-
-
 async def _embed(texts: list[str]):
     if config.EMBED_API_KEY:
         return await openai_embed.func(texts, model=config.EMBED_MODEL, api_key=config.EMBED_API_KEY, base_url=config.EMBED_BASE_URL)
-    return np.array(await asyncio.to_thread(lambda: list(_local_model().embed(texts))))
+    return hash_embed(texts)
+
+
+def hash_embed(texts: list[str], dim: int | None = None) -> np.ndarray:
+    """Feature hashing of character 2-3-grams: no model, no API, ~0 MB RAM, works for Thai without word splitting.
+
+    Each n-gram goes to one of `dim` slots (crc32 → slot, one bit → +1/-1 so collisions cancel out),
+    then the vector is scaled to length 1, so cosine similarity = how many n-grams two texts share.
+    It matches wording, not meaning; the knowledge base lists the other names customers use to make up for that."""
+    dim = dim or config.EMBED_DIM
+    out = np.zeros((len(texts), dim), dtype=np.float32)
+    for row, text in zip(out, texts):
+        s = re.sub(r"\s+", " ", text.lower())
+        for n in (2, 3):
+            for i in range(len(s) - n + 1):
+                h = zlib.crc32(s[i:i + n].encode())
+                row[h % dim] += 1.0 if h & 0x80000000 else -1.0
+        row /= np.linalg.norm(row) or 1.0
+    return out
 
 
 async def _get() -> LightRAG:
@@ -72,7 +85,8 @@ async def _get() -> LightRAG:
             config.RAG_DIR.mkdir(parents=True, exist_ok=True)
             rag = LightRAG(working_dir=str(config.RAG_DIR), llm_model_func=_llm, llm_model_name=config.CHAT_MODEL, chunk_token_size=config.RAG_CHUNK_TOKENS,
                            embedding_func=EmbeddingFunc(embedding_dim=config.EMBED_DIM, max_token_size=8192, func=_embed),
-                           addon_params={"language": "Thai"})
+                           addon_params={"language": "Thai"},
+                           vector_db_storage_cls_kwargs={"cosine_better_than_threshold": config.RAG_MIN_SIMILARITY})
             await rag.initialize_storages()
             _rag = rag
     return _rag
@@ -138,10 +152,17 @@ async def context(query: str) -> tuple[str, list[str]]:
         hits = keyword_search.index().search(query, config.RAG_TOP_K)
         text = "\n\n".join(f"[{c.doc_id}] {c.title} › {c.heading}\n{c.text}" for _, c in hits)
         return text, list(dict.fromkeys(c.doc_id for s, c in hits if s >= MIN_KEYWORD_SCORE))
+    # LightRAG finds the chunks (vector + knowledge graph); we lay them out ourselves: document text first because it is
+    # the source of truth, then a few graph relations. Its default layout put LLM-written entity summaries first,
+    # and Typhoon followed those over exceptions written in the documents.
     rag = await _get()
-    text = await rag.aquery(query, param=QueryParam(mode=config.RAG_MODE, only_need_context=True, top_k=20,
-                                                    chunk_top_k=config.RAG_TOP_K, max_total_tokens=8000))
-    return text, [doc_id for doc_id in _manifest() if doc_id in text]
+    data = (await rag.aquery_data(query, param=QueryParam(mode=config.RAG_MODE, top_k=10, chunk_top_k=config.RAG_TOP_K,
+                                                          max_total_tokens=8000))).get("data", {})
+    chunks, relations = data.get("chunks", []), data.get("relationships", [])[:10]
+    text = "\n\n".join(f"[{c.get('file_path')}]\n{c.get('content', '')}" for c in chunks)
+    if relations:
+        text += "\n\n[ความสัมพันธ์จากกราฟความรู้]\n" + "\n".join(f"- {r['src_id']} → {r['tgt_id']}: {r.get('description', '')}" for r in relations)
+    return text, list(dict.fromkeys(c.get("file_path") for c in chunks if c.get("file_path")))
 
 
 async def search(query: str, k: int = 3) -> list[dict]:

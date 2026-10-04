@@ -28,20 +28,18 @@ LLM_TIMEOUT_S = float(os.getenv("XF_LLM_TIMEOUT_S", "25"))
 LINE_CHANNEL_SECRET = os.getenv("LINE_CHANNEL_SECRET", "")
 LINE_CHANNEL_ACCESS_TOKEN = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", "")
 
-# LightRAG embeddings. With XF_EMBED_API_KEY: an OpenAI-compatible embedding API (Gemini by default, free tier).
-# Without it: a small multilingual model run on this machine (downloaded once, ~220 MB, needs ~560 MB more RAM).
+# LightRAG embeddings: rag.hash_embed() — character n-gram hashing, no model and no key (fits Render's free 512 MB).
+# Optional: XF_EMBED_API_KEY switches to an OpenAI-compatible embedding API (Gemini by default) for meaning-based search.
 EMBED_API_KEY = os.getenv("XF_EMBED_API_KEY", "")
 if EMBED_API_KEY:
     EMBED_BASE_URL = os.getenv("XF_EMBED_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai/")
     EMBED_MODEL = os.getenv("XF_EMBED_MODEL", "gemini-embedding-001")
     EMBED_DIM = int(os.getenv("XF_EMBED_DIM", "3072"))
 else:
-    EMBED_BASE_URL = ""
-    EMBED_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-    EMBED_DIM = 384
-MODELS_DIR = PROJECT_ROOT / "backend" / "data" / "models"
+    EMBED_BASE_URL, EMBED_MODEL, EMBED_DIM = "", "char-ngram-hash", 1024
 RAG_DIR = Path(os.getenv("XF_RAG_DIR", PROJECT_ROOT / "rag-index"))  # committed, so a fresh server (Render) does not rebuild it
 RAG_MODE = os.getenv("XF_RAG_MODE", "mix")         # LightRAG query mode: naive · local · global · hybrid · mix
 RAG_LLM_MAX_TOKENS = int(os.getenv("XF_RAG_LLM_MAX_TOKENS", "8192"))  # answer length for LightRAG extraction calls
 RAG_CHUNK_TOKENS = int(os.getenv("XF_RAG_CHUNK_TOKENS", "500"))       # small chunks: Thai entity lists fit in one answer
-RAG_TOP_K = int(os.getenv("XF_RAG_TOP_K", "4"))
+RAG_TOP_K = int(os.getenv("XF_RAG_TOP_K", "8"))          # document chunks sent to the LLM (4 missed schedule rows)
+RAG_MIN_SIMILARITY = float(os.getenv("XF_RAG_MIN_SIMILARITY", "0.1"))  # hash embedding scores run lower than model ones
