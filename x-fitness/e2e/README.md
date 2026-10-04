@@ -1,0 +1,46 @@
+# X Fitness Chatbot — ทดสอบผ่านหน้าเว็บด้วย Playwright
+
+ใช้หน้าเว็บจริงเหมือนลูกค้า: เปิดเว็บ → ยืนยันสมาชิก (ถ้ามี) → เปิดแชต → แนบภาพ/พิมพ์ → รอคำตอบ → ตรวจข้อความที่ขึ้นบนจอ → ถ่ายภาพหน้าจอ
+
+- **ชุดทดสอบ (อ่าน):** `qa/x-fitness-test-cases.md` นอก `x-fitness/` — แก้/เพิ่มแถวในไฟล์นั้น ไม่ต้องแก้โค้ดที่นี่
+- **ผล (เขียน):** `qa/results/x-fitness-ui-results.md` (ผลตอบ · ผ่าน/ไม่ผ่าน · เวลาตอบ · ลิงก์ภาพหน้าจอ) · `qa/results/screenshots/` · `qa/results/x-fitness-ui-results.json`
+- **ไม่แตะโค้ดแชตบอท:** ไม่ import อะไรจาก `backend/` รู้จักเว็บจากสิ่งที่ลูกค้าเห็นเท่านั้น (id ของปุ่มและช่องพิมพ์) · ภาพทดสอบอ่านจาก `x-fitness/test-images/`
+
+```text
+e2e/
+├── playwright.config.js   ตั้งค่า: เว็บที่ทดสอบ · เปิด backend ให้ถ้ายังไม่เปิด · รันทีละกรณี
+├── tests/chatbot.spec.js  หนึ่งกรณีต่อหนึ่ง test: ขั้นตอนที่ลูกค้าทำบนหน้าเว็บ + การตรวจผล
+└── lib/
+    ├── testcases.js       อ่านตารางใน qa/x-fitness-test-cases.md
+    ├── run-file.js        เก็บผลทีละกรณี แล้วสร้างรายงานตอนจบ
+    └── report.js          เขียน qa/results/x-fitness-ui-results.md
+```
+
+## รัน
+
+ต้องมี Node.js 18+ และ backend ที่ตั้ง `TYPHOON_API_KEY` แล้ว (ดู `x-fitness/README.md`) — ถ้าไม่มี key หน้าเว็บจะอยู่โหมดจำลอง และทุกกรณีจะไม่ผ่านตั้งแต่ขั้นแรก
+
+```bash
+cd x-fitness/e2e
+npm install                     # ครั้งแรก
+npx playwright install chromium # ครั้งแรก
+npm test                        # 40 กรณี ~3 นาที · เปิด backend ที่ localhost:8000 ให้เองถ้ายังไม่เปิด
+```
+
+| ต้องการ | คำสั่ง |
+|---|---|
+| ดูเบราว์เซอร์ทำงานจริง | `npm run test:headed` |
+| เฉพาะบางชุด | `E2E_SUITES=questions,images npm test` (ชุด: questions · images · safety · rules) |
+| สุ่มรายการต้องทำ/ห้ามทำ 10 ข้อ | `E2E_RULES=10 npm test` · รันชุดเดิมซ้ำด้วย `E2E_SEED=<เลขที่รายงานบอก>` |
+| ทดสอบเว็บที่ deploy แล้ว | `E2E_BASE_URL=https://<ชื่อ>.onrender.com npm test` |
+| ดูกรณีที่ไม่ผ่านแบบละเอียด | `npx playwright show-trace test-results/<โฟลเดอร์ของกรณีนั้น>/trace.zip` |
+
+PowerShell ตั้งตัวแปรแบบนี้: `$env:E2E_SUITES="questions"; npm test`
+
+## ตรวจอะไรบ้าง
+
+ตามคอลัมน์ในเอกสาร test case: **ต้องมีทุกคำ** · **ต้องมีอย่างน้อย 1 คำ** · **ห้ามมี** (เทียบกับข้อความคำตอบบนจอ ตัวเลขไม่สนจุลภาค) · `guard=` (ป้ายรหัสกฎใต้คำตอบ) · `อ้างอิง=` (ป้าย KB-xx) · `ภาพ.<ช่อง>=` (JSON ผลวิเคราะห์ภาพที่หน้าเว็บแสดง) · หน้าเว็บต้องไม่แสดง error
+
+`สลิปผ่าน=` ตรวจจากหน้าเว็บไม่ได้ (หน้าเว็บไม่แสดงผลตรวจแยก) รายงานจะหมายเหตุไว้ — ใช้สคริปต์ API (`cd x-fitness/backend && python -m eval.run`) ตรวจข้อนี้
+
+เวลาตอบ = จากกดส่งถึงคำตอบขึ้นจอ จึงมากกว่าเวลาของสคริปต์ API เล็กน้อย (รวมการแสดงผลและการบันทึกแชต)

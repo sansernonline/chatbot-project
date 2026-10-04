@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--brand:#e10613;--deep:#8e0a12;--tint:#fdecec;--ink:#1f2328;--body:#3d434b;--muted:#6b7280;--line:#d6d9de;
+        --cloud:#f4f7fb;--cloudline:#9db4cf;--ai:#f3effc;--ailine:#9b87d6;--data:#eef7f1;--dataline:#86b99a}
+  *{box-sizing:border-box;margin:0}
+  body{width:1600px;height:840px;font-family:'IBM Plex Sans Thai',Tahoma,sans-serif;color:var(--body);background:#fff;padding:30px 40px;position:relative}
+  h1{font-size:26px;color:var(--ink);font-weight:700} h1 b{color:var(--brand)}
+  .sub{font-size:15px;color:var(--muted);margin:4px 0 26px}
+  .cols{display:grid;grid-template-columns:190px 215px 560px 330px;column-gap:62px;height:690px;align-items:center}
+  .grp{border:2px dashed var(--line);border-radius:14px;padding:28px 12px 12px;position:relative;display:flex;flex-direction:column;gap:12px}
+  .grp>.t{position:absolute;top:-13px;left:14px;background:#fff;padding:0 8px;font-size:14px;font-weight:700;color:var(--muted)}
+  .box{background:#fff;border:1.6px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px;line-height:1.35;position:relative;z-index:2}
+  .box b{display:block;color:var(--ink);font-size:15px}
+  .box small{color:var(--muted);font-size:12.5px}
+  .ico{float:left;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;font-size:18px;margin-right:10px;background:var(--tint)}
+  .cloud{background:var(--cloud);border:2px solid var(--cloudline)}
+  .cloud>.t{background:var(--cloud);color:#3b5f8a;border:2px solid var(--cloudline);border-radius:8px;padding:2px 10px;top:-16px}
+  .app{background:#fff;border:2px solid var(--brand);border-radius:12px;padding:26px 12px 12px;position:relative;display:flex;flex-direction:column;gap:9px}
+  .app>.t{position:absolute;top:-14px;left:14px;background:var(--brand);color:#fff;font-size:14px;font-weight:700;padding:3px 12px;border-radius:7px}
+  .app .box{border-color:#f0b4b8;display:grid;grid-template-columns:170px 1fr;align-items:center;column-gap:10px;padding:8px 12px}
+  .app .box b{font-size:14.5px}
+  .data{background:var(--data);border-color:var(--dataline)} .data>.t{background:var(--data);color:#2f6b45}
+  .ai{background:var(--ai);border-color:var(--ailine)} .ai>.t{background:var(--ai);color:#5b47a6}
+  .data .ico{background:#d9efe1} .ai .ico{background:#e6ddfa}
+  .right{display:flex;flex-direction:column;gap:30px}
+  svg{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:visible}
+  .lbl{font:600 12.5px 'IBM Plex Sans Thai',Tahoma;fill:var(--deep)}
+  .num{font:700 12px 'IBM Plex Sans Thai',Tahoma;fill:#fff}
+  .legend{position:absolute;right:40px;top:34px;font-size:13px;color:var(--muted);text-align:right;line-height:1.5}
+  .legend span{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--brand);color:#fff;font-weight:700;font-size:11px;margin-right:4px}
+</style></head><body>
+<h1><b>X Fitness Chatbot</b> — แผนภาพสถาปัตยกรรมระบบ</h1>
+<div class="sub">แอปเดียว (FastAPI) รับทั้งหน้าเว็บ LINE OA และหลังบ้าน · ความรู้ของร้านอยู่ในไฟล์ที่ deploy มากับโค้ด · ความฉลาดเรียกใช้ Typhoon ผ่าน API</div>
+<div class="legend"><span>1</span>–<span>6</span> ลำดับการไหลของข้อความ 1 ข้อความ</div>
+
+<div class="cols">
+  <div class="grp"><div class="t">ผู้ใช้</div>
+    <div class="box" id="cust"><span class="ico">👤</span><b>ลูกค้า</b><small>มือถือ / คอมพิวเตอร์</small></div>
+    <div class="box" id="custline"><span class="ico">💬</span><b>ลูกค้า LINE</b><small>แอป LINE</small></div>
+    <div class="box" id="staff"><span class="ico">🧑‍💼</span><b>พนักงานร้าน</b><small>รับเรื่องที่ส่งต่อ</small></div>
+  </div>
+  <div class="grp"><div class="t">ช่องทาง</div>
+    <div class="box" id="web"><span class="ico">🌐</span><b>หน้าเว็บ + แชต</b><small>สถานะกำลังประมวลผล · error + ลองใหม่</small></div>
+    <div class="box" id="line"><span class="ico">🟩</span><b>LINE Messaging API</b><small>webhook · reply · push</small></div>
+    <div class="box" id="admin"><span class="ico">🗂️</span><b>หน้าหลังบ้าน</b><small>/admin · กล่องแชต · คลังความรู้</small></div>
+  </div>
+  <div class="grp cloud"><div class="t">☁️ Render (Cloud) · Python 3.13 · uvicorn</div>
+    <div class="app" id="app"><div class="t">X Fitness backend — FastAPI</div>
+      <div class="box" id="api"><b>API</b><small>/api/chat · /api/vision · /api/line/webhook · /api/conversations · /api/admin/*</small></div>
+      <div class="box" id="gin"><b>Guardrail ขาเข้า</b><small>prompt injection · อ้างเป็นแอดมิน · ยา/แผนอาหาร · นอกเรื่อง · ข้อมูลคนอื่น</small></div>
+      <div class="box" id="bot"><b>ตัวบอท answer()</b><small>รวมความรู้ + ประวัติแชต + คำสั่งระบบ แล้วให้ LLM ตอบภาษาไทย</small></div>
+      <div class="box" id="vision"><b>อ่านภาพ read_image()</b><small>OCR → จัดเป็น JSON (สลิป · ใบเสร็จ · ผลวัด · โปสเตอร์)</small></div>
+      <div class="box" id="rag"><b>LightRAG (hybrid)</b><small>กราฟความรู้ + เวกเตอร์ (hash embedding) + ค้นด้วยคำ</small></div>
+      <div class="box" id="rules"><b>กฎร้าน · ตรวจสลิป</b><small>ข้อเท็จจริงที่ต้องตอบตาม · ตรวจสลิป 5 ข้อด้วยโค้ด</small></div>
+      <div class="box" id="gout"><b>Guardrail ขาออก</b><small>ราคาที่ไม่มีจริง · "ชำระสำเร็จ" · เบอร์คนอื่น · บัญชีอื่น · ประเมินสุขภาพ</small></div>
+      <div class="box" id="store"><b>กล่องแชต</b><small>ส่งต่อพนักงาน · push คำตอบพนักงานกลับ LINE</small></div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="grp ai"><div class="t">บริการ AI ภายนอก (Typhoon API)</div>
+      <div class="box" id="llm"><span class="ico">🧠</span><b>Typhoon LLM</b><small>typhoon-v2.5-30b-a3b-instruct · ตอบ · แยกคำสำคัญ · สร้างดัชนี</small></div>
+      <div class="box" id="ocr"><span class="ico">🔎</span><b>Typhoon OCR</b><small>typhoon-ocr · อ่านข้อความในภาพ</small></div>
+    </div>
+    <div class="grp data"><div class="t">ข้อมูล (deploy มากับโค้ด)</div>
+      <div class="box" id="idx"><span class="ico">📚</span><b>คลังความรู้ 9 เอกสาร + ดัชนี</b><small>KB-01…09 · rag-index/ (สร้างไว้ล่วงหน้า)</small></div>
+      <div class="box" id="json"><span class="ico">🗃️</span><b>ข้อมูลร้าน + สมาชิก</b><small>JSON 14 ไฟล์ (จำลอง)</small></div>
+      <div class="box" id="sqlite"><span class="ico">💾</span><b>SQLite</b><small>แชตทุกช่องทาง</small></div>
+    </div>
+  </div>
+</div>
+<svg id="wires"><defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8e0a12"/></marker>
+</defs></svg>
+<script>
+  // [from, to, label, step] — every wire runs left → right
+  const W = [
+    ['cust', 'web', '', '1'], ['custline', 'line', '', '1'], ['staff', 'admin', '', ''],
+    ['web', 'api', 'HTTPS', '2'], ['line', 'api', 'webhook', '2'], ['admin', 'store', 'REST + token', ''],
+    ['bot', 'llm', 'ถาม LLM', '5'], ['vision', 'ocr', 'อ่านภาพ', ''], ['rag', 'idx', 'ค้น', '3'],
+    ['rules', 'json', 'อ่าน', '4'], ['store', 'sqlite', 'บันทึก', '6'],
+  ];
+  const svg = document.getElementById('wires'), R = id => document.getElementById(id).getBoundingClientRect();
+  const ns = 'http://www.w3.org/2000/svg', el = (t, a) => { const e = document.createElementNS(ns, t); for (const k in a) e.setAttribute(k, a[k]); svg.appendChild(e); return e; };
+  const app = R('app');
+  for (const [a, b, label, step] of W) {
+    const A = R(a), B = R(b);
+    const x1 = A.right, y1 = A.top + A.height / 2, x2 = B.left - 2, y2 = B.top + B.height / 2;
+    const mx = (b === 'api' || b === 'store') ? x2 - 30 : x1 + (x2 - x1) * (b === 'ocr' ? 0.32 : 0.55);    // channel wires bend just before the backend
+    el('path', { d: `M${x1},${y1} L${mx - 14},${y1} Q${mx},${y1} ${mx},${y1 + Math.sign(y2 - y1) * Math.min(14, Math.abs(y2 - y1) / 2)} L${mx},${y2 - Math.sign(y2 - y1) * Math.min(14, Math.abs(y2 - y1) / 2)} Q${mx},${y2} ${mx + 14},${y2} L${x2},${y2}`,
+                 fill: 'none', stroke: '#8e0a12', 'stroke-width': 1.8, 'marker-end': 'url(#arr)' });
+    if (label) {
+      const lx = b === 'api' || b === 'store' ? (x1 + mx) / 2 + 6 : (mx + x2) / 2, ly = (b === 'api' || b === 'store' ? y1 : y2) - 7;
+      const t = el('text', { x: lx, y: ly, class: 'lbl', 'text-anchor': 'middle' }); t.textContent = label;
+      const bb = t.getBBox(); svg.insertBefore(el('rect', { x: bb.x - 4, y: bb.y - 1, width: bb.width + 8, height: bb.height + 2, fill: '#fff', rx: 4 }), t);
+    }
+    if (step) { el('circle', { cx: x1 + 13, cy: y1, r: 10, fill: '#e10613' }); const n = el('text', { x: x1 + 13, y: y1 + 4, class: 'num', 'text-anchor': 'middle' }); n.textContent = step; }
+  }
+</script>
+</body></html>

@@ -1081,7 +1081,8 @@ function send() {
   input.value = ''; input.style.height = 'auto'; clearImage();
   userMsg(text, img);
   if (withAgent()) return; // a human has the conversation: message goes to the admin inbox only
-  if (/พนักงาน|แอดมิน|admin|คนจริง|เจ้าหน้าที่/i.test(text)) return requestHuman(text.slice(0, 60));
+  // hand over only when the customer asks to talk to a person (not when a message merely mentions staff/admin)
+  if (/(คุย|ติดต่อ|ขอสาย|โอนสาย|ต่อสาย)\s*(กับ)?\s*(พนักงาน|แอดมิน|admin|คนจริง|เจ้าหน้าที่)|^(พนักงาน|แอดมิน|admin|คนจริง)\s*(ค่ะ|ครับ|หน่อย)?$/i.test(text)) return requestHuman(text.slice(0, 60));
   run(text, img);
 }
 async function run(text, img, isRetry) {

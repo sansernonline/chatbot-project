@@ -1,0 +1,13 @@
+{
+  "name": "x-fitness-e2e",
+  "private": true,
+  "description": "Playwright tests that use the X Fitness website like a customer, driven by qa/x-fitness-test-cases.md",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "install-browser": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0"
+  }
+}

@@ -20,12 +20,14 @@ x-fitness/
 │   │   ├── rag.py             LightRAG (ไม่มี key → keyword_search.py)
 │   │   ├── knowledge.py       API หน้าคลังความรู้ของ admin
 │   │   ├── conversations.py   กล่องแชตลูกค้า/admin (SQLite)
-│   │   ├── business.py        ข้อมูลสมาชิก · ตรวจสลิป
+│   │   ├── business.py        ข้อมูลสมาชิก · ตรวจสลิป · กฎสำคัญที่โค้ดแนบให้ LLM (RULES)
 │   │   ├── llm.py · config.py · auth.py · db.py
 │   │   └── prompts/           system.md · vision.md
-│   ├── tests/
+│   ├── tests/              pytest (ไม่ต้องใช้ key)
+│   ├── eval/               ทดสอบผ่าน API กับ Typhoon จริง: อ่าน qa/x-fitness-test-cases.md → qa/results/x-fitness-api-results.md
 │   ├── requirements.txt
 │   └── .env.example
+├── e2e/           ทดสอบผ่านหน้าเว็บด้วย Playwright (ไม่แตะโค้ดแชตบอท) — ดู e2e/README.md
 ├── frontend/      ← copy จาก ../mockup/      (หน้าเว็บลูกค้า + admin/)
 ├── data/          ← copy จาก ../data/        (knowledge-base/ + db/)
 ├── test-images/   ← copy จาก ../test-images/
@@ -77,6 +79,15 @@ python -m pytest
 ```
 
 ไม่ต้องใช้ key และไม่ต่อเน็ต — test ปลอม LLM และ LINE เอง (embedding ใช้ของจริงเพราะเป็นสูตรคำนวณ) แม้ใน `.env` จะมี key ก็ไม่เรียก Typhoon จริง
+
+**ชุดทดสอบตาม checklist ของวิชา** (ใช้ Typhoon จริง ต้องมี key): คำถาม 10 ข้อ · ภาพ 5 ภาพ · ความปลอดภัย 5 กรณี · สุ่มกฎต้องทำ/ห้ามทำ 10 ข้อ
+
+```bash
+python -m eval.run              # อ่าน ../../qa/x-fitness-test-cases.md → เขียน ../../qa/results/x-fitness-api-results.md
+python -m eval.run --rules all  # ทดสอบกฎครบ 20 ข้อ
+```
+
+ชุดทดสอบ (แก้/เพิ่มได้) อยู่ที่ `qa/x-fitness-test-cases.md` · ทดสอบผ่านหน้าเว็บด้วย Playwright ดู `e2e/README.md` · กฎแต่ละข้ออธิบายใน `docs/03_bot-rules.md`
 
 ## ตั้งค่า (`backend/.env`)
 

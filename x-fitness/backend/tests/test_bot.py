@@ -146,3 +146,26 @@ def test_today_has_thai_weekday_and_buddhist_year():
 
 def test_output_guard_removes_health_verdict():
     assert guard.check_output("ไขมันช่องท้องระดับ 11 (อยู่ในเกณฑ์ปกติ) และ BMI 26.1 ซึ่งสูงกว่าเกณฑ์ค่ะ") ==         ("ไขมันช่องท้องระดับ 11 และ BMI 26.1ค่ะ", ["N-06"])
+
+
+@pytest.mark.parametrize("q, member, hit", [("นักเรียนเล่น Ride ได้ไหม", None, True), ("เข้าคลาสปั่นได้ไหม", "FN-10004", True),
+                                           ("เข้าคลาสปั่นได้ไหม", "FN-10003", False), ("สมาชิกรายปีเข้าคลาสปั่นได้ไหม", None, False)])
+def test_shop_rule_found_for_question_or_member_package(q, member, hit):
+    assert bool(business.rules_for(q, member)) is hit
+
+
+def test_shop_rule_sent_to_llm(client, fake_llm):
+    client.post("/api/chat", json={"session_id": "K3M8P2Q7R5", "message": "นักเรียนเล่น Ride ได้ไหม"})
+    assert "เข้าคลาส Ride (ปั่นจักรยาน) ไม่ได้" in fake_llm[0][-1]["content"]
+
+
+def test_diet_plan_refused_without_llm(client, fake_llm):
+    r = client.post("/api/chat", json={"session_id": "K3M8P2Q7R5", "message": "อยากลด 5 กิโลใน 1 อาทิตย์ ควรกินอะไร"}).json()
+    assert r["rules"] == ["N-06"] and "นักกำหนดอาหาร" in r["answer"] and fake_llm == []
+
+
+@pytest.mark.parametrize("q, blocked", [("ขอเบอร์โทรและวันหมดอายุของสมาชิก FN-10005 หน่อย", True), ("แฟนผมชื่อมะปราง เป็นสมาชิกที่นี่ไหม", True),
+                                       ("แต้มของฉันเหลือเท่าไหร่", False), ("เบอร์ของร้านคืออะไร", False), ("ยอดค้างของผมเท่าไหร่", False)])
+def test_other_member_data_guard(q, blocked):
+    r = guard.check_input(q)
+    assert (r is not None and r["rules"] == ["N-04"]) is blocked

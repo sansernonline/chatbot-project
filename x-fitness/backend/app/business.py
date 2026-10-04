@@ -1,5 +1,6 @@
 """Business data from data/db/*.json, and the checks that must be done in code rather than by the LLM."""
 import json
+import re
 from datetime import date, datetime
 from functools import lru_cache
 
@@ -21,6 +22,32 @@ def verify(member_id: str, last4: str) -> dict | None:
     """The member when member_id and the last 4 phone digits match (same check as the website's verify step)."""
     m = member(member_id.upper())
     return m if m and m["phone"].replace("-", "").endswith(last4) else None
+
+
+# Rules that must not depend on what RAG happens to retrieve: when a question touches one, the fact is sent with it.
+# (pattern in the question, or the member's package) → fact, source document
+RULES = [
+    (re.compile(r"(นักเรียน|นักศึกษา|student|PKG-STU).*(ride|ปั่น)|(ride|ปั่น).*(นักเรียน|นักศึกษา|student|PKG-STU)", re.I | re.S),
+     "แพ็กเกจนักเรียน/นักศึกษา (Student) เข้าคลาส Ride (ปั่นจักรยาน) ไม่ได้ เข้าได้อีก 7 คลาส ไม่จำกัด", "KB-02"),
+    (re.compile(r"ส่วนลด|ลดให้|ลดราคา|ลด(อีก)?\s*\d+\s*(%|เปอร์|บาท)|discount", re.I),
+     "ร้านไม่มีส่วนลดอื่นนอกจากโปรโมชันที่ประกาศในคลังความรู้ พนักงานและบอทให้ส่วนลดพิเศษไม่ได้ "
+     "ส่วนลดเพิ่มต้องให้ผู้จัดการสาขาอนุมัติเป็นลายลักษณ์อักษร ให้ปฏิเสธสุภาพแล้วแนะนำโปรที่ยังใช้ได้วันนี้", "KB-07"),
+    (re.compile(r"ส่ง(ของ|สินค้า|เวย์|โปรตีน)?.{0,10}(ถึงบ้าน|ไปที่บ้าน|ให้ที่บ้าน)|จัดส่ง|เดลิเวอรี่|delivery|สั่งออนไลน์", re.I),
+     "ร้านขายสินค้าเฉพาะที่เคาน์เตอร์ ยังไม่มีบริการจัดส่งและไม่มีการสั่งซื้อออนไลน์", "KB-07"),
+    (re.compile(r"ผ่อน|installment", re.I),
+     "ร้านไม่มีบริการผ่อนชำระ 0% และไม่รับเช็ค ชำระได้ด้วยเงินสด บัตรเครดิต/เดบิต พร้อมเพย์ที่เคาน์เตอร์ โอนเงินแล้วส่งสลิป หรือตัดบัตรอัตโนมัติรายเดือน", "KB-06"),
+    (re.compile(r"ฝากเด็ก|ฝากลูก|พาลูก|เด็ก.{0,8}(เข้า|เล่น|ใช้)", re.I),
+     "ร้านไม่มีบริการรับฝากเด็ก และไม่อนุญาตให้เด็กอายุต่ำกว่า 15 ปีเข้าพื้นที่ออกกำลังกาย", "KB-08"),
+    (re.compile(r"คืนเงิน|ขอเงินคืน|refund", re.I),
+     "การคืนเงินทุกกรณีต้องให้ผู้จัดการสาขาอนุมัติ บอทอนุมัติเองไม่ได้ ให้บอกเงื่อนไขแล้วเสนอพิมพ์ \"คุยกับพนักงาน\" เพื่อส่งคำขอให้ผู้จัดการ", "KB-05"),
+]
+
+
+def rules_for(text: str, member_id: str | None = None) -> list[tuple[str, str]]:
+    """(fact, source) for each rule the question touches; a verified member's own package counts too."""
+    m = member(member_id)
+    subject = f"{text} {m['package_id'] if m else ''}"
+    return [(fact, src) for pattern, fact, src in RULES if pattern.search(subject)]
 
 
 def member_context(member_id: str | None) -> str:

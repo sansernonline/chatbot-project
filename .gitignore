@@ -4,3 +4,4 @@ __pycache__/
 x-fitness/backend/data/
 x-fitness/backend/.env
 .venv/
+qa/results/.ui-run.jsonl

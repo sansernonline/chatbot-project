@@ -69,3 +69,10 @@ def test_hash_embed_similar_wording_scores_higher():
     v = rag.hash_embed(["ค่าสมาชิกรายเดือน 1,290 บาท", "ค่าสมาชิกรายเดือนเท่าไหร่", "ห้ามถ่ายรูปสมาชิกคนอื่น"], dim=1024)
     assert np.allclose(np.linalg.norm(v, axis=1), 1) and v[0] @ v[1] > v[0] @ v[2] + 0.2
     assert np.array_equal(v, rag.hash_embed(["ค่าสมาชิกรายเดือน 1,290 บาท", "ค่าสมาชิกรายเดือนเท่าไหร่", "ห้ามถ่ายรูปสมาชิกคนอื่น"], dim=1024))
+
+
+def test_kb_reindex_starts(admin, monkeypatch):
+    calls = []
+    async def fake_reindex(): calls.append(1)
+    monkeypatch.setattr(rag, "reindex", fake_reindex)
+    assert admin.post("/api/admin/kb/reindex").json() == {"status": "started"} and calls == [1]

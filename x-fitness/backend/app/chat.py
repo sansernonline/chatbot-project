@@ -64,6 +64,9 @@ async def answer(text: str, session_id: str, member_id: str | None = None, visio
     found = bool(sources)
 
     user, slip = text or "ช่วยดูภาพนี้ให้หน่อย", None
+    if rules := business.rules_for(text, member_id):
+        user += "\n\n[กฎของร้านที่ใช้กับคำถามนี้ — ตอบตามนี้]\n" + "\n".join(f"- {fact}" for fact, _ in rules)
+        sources = list(dict.fromkeys([*(src for _, src in rules), *sources]))
     if vision:
         user += f"\n\n[ข้อมูลที่อ่านได้จากภาพที่ลูกค้าส่ง]\n{json.dumps({k: v for k, v in vision.items() if k != 'raw_text'}, ensure_ascii=False)}"
         if vision.get("type") == "slip":

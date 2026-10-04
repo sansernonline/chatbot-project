@@ -22,6 +22,7 @@ from . import config, keyword_search
 
 log = logging.getLogger(__name__)
 MIN_KEYWORD_SCORE = 0.08            # keyword fallback: below this a chunk is not cited (and the bot is likely unsure)
+KEYWORD_BACKUP = 2                  # keyword-search chunks added to LightRAG results (hybrid search)
 _rag: LightRAG | None = None
 _lock = asyncio.Lock()
 _indexing = False
@@ -159,10 +160,14 @@ async def context(query: str) -> tuple[str, list[str]]:
     data = (await rag.aquery_data(query, param=QueryParam(mode=config.RAG_MODE, top_k=10, chunk_top_k=config.RAG_TOP_K,
                                                           max_total_tokens=8000))).get("data", {})
     chunks, relations = data.get("chunks", []), data.get("relationships", [])[:10]
-    text = "\n\n".join(f"[{c.get('file_path')}]\n{c.get('content', '')}" for c in chunks)
+    # hybrid search: LightRAG searches with keywords Typhoon pulls out of the question, and those can be wrong
+    # ("นักเรียนเล่น Ride" → "การเล่นเกม"); keyword search on the customer's own words backs it up.
+    found = [(c.get("file_path"), c.get("content", "")) for c in chunks]
+    found += [(c.doc_id, c.text) for s, c in keyword_search.index().search(query, KEYWORD_BACKUP) if s >= MIN_KEYWORD_SCORE]
+    text = "\n\n".join(f"[{doc_id}]\n{content}" for doc_id, content in found)
     if relations:
         text += "\n\n[ความสัมพันธ์จากกราฟความรู้]\n" + "\n".join(f"- {r['src_id']} → {r['tgt_id']}: {r.get('description', '')}" for r in relations)
-    return text, list(dict.fromkeys(c.get("file_path") for c in chunks if c.get("file_path")))
+    return text, list(dict.fromkeys(doc_id for doc_id, _ in found if doc_id))
 
 
 async def search(query: str, k: int = 3) -> list[dict]:
