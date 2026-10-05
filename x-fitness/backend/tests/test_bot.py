@@ -122,7 +122,7 @@ def test_output_guard_blocks_made_up_website():
     assert guard.check_output("ดูได้ที่ xfitness.co.th ค่ะ", known) == (guard.SAFE_REPLY, ["G-URL"])
     ok = "เว็บไซต์ทางการคือ https://x-fitness-chatbot.onrender.com ค่ะ"
     assert guard.check_output(ok, known) == (ok, [])
-    assert guard.check_output("อีเมล hello@xfitness.example ค่ะ", known)[1] == []
+    assert guard.check_output("เว็บหลักคือ https://www.xfitness.example ค่ะ", known) == (guard.SAFE_REPLY, ["G-URL"])   # once made up from an email
 
 
 def test_output_guard_blocks_made_up_time():

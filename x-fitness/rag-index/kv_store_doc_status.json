@@ -147,35 +147,6 @@
       "KB-06-chunk-002"
     ]
   },
-  "KB-08": {
-    "status": "processed",
-    "content_summary": "[KB-08] กฎการใช้ยิม ความปลอดภัย การวัดองค์ประกอบร่างกาย และข้อมูลส่วนบุคคล\n\n\n# กฎการใช้ยิม\n\n## การแต่งกาย\n\n- สวมรองเท้าผ้าใบหุ้มส้นในโซนเวทและคาร์ดิโอ (ห้ามรองเท้าแตะ)\n- คลาสโยคะ พิลาทิส และมวยไทย เท้าเปล่าได้\n- สวมเสื้อที่มีแขนหรือเสื้อกล้าม ห้ามถอด...",
-    "content_length": 2473,
-    "created_at": "2026-10-05T05:32:10.567843+00:00",
-    "updated_at": "2026-10-05T05:32:10.816434+00:00",
-    "file_path": "KB-08",
-    "track_id": "insert_20261005_123210_89d06f91",
-    "content_hash": "eef32ffb5f464589a093cb899f6d057f",
-    "metadata": {
-      "parse_start_time": 1791178330,
-      "parse_stage_skipped": true,
-      "parse_format": "raw",
-      "parse_engine": "legacy",
-      "analyzing_start_time": 1791178330,
-      "analyzing_stage_skipped": true,
-      "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791178330,
-      "process_end_time": 1791178330,
-      "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=500, split_only=False, overlap=100"
-    },
-    "chunks_count": 3,
-    "chunks_list": [
-      "KB-08-chunk-000",
-      "KB-08-chunk-001",
-      "KB-08-chunk-002"
-    ]
-  },
   "KB-09": {
     "status": "processed",
     "content_summary": "[KB-09] บริการลูกค้า ติดต่อพนักงาน เช็กอิน และบัตรสมาชิก\n\n\n# บริการลูกค้า\n\n## ติดต่อพนักงานและเวลาตอบ\n\n- แชตบอท \"เอ็กซ์\" ตอบได้ตลอด 24 ชั่วโมง\n- พิมพ์ \"คุยกับพนักงาน\" ในแชตเพื่อส่งเรื่องให้พนักงาน ระหว่างนั้นบอทจะหยุดตอบจนพนักงานปิดเรื่อง\n- พนักงานตอ...",
@@ -255,22 +226,22 @@
   "KB-01": {
     "status": "processed",
     "content_summary": "[KB-01] ข้อมูลทั่วไป เวลาเปิด-ปิด ที่ตั้ง และสิ่งอำนวยความสะดวก\n\n\n# เอ็กซ์ ฟิตเนส (X Fitness)\n\nเอ็กซ์ ฟิตเนส เป็นสตูดิโอฟิตเนสขนาดเล็ก สาขาเดียว ตั้งอยู่ใจกลางศรีราชา จังหวัดชลบุรี เปิดให้บริการตั้งแต่ปี 2567 เน้นคลาสกลุ่มขนาดเล็ก เทรนเนอร์ดูแลใกล้ชิ...",
-    "content_length": 2672,
-    "created_at": "2026-10-05T06:44:35.126174+00:00",
-    "updated_at": "2026-10-05T06:46:39.785200+00:00",
+    "content_length": 2682,
+    "created_at": "2026-10-05T09:13:36.575413+00:00",
+    "updated_at": "2026-10-05T09:16:40.698407+00:00",
     "file_path": "KB-01",
-    "track_id": "insert_20261005_134435_fcf336e1",
-    "content_hash": "2dec0a86da724b5e0960edbdead34ae2",
+    "track_id": "insert_20261005_161336_c99f3979",
+    "content_hash": "fdb71bf07d9c7bc4feabd18a05ef2ab4",
     "metadata": {
-      "parse_start_time": 1791182675,
+      "parse_start_time": 1791191616,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791182675,
+      "analyzing_start_time": 1791191616,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791182675,
-      "process_end_time": 1791182799,
+      "process_start_time": 1791191616,
+      "process_end_time": 1791191800,
       "chunk_method": "legacy_chunking_func",
       "chunk_opts": "size=500, split_only=False, overlap=100"
     },
@@ -279,6 +250,35 @@
       "KB-01-chunk-000",
       "KB-01-chunk-001",
       "KB-01-chunk-002"
+    ]
+  },
+  "KB-08": {
+    "status": "processed",
+    "content_summary": "[KB-08] กฎการใช้ยิม ความปลอดภัย การวัดองค์ประกอบร่างกาย และข้อมูลส่วนบุคคล\n\n\n# กฎการใช้ยิม\n\n## การแต่งกาย\n\n- สวมรองเท้าผ้าใบหุ้มส้นในโซนเวทและคาร์ดิโอ (ห้ามรองเท้าแตะ)\n- คลาสโยคะ พิลาทิส และมวยไทย เท้าเปล่าได้\n- สวมเสื้อที่มีแขนหรือเสื้อกล้าม ห้ามถอด...",
+    "content_length": 2498,
+    "created_at": "2026-10-05T09:16:40.705921+00:00",
+    "updated_at": "2026-10-05T09:18:23.390318+00:00",
+    "file_path": "KB-08",
+    "track_id": "insert_20261005_161640_9a0ee2fa",
+    "content_hash": "b40a99d583d3fbeeae14b52a544b361d",
+    "metadata": {
+      "parse_start_time": 1791191800,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1791191800,
+      "analyzing_stage_skipped": true,
+      "kg_write_state": "graph_mutation_started",
+      "process_start_time": 1791191800,
+      "process_end_time": 1791191903,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=500, split_only=False, overlap=100"
+    },
+    "chunks_count": 3,
+    "chunks_list": [
+      "KB-08-chunk-000",
+      "KB-08-chunk-001",
+      "KB-08-chunk-002"
     ]
   }
 }

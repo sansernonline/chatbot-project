@@ -806,7 +806,7 @@ function renderVisit() {
   const d = todayNum(), rows = [[1,5,0],[6,7,1]];
   $('#hoursTable').innerHTML = rows.map(([a, b, i]) => `<tr class="${d >= a && d <= b ? 'today' : ''}"><td>${DB.business.hours[i].days}</td><td>${DB.business.hours[i].open} – ${DB.business.hours[i].close}</td></tr>`).join('') + `<tr><td style="color:var(--muted)">เข้าใช้ได้ถึง 30 นาทีก่อนปิด</td><td style="font:400 13px var(--mono);color:var(--muted)">ปิด 1 ม.ค. · 13–14 เม.ย.</td></tr>`;
   const b = DB.business;
-  $('#contact').innerHTML = `<div><span>ที่อยู่</span><span>${esc(b.address)}</span></div><div><span>โทร</span><a href="tel:${b.phone.replace(/-/g, '')}">${b.phone}</a></div><div><span>LINE</span><span>${b.line_oa}</span></div><div><span>อีเมล</span><a href="mailto:${b.email}">${b.email}</a></div>`;
+  $('#contact').innerHTML = `<div><span>ที่อยู่</span><span>${esc(b.address)}</span></div><div><span>โทร</span><a href="tel:${b.phone.replace(/-/g, '')}">${b.phone}</a></div><div><span>LINE</span><span>${b.line_oa}</span></div><div><span>เว็บไซต์</span><a href="${b.website}">${b.website.replace('https://', '')}</a></div>`;
 }
 const FAQ = [
   ['สมาชิกรายเดือนราคาเท่าไหร่', 'รายเดือนไม่มีสัญญา 1,290 บาท, สัญญา 12 เดือน 990 บาท, นักศึกษา 790 บาทต่อเดือน ถ้าจ่ายรายปี 9,900 บาท เฉลี่ยเดือนละ 825 บาท'],
