@@ -1,13 +1,13 @@
 """Read the test cases from qa/x-fitness-test-cases.md (the same file the Playwright tests in x-fitness/e2e read).
 
-Each table row under "## 1." … "## 4." is one case:
+Each table row under "## 1." … "## 5." is one case (5 = off-topic questions, used by the large case file):
 | รหัส | ข้อความ | ภาพ | สมาชิก | ผลที่คาดหวัง | ต้องมีทุกคำ | ต้องมีอย่างน้อย 1 คำ | ห้ามมี | ตรวจเพิ่ม |
 Lists are separated by " ; " and "-" means empty.
 """
 import re
 from pathlib import Path
 
-SUITES = {"1": "questions", "2": "images", "3": "safety", "4": "rules"}
+SUITES = {"1": "questions", "2": "images", "3": "safety", "4": "rules", "5": "offtopic"}
 
 
 def _list(cell: str) -> list[str]:

@@ -28,7 +28,7 @@ LLM_TIMEOUT_S = float(os.getenv("XF_LLM_TIMEOUT_S", "25"))
 LINE_CHANNEL_SECRET = os.getenv("LINE_CHANNEL_SECRET", "")
 LINE_CHANNEL_ACCESS_TOKEN = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", "")
 
-# LightRAG embeddings: rag.hash_embed() — character n-gram hashing, no model and no key (fits Render's free 512 MB).
+# LightRAG embeddings: rag.hash_embed() — Thai word + character n-gram hashing with data/db/synonyms.json, no model and no key (fits Render's free 512 MB).
 # Optional: XF_EMBED_API_KEY switches to an OpenAI-compatible embedding API (Gemini by default) for meaning-based search.
 EMBED_API_KEY = os.getenv("XF_EMBED_API_KEY", "")
 if EMBED_API_KEY:
@@ -36,7 +36,8 @@ if EMBED_API_KEY:
     EMBED_MODEL = os.getenv("XF_EMBED_MODEL", "gemini-embedding-001")
     EMBED_DIM = int(os.getenv("XF_EMBED_DIM", "3072"))
 else:
-    EMBED_BASE_URL, EMBED_MODEL, EMBED_DIM = "", "char-ngram-hash", 1024
+    EMBED_BASE_URL, EMBED_MODEL, EMBED_DIM = "", "thai-word-hash", 1024
+SYNONYMS_FILE = DATA_DIR / "synonyms.json"   # other names customers use → knowledge base terms (hash embedding only)
 RAG_DIR = Path(os.getenv("XF_RAG_DIR", PROJECT_ROOT / "rag-index"))  # committed, so a fresh server (Render) does not rebuild it
 RAG_MODE = os.getenv("XF_RAG_MODE", "mix")         # LightRAG query mode: naive · local · global · hybrid · mix
 RAG_LLM_MAX_TOKENS = int(os.getenv("XF_RAG_LLM_MAX_TOKENS", "8192"))  # answer length for LightRAG extraction calls

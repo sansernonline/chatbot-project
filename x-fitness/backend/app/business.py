@@ -1,7 +1,7 @@
 """Business data from data/db/*.json, and the checks that must be done in code rather than by the LLM."""
 import json
 import re
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from functools import lru_cache
 
 from . import config
@@ -24,9 +24,29 @@ def verify(member_id: str, last4: str) -> dict | None:
     return m if m and m["phone"].replace("-", "").endswith(last4) else None
 
 
+def _hours() -> str:
+    """Opening hours from business.json — a holiday line in KB-01 once made the LLM answer "every Tuesday 08:00–20:00"."""
+    last = lambda close: (datetime.strptime(close, "%H:%M") - timedelta(minutes=30)).strftime("%H:%M")   # last entry: 30 min before closing
+    hours = " · ".join(f"{h['days']} {h['open']}–{h['close']} (เข้าได้ถึง {last(h['close'])})" for h in table("business")["hours"])
+    return f"เวลาเปิด-ปิดปกติทุกสัปดาห์: {hours} · เวลาวันหยุดนักขัตฤกษ์ใช้เฉพาะวันที่ KB-01 ระบุ วันอื่นใช้เวลาปกติ · ร้านไม่เปิด 24 ชั่วโมง"
+
+
+def _promos() -> str:
+    """Which packages each promo code covers, from promotions.json — the LLM let NOJOIN apply to the Student package."""
+    names = {p["id"]: p["name_th"] for p in table("packages")}
+    covers = lambda p: "ทุกแพ็กเกจ" if p["applies_to"] == ["ALL"] else "เฉพาะ " + ", ".join(names.get(i, i) for i in p["applies_to"])
+    return " · ".join(f"โค้ด {p['code']} ({p['title']}) ใช้ได้{covers(p)} ถึง {p['end']}" if p["status"] == "active"
+                      else f"โค้ด {p['code']} หมดเขตแล้ว ใช้ไม่ได้" for p in table("promotions")) + " · แพ็กเกจที่ไม่อยู่ในรายการของโค้ด ใช้โค้ดนั้นไม่ได้"
+
+
 # Rules that must not depend on what RAG happens to retrieve: when a question touches one, the fact is sent with it.
 # (pattern in the question, or the member's package) → fact, source document
 RULES = [
+    (re.compile(r"เปิด|ปิด|กี่โมง|กี่ทุ่ม|เวลาทำการ|\bopen|\bclose|24\s*(ชั่วโมง|ชม)", re.I), _hours(), "KB-01"),
+    (re.compile(r"โค้ด|โปร|promo|code|YEAR13|NOJOIN|FRIEND300|MID2", re.I), _promos(), "KB-07"),
+    (re.compile(r"ยิมอื่น|ที่อื่น|ร้านอื่น|คู่แข่ง|ยิมนี้|ถูกกว่า|other gym|cheaper", re.I),
+     "ร้านไม่ลดราคาหรือเทียบราคาตามยิมอื่น ราคาและโปรของร้านมีเฉพาะในคลังความรู้ ห้ามนำราคาของยิมอื่นหรือราคาในภาพมาบอกเป็นราคา/โปรของร้าน "
+     "ให้ปฏิเสธสุภาพ บอกว่าส่วนลดเพิ่มต้องให้ผู้จัดการสาขาอนุมัติ แล้วแนะนำโปรที่ยังใช้ได้วันนี้", "KB-07"),
     (re.compile(r"(นักเรียน|นักศึกษา|student|PKG-STU).*(ride|ปั่น)|(ride|ปั่น).*(นักเรียน|นักศึกษา|student|PKG-STU)", re.I | re.S),
      "แพ็กเกจนักเรียน/นักศึกษา (Student) เข้าคลาส Ride (ปั่นจักรยาน) ไม่ได้ เข้าได้อีก 7 คลาส ไม่จำกัด", "KB-02"),
     (re.compile(r"ส่วนลด|ลดให้|ลดราคา|ลด(อีก)?\s*\d+\s*(%|เปอร์|บาท)|discount", re.I),
@@ -69,10 +89,12 @@ def member_context(member_id: str | None) -> str:
 
 
 USED_SLIP_REFS = {"DEMO2609010930Z9"}  # references already used — the real system reads these from its payments table
+FAILED_TRANSFER = re.compile(r"ไม่สำเร็จ|ล้มเหลว|ถูกปฏิเสธ|\b(failed|unsuccessful|declined|rejected)\b", re.I)
 
 
 def check_slip(slip: dict, member_id: str | None) -> dict:
-    """The 5 checks from KB-06. The result is preliminary: only staff can mark a payment as paid (never the bot)."""
+    """The 5 checks from KB-06. The result is preliminary: only staff can mark a payment as paid (never the bot).
+    A slip whose status says the transfer failed ("โอนเงินไม่สำเร็จ") never passes, whatever the 5 checks say."""
     m = member(member_id)
     if not m:
         return {"ok": False, "need_verify": True, "checks": [], "note": "ต้องยืนยันตัวตนก่อนจึงจะตรวจสลิปเทียบยอดค้างได้"}
@@ -84,17 +106,28 @@ def check_slip(slip: dict, member_id: str | None) -> dict:
     paid_on = _date(slip.get("datetime") or slip.get("date"))
     checks = [
         ("ชื่อบัญชีผู้รับเป็น " + bank["account_name"], _norm(bank["account_name"]) in _norm(slip.get("receiver_name"))),
-        ("เลขบัญชีผู้รับลงท้าย 4521-0", _norm("4521-0") in _norm(slip.get("receiver_account_last") or slip.get("receiver_account"))),
+        ("เลขบัญชีผู้รับลงท้าย 4521-0", _digits(slip.get("receiver_account_last") or slip.get("receiver_account")).endswith("45210")),
         (f"ยอดเงินตรงกับยอดค้าง {due['amount']:,.2f} บาท", amount is not None and abs(amount - due["amount"]) < 0.01),
         ("วันที่โอนไม่เกิน 7 วันก่อนหรือหลังวันครบกำหนด", paid_on is not None and abs((paid_on - date.fromisoformat(due["due"])).days) <= 7),
         ("เลขอ้างอิงไม่เคยใช้มาก่อน", bool(slip.get("reference")) and slip["reference"] not in USED_SLIP_REFS),
     ]
-    result = {"ok": all(ok for _, ok in checks), "payment_id": due["id"], "due_amount": due["amount"],
+    failed = bool(FAILED_TRANSFER.search(str(slip.get("status") or "")))
+    result = {"ok": all(ok for _, ok in checks) and not failed, "payment_id": due["id"], "due_amount": due["amount"],
               "checks": [{"rule": r, "pass": ok} for r, ok in checks]}
+    if failed:
+        result["transfer_failed"] = True
     if amount is not None and amount < due["amount"]:
         result["short_by"] = round(due["amount"] - amount, 2)
-    result["note"] = "ผ่านครบ 5 ข้อ สถานะเป็น 'รอพนักงานยืนยัน' (ยังไม่ใช่ชำระแล้ว)" if result["ok"] else "ไม่ผ่านบางข้อ ส่งต่อพนักงาน ห้ามบอกว่าชำระสำเร็จ"
+    if amount is not None and amount > due["amount"]:
+        result["over_by"] = round(amount - due["amount"], 2)       # the LLM states the difference: give it the number
+    result["note"] = ("ผ่านครบ 5 ข้อ สถานะเป็น 'รอพนักงานยืนยัน' (ยังไม่ใช่ชำระแล้ว)" if result["ok"] else
+                      ("สลิประบุว่าการโอนไม่สำเร็จ " if failed else "ไม่ผ่านบางข้อ ")
+                      + "บอกลูกค้าว่าส่งให้พนักงานตรวจต่อแล้ว ไม่ต้องโอนซ้ำจนกว่าพนักงานติดต่อกลับ ให้พิมพ์ \"คุยกับพนักงาน\" ได้ ห้ามบอกว่าชำระสำเร็จ")
     return result
+
+
+def _digits(s) -> str:
+    return re.sub(r"\D", "", str(s or ""))
 
 
 def _norm(s) -> str:

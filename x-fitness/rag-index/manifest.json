@@ -1,14 +1,14 @@
 {
- "embedder": "char-ngram-hash:1024:chunk500",
+ "embedder": "thai-word-hash:1024:chunk500:synfb9fdb23",
  "docs": {
-  "KB-01": "a5e83929e1b77e5ef60d78492498d190",
   "KB-02": "50492e4411099e9f4794ea87393b5998",
   "KB-03": "91592c2d9bc1c98053623aaadde737d5",
   "KB-04": "86bcae54c7c8c7745984a9e3c4a54d65",
   "KB-05": "de3438d2746ce3793bc38cbe507f7c71",
   "KB-06": "e7a84189a1ef61a1051e51572e0974cc",
-  "KB-07": "1a61e723bf308bc07a633f8bf7bd6d0f",
   "KB-08": "7d96fd5329c66fd25ca2818d99ad1901",
-  "KB-09": "29b5cfb8ac74d9f24a596fc1fa11855d"
+  "KB-09": "29b5cfb8ac74d9f24a596fc1fa11855d",
+  "KB-07": "1a61e723bf308bc07a633f8bf7bd6d0f",
+  "KB-01": "f014860db5b44a357249694acb87368f"
  }
 }

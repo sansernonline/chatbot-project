@@ -1,64 +1,25 @@
 {
-  "KB-01": {
-    "status": "processed",
-    "content_summary": "[KB-01] ข้อมูลทั่วไป เวลาเปิด-ปิด ที่ตั้ง และสิ่งอำนวยความสะดวก\n\n\n# เอ็กซ์ ฟิตเนส (X Fitness)\n\nเอ็กซ์ ฟิตเนส เป็นสตูดิโอฟิตเนสขนาดเล็ก สาขาเดียว ตั้งอยู่ใจกลางศรีราชา จังหวัดชลบุรี เปิดให้บริการตั้งแต่ปี 2567 เน้นคลาสกลุ่มขนาดเล็ก เทรนเนอร์ดูแลใกล้ชิ...",
-    "content_length": 2466,
-    "created_at": "2026-10-04T19:24:16.809744+00:00",
-    "updated_at": "2026-10-04T19:25:47.607980+00:00",
-    "file_path": "KB-01",
-    "track_id": "insert_20261005_022416_50517b31",
-    "content_hash": "b6d25a3df49e3596493260a5f380fb19",
-    "metadata": {
-      "parse_start_time": 1791141856,
-      "parse_stage_skipped": true,
-      "parse_format": "raw",
-      "parse_engine": "legacy",
-      "analyzing_start_time": 1791141856,
-      "analyzing_stage_skipped": true,
-      "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791141856,
-      "process_end_time": 1791141947,
-      "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=500, split_only=False, overlap=100"
-    },
-    "chunks_count": 3,
-    "chunks_list": [
-      "KB-01-chunk-000",
-      "KB-01-chunk-001",
-      "KB-01-chunk-002"
-    ]
-  },
   "KB-02": {
     "status": "processed",
     "content_summary": "[KB-02] แพ็กเกจสมาชิก ราคา และเงื่อนไขการสมัคร\n\n\n# แพ็กเกจสมาชิก\n\nค่าสมาชิก (ราคาแพ็กเกจ) ค่าสมาชิกรายเดือน รายปี และรายวัน มีดังนี้ เอ็กซ์ ฟิตเนส มีแพ็กเกจสมาชิก 5 แบบ ทุกแบบใช้โซนเวทและคาร์ดิโอได้ไม่จำกัดตามเวลาเปิด-ปิด\n\n| รหัส | แพ็กเกจ | ราคา | ส...",
     "content_length": 3645,
-    "created_at": "2026-10-04T19:25:47.610804+00:00",
-    "updated_at": "2026-10-04T19:29:22.043455+00:00",
+    "created_at": "2026-10-05T05:26:21.454817+00:00",
+    "updated_at": "2026-10-05T05:31:18.171016+00:00",
     "file_path": "KB-02",
-    "track_id": "insert_20261005_022547_6019c067",
+    "track_id": "insert_20261005_122621_4cef8ddc",
     "content_hash": "da3a2055c83b642e4d54e997e60ac73d",
     "metadata": {
-      "parse_start_time": 1791141947,
+      "parse_start_time": 1791177981,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791141947,
+      "analyzing_start_time": 1791177981,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791141947,
-      "process_end_time": 1791142162,
+      "process_start_time": 1791177981,
+      "process_end_time": 1791178278,
       "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=500, split_only=False, overlap=100",
-      "llm_truncation": {
-        "events": 1,
-        "affected": 1,
-        "stages": {
-          "initial": 1
-        },
-        "samples": [
-          "KB-02-chunk-001"
-        ]
-      }
+      "chunk_opts": "size=500, split_only=False, overlap=100"
     },
     "chunks_count": 4,
     "chunks_list": [
@@ -72,21 +33,21 @@
     "status": "processed",
     "content_summary": "[KB-03] คลาสกลุ่ม ตารางเรียน และการจองคลาส\n\n\n# คลาสกลุ่ม 8 คลาส\n\n| รหัส | คลาส | เวลา | ระดับ | ห้อง | รับได้ | เผาผลาญโดยประมาณ |\n|---|---|---|---|---|---|---|\n| CL-HIIT | HIIT Blast | 45 นาที | กลาง–สูง | Studio A | 25 คน | 450–600 กิโลแคลอรี |\n| C...",
     "content_length": 4305,
-    "created_at": "2026-10-04T19:29:22.047106+00:00",
-    "updated_at": "2026-10-04T19:30:55.424803+00:00",
+    "created_at": "2026-10-05T05:31:18.175496+00:00",
+    "updated_at": "2026-10-05T05:31:18.605253+00:00",
     "file_path": "KB-03",
-    "track_id": "insert_20261005_022922_42d5f7f3",
+    "track_id": "insert_20261005_123118_1d6cb077",
     "content_hash": "49477d87a8fbd0fd0b9b052d6823df27",
     "metadata": {
-      "parse_start_time": 1791142162,
+      "parse_start_time": 1791178278,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791142162,
+      "analyzing_start_time": 1791178278,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791142162,
-      "process_end_time": 1791142255,
+      "process_start_time": 1791178278,
+      "process_end_time": 1791178278,
       "chunk_method": "legacy_chunking_func",
       "chunk_opts": "size=500, split_only=False, overlap=100"
     },
@@ -103,21 +64,21 @@
     "status": "processed",
     "content_summary": "[KB-04] เทรนเนอร์ส่วนตัว (Personal Trainer) แพ็กเกจและเงื่อนไข\n\n\n# เทรนเนอร์ส่วนตัว (Personal Trainer: PT)\n\nเทรนเนอร์ส่วนตัวช่วยวางโปรแกรมให้ตรงเป้าหมาย เช่น ลดไขมัน เพิ่มกล้ามเนื้อ ปรับท่าทาง หรือเตรียมร่างกายสำหรับกีฬา แต่ละครั้งยาว 60 นาที\n\n## แพ็...",
     "content_length": 2287,
-    "created_at": "2026-10-04T19:30:55.431959+00:00",
-    "updated_at": "2026-10-04T19:33:44.142854+00:00",
+    "created_at": "2026-10-05T05:31:18.609424+00:00",
+    "updated_at": "2026-10-05T05:31:19.002381+00:00",
     "file_path": "KB-04",
-    "track_id": "insert_20261005_023055_ac84ecf0",
+    "track_id": "insert_20261005_123118_d091bcea",
     "content_hash": "f638bfd53ce56fb4a95edc3a5110c856",
     "metadata": {
-      "parse_start_time": 1791142255,
+      "parse_start_time": 1791178278,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791142255,
+      "analyzing_start_time": 1791178278,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791142255,
-      "process_end_time": 1791142424,
+      "process_start_time": 1791178278,
+      "process_end_time": 1791178279,
       "chunk_method": "legacy_chunking_func",
       "chunk_opts": "size=500, split_only=False, overlap=100"
     },
@@ -132,33 +93,23 @@
     "status": "processed",
     "content_summary": "[KB-05] นโยบายการพักสมาชิก ยกเลิก คืนเงิน และโอนสิทธิ์\n\n\n# นโยบายสมาชิก\n\n## การพักสมาชิก (Freeze)\n\n- สรุป: พักแบบปกติได้นานสุด 3 เดือนต่อปีสมาชิก ค่าธรรมเนียม 100 บาทต่อเดือน · พักเพราะเหตุผลทางการแพทย์ได้นานสุด 6 เดือน ไม่มีค่าธรรมเนียม ต้องมีใบรับร...",
     "content_length": 2253,
-    "created_at": "2026-10-04T19:33:44.146379+00:00",
-    "updated_at": "2026-10-04T19:35:32.811475+00:00",
+    "created_at": "2026-10-05T05:31:19.005594+00:00",
+    "updated_at": "2026-10-05T05:32:10.172110+00:00",
     "file_path": "KB-05",
-    "track_id": "insert_20261005_023344_fb31a0d7",
+    "track_id": "insert_20261005_123119_8bef6f51",
     "content_hash": "ffd5f2651e94e442d6f936b53c1662b6",
     "metadata": {
-      "parse_start_time": 1791142424,
+      "parse_start_time": 1791178279,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791142424,
+      "analyzing_start_time": 1791178279,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791142424,
-      "process_end_time": 1791142532,
+      "process_start_time": 1791178279,
+      "process_end_time": 1791178330,
       "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=500, split_only=False, overlap=100",
-      "llm_truncation": {
-        "events": 1,
-        "affected": 1,
-        "stages": {
-          "initial": 1
-        },
-        "samples": [
-          "KB-05-chunk-000"
-        ]
-      }
+      "chunk_opts": "size=500, split_only=False, overlap=100"
     },
     "chunks_count": 3,
     "chunks_list": [
@@ -171,21 +122,21 @@
     "status": "processed",
     "content_summary": "[KB-06] การชำระเงิน การส่งสลิป และการออกใบเสร็จ\n\n\n# การชำระเงิน\n\n## ช่องทางชำระเงิน\n\n1. เงินสดหรือบัตรเครดิต/เดบิตที่เคาน์เตอร์ (บัตรเครดิตขั้นต่ำ 300 บาท)\n2. สแกนคิวอาร์พร้อมเพย์ที่เคาน์เตอร์\n3. โอนเงินเข้าบัญชีร้าน แล้วส่งสลิปผ่านแชตหรือ LINE Offic...",
     "content_length": 1913,
-    "created_at": "2026-10-04T19:35:32.817710+00:00",
-    "updated_at": "2026-10-04T19:36:11.190410+00:00",
+    "created_at": "2026-10-05T05:32:10.175157+00:00",
+    "updated_at": "2026-10-05T05:32:10.392489+00:00",
     "file_path": "KB-06",
-    "track_id": "insert_20261005_023532_3ee048c5",
+    "track_id": "insert_20261005_123210_e079c9db",
     "content_hash": "415826f83c8f3c791ad54ef2e628121e",
     "metadata": {
-      "parse_start_time": 1791142532,
+      "parse_start_time": 1791178330,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791142532,
+      "analyzing_start_time": 1791178330,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791142532,
-      "process_end_time": 1791142571,
+      "process_start_time": 1791178330,
+      "process_end_time": 1791178330,
       "chunk_method": "legacy_chunking_func",
       "chunk_opts": "size=500, split_only=False, overlap=100"
     },
@@ -196,55 +147,25 @@
       "KB-06-chunk-002"
     ]
   },
-  "KB-07": {
-    "status": "processed",
-    "content_summary": "[KB-07] โปรโมชัน ระบบแต้มสะสม และสินค้าในร้าน\n\n\n# โปรโมชัน\n\nโปรใช้ได้เมื่อวันที่วันนี้อยู่ระหว่างวันเริ่มและวันสิ้นสุด (รวมทั้งสองวัน) เลยวันสิ้นสุดแล้วถือว่าหมดเขต\n\n| รหัส | โปรโมชัน | โค้ด | ใช้กับ | เริ่ม | สิ้นสุด |\n|---|---|---|---|---|---|\n| PR...",
-    "content_length": 3431,
-    "created_at": "2026-10-04T19:36:11.199122+00:00",
-    "updated_at": "2026-10-04T19:38:42.255886+00:00",
-    "file_path": "KB-07",
-    "track_id": "insert_20261005_023611_8f65a49b",
-    "content_hash": "28c02822bb70ba6f5603fba7388836d0",
-    "metadata": {
-      "parse_start_time": 1791142571,
-      "parse_stage_skipped": true,
-      "parse_format": "raw",
-      "parse_engine": "legacy",
-      "analyzing_start_time": 1791142571,
-      "analyzing_stage_skipped": true,
-      "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791142571,
-      "process_end_time": 1791142722,
-      "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=500, split_only=False, overlap=100"
-    },
-    "chunks_count": 4,
-    "chunks_list": [
-      "KB-07-chunk-000",
-      "KB-07-chunk-001",
-      "KB-07-chunk-002",
-      "KB-07-chunk-003"
-    ]
-  },
   "KB-08": {
     "status": "processed",
     "content_summary": "[KB-08] กฎการใช้ยิม ความปลอดภัย การวัดองค์ประกอบร่างกาย และข้อมูลส่วนบุคคล\n\n\n# กฎการใช้ยิม\n\n## การแต่งกาย\n\n- สวมรองเท้าผ้าใบหุ้มส้นในโซนเวทและคาร์ดิโอ (ห้ามรองเท้าแตะ)\n- คลาสโยคะ พิลาทิส และมวยไทย เท้าเปล่าได้\n- สวมเสื้อที่มีแขนหรือเสื้อกล้าม ห้ามถอด...",
     "content_length": 2473,
-    "created_at": "2026-10-04T19:38:42.264108+00:00",
-    "updated_at": "2026-10-04T19:39:16.039847+00:00",
+    "created_at": "2026-10-05T05:32:10.567843+00:00",
+    "updated_at": "2026-10-05T05:32:10.816434+00:00",
     "file_path": "KB-08",
-    "track_id": "insert_20261005_023842_d86f6a38",
+    "track_id": "insert_20261005_123210_89d06f91",
     "content_hash": "eef32ffb5f464589a093cb899f6d057f",
     "metadata": {
-      "parse_start_time": 1791142722,
+      "parse_start_time": 1791178330,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791142722,
+      "analyzing_start_time": 1791178330,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791142722,
-      "process_end_time": 1791142756,
+      "process_start_time": 1791178330,
+      "process_end_time": 1791178330,
       "chunk_method": "legacy_chunking_func",
       "chunk_opts": "size=500, split_only=False, overlap=100"
     },
@@ -259,21 +180,21 @@
     "status": "processed",
     "content_summary": "[KB-09] บริการลูกค้า ติดต่อพนักงาน เช็กอิน และบัตรสมาชิก\n\n\n# บริการลูกค้า\n\n## ติดต่อพนักงานและเวลาตอบ\n\n- แชตบอท \"เอ็กซ์\" ตอบได้ตลอด 24 ชั่วโมง\n- พิมพ์ \"คุยกับพนักงาน\" ในแชตเพื่อส่งเรื่องให้พนักงาน ระหว่างนั้นบอทจะหยุดตอบจนพนักงานปิดเรื่อง\n- พนักงานตอ...",
     "content_length": 1443,
-    "created_at": "2026-10-04T19:39:16.045681+00:00",
-    "updated_at": "2026-10-04T19:39:39.971352+00:00",
+    "created_at": "2026-10-05T05:32:10.821171+00:00",
+    "updated_at": "2026-10-05T05:32:18.927082+00:00",
     "file_path": "KB-09",
-    "track_id": "insert_20261005_023916_6cf80e1d",
+    "track_id": "insert_20261005_123210_091017f3",
     "content_hash": "1eb94fcd11f52bfd61601d6500ed075b",
     "metadata": {
-      "parse_start_time": 1791142756,
+      "parse_start_time": 1791178330,
       "parse_stage_skipped": true,
       "parse_format": "raw",
       "parse_engine": "legacy",
-      "analyzing_start_time": 1791142756,
+      "analyzing_start_time": 1791178330,
       "analyzing_stage_skipped": true,
       "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791142756,
-      "process_end_time": 1791142779,
+      "process_start_time": 1791178330,
+      "process_end_time": 1791178338,
       "chunk_method": "legacy_chunking_func",
       "chunk_opts": "size=500, split_only=False, overlap=100"
     },
@@ -281,6 +202,83 @@
     "chunks_list": [
       "KB-09-chunk-000",
       "KB-09-chunk-001"
+    ]
+  },
+  "dup-e9a5d51919087a044e4b442ab006f029": {
+    "status": "failed",
+    "content_summary": "[DUPLICATE:filename] Original document: KB-01",
+    "content_length": 2638,
+    "chunks_count": 0,
+    "chunks_list": [],
+    "created_at": "2026-10-05T05:32:39.835115+00:00",
+    "updated_at": "2026-10-05T05:32:39.835118+00:00",
+    "file_path": "KB-01",
+    "track_id": "insert_20261005_123239_4c7ca502",
+    "error_msg": "File name already exists. Original doc_id: KB-01, Status: failed",
+    "metadata": {
+      "is_duplicate": true,
+      "duplicate_kind": "filename",
+      "original_doc_id": "KB-01",
+      "original_track_id": "insert_20261005_122621_2606f66e"
+    }
+  },
+  "KB-07": {
+    "status": "processed",
+    "content_summary": "[KB-07] โปรโมชัน ระบบแต้มสะสม และสินค้าในร้าน\n\n\n# โปรโมชัน\n\nโปรใช้ได้เมื่อวันที่วันนี้อยู่ระหว่างวันเริ่มและวันสิ้นสุด (รวมทั้งสองวัน) เลยวันสิ้นสุดแล้วถือว่าหมดเขต\n\n| รหัส | โปรโมชัน | โค้ด | ใช้กับ | เริ่ม | สิ้นสุด |\n|---|---|---|---|---|---|\n| PR...",
+    "content_length": 3431,
+    "created_at": "2026-10-05T05:32:40.066353+00:00",
+    "updated_at": "2026-10-05T05:32:40.851805+00:00",
+    "file_path": "KB-07",
+    "track_id": "insert_20261005_123240_d42086d2",
+    "content_hash": "28c02822bb70ba6f5603fba7388836d0",
+    "metadata": {
+      "parse_start_time": 1791178360,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1791178360,
+      "analyzing_stage_skipped": true,
+      "kg_write_state": "graph_mutation_started",
+      "process_start_time": 1791178360,
+      "process_end_time": 1791178360,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=500, split_only=False, overlap=100"
+    },
+    "chunks_count": 4,
+    "chunks_list": [
+      "KB-07-chunk-000",
+      "KB-07-chunk-001",
+      "KB-07-chunk-002",
+      "KB-07-chunk-003"
+    ]
+  },
+  "KB-01": {
+    "status": "processed",
+    "content_summary": "[KB-01] ข้อมูลทั่วไป เวลาเปิด-ปิด ที่ตั้ง และสิ่งอำนวยความสะดวก\n\n\n# เอ็กซ์ ฟิตเนส (X Fitness)\n\nเอ็กซ์ ฟิตเนส เป็นสตูดิโอฟิตเนสขนาดเล็ก สาขาเดียว ตั้งอยู่ใจกลางศรีราชา จังหวัดชลบุรี เปิดให้บริการตั้งแต่ปี 2567 เน้นคลาสกลุ่มขนาดเล็ก เทรนเนอร์ดูแลใกล้ชิ...",
+    "content_length": 2672,
+    "created_at": "2026-10-05T06:44:35.126174+00:00",
+    "updated_at": "2026-10-05T06:46:39.785200+00:00",
+    "file_path": "KB-01",
+    "track_id": "insert_20261005_134435_fcf336e1",
+    "content_hash": "2dec0a86da724b5e0960edbdead34ae2",
+    "metadata": {
+      "parse_start_time": 1791182675,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1791182675,
+      "analyzing_stage_skipped": true,
+      "kg_write_state": "graph_mutation_started",
+      "process_start_time": 1791182675,
+      "process_end_time": 1791182799,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=500, split_only=False, overlap=100"
+    },
+    "chunks_count": 3,
+    "chunks_list": [
+      "KB-01-chunk-000",
+      "KB-01-chunk-001",
+      "KB-01-chunk-002"
     ]
   }
 }

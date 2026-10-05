@@ -2,6 +2,7 @@ fastapi>=0.115
 uvicorn>=0.30
 httpx>=0.27          # LLM / vision API calls
 lightrag-hku>=1.5.7  # knowledge graph RAG (pulls in numpy, openai)
+pythainlp>=5.0       # Thai word segmentation for the hash embedding (rag.hash_embed)
 python-multipart>=0.0.9
 python-dotenv>=1.0
 # tests

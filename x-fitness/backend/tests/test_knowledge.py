@@ -71,6 +71,12 @@ def test_hash_embed_similar_wording_scores_higher():
     assert np.array_equal(v, rag.hash_embed(["ค่าสมาชิกรายเดือน 1,290 บาท", "ค่าสมาชิกรายเดือนเท่าไหร่", "ห้ามถ่ายรูปสมาชิกคนอื่น"], dim=1024))
 
 
+def test_hash_embed_synonyms_bridge_other_names():
+    v = rag.hash_embed(["อยากจ้างครูฝึกส่วนตัว", "เทรนเนอร์ส่วนตัว PT 10 ครั้ง 8,000 บาท", "ล็อกเกอร์ห้ามทิ้งของข้ามคืน"])
+    assert v[0] @ v[1] > v[0] @ v[2] + 0.2
+    assert not [t for t, p in rag._synonyms() if "pt" in t and p.search("system prompt")]   # English names match whole words only
+
+
 def test_kb_reindex_starts(admin, monkeypatch):
     calls = []
     async def fake_reindex(): calls.append(1)
