@@ -14,16 +14,16 @@ import httpx
 from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 from fastapi.concurrency import run_in_threadpool
 
-from . import chat, config, db, limits, llm
+from . import backoffice, chat, config, db, limits, llm
 
 log = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/line", tags=["LINE"])
 API = "https://api.line.me/v2/bot"
 STAFF_BUSY = ("waiting", "agent")                                     # staff has the chat: bot stays quiet
-ERROR_REPLY = {"answer": f"ขออภัยค่ะ ระบบขัดข้องชั่วคราว ลองใหม่อีกครั้ง หรือพิมพ์ \"{chat.HANDOFF}\"", "actions": [chat.HANDOFF]}
+ERROR_REPLY = {"answer": f"ขออภัยครับ ระบบขัดข้องชั่วคราว ลองใหม่อีกครั้ง หรือพิมพ์ \"{chat.HANDOFF}\"", "actions": [chat.HANDOFF]}
 
 
-@router.post("/webhook")
+@router.post("/webhook", summary="รับข้อความจาก LINE OA (ตรวจลายเซ็น X-Line-Signature)")
 async def webhook(request: Request, tasks: BackgroundTasks, x_line_signature: str = Header(default="")):
     if not config.LINE_CHANNEL_SECRET:
         raise HTTPException(503, "ยังไม่ได้ตั้งค่า LINE_CHANNEL_SECRET")
@@ -57,10 +57,13 @@ async def handle(event: dict) -> None:
             result = await on_text(cid, user_id, msg["text"].strip()[:500], conv)
         elif msg["type"] == "image":
             loading(user_id)
-            vision = await run_in_threadpool(chat.read_image, *download(msg["id"]))
+            data, mime = download(msg["id"])
+            vision = await run_in_threadpool(chat.read_image, data, mime)
+            if vision.get("type") == "slip":
+                vision["image_id"] = backoffice.save_upload(data, mime, cid)
             result = await chat.answer("", cid, conv["member_id"], vision)
         else:
-            result = {"answer": "ตอนนี้เอ็กซ์อ่านได้เฉพาะข้อความและรูปภาพค่ะ", "actions": []}
+            result = {"answer": "ตอนนี้เอ็กซ์อ่านได้เฉพาะข้อความและรูปภาพครับ", "actions": []}
     except ValueError as e:                                            # image too big / wrong type
         result = {"answer": str(e), "actions": []}
     except (llm.LLMError, httpx.HTTPError) as e:
@@ -73,8 +76,8 @@ async def handle(event: dict) -> None:
 async def on_text(cid: str, user_id: str, text: str, conv: dict) -> dict:
     if chat.HANDOFF in text:
         db.handoff(cid, "ขอคุยกับพนักงาน (LINE)", conv["name"], conv["member_id"])
-        return {"answer": "ส่งเรื่องให้พนักงานแล้วค่ะ พนักงานตอบทุกวัน 09:00–20:00 น. ภายในประมาณ 15 นาที "
-                          "ระหว่างนี้พิมพ์รายละเอียดเพิ่มได้เลยค่ะ", "actions": []}
+        return {"answer": "ส่งเรื่องให้พนักงานแล้วครับ พนักงานตอบทุกวัน 09:00–20:00 น. ภายในประมาณ 15 นาที "
+                          "ระหว่างนี้พิมพ์รายละเอียดเพิ่มได้เลยครับ", "actions": []}
     loading(user_id)
     result = await chat.answer(text, cid, conv["member_id"])          # LINE has no verify form: the member types it (chat.verify_step)
     if member := result.pop("member", None):
@@ -106,7 +109,7 @@ def download(message_id: str) -> tuple[bytes, str]:
     r.raise_for_status()
     mime = r.headers.get("content-type", "image/jpeg").split(";")[0]
     if mime not in chat.IMAGE_TYPES or len(r.content) > chat.MAX_IMAGE_BYTES:
-        raise ValueError("รองรับเฉพาะภาพ JPG หรือ PNG ขนาดไม่เกิน 5 MB ค่ะ")
+        raise ValueError("รองรับเฉพาะภาพ JPG หรือ PNG ขนาดไม่เกิน 5 MB ครับ")
     return r.content, mime
 
 

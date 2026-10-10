@@ -14,3 +14,10 @@ def no_real_api(monkeypatch):
 def fresh_limits():
     """Every test starts with no rate-limit or verification counts (they live in memory for the whole process)."""
     limits.reset()
+
+
+@pytest.fixture(autouse=True)
+def own_database(monkeypatch, tmp_path):
+    """Every test gets its own chat database and slip folder, so admin changes and slips never leak between tests."""
+    monkeypatch.setattr(config, "DB_PATH", tmp_path / "chat.sqlite3")
+    monkeypatch.setattr(config, "SLIPS_DIR", tmp_path / "slips")

@@ -8,7 +8,8 @@
       "description": "ค่าสมาชิกรายเดือน ต.ค. 2569",
       "amount": 990.0,
       "due": "2026-10-01",
-      "status": "pending_slip"
+      "status": "pending_slip",
+      "slip_image": "01_slip_valid.png"
     },
     {
       "id": "PAY-2609-007",
@@ -16,7 +17,8 @@
       "description": "ค่าสมาชิก Monthly Flex ต.ค. 2569",
       "amount": 1290.0,
       "due": "2026-10-01",
-      "status": "pending_slip"
+      "status": "pending_slip",
+      "slip_image": "02_slip_amount_mismatch.png"
     },
     {
       "id": "PAY-2609-016",
@@ -33,6 +35,34 @@
       "amount": 990.0,
       "due": "2026-09-01",
       "status": "paid"
+    },
+    {
+      "id": "PAY-2610-005",
+      "member_id": "FN-10005",
+      "description": "ค่าสมาชิก Monthly Flex ต.ค. 2569",
+      "amount": 1290.0,
+      "due": "2026-10-01",
+      "status": "awaiting_slip",
+      "test_note": "ข้อมูลทดสอบหลังบ้าน (10 ต.ค. 2569) · ทดสอบ: ส่ง 02_slip_amount_mismatch.png (690 บาท) → ไม่ผ่าน ขาด 600"
+    },
+    {
+      "id": "PAY-2610-012",
+      "member_id": "FN-10012",
+      "description": "ค่าสมาชิกรายเดือน ต.ค. 2569",
+      "amount": 990.0,
+      "due": "2026-10-01",
+      "status": "awaiting_slip",
+      "test_note": "ข้อมูลทดสอบหลังบ้าน (10 ต.ค. 2569) · ทดสอบ: ส่ง 01_slip_valid.png (990 บาท) → ผ่านครบ 5 ข้อ"
+    },
+    {
+      "id": "PAY-2610-020",
+      "member_id": "FN-10020",
+      "description": "ค่าสมาชิกรายเดือน ต.ค. 2569",
+      "amount": 990.0,
+      "due": "2026-10-05",
+      "status": "awaiting_slip",
+      "test_note": "ข้อมูลทดสอบหลังบ้าน (10 ต.ค. 2569) · ทดสอบ: ส่งสลิปใดก็ได้"
     }
-  ]
+  ],
+  "status_values": "awaiting_slip = ยังไม่ส่งสลิป · pending_slip = ส่งสลิปแล้ว รอพนักงานตรวจ · paid = ชำระแล้ว · rejected = สลิปไม่ผ่าน"
 }

@@ -21,6 +21,7 @@ const ICON_PATHS = {
   payments: '<rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M2.5 10h19M7 15h4"/>',
   bookings: '<rect x="3" y="4.5" width="18" height="16.5" rx="2"/><path d="M8 2.5v4M16 2.5v4M3 10h18"/>',
   promotions: '<path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
+  graph: '<circle cx="5" cy="6" r="2.2"/><circle cx="19" cy="5" r="2.2"/><circle cx="12" cy="13" r="2.6"/><circle cx="5" cy="19" r="2.2"/><circle cx="19" cy="19" r="2.2"/><path d="M7 7l3.2 4.2M17.2 6.4L14 10.8M10 14.8L6.8 17.6M14.2 14.6l3.2 3"/>',
   knowledge: '<path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v15H5.5A1.5 1.5 0 0 0 4 19.5zM4 19.5A1.5 1.5 0 0 0 5.5 21H20"/>',
   bot: '<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1.5 14h5M9.5 8h5M17.5 16h5"/>',
   reports: '<path d="M3 3v18h18M7 15l4-4 3 3 6-6"/>',
@@ -38,7 +39,7 @@ const NAV = [
   ['หลัก', ['dashboard']],
   ['บริการลูกค้า', ['inbox', 'leads']],
   ['ธุรกิจ', ['members', 'payments', 'bookings', 'promotions']],
-  ['แชตบอท', ['knowledge', 'bot', 'reports']],
+  ['แชตบอท', ['knowledge', 'graph', 'bot', 'reports']],
   ['ระบบ', ['users']]
 ];
 
@@ -73,8 +74,9 @@ function route() {
   const view = $('#view'); view.innerHTML = ''; view.onclick = null; p.render(view);
   renderNav();
 }
-function showApp() {
+async function showApp() {
   if (!ChatStore.online && !ChatStore.list().length) seedDemo();   // preview mode: sample chats so the inbox is not empty
+  if (ChatStore.online) try { Object.assign(DB, await ChatStore.api('GET', '/api/admin/data')); } catch {}   // members, leads, shop data from the database
   $('#login').hidden = true; $('#app').hidden = false; route();
 }
 addEventListener('hashchange', () => loggedIn() && route());

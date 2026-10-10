@@ -31,16 +31,18 @@ final-project/
 │   └── tools/                    สคริปต์สร้างชุดทำรายงาน แถวจากข้อมูลร้าน และภาพ
 ├── data/
 │   ├── knowledge-base/           คลังความรู้ 8 เอกสาร (~15 หน้า) สำหรับทำ RAG
-│   └── db/                       ข้อมูลธุรกิจแบบ JSON 14 ไฟล์ (แพ็กเกจ คลาส ตาราง สมาชิกจำลอง 20 คน ฯลฯ)
+│   ├── db/                       ข้อมูลร้านตั้งต้น JSON 15 ไฟล์ (แพ็กเกจ คลาส ตาราง สมาชิกจำลอง 20 คน ฯลฯ) · เซิร์ฟเวอร์โหลดเข้าตารางในฐานข้อมูล SQLite เดียวกับแชต
+│   ├── guard/replies.md          ข้อความที่บอทตอบเมื่อ guard ทำงาน (แก้ได้โดยไม่แตะโค้ด · รูปแบบที่ใช้จับอยู่ใน guard.py)
+│   └── build_db_js.py            แก้ db/ แล้วรัน → สร้าง shared/db.js ของหน้าเว็บและหลังบ้านใหม่
 ├── mockup/
 │   ├── index.html                เว็บไซต์ต้นแบบพร้อมวิดเจ็ตแชต เปิดด้วยเบราว์เซอร์ได้เลย
 │   ├── admin/                    ระบบหลังบ้าน (login admin / 1234 · ไม่รัน backend = โหมดดูตัวอย่าง)
 │   └── shared/                   db.js (ข้อมูลจาก data/db) + chat-store.js (ต่อ API กล่องแชต ใช้ร่วมกันทั้งหน้าเว็บและหลังบ้าน)
 └── x-fitness/                    source code (รันได้ในตัว)
-    ├── backend/                  FastAPI: บอท LightRAG + vision LLM + guardrail (/api/chat, /api/vision) + กล่องแชตใน SQLite + เสิร์ฟหน้าเว็บ
+    ├── backend/                  FastAPI: บอท LightRAG + vision LLM + guardrail (/api/chat, /api/vision) + ฐานข้อมูล SQLite เดียว (แชต สลิป ข้อมูลร้าน) + เสิร์ฟหน้าเว็บ
     ├── frontend/                 สำเนาของ mockup/ ที่ backend เสิร์ฟ
-    ├── data/                     สำเนาของ data/
-    └── test-images/              สำเนาของ qa/test-images/
+    ├── data/                     สำเนาของ data/ + rag-index/ ดัชนี LightRAG (มีเฉพาะที่นี่)
+    └── qa/                       สำเนาของ qa/test-images/
 ```
 
 ## วิธีเปิด mockup
@@ -54,8 +56,8 @@ final-project/
 ### ระบบหลังบ้าน (admin) และ backend
 
 - **ดูหน้าตาอย่างเดียว:** ดับเบิลคลิก `mockup/admin/index.html` ล็อกอิน admin / 1234 ได้เลย เข้า**โหมดดูตัวอย่าง** มีแชตตัวอย่างให้ลองตอบ แต่ไม่บันทึกอะไร
-- **ใช้งานจริง:** รัน backend ก่อน แล้วกล่องแชตจะอ่าน/เขียน SQLite
-- `x-fitness/` เป็น source code ที่รันได้ในตัว: `frontend/` `data/` `test-images/` ในนั้น**คัดลอกมาจากราก** (`mockup/` `data/` `qa/test-images/`) ถ้าแก้ `mockup/` หรือ `data/` ที่ราก ให้คัดลอกไปทับอีกครั้ง เช่น `cp -r mockup/. x-fitness/frontend/` และ `cp -r data/. x-fitness/data/`
+- **ใช้งานจริง:** รัน backend ก่อน แล้วหลังบ้านจะอ่าน/เขียนฐานข้อมูล SQLite (แชต สลิป ข้อมูลร้าน)
+- `x-fitness/` เป็น source code ที่รันได้ในตัว: `frontend/` `data/` `qa/` ในนั้น**คัดลอกมาจากราก** (`mockup/` `data/` `qa/test-images/`) ถ้าแก้ `mockup/` หรือ `data/` ที่ราก ให้คัดลอกไปทับอีกครั้ง เช่น `cp -r mockup/. x-fitness/frontend/` และ `cp -r data/. x-fitness/data/`
 
 ```bash
 cd x-fitness/backend
@@ -85,7 +87,7 @@ URL เปลี่ยนทุกครั้งที่เปิด tunnel �
 
 **แชตลูกค้า**
 - แชตใหม่ได้เลขเรื่อง (ticket) 10 ตัว ตัวอักษรสลับตัวเลข เช่น `K3M8P2Q7R5` เก็บใน localStorage ของลูกค้า รีโหลดหน้าแล้วกลับมาแชตเดิม ปุ่ม "เริ่มแชตใหม่" ออกเลขใหม่
-- ข้อความทุกข้อความเก็บใน SQLite `x-fitness/backend/data/chat.sqlite3` · ไม่รัน backend บอทยังตอบได้ (โหมดจำลอง) แต่ส่งต่อพนักงานไม่ได้
+- ข้อความทุกข้อความเก็บใน SQLite `x-fitness/backend/data/chat.sqlite3` (ฐานข้อมูลเดียวกับข้อมูลร้านและสลิป) · ไม่รัน backend บอทยังตอบได้ (โหมดจำลอง) แต่ส่งต่อพนักงานไม่ได้
 - ทดสอบ: ลูกค้าพิมพ์ "คุยกับพนักงาน" → เข้ากล่องของ admin ภายใน 1–2 วินาที → admin ตอบ ข้อความขึ้นในแชตลูกค้า ระหว่างนั้นบอทหยุดตอบ จนกว่า admin จะกด "ปิดเรื่อง · คืนให้บอท"
 
 **บอท** — เมื่อ `.env` มี `TYPHOON_API_KEY` หน้าเว็บสลับไปตอบด้วย LLM จริงเอง (ไม่มี key = โหมดจำลอง) · ใช้ key ของ Typhoon ตัวเดียว (แชต · อ่านภาพ · สร้างดัชนี LightRAG)
@@ -98,7 +100,7 @@ URL เปลี่ยนทุกครั้งที่เปิด tunnel �
 | ส่วน | ไฟล์ | ทำอะไร |
 |---|---|---|
 | Guardrail | `x-fitness/backend/app/guard.py` · `limits.py` | **จำกัดการใช้งาน** 30 ข้อความ/นาทีต่อ IP หรือผู้ใช้ LINE · ล็อกรหัสสมาชิกที่เดาเบอร์ผิด 5 ครั้ง · **ขาเข้า** ข้อความเปลี่ยนคำสั่งระบบ (N-07, N-08 รวมที่แบ่งส่งหลายข้อความ) · อาการฉุกเฉิน (D-07) · ยา/สารกระตุ้น (N-06) · นอกเรื่อง (N-10) ตอบด้วยข้อความตายตัว ไม่เรียก LLM · **ขาออก** ตัดคำว่า "ชำระสำเร็จ" (N-05) · ปิดเบอร์โทรที่ไม่ใช่ของร้าน (N-04) · ตัดคำประเมินสุขภาพเช่น "อยู่ในเกณฑ์ปกติ" (N-06) · คำตอบที่มีเลขบัญชีอื่น หลุดคำสั่งระบบ หรือมีจำนวนเงินที่ไม่มีในคลังความรู้ (G-NUM) เปลี่ยนเป็นข้อความปลอดภัยและเสนอส่งต่อพนักงาน · รหัสกฎส่งกลับใน `rules` |
-| RAG | `x-fitness/backend/app/rag.py` | LightRAG: Typhoon สร้างกราฟความรู้ + เวกเตอร์จาก `data/knowledge-base` · embedding แบบ feature hashing ของคำไทย (pythainlp) + กลุ่มตัวอักษร 2–3 ตัว + คำพ้องใน `data/db/synonyms.json` (ไม่มีโมเดล ไม่ใช้ key) · ดัชนีสร้างไว้แล้วใน `x-fitness/rag-index/` ทำใหม่เฉพาะเอกสารที่เปลี่ยน · ไม่มี `TYPHOON_API_KEY` = ค้นด้วยคำแทน (`keyword_search.py`) |
+| RAG | `x-fitness/backend/app/rag.py` | LightRAG: Typhoon สร้างกราฟความรู้ + เวกเตอร์จาก `data/knowledge-base` · embedding แบบ feature hashing ของคำไทย (pythainlp) + กลุ่มตัวอักษร 2–3 ตัว + คำพ้องใน `data/db/synonyms.json` (ไม่มีโมเดล ไม่ใช้ key) · ดัชนีสร้างไว้แล้วใน `x-fitness/data/rag-index/` ทำใหม่เฉพาะเอกสารที่เปลี่ยน · ไม่มี `TYPHOON_API_KEY` = ค้นด้วยคำแทน (`keyword_search.py`) |
 | Vision | `x-fitness/backend/app/chat.py` `/api/vision` | `typhoon-ocr` อ่านข้อความในภาพ (`prompts/ocr.md` · ตอบ error ลองใหม่ 1 ครั้ง) → LLM แชตจัดเป็น JSON ตาม `prompts/vision.md` · typhoon-ocr ใช้คำสั่งให้ตอบ JSON ตรง ๆ ไม่ได้ (ทดสอบแล้ว error) · สลิปตรวจ 5 ข้อตาม KB-06 ด้วยโค้ด (`business.py`) |
 | คำสั่งระบบ | `x-fitness/backend/app/prompts/system.md` | กฎต้องทำ/ห้ามทำ + ข้อมูลสมาชิกที่ยืนยันแล้ว + ประวัติแชต 8 ข้อความ |
 
@@ -121,6 +123,14 @@ URL เปลี่ยนทุกครั้งที่เปิด tunnel �
 | POST | `/api/line/webhook` | รับข้อความ/รูปจาก LINE OA (ตรวจลายเซ็น) แล้วตอบกลับทาง LINE |
 | GET | `/api/admin/kb` | รายการเอกสารคลังความรู้ + สถานะดัชนี |
 | POST | `/api/admin/kb/search` | ทดสอบค้นคลังความรู้ (3 ส่วนที่ใกล้ที่สุด) |
+| GET | `/api/admin/kb/graph` | กราฟความรู้ LightRAG (หน้า กราฟความรู้) |
+| GET | `/api/data` | ข้อมูลร้านจากฐานข้อมูลให้หน้าเว็บ (ไม่มีข้อมูลสมาชิก) |
+| GET | `/api/admin/data` · `/api/admin/dashboard` | ข้อมูลหลังบ้าน (สมาชิก leads) · ตัวเลขหน้าภาพรวม |
+| GET/PATCH | `/api/admin/payments` · `bookings` · `promotions` | ดูและเปลี่ยนสถานะ (ยืนยันชำระ · เปิด/ปิดการจอง · เปิด/ปิดโปร) |
+| GET | `/api/admin/slips/{id}/image` | ภาพสลิปที่ลูกค้าส่ง |
+| POST | `/api/admin/test-data/reset` | กลับเป็นข้อมูลตั้งต้น |
+
+ทุก endpoint พร้อมคำอธิบายและลองเรียกได้ที่ `/docs` (Swagger) ของเซิร์ฟเวอร์
 | POST | `/api/admin/kb` | อัปโหลดเอกสาร `.md` (ไม่เกิน 200 KB) แล้วสร้างดัชนี |
 | POST | `/api/admin/kb/reindex` | สร้างดัชนีใหม่เฉพาะเอกสารที่เปลี่ยน |
 

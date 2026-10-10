@@ -10,7 +10,7 @@ def client(tmp_path, monkeypatch):
     from app import db
     monkeypatch.setattr(config, "DB_PATH", tmp_path / "chat.sqlite3")
     db.init()
-    monkeypatch.setattr(llm, "chat", lambda messages, **kw: "คำตอบทดสอบค่ะ")
+    monkeypatch.setattr(llm, "chat", lambda messages, **kw: "คำตอบทดสอบครับ")
     from app.main import app
     return TestClient(app)
 

@@ -15,7 +15,7 @@ from fastapi import Request
 
 from . import config
 
-TOO_FAST = "ส่งข้อความถี่เกินไปค่ะ รอสักครู่แล้วพิมพ์ใหม่อีกครั้ง หรือโทร 038-000-888"
+TOO_FAST = "ส่งข้อความถี่เกินไปครับ รอสักครู่แล้วพิมพ์ใหม่อีกครั้ง หรือโทร 038-000-888"
 _hits: dict[str, deque] = defaultdict(deque)                  # key → times of recent hits
 _lock = threading.Lock()
 

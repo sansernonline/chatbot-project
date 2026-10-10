@@ -11,14 +11,32 @@ from functools import lru_cache
 
 from . import business, config, keyword_search
 
-QUICK = ["ราคาสมาชิก", "ตารางคลาส"]
-OTHER_MEMBER = ("ขออภัยค่ะ เอ็กซ์ไม่สามารถเปิดเผยหรือยืนยันข้อมูลของสมาชิกคนอื่นได้ รวมถึงไม่บอกว่าใครเป็นสมาชิกหรือไม่ "
-                "ถ้าเป็นข้อมูลของคุณเอง กรุณายืนยันตัวตนด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้ายค่ะ")
+
+
+def load_replies(path=config.GUARD_REPLIES) -> dict[str, tuple[str, list[str]]]:
+    """data/guard/replies.md → {code: (reply, quick-reply buttons)}. "## <code> — note" starts a reply; its lines join into one
+    message and an optional "ปุ่ม: a · b" line lists the buttons. Lines before the first "##" are notes for whoever edits it."""
+    replies, key, lines, buttons = {}, None, [], []
+    for line in path.read_text(encoding="utf-8").splitlines() + ["## end"]:
+        if line.startswith("## ") or line.startswith("# "):
+            if key:
+                replies[key] = (" ".join(lines), buttons)
+            key, lines, buttons = (line[3:].split()[0] if line.startswith("## ") else None), [], []
+        elif key and line.startswith("ปุ่ม:"):
+            buttons = [b.strip() for b in line[5:].split(" · ") if b.strip()]
+        elif key and line.strip():
+            lines.append(line.strip())
+    return replies
+
+
+R = load_replies()   # a code missing from the file stops the app at start-up (KeyError below), not mid-chat
+OTHER_MEMBER = R["N-04"][0]
+SAFE_REPLY = R["ตอบไม่ได้"][0]
 THAI_DIGITS = str.maketrans("๐๑๒๓๔๕๖๗๘๙", "0123456789")
 LEET = str.maketrans("0134@$", "oieaas")                              # "pr0mpt", "@dmin": English words only
 MEMBER_ID = re.compile(r"FN\s*-?\s*(\d{5})", re.I)
 
-# (rule codes, pattern, fixed reply, quick replies)
+# (rule codes, pattern, fixed reply, quick replies) — replies come from data/guard/replies.md
 INPUT_RULES = [
     (["N-07", "N-08"], re.compile(r"(ignore|disregard|forget).{0,20}(instruction|previous|above)|ลืม.{0,10}(คำสั่ง|กฎ)|ไม่ต้องสน.{0,10}(คำสั่ง|กฎ)"
                                   r"|system\s*prompt|คำสั่งระบบ|prompt\s*ของคุณ|ได้รับคำสั่งอะไร|คุณคือ(แอดมิน|ผู้จัดการ|admin)|ตอนนี้คุณคือ"
@@ -30,26 +48,23 @@ INPUT_RULES = [
                                   r"|(ทวน|บอก|เปิดเผย|แสดง|แปล|พิมพ์).{0,15}(กฎ|กติกา|คำสั่ง|ข้อความ).{0,10}(ที่(ตั้ง|ให้|สั่ง)ไว้(ให้|กับ)?คุณ|ที่คุณได้รับ|ข้างบน|ด้านบน|ก่อนหน้านี้)"
                                   r"|(เล่นบท|สวมบท|แกล้งเป็น|ทำตัวเป็น|สมมติ(ว่า)?(คุณ|ตัวเอง)?เป็น).{0,10}(แอดมิน|ผู้จัดการ|ผู้ดูแล|admin|เจ้าของร้าน|ai\s*อื่น)"
                                   r"|pretend\s*(to\s*be|you)|role\s*-?\s*play|act\s*as\s*(an?\s*)?(admin|manager|developer)|\bdan\s*mode", re.I),
-     "ขออภัยค่ะ เอ็กซ์ไม่สามารถเปิดเผยหรือเปลี่ยนคำสั่งการทำงานได้ และไม่รับคำสั่งที่อ้างว่ามาจากผู้ดูแลผ่านแชต ถ้าต้องการสอบถามเรื่องสมาชิกหรือคลาส ยินดีช่วยค่ะ", QUICK),
+     *R["N-07"]),
     (["D-07", "N-06"], re.compile(r"เจ็บ(ที่)?(หน้า)?อก|แน่น(หน้า)?อก|หน้ามืด|เวียนหัว|หายใจไม่ออก|หายใจไม่ทัน|ใจสั่น|หัวใจ(เต้น)?(แรง|เร็ว|ผิดจังหวะ)"
                                        r"|(จะ)?เป็นลม|หมดสติ|ปวดร้าว(ไป)?(แขน|กราม)"),
-     "ถ้ามีอาการเจ็บหน้าอก เวียนศีรษะ หรือหายใจไม่ออก ให้หยุดออกกำลังกายทันทีและพบแพทย์ค่ะ กรณีฉุกเฉินโทร 1669 "
-     "ในยิมมีเครื่อง AED ที่เคาน์เตอร์ และพนักงานผ่านการอบรมปฐมพยาบาล", []),
+     *R["D-07"]),
     (["N-06"], re.compile(r"สเตียรอยด์|steroid|ฮอร์โมน|ยาลด|ยาเผาผลาญ|ยากระตุ้น|ยาชุด|sarm|clen|hgh|เทสโทส|testosterone|ฉีด.{0,10}(ยา|สาร|กล้าม|ไขมัน|วิตามิน|กลูต้า|ผิว|โบท็อก|ฟิลเลอร์)", re.I),   # "ฉีดวัคซีน" is a fair question
-     "เอ็กซ์ไม่สามารถแนะนำยา สเตียรอยด์ ฮอร์โมน หรือสารเสริมประสิทธิภาพได้ค่ะ เพราะอาจเป็นอันตรายต่อสุขภาพ กรุณาปรึกษาแพทย์ "
-     "ถ้าอยากเพิ่มกล้ามเนื้ออย่างปลอดภัย โค้ชตั้มถนัดด้านเวทเทรนนิ่งค่ะ", ["ราคา PT 10 ครั้ง"]),
+     *R["N-06-ยา"]),
     (["N-06"], re.compile(r"กินอะไร|แผนอาหาร|คุมอาหาร|ลด.{0,6}\d+\s*(กิโล|kg).{0,10}(อาทิตย์|สัปดาห์|วัน)|อดอาหาร|ควรกินกี่แคล", re.I),
-     "เอ็กซ์ไม่สามารถกำหนดแผนอาหารหรือเป้าลดน้ำหนักเร่งด่วนได้ค่ะ แนะนำปรึกษาแพทย์หรือนักกำหนดอาหาร "
-     "ส่วนการออกกำลังกาย โค้ชเก่งถนัดโปรแกรมลดไขมันค่ะ", ["คลาสเผาผลาญเยอะ", "ราคา PT"]),
+     *R["N-06-อาหาร"]),
     (["N-04"], re.compile(r"(เบอร์|วันหมดอายุ|แต้ม|ที่อยู่|ยอดค้าง|นามสกุล).{0,15}(ของ(?!ฉัน|ผม|หนู|เรา|ร้าน|ตัวเอง)|สมาชิก\s*FN)|ใครเป็นสมาชิก|รายชื่อสมาชิก"
                           r"|(แฟน|เพื่อน|พี่|น้อง|คุณ\S{2,20}).{0,20}(เป็น|ยังเป็น)สมาชิก(ที่นี่|อยู่)?(ไหม|หรือเปล่า|รึเปล่า|มั้ย|หรือยัง)"
                           r"|ขอ(เบอร์|ที่อยู่|นามสกุล|อีเมล|ไลน์).{0,10}(คุณ|น้อง|พี่)\S{2,20}.{0,10}สมาชิก", re.I),
-     OTHER_MEMBER, []),
+     *R["N-04"]),
     (["N-10"], re.compile(r"หุ้น|คริปโต|bitcoin|การเมือง|เลือกตั้ง|หวย|การบ้าน|เขียนโค้ด|แปลภาษา|ดูดวง"
                           r"|เขียน.{0,10}(โปรแกรม|code|python|java|sql|html|สคริปต์)|\bpython\b|\bjavascript\b"
                           r"|ทำพาสปอร์ต|ทำวีซ่า|ขอวีซ่า|ราคาทอง|ราคาน้ำมัน|ค่าเงินบาท|พยากรณ์อากาศ|ผลบอล|แต่งกลอน|เรียงความ|สูตรอาหาร"
                           r"|^[\s\d.,]+(คูณ|หาร|บวก|ลบ|[x×*/+\-])[\s\d.,]+(ได้)?\s*(เท่า(ไหร่|ไร))?\s*(คะ|ครับ|ค่ะ)?\s*[?=]?\s*$", re.I),
-     "ขออภัยค่ะ เอ็กซ์ตอบได้เฉพาะเรื่องของ X Fitness เช่น แพ็กเกจ คลาส เทรนเนอร์ และโปรโมชันค่ะ", QUICK),
+     *R["N-10"]),
 ]
 
 # Llama Guard's 14 hazard categories (S1–S14), checked in code. High-precision patterns: a gym question that only looks
@@ -59,7 +74,6 @@ INPUT_RULES = [
 SPLIT_INJECTION = re.compile(r"system\s*prompt|(ignore|disregard).{0,20}(instruction|previous|above)|jailbreak|developer\s*mode"
                              r"|api\s*key|prompt\s*ของคุณ|โหมดนักพัฒนา|verbatim", re.I)
 
-HANDOFF_ACTION = ["คุยกับพนักงาน"]
 SELF_HARM = re.compile(r"อยาก(จะ)?ตาย|ฆ่าตัว(ตาย)?|ไม่อยากมีชีวิต|อยากหายไปจากโลก|จบชีวิต(ตัวเอง)?|ทำร้ายตัวเอง|ทำร้ายร่างกายตัวเอง"
                        r"|กรีด(ข้อมือ|แขน|ตัวเอง)|กินยา.{0,6}(ตาย|เกินขนาด)|ผูกคอ|กระโดด(ตึก|สะพาน|น้ำตาย)"
                        r"|suicid|kill\s*my\s*self|self\s*-?\s*harm|end\s*my\s*life|want\s*to\s*die", re.I)
@@ -93,26 +107,21 @@ ADVICE = re.compile(r"ปรึกษา(กฎหมาย|ทนาย|คด�
 ELECTIONS = re.compile(r"พรรคการเมือง|นายกรัฐมนตรี|นายกฯ|ส\.ส\.|กกต|เลือกพรรค|เลือกใคร(เป็น)?(นายก|ส\.?ส)|ประชามติ|โหวต(ให้)?(พรรค|นายก)", re.I)
 CODE_ABUSE = re.compile(r"rm\s+-rf|os\.system|subprocess|import\s+os|__import__|exec\s*\(|eval\s*\(|<script|javascript:|drop\s+table|union\s+select"
                         r"|select\s+\*\s+from|/etc/passwd|powershell|cmd\.exe|curl\s+https?://|wget\s+https?://|base64\s+-d|รันโค้ด|run\s+(this|the following)\s+code", re.I)
-SORRY_SHOP = "ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยค่ะ"
 HARM_RULES = [
-    (["S11"], SELF_HARM, "เอ็กซ์เป็นห่วงคุณนะคะ ถ้ารู้สึกอยากทำร้ายตัวเอง โทรคุยกับสายด่วนสุขภาพจิต 1323 ได้ตลอด 24 ชั่วโมง ไม่เสียค่าใช้จ่าย "
-                         "ถ้าอยู่ในอันตรายตอนนี้ โทร 1669 หรือไปโรงพยาบาลที่ใกล้ที่สุด ถ้าอยากคุยกับพนักงานของร้าน พิมพ์ \"คุยกับพนักงาน\" ได้เลยค่ะ", HANDOFF_ACTION),
-    (["S1", "S2", "S3"], INCIDENT, "ขอโทษที่เกิดเรื่องนี้ค่ะ เรื่องนี้สำคัญ เอ็กซ์ขอส่งต่อให้ผู้จัดการสาขาดูแลทันที พิมพ์ \"คุยกับพนักงาน\" หรือโทร 038-000-888 "
-                                   "ถ้ายังอยู่ในอันตรายตอนนี้ โทรแจ้งตำรวจ 191 ค่ะ", HANDOFF_ACTION),
-    (["S4"], CHILD, "ขออภัยค่ะ เอ็กซ์ไม่ตอบเนื้อหาทางเพศที่เกี่ยวกับเด็กหรือผู้เยาว์ในทุกกรณี", []),
-    (["S12", "S3"], SEXUAL, "ขออภัยค่ะ เอ็กซ์ไม่ตอบหรือสร้างเนื้อหาทางเพศ " + SORRY_SHOP, QUICK),
-    (["S9"], WEAPONS, "ขออภัยค่ะ เอ็กซ์ให้ข้อมูลเกี่ยวกับอาวุธ วัตถุระเบิด หรือสารอันตรายไม่ได้ " + SORRY_SHOP, QUICK),
-    (["S1"], VIOLENCE, "ขออภัยค่ะ เอ็กซ์ช่วยเรื่องที่อาจทำร้ายผู้อื่นไม่ได้ ถ้ามีคนกำลังตกอยู่ในอันตราย โทรแจ้งตำรวจ 191 ค่ะ", []),
-    (["S2"], CRIME, "ขออภัยค่ะ เอ็กซ์ช่วยเรื่องที่ผิดกฎหมายไม่ได้ " + SORRY_SHOP, QUICK),
-    (["S10"], HATE, "ขออภัยค่ะ เอ็กซ์ไม่ตอบข้อความที่ดูถูกหรือเหยียดผู้อื่น X Fitness ต้อนรับทุกคนอย่างเท่าเทียม " + SORRY_SHOP, QUICK),
-    (["S5"], DEFAMATION, "ขออภัยค่ะ เอ็กซ์ช่วยเขียนหรือเผยแพร่ข้อความที่กล่าวหาหรือทำให้ผู้อื่นเสียชื่อเสียงไม่ได้ "
-                         "ถ้ามีปัญหากับบริการของร้าน พิมพ์ \"คุยกับพนักงาน\" เพื่อแจ้งผู้จัดการสาขาได้ค่ะ", HANDOFF_ACTION),
-    (["S8"], COPYRIGHT, "ขออภัยค่ะ เอ็กซ์ช่วยเรื่องที่ละเมิดลิขสิทธิ์หรือสินค้าปลอมไม่ได้ " + SORRY_SHOP, QUICK),
-    (["S7", "N-04"], PRIVACY, "ขออภัยค่ะ เอ็กซ์ให้ข้อมูลส่วนตัวของโค้ช พนักงาน หรือลูกค้าคนอื่นไม่ได้ ถ้าต้องการติดต่อโค้ชหรือนัด PT "
-                              "ติดต่อผ่านร้านได้ที่ 038-000-888 หรือพิมพ์ \"คุยกับพนักงาน\" ค่ะ", HANDOFF_ACTION),
-    (["S6", "N-10"], ADVICE, "ขออภัยค่ะ เอ็กซ์ให้คำปรึกษาด้านกฎหมายหรือการลงทุนไม่ได้ แนะนำปรึกษาผู้เชี่ยวชาญโดยตรง " + SORRY_SHOP, QUICK),
-    (["S13", "N-10"], ELECTIONS, "ขออภัยค่ะ เอ็กซ์ไม่ตอบเรื่องการเมืองหรือการเลือกตั้ง " + SORRY_SHOP, QUICK),
-    (["S14", "N-10"], CODE_ABUSE, "ขออภัยค่ะ เอ็กซ์ไม่รันหรือเขียนโค้ด และตอบได้เฉพาะเรื่องของ X Fitness " + SORRY_SHOP, QUICK),
+    (["S11"], SELF_HARM, *R["S11"]),
+    (["S1", "S2", "S3"], INCIDENT, *R["S1-เหตุร้าย"]),
+    (["S4"], CHILD, *R["S4"]),
+    (["S12", "S3"], SEXUAL, *R["S12"]),
+    (["S9"], WEAPONS, *R["S9"]),
+    (["S1"], VIOLENCE, *R["S1"]),
+    (["S2"], CRIME, *R["S2"]),
+    (["S10"], HATE, *R["S10"]),
+    (["S5"], DEFAMATION, *R["S5"]),
+    (["S8"], COPYRIGHT, *R["S8"]),
+    (["S7", "N-04"], PRIVACY, *R["S7"]),
+    (["S6", "N-10"], ADVICE, *R["S6"]),
+    (["S13", "N-10"], ELECTIONS, *R["S13"]),
+    (["S14", "N-10"], CODE_ABUSE, *R["S14"]),
 ]
 # An LLM answer is replaced when it says any of these (self-harm, incidents and privacy are input-side only:
 # the bot's own care reply mentions them on purpose).
@@ -132,7 +141,6 @@ BANK_ACCOUNT = re.compile(r"(?<!\d)\d{3}-\d-\d{5}-\d(?!\d)")
 MONEY = re.compile(r"(\d[\d,]*(?:\.\d+)?)\s*บาท")
 URL = re.compile(r"(?:https?://|www\.)[^\s<>()\[\]\"']+|\b[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|net|org|co\.th|in\.th|th|io|app)\b", re.I)
 TIME = re.compile(r"(?<![\d,.])([01]?\d|2[0-3])[:.]([0-5]\d)(?![\d.])")
-SAFE_REPLY = "ขออภัยค่ะ เอ็กซ์ตอบเรื่องนี้ไม่ได้ พิมพ์ \"คุยกับพนักงาน\" หรือโทร 038-000-888 ได้เลยค่ะ"
 
 
 def check_input(text: str, member_id: str | None = None, earlier: list[str] = ()) -> dict | None:
@@ -194,7 +202,7 @@ def check_output(answer: str, known: str = "") -> tuple[str, list[str]]:
         return SAFE_REPLY, ["G-BANK"]                                       # not the shop's account: never send it
     rules = []
     if PAID_CLAIM.search(answer):
-        answer, rules = PAID_CLAIM.sub("รอพนักงานยืนยันการชำระ", answer), rules + ["N-05"]
+        answer, rules = PAID_CLAIM.sub(R["N-05"][0], answer), rules + ["N-05"]
     if HEALTH_VERDICT.search(answer) or BODY_VERDICT.search(answer):
         answer, rules = BODY_VERDICT.sub(r"\1", HEALTH_VERDICT.sub("", answer)), rules + ["N-06"]
     masked = PHONE.sub(lambda m: m.group(0) if m.group(0) == shop["phone"] else "0xx-xxx-xxxx", answer)
@@ -216,7 +224,7 @@ def _leaked(answer: str) -> bool:
 @lru_cache(maxsize=1)
 def _secret_sentences() -> list[set[str]]:
     """12-character runs of each sentence of the system prompt and of the not-verified notice, quoted replies left out
-    (the bot is meant to say "เอ็กซ์ยังไม่มีข้อมูลเรื่องนี้ค่ะ" and "คุยกับพนักงาน")."""
+    (the bot is meant to say "เอ็กซ์ยังไม่มีข้อมูลเรื่องนี้ครับ" and "คุยกับพนักงาน")."""
     system = (config.PROMPTS_DIR / "system.md").read_text(encoding="utf-8").split("## ข้อมูลอ้างอิง")[0]
     text = re.sub(r'"[^"]*"|\{\w+\}', " ", system + "\n" + business.member_context(None))
     sentences = [_squeeze(s) for s in re.split(r"\s{1,}", text)]

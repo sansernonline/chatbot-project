@@ -1,7 +1,8 @@
 """Demo admin login: one account from config, tokens kept in memory (cleared on restart)."""
 import secrets
 
-from fastapi import Header, HTTPException
+from fastapi import Depends, HTTPException
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from . import config
 
@@ -17,6 +18,9 @@ def login(user: str, password: str) -> str | None:
     return token
 
 
-def require_admin(authorization: str = Header(default="")) -> None:
-    if authorization.removeprefix("Bearer ") not in _tokens:
+bearer = HTTPBearer(auto_error=False, description="token จาก POST /api/admin/login")   # also gives Swagger (/docs) its Authorize button
+
+
+def require_admin(cred: HTTPAuthorizationCredentials | None = Depends(bearer)) -> None:
+    if not cred or cred.credentials not in _tokens:
         raise HTTPException(401, "ต้องล็อกอินผู้ดูแลก่อน")

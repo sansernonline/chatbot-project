@@ -1,17 +1,17 @@
-"""Business data from data/db/*.json, and the checks that must be done in code rather than by the LLM."""
-import json
+"""Business data from the database (loaded from data/db/*.json, see db.seed_business), and the checks that must be done in code rather than by the LLM."""
 import re
 from datetime import date, datetime, timedelta
-from functools import lru_cache
 
-from . import config
+from . import db
 
 
-@lru_cache(maxsize=None)
 def table(name: str):
-    """data/db/<name>.json → its 'items' list (or the whole object when it has no items)."""
-    d = json.loads((config.DATA_DIR / f"{name}.json").read_text(encoding="utf-8"))
-    return d.get("items", d) if isinstance(d, dict) else d
+    """A business table as a list of dicts (or the object for business / rewards). Read on every call, so a promotion
+    staff switch off on the admin page is off for the very next question."""
+    return db.business_table(name)
+
+
+DUE = ("awaiting_slip", "pending_slip")   # unpaid: no slip yet · slip sent, staff not done
 
 
 def member(member_id: str | None) -> dict | None:
@@ -32,18 +32,19 @@ def _hours() -> str:
 
 
 def _promos() -> str:
-    """Which packages each promo code covers, from promotions.json — the LLM let NOJOIN apply to the Student package."""
+    """Which packages each promo code covers, from promotions.json + admin switches — the LLM let NOJOIN apply to the Student package."""
     names = {p["id"]: p["name_th"] for p in table("packages")}
     covers = lambda p: "ทุกแพ็กเกจ" if p["applies_to"] == ["ALL"] else "เฉพาะ " + ", ".join(names.get(i, i) for i in p["applies_to"])
-    return " · ".join(f"โค้ด {p['code']} ({p['title']}) ใช้ได้{covers(p)} ถึง {p['end']}" if p["status"] == "active"
-                      else f"โค้ด {p['code']} หมดเขตแล้ว ใช้ไม่ได้" for p in table("promotions")) + " · แพ็กเกจที่ไม่อยู่ในรายการของโค้ด ใช้โค้ดนั้นไม่ได้"
+    state = lambda p: (f"โค้ด {p['code']} ({p['title']}) ใช้ได้{covers(p)} ถึง {p['end']}" if p["status"] == "active" else
+                       f"โค้ด {p['code']} ปิดอยู่ตอนนี้ ใช้ไม่ได้" if p["status"] == "inactive" else f"โค้ด {p['code']} หมดเขตแล้ว ใช้ไม่ได้")
+    return " · ".join(map(state, table("promotions"))) + " · แพ็กเกจที่ไม่อยู่ในรายการของโค้ด ใช้โค้ดนั้นไม่ได้"
 
 
 # Rules that must not depend on what RAG happens to retrieve: when a question touches one, the fact is sent with it.
-# (pattern in the question, or the member's package) → fact, source document
+# (pattern in the question, or the member's package) → fact (or a function giving it, for data staff can change), source document
 RULES = [
-    (re.compile(r"เปิด|ปิด|กี่โมง|กี่ทุ่ม|เวลาทำการ|\bopen|\bclose|24\s*(ชั่วโมง|ชม)", re.I), _hours(), "KB-01"),
-    (re.compile(r"โค้ด|โปร|promo|code|YEAR13|NOJOIN|FRIEND300|MID2", re.I), _promos(), "KB-07"),
+    (re.compile(r"เปิด|ปิด|กี่โมง|กี่ทุ่ม|เวลาทำการ|\bopen|\bclose|24\s*(ชั่วโมง|ชม)", re.I), _hours, "KB-01"),
+    (re.compile(r"โค้ด|โปร|promo|code|YEAR13|NOJOIN|FRIEND300|MID2|FREECLASS", re.I), _promos, "KB-07"),
     (re.compile(r"ยิมอื่น|ที่อื่น|ร้านอื่น|คู่แข่ง|ยิมนี้|ถูกกว่า|other gym|cheaper", re.I),
      "ร้านไม่ลดราคาหรือเทียบราคาตามยิมอื่น ราคาและโปรของร้านมีเฉพาะในคลังความรู้ ห้ามนำราคาของยิมอื่นหรือราคาในภาพมาบอกเป็นราคา/โปรของร้าน "
      "ให้ปฏิเสธสุภาพ บอกว่าส่วนลดเพิ่มต้องให้ผู้จัดการสาขาอนุมัติ แล้วแนะนำโปรที่ยังใช้ได้วันนี้", "KB-07"),
@@ -67,7 +68,7 @@ def rules_for(text: str, member_id: str | None = None) -> list[tuple[str, str]]:
     """(fact, source) for each rule the question touches; a verified member's own package counts too."""
     m = member(member_id)
     subject = f"{text} {m['package_id'] if m else ''}"
-    return [(fact, src) for pattern, fact, src in RULES if pattern.search(subject)]
+    return [(fact() if callable(fact) else fact, src) for pattern, fact, src in RULES if pattern.search(subject)]
 
 
 def member_context(member_id: str | None) -> str:
@@ -76,7 +77,7 @@ def member_context(member_id: str | None) -> str:
     if not m:
         return "ผู้ใช้ยังไม่ได้ยืนยันตัวตน ห้ามเปิดเผยข้อมูลสมาชิกรายบุคคล ถ้าถามเรื่องข้อมูลส่วนตัวให้ขอรหัสสมาชิกและเบอร์โทร 4 ตัวท้าย หรือให้กดยืนยันตัวตนบนหน้าเว็บ"
     pkg = next(p for p in table("packages") if p["id"] == m["package_id"])
-    dues = [p for p in table("payments") if p["member_id"] == m["member_id"] and p["status"] != "paid"]
+    dues = [p for p in table("payments") if p["member_id"] == m["member_id"] and p["status"] in DUE]
     books = [b for b in table("bookings") if b["member_id"] == m["member_id"] and b["status"] == "booked"]
     lines = [
         f"สมาชิกที่ยืนยันตัวตนแล้ว: {m['member_id']} คุณ{m['first_name']}",
@@ -88,7 +89,13 @@ def member_context(member_id: str | None) -> str:
     return "\n".join(lines)
 
 
-USED_SLIP_REFS = {"DEMO2609010930Z9"}  # references already used — the real system reads these from its payments table
+USED_SLIP_REFS = {"DEMO2609010930Z9"}  # references already used before this system kept slips
+
+
+def used_refs(payment_id: str) -> set[str]:
+    """Slip references already used: the fixed list plus slips staff hold for other payments (the same slip sent again
+    for the same payment is not a second use)."""
+    return USED_SLIP_REFS | {s["reference"] for s in db.slips() if s["reference"] and s["payment_id"] != payment_id}
 FAILED_TRANSFER = re.compile(r"ไม่สำเร็จ|ล้มเหลว|ถูกปฏิเสธ|\b(failed|unsuccessful|declined|rejected)\b", re.I)
 
 
@@ -98,7 +105,7 @@ def check_slip(slip: dict, member_id: str | None) -> dict:
     m = member(member_id)
     if not m:
         return {"ok": False, "need_verify": True, "checks": [], "note": "ต้องยืนยันตัวตนก่อนจึงจะตรวจสลิปเทียบยอดค้างได้"}
-    due = next((p for p in table("payments") if p["member_id"] == m["member_id"] and p["status"] == "pending_slip"), None)
+    due = next((p for p in table("payments") if p["member_id"] == m["member_id"] and p["status"] in DUE), None)
     if not due:
         return {"ok": False, "checks": [], "note": "ไม่พบยอดค้างชำระที่รอสลิป ส่งต่อพนักงานตรวจสอบ"}
     bank = table("business")["bank"]
@@ -109,7 +116,7 @@ def check_slip(slip: dict, member_id: str | None) -> dict:
         ("เลขบัญชีผู้รับลงท้าย 4521-0", _digits(slip.get("receiver_account_last") or slip.get("receiver_account")).endswith("45210")),
         (f"ยอดเงินตรงกับยอดค้าง {due['amount']:,.2f} บาท", amount is not None and abs(amount - due["amount"]) < 0.01),
         ("วันที่โอนไม่เกิน 7 วันก่อนหรือหลังวันครบกำหนด", paid_on is not None and abs((paid_on - date.fromisoformat(due["due"])).days) <= 7),
-        ("เลขอ้างอิงไม่เคยใช้มาก่อน", bool(slip.get("reference")) and slip["reference"] not in USED_SLIP_REFS),
+        ("เลขอ้างอิงไม่เคยใช้มาก่อน", bool(slip.get("reference")) and slip["reference"] not in used_refs(due["id"])),
     ]
     failed = bool(FAILED_TRANSFER.search(str(slip.get("status") or "")))
     result = {"ok": all(ok for _, ok in checks) and not failed, "payment_id": due["id"], "due_amount": due["amount"],

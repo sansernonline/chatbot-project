@@ -1,0 +1,201 @@
+/* ---------- animation: everything on a slide rises in, one after another ---------- */
+@keyframes up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
+@keyframes flow{to{stroke-dashoffset:-36}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(255,37,54,.0)}50%{box-shadow:0 0 0 6px rgba(255,37,54,.25)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-80px)}to{opacity:1;transform:none}}
+.slide.on>*{animation:up .55s cubic-bezier(.2,.7,.2,1) both}
+.slide.on>*:nth-child(2){animation-delay:.08s}.slide.on>*:nth-child(3){animation-delay:.16s}.slide.on>*:nth-child(4){animation-delay:.24s}
+.slide.on>.foot,.slide.on>.pg{animation:none}
+.slide.on [data-k]{animation:up .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--k) * 70ms + 220ms)}
+.slide.on .node[data-k],.slide.on .graph g[data-k]{animation-name:pop}
+.slide.on.divider .num{animation:slideIn .7s cubic-bezier(.2,.7,.2,1) both}
+.divider .num{color:var(--red2)!important}
+.lit{border-color:var(--red2)!important;background:#1d0d10!important;animation:glow 1.4s ease-in-out infinite}
+.growbar{transition:height .9s cubic-bezier(.2,.7,.2,1)}
+@media (prefers-reduced-motion:reduce){.slide.on>*,.slide.on [data-k],.arch svg path.hot,.lit,#menu li.cur{animation:none!important}}
+
+/* ---------- try-it playground: chat on the left, the 6 steps lighting up on the right ---------- */
+.play{display:grid;grid-template-columns:440px 1fr;gap:28px;flex:1;min-height:0;margin-bottom:-40px}
+.play .phone{width:440px;height:100%}
+.play .bar{justify-content:space-between}
+.pl-chips{display:flex;flex-wrap:wrap;gap:8px;padding:10px 12px;border-top:1px solid #222;background:#111114;max-height:150px;overflow:auto}
+.pl-chips button{font:16px var(--body);background:#1f1f24;color:var(--soft);border:1px solid #33333a;border-radius:999px;padding:6px 12px;cursor:pointer}
+.pl-chips button:hover{border-color:var(--red2);color:#fff}
+.pl-chips img{width:34px;height:34px;object-fit:cover;border-radius:6px;vertical-align:middle;margin-right:6px}
+.pl-in{display:flex;gap:8px;padding:10px 12px;background:#141418;border-top:1px solid #222}
+.pl-in input{flex:1;font:18px var(--body);background:#0d0d10;color:var(--text);border:1px solid #33333a;border-radius:10px;padding:10px 12px;min-width:0}
+.pl-in button{font:600 18px var(--body);background:var(--red);color:#fff;border:0;border-radius:10px;padding:0 16px;cursor:pointer}
+.b .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.b .acts span{font-size:15px;border:1px solid #444;border-radius:999px;padding:3px 10px;color:var(--soft)}
+.trace{display:flex;flex-direction:column;gap:8px;min-height:0;overflow:auto}
+.trace .top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.st{display:grid;grid-template-columns:44px 1fr;gap:2px 14px;align-items:center;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:7px 16px;transition:border-color .25s,background .25s,opacity .25s}
+.st .n{grid-row:span 2;font:700 26px var(--head);color:#55555d;text-align:center}
+.st b{font-size:22px}.st b small{font:16px var(--mono);color:var(--dim);margin-left:10px;font-weight:400}
+.st .s{font-size:18px;color:var(--muted);min-height:24px;line-height:1.35}
+.st.focus{border-style:dashed;border-color:#7a1d24}
+.st.run{border-color:#fbbf24;background:#1f1a0a}.st.run .n{color:#fbbf24}
+.st.ok{border-color:#1f6f3d}.st.ok .n{color:#4ade80}
+.st.stop{border-color:var(--red2);background:#22090c}.st.stop .n{color:var(--red2)}
+.st.hit{border-color:#b45309;background:#1f1406}.st.hit .n{color:#fbbf24}
+.st.skip{opacity:.35}
+.conn{font:600 16px var(--mono);border-radius:999px;padding:5px 12px;cursor:pointer;border:1px solid #333;background:#16161a;white-space:nowrap}
+.conn.on{color:#4ade80;border-color:#1f6f3d}.conn.off{color:#fbbf24;border-color:#6b4e0a}
+#connbox{position:fixed;right:16px;top:16px;z-index:12;background:#16161a;border:1px solid #3a3a40;border-radius:12px;padding:14px;display:none;gap:8px;align-items:center;font:15px var(--body);color:var(--soft)}
+#connbox.on{display:flex}
+#connbox input{font:15px var(--mono);background:#0d0d10;color:#fff;border:1px solid #3a3a40;border-radius:8px;padding:6px 10px;width:300px}
+#connbox button{font:600 15px var(--body);background:var(--red);color:#fff;border:0;border-radius:8px;padding:7px 12px;cursor:pointer}
+
+/* architecture diagram: solid arrows, a red dot travels the lit path */
+.arch{position:relative;width:1060px;height:575px;flex:none}
+.arch .node{padding:8px 12px;gap:2px;border-radius:10px;height:60px;justify-content:center}
+.arch .node b{font-size:20px;line-height:1.2}.arch .node span{font-size:13px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.arch .node.tour{border-color:var(--red2);background:#22090c}
+.arch svg path{stroke:#8a8a92;stroke-width:3;fill:none;marker-end:url(#ah)}
+.arch svg path.hot{stroke:var(--red2);stroke-width:4;marker-end:url(#ahr)}
+.tourbar{display:flex;gap:8px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.tourbar button{font:600 17px var(--body);padding:0 12px;height:44px;white-space:nowrap;flex:none;background:#26262b;color:#fff;border:1px solid #3a3a40;border-radius:9px;cursor:pointer}
+.tourbar button:hover{background:#33333a}.tourbar .pp{background:var(--red);border-color:var(--red)}
+.tourbar .tstep{font:600 17px var(--mono);color:var(--dim);margin:0 6px;min-width:52px}
+.tourbar .tcap{font-size:19px;color:var(--soft);line-height:1.35}
+
+/* capabilities page: one real tested example under each card */
+.capcard{gap:10px;padding:22px;flex:1 1 0;min-width:0}
+.capcard h3{font-size:28px}.capdesc{font-size:21px;color:var(--muted);line-height:1.45}
+.capex{flex:1;display:flex;flex-direction:column;gap:8px;background:#0d0d10;border:1px solid #222;border-radius:12px;padding:14px;min-height:0}
+.capex .lab{font:600 14px var(--mono);color:var(--dim)}
+.capex .b{max-width:100%;font-size:17px;padding:9px 12px}
+.capimg img{height:84px;border-radius:8px;border:1px solid #333;align-self:flex-end;display:block;margin-left:auto}
+.capmeta{display:flex;gap:8px;margin-top:auto}
+.capgo{align-self:flex-start;font:600 18px var(--body);color:#4ade80;cursor:pointer;text-decoration:none}
+.capgo .p{font:14px var(--mono);color:var(--dim);margin-left:6px}
+.arch svg defs path{stroke:none!important;marker-end:none!important}
+.arch svg #ah path{fill:#8a8a92}.arch svg #ahr path{fill:#ff2536}
+
+/* flow page: 4 real cases across the 6 steps */
+.flowt{width:100%;border-collapse:separate;border-spacing:6px 6px;margin:-6px}
+.flowt th{font:600 16px var(--mono);color:var(--dim);text-align:left;padding:0 10px}
+.flowt td{border-radius:10px;padding:10px 12px;font-size:18px;vertical-align:middle}
+.flowt .fq{background:var(--panel);border:1px solid var(--line);width:330px;font-size:18px}
+.flowt .fq b{font-family:var(--mono);color:var(--red2);margin-right:6px}.flowt .fq span{display:block;font-size:15px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:300px}
+.flowt .fc.ok{background:#0f2e1b;color:#86efac}.flowt .fc.stop{background:#3a0c10;color:#fca5a5;font-weight:700}
+.flowt .fc.hit{background:#2a1f06;color:#fcd34d}.flowt .fc.skip{background:#141417;color:#55555d}
+.flowt .ft{font:600 18px var(--mono);color:var(--soft);text-align:right}
+#flow [data-loop] .card p{font-size:21px!important;line-height:1.4}#flow [data-loop] .card h3{font-size:28px}#flow [data-loop] .card{padding:18px 20px!important}
+
+/* ---------- flowcharts (flow · rag · vision · line) ---------- */
+.flowmap{position:relative;flex:none;margin:0 auto}
+.flowmap svg{position:absolute;inset:0;overflow:visible}
+.flowmap svg>path{stroke:#8a8a92;stroke-width:3;fill:none}
+.flowmap svg>path.hot{stroke:var(--red2);stroke-width:4.5}
+.flowmap svg text{font:15px var(--body);fill:#a3a3a8}
+.flowmap svg circle{fill:#ff2536}
+.fnode{position:absolute;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:8px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;transition:border-color .25s,background .25s,opacity .25s}
+.fnode b{font-size:20px;line-height:1.25}.fnode span{font-size:14px;color:var(--muted);line-height:1.3}
+.fnode.check{border-color:#6b4e0a}.fnode.check b::after{content:' ?';color:#fbbf24}
+.fnode.end{border-color:#3a3a40;background:#1d1d22}
+.fnode.exit{border-style:dashed;border-color:#4a4a52}
+.fnode.data{background:#0f1623;border-color:#1e3a5f}
+.fnode.ext{border-style:dashed;border-color:#7a1d24}
+.fnode.f-ok{border-color:#22c55e;background:#0f2e1b}.fnode.f-hit{border-color:#fbbf24;background:#2a1f06}.fnode.f-stop{border-color:var(--red2);background:#3a0c10}
+.flowmap.walking .fnode:not(.f-ok):not(.f-hit):not(.f-stop){opacity:.4}
+.flowbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.flowbar .lab{font:600 16px var(--mono);color:var(--dim)}
+.flowbar .fbtns{display:flex;gap:8px;flex-wrap:wrap}
+.flowbar button{font:600 17px var(--body);background:#1f1f24;color:var(--soft);border:1px solid #3a3a40;border-radius:999px;padding:7px 16px;cursor:pointer}
+.flowbar button:hover{border-color:var(--red2);color:#fff}.flowbar button.sel{background:var(--red);border-color:var(--red);color:#fff}
+.flowbar .ftime{margin-left:auto;font:600 17px var(--mono);color:var(--soft)}
+.fcap{min-height:58px;font-size:20px;color:var(--soft);line-height:1.45;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 16px}
+.fcap b{color:var(--red2);font-family:var(--mono);margin-right:8px}.fcap i{font-style:normal;color:var(--dim)}
+
+/* ---------- overall architecture ---------- */
+.ovmap{position:relative;width:1664px;height:600px;flex:none}
+.ovmap svg{position:absolute;inset:0}
+.ovmap svg>path{stroke:#8a8a92;stroke-width:3;fill:none;marker-end:url(#oh)}
+.ovmap svg text{font:15px var(--mono);fill:#a3a3a8}
+.ovmap svg circle{fill:#ff2536}
+.ovbox{position:absolute;width:250px;height:90px;background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.ovbox b{font-size:22px}.ovbox span{font-size:15px;color:var(--muted)}
+.ovbox.user{border-color:#1e3a5f;background:#0f1623}.ovbox.ext{border-style:dashed;border-color:#7a1d24}.ovbox.dev{border-color:#3a3a40}
+.ovrender{position:absolute;width:700px;height:600px;border:2px solid var(--red2);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:12px;background:#120709}
+.ovtitle{font:700 20px var(--head);color:var(--red2)}
+.ovlayer{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;display:flex;flex-direction:column;justify-content:center;gap:4px}
+.ovlayer b{font-size:21px}.ovlayer span{font:15px var(--mono);color:var(--muted)}
+.ovlayer.core{border-color:#7a1d24;background:#1d0d10}.ovlayer.data{border-color:#1e3a5f;background:#0f1623}
+
+/* knowledge graph: centre pops, lines draw outwards one by one, each outer node pops as its line arrives */
+@keyframes draw{to{stroke-dashoffset:0}}
+.graph g{transform-box:fill-box;transform-origin:center}
+.slide.on .graph g[data-k]{animation:pop .45s cubic-bezier(.2,.9,.3,1.35) both;animation-delay:calc(var(--i,0) * 90ms + 1s)}
+.slide.on .graph g[data-key="c"]{animation-duration:.6s;animation-delay:.3s}
+.slide.on .graph line{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .5s ease-out both;animation-delay:calc(var(--i) * 90ms + .65s)}
+/* request-flow page: bigger boxes */
+.flowmap[data-flow="flow"] .fnode{padding:8px 12px}
+.flowmap[data-flow="flow"] .fnode b{font-size:18px}.flowmap[data-flow="flow"] .fnode span{font-size:14px}
+/* guard-in page: real test examples */
+.tbl.gex{font-size:20px}.tbl.gex td{padding:6px 12px}.tbl.gex td.m{font:600 18px var(--body);color:var(--red2)}
+.tbl.gex tr.pass td.m{color:#4ade80}
+/* graph page: how to read it */
+.gread{gap:8px;flex:none}.gread h3{font-size:22px}.gread p{font-size:18px;color:var(--muted);line-height:1.45}.gread b{color:var(--text);margin-right:6px}
+.gcard{padding:18px 24px;gap:6px}.gcard h3{font-size:24px}.gcard p{font-size:19px;color:var(--muted);line-height:1.45}
+/* architecture page: a reply travelling back points at the customer; the file card is code first */
+.arch svg path.hot.back{marker-end:none;marker-start:url(#ahb)}
+.arch svg #ahb path{fill:#ff2536}
+#d-arch{padding:22px 24px;gap:10px}
+#d-arch .path{font-size:17px}#d-arch p{font-size:18px;line-height:1.45;color:var(--muted)}
+#d-arch pre{font:12.5px/1.45 var(--mono);max-height:none;flex:none;padding:12px 14px}
+/* LightRAG page: 13 boxes, smaller type */
+.flowmap[data-flow="rag"] .fnode{padding:4px 12px;gap:2px}
+.flowmap[data-flow="rag"] .fnode b{font-size:18px}.flowmap[data-flow="rag"] .fnode span{font-size:13px}
+.fnode span.found{color:#86efac;line-height:1.25}
+/* member-verification page: 4 big cards of equal height */
+.vsteps{flex:none;min-height:420px}.vsteps .card{padding:28px 30px;gap:14px;justify-content:flex-start}
+.vsteps .card h3{font-size:34px}.vsteps .card p{font-size:26px!important;line-height:1.45}.vsteps .card p.mono{font-size:30px!important}
+.vsteps .tag{align-self:flex-start;padding:4px 14px;font-size:18px}
+/* image page: the 5 slip checks, in the empty top-left of the flowchart */
+.slipchecks{position:absolute;left:0;top:0;width:1110px;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--red2);border-radius:12px;padding:12px 18px}
+.slipchecks .sh{font:600 17px var(--body);color:var(--red2);margin-bottom:6px}
+.slipchecks ol{margin:0 0 6px 22px;padding:0;columns:2;column-gap:28px;font-size:17px;line-height:1.55;color:var(--soft)}
+.slipchecks b{color:var(--text)}.slipchecks .sn{font-size:14px;color:var(--dim)}
+/* testing page: what each layer covers, with its numbers */
+.tests .card{gap:8px;padding:22px 26px}.tests .big{line-height:1}.tests h3{font-size:24px}
+.tests .tl{display:grid;grid-template-columns:1fr auto;gap:5px 16px;font-size:18px;color:var(--soft);border-top:1px solid var(--line);padding-top:10px}
+.tests .tl b{font:600 17px var(--mono);color:var(--text);text-align:right}.tests .tl b.ok{color:#4ade80}
+.tests .tn{font-size:14px;color:var(--dim);margin-top:auto}
+/* demo pages: the phone shows the site's input dock, for looks only (not clickable) */
+.still{pointer-events:none;user-select:none}
+.pl-chips.still{flex-wrap:wrap;max-height:none}.pl-chips.still button{font-size:14px;padding:4px 10px}
+.pl-in.still input{font-size:16px;padding:8px 12px}.pl-in.still input::placeholder{color:var(--dim)}
+.pl-in.still button{font-size:16px;padding:0 14px}
+/* LINE OA demo: a LINE-style chat (light theme, as in the app) */
+.lphone{width:440px;height:100%;border:10px solid #26262b;border-radius:44px;background:#8cabd9;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lhead{display:flex;justify-content:space-between;align-items:center;background:#fff;color:#111;padding:14px 18px;font-size:18px}.lhead b{font-weight:700}
+.llog{flex:1;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;padding:10px 12px}
+.lm{display:flex;gap:6px;align-items:flex-end}.lm.u{justify-content:flex-end}
+.lm .lb{font-size:14px;line-height:1.4;padding:7px 11px;border-radius:16px;max-width:300px;white-space:pre-wrap}
+.lm.u .lb{background:#86e36d;color:#111}.lm.a .lb{background:#fff;color:#111}
+.lm .lt{font-size:10px;color:#4a5a70;line-height:1.2;text-align:right}.lm .lw{display:flex;align-items:flex-end;gap:6px}
+.lm .av{width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font:700 15px var(--head);display:flex;align-items:center;justify-content:center;flex:none;align-self:flex-start}
+.lm .ln{font-size:11px;color:#2b3a4f;margin-bottom:2px}.lm .li{width:96px;border-radius:10px;display:block}
+.lquick{display:flex;gap:6px;padding:6px 10px;background:#8cabd9}.lquick span{background:#fff;color:#06c755;border:1px solid #06c755;border-radius:999px;padding:3px 12px;font-size:13px}
+.lin{display:flex;gap:12px;align-items:center;background:#fff;padding:10px 14px;color:#555;font-size:18px}.lin i{flex:1;font-style:normal;background:#f0f0f0;border-radius:999px;padding:6px 14px;font-size:15px;color:#999}
+.lsteps{gap:16px;padding:30px 34px}.lsteps h3{font-size:30px}.lsteps ol{margin:0 0 0 28px;padding:0;font-size:23px;line-height:1.55;color:var(--soft);display:flex;flex-direction:column;gap:8px}
+.lsteps b{color:var(--text)}.lsteps .tn{font-size:15px;color:var(--dim);margin-top:auto}
+/* LINE page: rich menu, typing dots, quick replies */
+.lhead .conn{font-size:12px}
+.llog{justify-content:flex-start!important;overflow-y:auto!important;scrollbar-width:none}.llog::-webkit-scrollbar{display:none}
+.llog>.lm:first-child{margin-top:auto}
+.lbar{background:#fff;border-top:1px solid #ddd;color:#333;text-align:center;font-size:14px;padding:7px;cursor:pointer}
+.rmenu{position:relative;line-height:0}.rmenu img{width:100%;display:block}
+.rmenu .rm{position:absolute;background:transparent;border:0;cursor:pointer;padding:0}.rmenu .rm:hover{background:rgba(255,255,255,.12)}.rmenu .rm:active{background:rgba(255,37,54,.25)}
+.lphone.menu-off .rmenu{display:none}.lphone.menu-off .lbar span{display:inline-block;transform:rotate(180deg)}
+.ltyping{background:#fff;border-radius:16px;padding:10px 14px;display:flex;gap:5px}.ltyping span{width:7px;height:7px;border-radius:50%;background:#999;animation:bl 1s infinite}
+.ltyping span:nth-child(2){animation-delay:.15s}.ltyping span:nth-child(3){animation-delay:.3s}
+.lqr{display:flex;gap:6px;margin-top:6px}.lqr span{background:#fff;color:#06c755;border:1px solid #06c755;border-radius:999px;padding:2px 10px;font-size:12px}
+.lnote{font-size:17px;color:#86efac;min-height:24px}
+#replay-line{white-space:nowrap;flex:none}
+/* LINE page: phone on the right, full slide height */
+.lline{margin-bottom:-58px}.lline>.col{flex:1 1 0}.lline .lphone{width:440px}
+#demo-line h2{font-size:46px}
+.lline .stagebox{display:block;width:440px}

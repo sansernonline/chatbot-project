@@ -82,6 +82,15 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative;border-top:1px solid 
 .slashes i:nth-child(2){right:27vw;width:2.4vw;opacity:.7;animation-delay:.12s}
 .slashes i:nth-child(3){right:32vw;width:.6vw;opacity:.5;animation-delay:.22s}
 @keyframes slide{from{transform:skewX(-20deg) translateY(-110%)}to{transform:skewX(-20deg) translateY(0)}}
+/* hero motion that keeps going after the entrance */
+.grid-bg{animation:drift 20s linear infinite}
+@keyframes drift{to{background-position:80px 80px,80px 80px}}
+.slashes{transform:translate3d(var(--px,0),var(--py,0),0);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.slashes i:nth-child(1){animation:slide 1.2s cubic-bezier(.2,.8,.2,1) both,glow 3.2s 1.2s ease-in-out infinite alternate}
+.slashes i:nth-child(2){animation:slide 1.2s .12s cubic-bezier(.2,.8,.2,1) both,sway 4.5s 1.4s ease-in-out infinite alternate}
+.slashes i:nth-child(3){animation:slide 1.2s .22s cubic-bezier(.2,.8,.2,1) both,sway 3.4s 1.6s ease-in-out infinite alternate-reverse}
+@keyframes glow{to{box-shadow:0 0 200px 20px var(--red-glow)}}
+@keyframes sway{from{transform:skewX(-20deg) translateY(0)}to{transform:skewX(-20deg) translate(-1.6vw,2%)}}
 .hero .wrap{position:relative;z-index:2;width:100%}
 .status-pill{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;box-shadow:inset 0 0 0 1px var(--line-2);background:rgba(0,0,0,.4);font:500 13px var(--mono);letter-spacing:.06em}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(34,197,94,.6);animation:ping 1.8s infinite}
@@ -93,6 +102,11 @@ section{padding:clamp(72px,10vw,130px) 0;position:relative;border-top:1px solid 
 .hero h1 span{display:block;animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
 .hero h1 span:nth-child(2){animation-delay:.1s}
 @keyframes rise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+.hero h1 span.o{background:linear-gradient(100deg,transparent 42%,var(--red) 50%,transparent 58%) 150% 0/300% 100% no-repeat;-webkit-background-clip:text;background-clip:text;animation:rise .9s .1s cubic-bezier(.2,.8,.2,1) both,shine 5s 1.5s ease-in-out infinite}
+@keyframes shine{0%{background-position:150% 0}45%,100%{background-position:-50% 0}}
+.hero p.th,.hero .ctas,.stat{animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+.hero p.th{animation-delay:.25s}.hero .ctas{animation-delay:.35s}
+.stat:nth-child(1){animation-delay:.5s}.stat:nth-child(2){animation-delay:.6s}.stat:nth-child(3){animation-delay:.7s}.stat:nth-child(4){animation-delay:.8s}
 .hero p.th{font-size:clamp(17px,1.6vw,21px);color:#d4d4d8;max-width:560px}
 .hero .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
 .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:clamp(48px,8vw,96px);border-top:1px solid var(--line-2);max-width:880px}
@@ -646,7 +660,7 @@ function nextDate(dayNum, time) {
   if (diff === 0 && time) { const [h, m] = time.split(':').map(Number); if (now.getHours() * 60 + now.getMinutes() > h * 60 + m - 120) d.setDate(d.getDate() + 7); }
   return d;
 }
-function promoStatus(p) { const t = iso(new Date()); return t < p.start ? 'upcoming' : t > p.end ? 'expired' : 'active'; }
+function promoStatus(p) { const t = iso(new Date()); return p.status === 'inactive' ? 'inactive' : p.status === 'expired' || t > p.end ? 'expired' : t < p.start ? 'upcoming' : 'active'; }   // status = switch on the admin page
 function seatsTaken(slot) { let h = 0; for (const ch of slot.id + slot.day) h = (h * 31 + ch.charCodeAt(0)) % 997; const cap = C(slot.class_id).capacity; return Math.min(cap, Math.floor(cap * (0.35 + (h % 60) / 100))); }
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 2600); }
 
@@ -796,7 +810,7 @@ function renderMemberPanel() {
 function renderPromos() {
   $('#promoList').innerHTML = DB.promotions.map(p => {
     const st = promoStatus(p);
-    return `<article class="promo ${st === 'expired' ? 'expired' : ''}"><span class="badge ${st === 'active' ? 'active' : 'expired'}" style="align-self:flex-start">${{ active: 'ใช้ได้', expired: 'หมดเขตแล้ว', upcoming: 'เร็ว ๆ นี้' }[st]}</span>
+    return `<article class="promo ${st === 'expired' || st === 'inactive' ? 'expired' : ''}"><span class="badge ${st === 'active' ? 'active' : 'expired'}" style="align-self:flex-start">${{ active: 'ใช้ได้', expired: 'หมดเขตแล้ว', upcoming: 'เร็ว ๆ นี้', inactive: 'ปิดชั่วคราว' }[st]}</span>
       <h3>${esc(p.title)}</h3><p>${esc(p.detail)}</p>
       <div class="code"><span>${esc(p.code)}</span>${st === 'active' ? `<button data-copy="${esc(p.code)}">คัดลอก</button>` : '<span style="font-size:12px;color:var(--dim)">ใช้ไม่ได้</span>'}</div>
       <div class="dates">${thDate(p.start)} – ${thDate(p.end)}</div></article>`;
@@ -876,6 +890,7 @@ function checkPromo(code, pkgId) {
   const st = promoStatus(p);
   if (st === 'expired') return { ok: false, error: `โค้ด ${code} หมดเขตแล้วเมื่อ ${thDate(p.end)}` };
   if (st === 'upcoming') return { ok: false, error: `โค้ด ${code} เริ่มใช้ได้ ${thDate(p.start)}` };
+  if (st === 'inactive') return { ok: false, error: `โค้ด ${code} ปิดใช้ชั่วคราว` };
   if (p.applies_to[0] !== 'ALL' && !p.applies_to.includes(pkgId)) return { ok: false, error: `โค้ด ${code} ใช้กับแพ็กเกจนี้ไม่ได้ (ใช้กับ ${p.applies_to.map(i => P(i).name_th).join(', ')})` };
   return { ok: true, promo: p };
 }
@@ -972,7 +987,7 @@ function renderMemberBar() {
   const m = S.member; $('#memberBar').classList.toggle('show', !!m);
   if (m) $('#memberBarText').textContent = `ยืนยันตัวตนแล้ว · ${m.member_id} · คุณ${m.first_name} · ${fmt(m.points)} แต้ม`;
 }
-$('#btnLogout').onclick = () => { setMember(null); renderSlots(); botMsg({ html: 'ออกจากระบบแล้วค่ะ ข้อมูลสมาชิกจะไม่แสดงในแชตนี้อีกจนกว่าจะยืนยันตัวตนใหม่' }); };
+$('#btnLogout').onclick = () => { setMember(null); renderSlots(); botMsg({ html: 'ออกจากระบบแล้วครับ ข้อมูลสมาชิกจะไม่แสดงในแชตนี้อีกจนกว่าจะยืนยันตัวตนใหม่' }); };
 
 input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = Math.min(120, input.scrollHeight) + 'px'; updateSend(); });
 input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); if (!$('#btnSend').disabled) send(); } });
@@ -988,8 +1003,8 @@ const SAMPLES = [
   ['slip_valid', '01_slip_valid.png', 'สลิป ✓'], ['slip_mismatch', '02_slip_amount_mismatch.png', 'สลิป ✗'],
   ['body_scan', '03_body_scan.png', 'ผลวัด'], ['receipt', '04_receipt.png', 'ใบเสร็จ'], ['promo_expired', '05_promo_poster_expired.png', 'โปสเตอร์']
 ];
-// test images: served by the backend at /test-images; opened straight from disk they live in ../qa/test-images
-const TEST_IMG = location.protocol === 'file:' ? '../qa/test-images/' : '../test-images/';
+// test images: served by the backend at /qa; opened straight from disk they live in ../qa/test-images
+const TEST_IMG = location.protocol === 'file:' ? '../qa/test-images/' : '../qa/';
 $('#samples').innerHTML = SAMPLES.map(([k, f, l]) => `<button data-sample="${k}" title="${f}" style="background-image:url('${TEST_IMG}${f}')"><span>${l}</span></button>`).join('');
 $('#samples').onclick = e => { const b = e.target.closest('[data-sample]'); if (!b) return; const s = SAMPLES.find(x => x[0] === b.dataset.sample); setImage({ key: s[0], name: s[1], url: TEST_IMG + s[1], size: 0, type: 'image/png' }); };
 $('#file').onchange = e => {
@@ -1041,9 +1056,9 @@ function agentMsg(text, by, quiet) {
   if (!quiet && !document.body.classList.contains('chat-open')) toast('พนักงานตอบกลับในแชตแล้ว');
 }
 async function requestHuman(topic) {
-  if (!ChatStore.online) return botMsg({ html: 'ตอนนี้ระบบส่งต่อพนักงานยังไม่เปิด (ไม่ได้รัน backend) ติดต่อพนักงานได้ที่ 038-000-888 หรือ LINE @xfitness.demo ค่ะ' });
+  if (!ChatStore.online) return botMsg({ html: 'ตอนนี้ระบบส่งต่อพนักงานยังไม่เปิด (ไม่ได้รัน backend) ติดต่อพนักงานได้ที่ 038-000-888 หรือ LINE @xfitness.demo ครับ' });
   const m = S.member, c = await ChatStore.handoff(SID, topic, { name: m ? `คุณ${m.first_name} ${m.last_name}` : null, member_id: m?.member_id || null });
-  botMsg({ html: `ส่งเรื่องให้พนักงานแล้วค่ะ เลขเรื่อง <strong>${c.ticket}</strong> พิมพ์ต่อในแชตนี้ได้เลย ข้อความจะส่งถึงพนักงานโดยตรงจนกว่าพนักงานจะปิดเรื่อง` });
+  botMsg({ html: `ส่งเรื่องให้พนักงานแล้วครับ เลขเรื่อง <strong>${c.ticket}</strong> พิมพ์ต่อในแชตนี้ได้เลย ข้อความจะส่งถึงพนักงานโดยตรงจนกว่าพนักงานจะปิดเรื่อง` });
   setChatMode();
 }
 function setChatMode() {
@@ -1073,7 +1088,7 @@ function thinking(img) {
   return { next() { i++; tick(); }, done() { el.remove(); } };
 }
 function greet() {
-  botMsg({ html: 'สวัสดีค่ะ เอ็กซ์เป็นผู้ช่วยของ <strong>X Fitness</strong> ถามเรื่องแพ็กเกจ คลาส เทรนเนอร์ นโยบาย หรือส่งภาพสลิป ผลวัดร่างกาย ใบเสร็จ โปสเตอร์โปรโมชันมาให้ตรวจได้ค่ะ', quick: ['ราคาสมาชิก', 'ตารางคลาสวันนี้', 'โปรโมชันตอนนี้', 'เช็กแต้มของฉัน', 'คุยกับพนักงาน'] });
+  botMsg({ html: 'สวัสดีครับ เอ็กซ์เป็นผู้ช่วยของ <strong>X Fitness</strong> ถามเรื่องแพ็กเกจ คลาส เทรนเนอร์ นโยบาย หรือส่งภาพสลิป ผลวัดร่างกาย ใบเสร็จ โปสเตอร์โปรโมชันมาให้ตรวจได้ครับ', quick: ['ราคาสมาชิก', 'ตารางคลาสวันนี้', 'โปรโมชันตอนนี้', 'เช็กแต้มของฉัน', 'คุยกับพนักงาน'] });
 }
 function sendText(t) { input.value = t; updateSend(); send(); }
 function send() {
@@ -1143,26 +1158,26 @@ const R = {
 };
 // Llama Guard's 14 hazard categories (S1–S14): same patterns and replies as HARM_RULES in backend/app/guard.py
 const HARM = [
-  [["S11"], new RegExp("อยาก(จะ)?ตาย|ฆ่าตัว(ตาย)?|ไม่อยากมีชีวิต|อยากหายไปจากโลก|จบชีวิต(ตัวเอง)?|ทำร้ายตัวเอง|ทำร้ายร่างกายตัวเอง|กรีด(ข้อมือ|แขน|ตัวเอง)|กินยา.{0,6}(ตาย|เกินขนาด)|ผูกคอ|กระโดด(ตึก|สะพาน|น้ำตาย)|suicid|kill\\s*my\\s*self|self\\s*-?\\s*harm|end\\s*my\\s*life|want\\s*to\\s*die", 'i'), "เอ็กซ์เป็นห่วงคุณนะคะ ถ้ารู้สึกอยากทำร้ายตัวเอง โทรคุยกับสายด่วนสุขภาพจิต 1323 ได้ตลอด 24 ชั่วโมง ไม่เสียค่าใช้จ่าย ถ้าอยู่ในอันตรายตอนนี้ โทร 1669 หรือไปโรงพยาบาลที่ใกล้ที่สุด ถ้าอยากคุยกับพนักงานของร้าน พิมพ์ \"คุยกับพนักงาน\" ได้เลยค่ะ", ["คุยกับพนักงาน"]],
-  [["S1", "S2", "S3"], new RegExp("(โดน|ถูก|มีคน|โค้ช\\S{0,6}|พนักงาน\\S{0,6}).{0,10}(ลวนลาม|คุกคาม|ล่วงละเมิด|แตะต้องตัว|จับก้น|จับหน้าอก|แอบถ่าย|ถ้ำมอง|ข่มขู่)|แอบถ่าย.{0,6}(ห้องน้ำ|ห้องอาบน้ำ|ห้องเปลี่ยน)|(โดน|ถูก|มีคน)(ขโมย|ทำร้าย|ชก|ต่อย|ตบ|ตี|ทุบ)", 'i'), "ขอโทษที่เกิดเรื่องนี้ค่ะ เรื่องนี้สำคัญ เอ็กซ์ขอส่งต่อให้ผู้จัดการสาขาดูแลทันที พิมพ์ \"คุยกับพนักงาน\" หรือโทร 038-000-888 ถ้ายังอยู่ในอันตรายตอนนี้ โทรแจ้งตำรวจ 191 ค่ะ", ["คุยกับพนักงาน"]],
-  [["S4"], new RegExp("(เด็ก|ผู้เยาว์|อายุ\\s*(1[0-7]|[1-9])\\s*(ปี|ขวบ)|ประถม|มัธยม|นักเรียน|underage|minor|child|loli).{0,25}(เซ็กส์|\\bsex|ลามก|โป๊|เปลือย|ทางเพศ|มีอะไรกัน|ได้เสีย|ร่วมเพศ|เย็ด|porn|nude)|(เซ็กส์|\\bsex|ลามก|โป๊|เปลือย|ทางเพศ|มีอะไรกัน|ได้เสีย|ร่วมเพศ|เย็ด|porn|nude).{0,25}(เด็ก|ผู้เยาว์|underage|minor|child|loli)", 'i'), "ขออภัยค่ะ เอ็กซ์ไม่ตอบเนื้อหาทางเพศที่เกี่ยวกับเด็กหรือผู้เยาว์ในทุกกรณี", []],
-  [["S12", "S3"], new RegExp("เซ็กส์|\\bsex\\b|porn|(หนัง|คลิป|รูป|ภาพ|เว็บ)(โป๊|นู้ด|เปลือย|xxx)|ลามก|เย็ด|ร่วมเพศ|มีเพศสัมพันธ์|ขายตัว|ขายบริการทางเพศ|นวดกระปู๋|happy\\s*ending|xxx|onlyfans|คลิปหลุด|ภาพหลุด|ข่มขืน|\\brape", 'i'), "ขออภัยค่ะ เอ็กซ์ไม่ตอบหรือสร้างเนื้อหาทางเพศ ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยค่ะ", ["ราคาสมาชิก", "ตารางคลาส"]],
-  [["S9"], new RegExp("(ทำ|ประกอบ|สร้าง|ผลิต|สูตร|วิธี|ซื้อ|หา|สังเคราะห์|เตรียม).{0,10}(ระเบิด(?!ไขมัน|พุง|แคล|เหงื่อ|กล้าม|พลัง|ความมัน)|ปืน(?!นวด)|กระสุน|อาวุธ|ยาพิษ|สารพิษ|แก๊สพิษ|ไซยาไนด์|ไรซิน|ซาริน|แอนแทรกซ์)|อาวุธ(เคมี|ชีวภาพ|นิวเคลียร์)|ระเบิด(ปิงปอง|ขวด|แสวงเครื่อง)|molotov|โมโลตอฟ|\\bbomb\\b|explosive|nerve\\s*agent|ricin|sarin|anthrax|bioweapon", 'i'), "ขออภัยค่ะ เอ็กซ์ให้ข้อมูลเกี่ยวกับอาวุธ วัตถุระเบิด หรือสารอันตรายไม่ได้ ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยค่ะ", ["ราคาสมาชิก", "ตารางคลาส"]],
-  [["S1"], new RegExp("(อยาก|จะ(ไป)?|วิธี|สอน|ช่วย(คิด)?|แผน|แอบ|ทำยังไงให้).{0,8}(ฆ่า|ทำร้าย|แทง|ยิง|วางยา|ทุบตี|กระทืบ|ลักพาตัว|ตีหัว|ข่มขืน)(?!ไขมัน|เวลา|แคล|เป้า).{0,6}(คน|เขา|มัน|แฟน|เมีย|ผัว|สามี|ภรรยา|พ่อ|แม่|เพื่อน|เจ้านาย|หัวหน้า|ครู|โค้ช|ใคร|พนักงาน|สมาชิก|ลูกค้า|ศัตรู|คู่อริ|ตำรวจ)|how\\s*to\\s*(kill|murder|poison|kidnap)|kill\\s*(him|her|them|someone|people)|\\bmurder", 'i'), "ขออภัยค่ะ เอ็กซ์ช่วยเรื่องที่อาจทำร้ายผู้อื่นไม่ได้ ถ้ามีคนกำลังตกอยู่ในอันตราย โทรแจ้งตำรวจ 191 ค่ะ", []],
-  [["S2"], new RegExp("ลักทรัพย์|(วิธี|สอน|อยาก|จะ|ช่วย|แอบ).{0,6}ขโมย|งัด(ล็อกเกอร์|ตู้|รถ|บ้าน|ประตู)|(ปลอม|ตัดต่อ|แต่ง)(สลิป|เอกสาร|ใบเสร็จ|ลายเซ็น|บัตร)|สลิปปลอม|บัตร(นักศึกษา|ประชาชน)ปลอม|ฟอกเงิน|ยาบ้า|ยาไอซ์|โคเคน|เฮโรอีน|เคตามีน|ยาเสพติด|ขายยาเสพ|กัญชา|แฮ็ก|แฮก|\\bhack|เจาะระบบ|phishing|ฟิชชิ่ง|บัญชีม้า|เปิดบัญชีให้คนอื่น|เลี่ยงภาษี|ใช้บัตร(เครดิต)?(คนอื่น|ที่ขโมย)", 'i'), "ขออภัยค่ะ เอ็กซ์ช่วยเรื่องที่ผิดกฎหมายไม่ได้ ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยค่ะ", ["ราคาสมาชิก", "ตารางคลาส"]],
-  [["S10"], new RegExp("ไอ้(ดำ|ตุ๊ด|เกย์|กะเทย|ลาว|เขมร|พม่า|แขก|เจ๊ก|ญวน|อ้วน|ง่อย)|อี(ตุ๊ด|ดำ|อ้วน|กะเทย)|nigger|nigga|faggot|tranny|retard|เกลียด(พวก|คน)\\S{0,4}(ดำ|เกย์|ตุ๊ด|กะเทย|lgbt|มุสลิม|คริสต์|พุทธ|อิสลาม|ลาว|เขมร|พม่า|จีน|แขก|ต่างด้าว|ต่างชาติ|พิการ|อ้วน)|(พวก|คน)(ดำ|ตุ๊ด|กะเทย|เกย์|แขก|ต่างด้าว|พม่า|เขมร|ลาว|มุสลิม)\\S{0,4}(สกปรก|โง่|ขี้ขโมย|น่ารังเกียจ|ไม่ควร(ได้)?(เข้า|เป็นสมาชิก)|ห้ามเข้า|ไม่ใช่คน)", 'i'), "ขออภัยค่ะ เอ็กซ์ไม่ตอบข้อความที่ดูถูกหรือเหยียดผู้อื่น X Fitness ต้อนรับทุกคนอย่างเท่าเทียม ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยค่ะ", ["ราคาสมาชิก", "ตารางคลาส"]],
-  [["S5"], new RegExp("ใส่ร้าย|ใส่ความ|ปล่อยข่าว|ข่าวปลอม|ประจาน|(เขียน|แต่ง|โพสต์|ปั่น|ทำ)(รีวิว|โพสต์|ข่าว).{0,10}(ปลอม|ด่า|ใส่ร้าย|โจมตี|ทำลาย|ให้เสียชื่อ)|ทำให้\\S{0,15}เสียชื่อ", 'i'), "ขออภัยค่ะ เอ็กซ์ช่วยเขียนหรือเผยแพร่ข้อความที่กล่าวหาหรือทำให้ผู้อื่นเสียชื่อเสียงไม่ได้ ถ้ามีปัญหากับบริการของร้าน พิมพ์ \"คุยกับพนักงาน\" เพื่อแจ้งผู้จัดการสาขาได้ค่ะ", ["คุยกับพนักงาน"]],
-  [["S8"], new RegExp("ละเมิดลิขสิทธิ์|(ขาย|ซื้อ|หา|แหล่ง)\\S{0,6}(ของเถื่อน|ของก๊อป|ของปลอม)|ก๊อปเกรด|แบรนด์เนมปลอม|\\bcrack|แคร็ก|torrent|ทอร์เรนต์|(โหลด|ดาวน์โหลด|ดู)(หนัง|เพลง|เกม|โปรแกรม|ซอฟต์แวร์|การ์ตูน|มังงะ|ebook|อีบุ๊ก)\\S{0,6}(ฟรี|เถื่อน)|(ก๊อป|คัดลอก|ขโมย)(คอร์ส|คลิป|โปรแกรม|ท่าเต้น)", 'i'), "ขออภัยค่ะ เอ็กซ์ช่วยเรื่องที่ละเมิดลิขสิทธิ์หรือสินค้าปลอมไม่ได้ ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยค่ะ", ["ราคาสมาชิก", "ตารางคลาส"]],
-  [["S7", "N-04"], new RegExp("(ขอ|อยากได้|มี)(เบอร์|ไลน์|line|ig|ไอจี|เฟส|facebook|ที่อยู่|บ้าน)\\S{0,6}(ส่วนตัว)?\\S{0,4}(ของ)?(โค้ช|เทรนเนอร์|พนักงาน|ผู้จัดการ|สาว|ผู้หญิง|ผู้ชาย|คนที่)|(โค้ช|เทรนเนอร์|พนักงาน)\\S{0,8}(บ้านอยู่|อยู่บ้าน|เบอร์ส่วนตัว|ไลน์ส่วนตัว|มีแฟน|โสด)", 'i'), "ขออภัยค่ะ เอ็กซ์ให้ข้อมูลส่วนตัวของโค้ช พนักงาน หรือลูกค้าคนอื่นไม่ได้ ถ้าต้องการติดต่อโค้ชหรือนัด PT ติดต่อผ่านร้านได้ที่ 038-000-888 หรือพิมพ์ \"คุยกับพนักงาน\" ค่ะ", ["คุยกับพนักงาน"]],
-  [["S6", "N-10"], new RegExp("ปรึกษา(กฎหมาย|ทนาย|คดี)|ฟ้อง(หย่า|ศาล|ร้อง)(ยังไง|อย่างไร)|ควร(ซื้อ|ลงทุน)\\S{0,6}(หุ้น|กองทุน|คริปโต|ทอง)|ลงทุนอะไรดี|กู้เงินที่ไหน", 'i'), "ขออภัยค่ะ เอ็กซ์ให้คำปรึกษาด้านกฎหมายหรือการลงทุนไม่ได้ แนะนำปรึกษาผู้เชี่ยวชาญโดยตรง ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยค่ะ", ["ราคาสมาชิก", "ตารางคลาส"]],
-  [["S13", "N-10"], new RegExp("พรรคการเมือง|นายกรัฐมนตรี|นายกฯ|ส\\.ส\\.|กกต|เลือกพรรค|เลือกใคร(เป็น)?(นายก|ส\\.?ส)|ประชามติ|โหวต(ให้)?(พรรค|นายก)", 'i'), "ขออภัยค่ะ เอ็กซ์ไม่ตอบเรื่องการเมืองหรือการเลือกตั้ง ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยค่ะ", ["ราคาสมาชิก", "ตารางคลาส"]],
-  [["S14", "N-10"], new RegExp("rm\\s+-rf|os\\.system|subprocess|import\\s+os|__import__|exec\\s*\\(|eval\\s*\\(|<script|javascript:|drop\\s+table|union\\s+select|select\\s+\\*\\s+from|/etc/passwd|powershell|cmd\\.exe|curl\\s+https?://|wget\\s+https?://|base64\\s+-d|รันโค้ด|run\\s+(this|the following)\\s+code", 'i'), "ขออภัยค่ะ เอ็กซ์ไม่รันหรือเขียนโค้ด และตอบได้เฉพาะเรื่องของ X Fitness ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยค่ะ", ["ราคาสมาชิก", "ตารางคลาส"]]
+  [["S11"], new RegExp("อยาก(จะ)?ตาย|ฆ่าตัว(ตาย)?|ไม่อยากมีชีวิต|อยากหายไปจากโลก|จบชีวิต(ตัวเอง)?|ทำร้ายตัวเอง|ทำร้ายร่างกายตัวเอง|กรีด(ข้อมือ|แขน|ตัวเอง)|กินยา.{0,6}(ตาย|เกินขนาด)|ผูกคอ|กระโดด(ตึก|สะพาน|น้ำตาย)|suicid|kill\\s*my\\s*self|self\\s*-?\\s*harm|end\\s*my\\s*life|want\\s*to\\s*die", 'i'), "เอ็กซ์เป็นห่วงคุณนะครับ ถ้ารู้สึกอยากทำร้ายตัวเอง โทรคุยกับสายด่วนสุขภาพจิต 1323 ได้ตลอด 24 ชั่วโมง ไม่เสียค่าใช้จ่าย ถ้าอยู่ในอันตรายตอนนี้ โทร 1669 หรือไปโรงพยาบาลที่ใกล้ที่สุด ถ้าอยากคุยกับพนักงานของร้าน พิมพ์ \"คุยกับพนักงาน\" ได้เลยครับ", ["คุยกับพนักงาน"]],
+  [["S1", "S2", "S3"], new RegExp("(โดน|ถูก|มีคน|โค้ช\\S{0,6}|พนักงาน\\S{0,6}).{0,10}(ลวนลาม|คุกคาม|ล่วงละเมิด|แตะต้องตัว|จับก้น|จับหน้าอก|แอบถ่าย|ถ้ำมอง|ข่มขู่)|แอบถ่าย.{0,6}(ห้องน้ำ|ห้องอาบน้ำ|ห้องเปลี่ยน)|(โดน|ถูก|มีคน)(ขโมย|ทำร้าย|ชก|ต่อย|ตบ|ตี|ทุบ)", 'i'), "ขอโทษที่เกิดเรื่องนี้ครับ เรื่องนี้สำคัญ เอ็กซ์ขอส่งต่อให้ผู้จัดการสาขาดูแลทันที พิมพ์ \"คุยกับพนักงาน\" หรือโทร 038-000-888 ถ้ายังอยู่ในอันตรายตอนนี้ โทรแจ้งตำรวจ 191 ครับ", ["คุยกับพนักงาน"]],
+  [["S4"], new RegExp("(เด็ก|ผู้เยาว์|อายุ\\s*(1[0-7]|[1-9])\\s*(ปี|ขวบ)|ประถม|มัธยม|นักเรียน|underage|minor|child|loli).{0,25}(เซ็กส์|\\bsex|ลามก|โป๊|เปลือย|ทางเพศ|มีอะไรกัน|ได้เสีย|ร่วมเพศ|เย็ด|porn|nude)|(เซ็กส์|\\bsex|ลามก|โป๊|เปลือย|ทางเพศ|มีอะไรกัน|ได้เสีย|ร่วมเพศ|เย็ด|porn|nude).{0,25}(เด็ก|ผู้เยาว์|underage|minor|child|loli)", 'i'), "ขออภัยครับ เอ็กซ์ไม่ตอบเนื้อหาทางเพศที่เกี่ยวกับเด็กหรือผู้เยาว์ในทุกกรณี", []],
+  [["S12", "S3"], new RegExp("เซ็กส์|\\bsex\\b|porn|(หนัง|คลิป|รูป|ภาพ|เว็บ)(โป๊|นู้ด|เปลือย|xxx)|ลามก|เย็ด|ร่วมเพศ|มีเพศสัมพันธ์|ขายตัว|ขายบริการทางเพศ|นวดกระปู๋|happy\\s*ending|xxx|onlyfans|คลิปหลุด|ภาพหลุด|ข่มขืน|\\brape", 'i'), "ขออภัยครับ เอ็กซ์ไม่ตอบหรือสร้างเนื้อหาทางเพศ ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยครับ", ["ราคาสมาชิก", "ตารางคลาส"]],
+  [["S9"], new RegExp("(ทำ|ประกอบ|สร้าง|ผลิต|สูตร|วิธี|ซื้อ|หา|สังเคราะห์|เตรียม).{0,10}(ระเบิด(?!ไขมัน|พุง|แคล|เหงื่อ|กล้าม|พลัง|ความมัน)|ปืน(?!นวด)|กระสุน|อาวุธ|ยาพิษ|สารพิษ|แก๊สพิษ|ไซยาไนด์|ไรซิน|ซาริน|แอนแทรกซ์)|อาวุธ(เคมี|ชีวภาพ|นิวเคลียร์)|ระเบิด(ปิงปอง|ขวด|แสวงเครื่อง)|molotov|โมโลตอฟ|\\bbomb\\b|explosive|nerve\\s*agent|ricin|sarin|anthrax|bioweapon", 'i'), "ขออภัยครับ เอ็กซ์ให้ข้อมูลเกี่ยวกับอาวุธ วัตถุระเบิด หรือสารอันตรายไม่ได้ ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยครับ", ["ราคาสมาชิก", "ตารางคลาส"]],
+  [["S1"], new RegExp("(อยาก|จะ(ไป)?|วิธี|สอน|ช่วย(คิด)?|แผน|แอบ|ทำยังไงให้).{0,8}(ฆ่า|ทำร้าย|แทง|ยิง|วางยา|ทุบตี|กระทืบ|ลักพาตัว|ตีหัว|ข่มขืน)(?!ไขมัน|เวลา|แคล|เป้า).{0,6}(คน|เขา|มัน|แฟน|เมีย|ผัว|สามี|ภรรยา|พ่อ|แม่|เพื่อน|เจ้านาย|หัวหน้า|ครู|โค้ช|ใคร|พนักงาน|สมาชิก|ลูกค้า|ศัตรู|คู่อริ|ตำรวจ)|how\\s*to\\s*(kill|murder|poison|kidnap)|kill\\s*(him|her|them|someone|people)|\\bmurder", 'i'), "ขออภัยครับ เอ็กซ์ช่วยเรื่องที่อาจทำร้ายผู้อื่นไม่ได้ ถ้ามีคนกำลังตกอยู่ในอันตราย โทรแจ้งตำรวจ 191 ครับ", []],
+  [["S2"], new RegExp("ลักทรัพย์|(วิธี|สอน|อยาก|จะ|ช่วย|แอบ).{0,6}ขโมย|งัด(ล็อกเกอร์|ตู้|รถ|บ้าน|ประตู)|(ปลอม|ตัดต่อ|แต่ง)(สลิป|เอกสาร|ใบเสร็จ|ลายเซ็น|บัตร)|สลิปปลอม|บัตร(นักศึกษา|ประชาชน)ปลอม|ฟอกเงิน|ยาบ้า|ยาไอซ์|โคเคน|เฮโรอีน|เคตามีน|ยาเสพติด|ขายยาเสพ|กัญชา|แฮ็ก|แฮก|\\bhack|เจาะระบบ|phishing|ฟิชชิ่ง|บัญชีม้า|เปิดบัญชีให้คนอื่น|เลี่ยงภาษี|ใช้บัตร(เครดิต)?(คนอื่น|ที่ขโมย)", 'i'), "ขออภัยครับ เอ็กซ์ช่วยเรื่องที่ผิดกฎหมายไม่ได้ ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยครับ", ["ราคาสมาชิก", "ตารางคลาส"]],
+  [["S10"], new RegExp("ไอ้(ดำ|ตุ๊ด|เกย์|กะเทย|ลาว|เขมร|พม่า|แขก|เจ๊ก|ญวน|อ้วน|ง่อย)|อี(ตุ๊ด|ดำ|อ้วน|กะเทย)|nigger|nigga|faggot|tranny|retard|เกลียด(พวก|คน)\\S{0,4}(ดำ|เกย์|ตุ๊ด|กะเทย|lgbt|มุสลิม|คริสต์|พุทธ|อิสลาม|ลาว|เขมร|พม่า|จีน|แขก|ต่างด้าว|ต่างชาติ|พิการ|อ้วน)|(พวก|คน)(ดำ|ตุ๊ด|กะเทย|เกย์|แขก|ต่างด้าว|พม่า|เขมร|ลาว|มุสลิม)\\S{0,4}(สกปรก|โง่|ขี้ขโมย|น่ารังเกียจ|ไม่ควร(ได้)?(เข้า|เป็นสมาชิก)|ห้ามเข้า|ไม่ใช่คน)", 'i'), "ขออภัยครับ เอ็กซ์ไม่ตอบข้อความที่ดูถูกหรือเหยียดผู้อื่น X Fitness ต้อนรับทุกคนอย่างเท่าเทียม ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยครับ", ["ราคาสมาชิก", "ตารางคลาส"]],
+  [["S5"], new RegExp("ใส่ร้าย|ใส่ความ|ปล่อยข่าว|ข่าวปลอม|ประจาน|(เขียน|แต่ง|โพสต์|ปั่น|ทำ)(รีวิว|โพสต์|ข่าว).{0,10}(ปลอม|ด่า|ใส่ร้าย|โจมตี|ทำลาย|ให้เสียชื่อ)|ทำให้\\S{0,15}เสียชื่อ", 'i'), "ขออภัยครับ เอ็กซ์ช่วยเขียนหรือเผยแพร่ข้อความที่กล่าวหาหรือทำให้ผู้อื่นเสียชื่อเสียงไม่ได้ ถ้ามีปัญหากับบริการของร้าน พิมพ์ \"คุยกับพนักงาน\" เพื่อแจ้งผู้จัดการสาขาได้ครับ", ["คุยกับพนักงาน"]],
+  [["S8"], new RegExp("ละเมิดลิขสิทธิ์|(ขาย|ซื้อ|หา|แหล่ง)\\S{0,6}(ของเถื่อน|ของก๊อป|ของปลอม)|ก๊อปเกรด|แบรนด์เนมปลอม|\\bcrack|แคร็ก|torrent|ทอร์เรนต์|(โหลด|ดาวน์โหลด|ดู)(หนัง|เพลง|เกม|โปรแกรม|ซอฟต์แวร์|การ์ตูน|มังงะ|ebook|อีบุ๊ก)\\S{0,6}(ฟรี|เถื่อน)|(ก๊อป|คัดลอก|ขโมย)(คอร์ส|คลิป|โปรแกรม|ท่าเต้น)", 'i'), "ขออภัยครับ เอ็กซ์ช่วยเรื่องที่ละเมิดลิขสิทธิ์หรือสินค้าปลอมไม่ได้ ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยครับ", ["ราคาสมาชิก", "ตารางคลาส"]],
+  [["S7", "N-04"], new RegExp("(ขอ|อยากได้|มี)(เบอร์|ไลน์|line|ig|ไอจี|เฟส|facebook|ที่อยู่|บ้าน)\\S{0,6}(ส่วนตัว)?\\S{0,4}(ของ)?(โค้ช|เทรนเนอร์|พนักงาน|ผู้จัดการ|สาว|ผู้หญิง|ผู้ชาย|คนที่)|(โค้ช|เทรนเนอร์|พนักงาน)\\S{0,8}(บ้านอยู่|อยู่บ้าน|เบอร์ส่วนตัว|ไลน์ส่วนตัว|มีแฟน|โสด)", 'i'), "ขออภัยครับ เอ็กซ์ให้ข้อมูลส่วนตัวของโค้ช พนักงาน หรือลูกค้าคนอื่นไม่ได้ ถ้าต้องการติดต่อโค้ชหรือนัด PT ติดต่อผ่านร้านได้ที่ 038-000-888 หรือพิมพ์ \"คุยกับพนักงาน\" ครับ", ["คุยกับพนักงาน"]],
+  [["S6", "N-10"], new RegExp("ปรึกษา(กฎหมาย|ทนาย|คดี)|ฟ้อง(หย่า|ศาล|ร้อง)(ยังไง|อย่างไร)|ควร(ซื้อ|ลงทุน)\\S{0,6}(หุ้น|กองทุน|คริปโต|ทอง)|ลงทุนอะไรดี|กู้เงินที่ไหน", 'i'), "ขออภัยครับ เอ็กซ์ให้คำปรึกษาด้านกฎหมายหรือการลงทุนไม่ได้ แนะนำปรึกษาผู้เชี่ยวชาญโดยตรง ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยครับ", ["ราคาสมาชิก", "ตารางคลาส"]],
+  [["S13", "N-10"], new RegExp("พรรคการเมือง|นายกรัฐมนตรี|นายกฯ|ส\\.ส\\.|กกต|เลือกพรรค|เลือกใคร(เป็น)?(นายก|ส\\.?ส)|ประชามติ|โหวต(ให้)?(พรรค|นายก)", 'i'), "ขออภัยครับ เอ็กซ์ไม่ตอบเรื่องการเมืองหรือการเลือกตั้ง ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยครับ", ["ราคาสมาชิก", "ตารางคลาส"]],
+  [["S14", "N-10"], new RegExp("rm\\s+-rf|os\\.system|subprocess|import\\s+os|__import__|exec\\s*\\(|eval\\s*\\(|<script|javascript:|drop\\s+table|union\\s+select|select\\s+\\*\\s+from|/etc/passwd|powershell|cmd\\.exe|curl\\s+https?://|wget\\s+https?://|base64\\s+-d|รันโค้ด|run\\s+(this|the following)\\s+code", 'i'), "ขออภัยครับ เอ็กซ์ไม่รันหรือเขียนโค้ด และตอบได้เฉพาะเรื่องของ X Fitness ถ้าต้องการสอบถามเรื่องสมาชิก คลาส หรือโปรโมชัน ยินดีช่วยครับ", ["ราคาสมาชิก", "ตารางคลาส"]]
 ];
 function mid(t) { const m = t.toUpperCase().match(/FN\s*-?\s*(\d{5})/); return m ? 'FN-' + m[1] : null; }
 function last4(t) { const s = t.replace(/FN\s*-?\s*\d{5}/i, ' '); const m = s.match(/(?<!\d)(\d{4})(?!\d)/); return m ? m[1] : null; }
 function needVerify(intent, why) {
   S.pending = intent;
-  return { html: `${why ? why + ' ' : ''}ขอยืนยันตัวตนก่อนนะคะ พิมพ์ <strong>รหัสสมาชิก</strong> และ <strong>เบอร์โทร 4 ตัวท้าย</strong> เช่น <span class="mono">FN-xxxxx 1234</span>`, rules: ['D-04'] };
+  return { html: `${why ? why + ' ' : ''}ขอยืนยันตัวตนก่อนนะครับ พิมพ์ <strong>รหัสสมาชิก</strong> และ <strong>เบอร์โทร 4 ตัวท้าย</strong> เช่น <span class="mono">FN-xxxxx 1234</span>`, rules: ['D-04'] };
 }
 function pkgTable(ids) { return `<table>${ids.map(id => { const p = P(id); return `<tr><td>${esc(p.name_th)}</td><td>${fmt(p.price)} บาท/${p.unit}</td></tr>`; }).join('')}</table>`; }
 function slotsFor(classId) { return DB.schedule.filter(s => s.class_id === classId).map(s => `${DAY_TH[s.day]} ${s.start} น. (${T(s.trainer_id).nickname})`); }
@@ -1181,33 +1196,33 @@ async function mockAnswer(raw, img) {
 
   /* ---- 1. input guard (rules N-06, N-07, N-08, N-10) ---- */
   for (const [rules, re, reply, quick] of HARM) if (t && re.test(t)) return { html: esc(reply), rules, quick };
-  if (t && has(t, R.inject)) return { html: 'ขออภัยค่ะ เอ็กซ์ไม่สามารถเปิดเผยหรือเปลี่ยนคำสั่งการทำงานได้ และไม่รับคำสั่งที่อ้างว่ามาจากผู้ดูแลผ่านแชต ถ้าต้องการสอบถามเรื่องสมาชิกหรือคลาส ยินดีช่วยค่ะ', rules: ['N-07', 'N-08'], quick: ['ราคาสมาชิก', 'ตารางคลาส'] };
-  if (t && has(t, R.drug)) return { html: 'เอ็กซ์ไม่สามารถแนะนำยา สเตียรอยด์ ฮอร์โมน หรือสารเสริมประสิทธิภาพได้ค่ะ เพราะอาจเป็นอันตรายต่อสุขภาพ กรุณาปรึกษาแพทย์ ถ้าอยากเพิ่มกล้ามเนื้ออย่างปลอดภัย โค้ชตั้มถนัดด้านเวทเทรนนิ่งค่ะ', sources: ['KB-08', 'KB-04'], rules: ['N-06'], quick: ['ราคา PT 10 ครั้ง'] };
-  if (t && has(t, R.symptom)) return { html: 'ถ้ามีอาการเจ็บหน้าอก เวียนศีรษะ หรือหายใจไม่ออก ให้<strong>หยุดออกกำลังกายทันที</strong>และพบแพทย์ค่ะ กรณีฉุกเฉินโทร <strong>1669</strong> ในยิมมีเครื่อง AED ที่เคาน์เตอร์ และพนักงานผ่านการอบรมปฐมพยาบาล', sources: ['KB-08'], rules: ['D-07', 'N-06'] };
-  if (t && has(t, R.diet)) return { html: 'เอ็กซ์ไม่สามารถกำหนดแผนอาหารหรือเป้าลดน้ำหนักเร่งด่วนได้ค่ะ แนะนำปรึกษาแพทย์หรือนักกำหนดอาหาร ส่วนการออกกำลังกาย โค้ชเก่งถนัดโปรแกรมลดไขมันค่ะ', sources: ['KB-08', 'KB-04'], rules: ['N-06'], quick: ['คลาสเผาผลาญเยอะ', 'ราคา PT'] };
-  if (t && has(t, R.offtopic)) return { html: 'ขออภัยค่ะ เอ็กซ์ตอบได้เฉพาะเรื่องของ X Fitness เช่น แพ็กเกจ คลาส เทรนเนอร์ และโปรโมชันค่ะ', rules: ['N-10'], quick: ['ราคาสมาชิก', 'ตารางคลาส'] };
+  if (t && has(t, R.inject)) return { html: 'ขออภัยครับ เอ็กซ์ไม่สามารถเปิดเผยหรือเปลี่ยนคำสั่งการทำงานได้ และไม่รับคำสั่งที่อ้างว่ามาจากผู้ดูแลผ่านแชต ถ้าต้องการสอบถามเรื่องสมาชิกหรือคลาส ยินดีช่วยครับ', rules: ['N-07', 'N-08'], quick: ['ราคาสมาชิก', 'ตารางคลาส'] };
+  if (t && has(t, R.drug)) return { html: 'เอ็กซ์ไม่สามารถแนะนำยา สเตียรอยด์ ฮอร์โมน หรือสารเสริมประสิทธิภาพได้ครับ เพราะอาจเป็นอันตรายต่อสุขภาพ กรุณาปรึกษาแพทย์ ถ้าอยากเพิ่มกล้ามเนื้ออย่างปลอดภัย โค้ชตั้มถนัดด้านเวทเทรนนิ่งครับ', sources: ['KB-08', 'KB-04'], rules: ['N-06'], quick: ['ราคา PT 10 ครั้ง'] };
+  if (t && has(t, R.symptom)) return { html: 'ถ้ามีอาการเจ็บหน้าอก เวียนศีรษะ หรือหายใจไม่ออก ให้<strong>หยุดออกกำลังกายทันที</strong>และพบแพทย์ครับ กรณีฉุกเฉินโทร <strong>1669</strong> ในยิมมีเครื่อง AED ที่เคาน์เตอร์ และพนักงานผ่านการอบรมปฐมพยาบาล', sources: ['KB-08'], rules: ['D-07', 'N-06'] };
+  if (t && has(t, R.diet)) return { html: 'เอ็กซ์ไม่สามารถกำหนดแผนอาหารหรือเป้าลดน้ำหนักเร่งด่วนได้ครับ แนะนำปรึกษาแพทย์หรือนักกำหนดอาหาร ส่วนการออกกำลังกาย โค้ชเก่งถนัดโปรแกรมลดไขมันครับ', sources: ['KB-08', 'KB-04'], rules: ['N-06'], quick: ['คลาสเผาผลาญเยอะ', 'ราคา PT'] };
+  if (t && has(t, R.offtopic)) return { html: 'ขออภัยครับ เอ็กซ์ตอบได้เฉพาะเรื่องของ X Fitness เช่น แพ็กเกจ คลาส เทรนเนอร์ และโปรโมชันครับ', rules: ['N-10'], quick: ['ราคาสมาชิก', 'ตารางคลาส'] };
 
   /* ---- 2. verification capture ---- */
   let id = mid(raw); const l4 = last4(raw);
   if (!id && !S.member && S.askId && l4 && /^\D{0,12}\d{4}\D{0,12}$/.test(raw.trim())) id = S.askId;   // digits right after the question
-  if (id && !S.member && !l4 && has(t, R.otherData)) return { html: 'ขออภัยค่ะ เอ็กซ์ไม่สามารถเปิดเผยหรือยืนยันข้อมูลของสมาชิกคนอื่นได้ รวมถึงไม่บอกว่าใครเป็นสมาชิกหรือไม่ ถ้าเป็นข้อมูลของคุณเอง กรุณายืนยันตัวตนด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้ายค่ะ', rules: ['N-04'] };
+  if (id && !S.member && !l4 && has(t, R.otherData)) return { html: 'ขออภัยครับ เอ็กซ์ไม่สามารถเปิดเผยหรือยืนยันข้อมูลของสมาชิกคนอื่นได้ รวมถึงไม่บอกว่าใครเป็นสมาชิกหรือไม่ ถ้าเป็นข้อมูลของคุณเอง กรุณายืนยันตัวตนด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้ายครับ', rules: ['N-04'] };
   if (id && !S.member) {
-    if ((S.verifyFails || 0) >= 3) return { html: 'ยืนยันตัวตนไม่สำเร็จหลายครั้งแล้วค่ะ เพื่อความปลอดภัยของสมาชิก กรุณาพิมพ์ "คุยกับพนักงาน" หรือโทร 038-000-888', rules: ['D-04'], quick: ['คุยกับพนักงาน'] };
-    if (!l4) { S.askId = id; return { html: `ขอเบอร์โทร 4 ตัวท้ายที่ลงทะเบียนไว้กับรหัส ${esc(id)} ด้วยค่ะ เพื่อยืนยันว่าเป็นเจ้าของบัญชี`, rules: ['D-04'] }; }
+    if ((S.verifyFails || 0) >= 3) return { html: 'ยืนยันตัวตนไม่สำเร็จหลายครั้งแล้วครับ เพื่อความปลอดภัยของสมาชิก กรุณาพิมพ์ "คุยกับพนักงาน" หรือโทร 038-000-888', rules: ['D-04'], quick: ['คุยกับพนักงาน'] };
+    if (!l4) { S.askId = id; return { html: `ขอเบอร์โทร 4 ตัวท้ายที่ลงทะเบียนไว้กับรหัส ${esc(id)} ด้วยครับ เพื่อยืนยันว่าเป็นเจ้าของบัญชี`, rules: ['D-04'] }; }
     S.askId = null;
     const v = verifyMember(id, l4);
     if (!v.ok) S.verifyFails = (S.verifyFails || 0) + 1;
     if (!v.ok) return { html: esc(v.error) + ' (ระบบไม่บอกว่ารหัสนี้มีอยู่หรือไม่ เพื่อความปลอดภัยของสมาชิก)', rules: ['D-04', 'N-04'] };
     setMember(v.member); renderSlots();
     const pend = S.pending, pImg = S.pendingImage; S.pending = null; S.pendingImage = null;
-    const hello = `ยืนยันตัวตนแล้วค่ะ สวัสดีคุณ${esc(v.member.first_name)} `;
+    const hello = `ยืนยันตัวตนแล้วครับ สวัสดีคุณ${esc(v.member.first_name)} `;
     if (pImg) { const r = await analyzeImage(pImg, ''); r.html = hello + '<br>' + r.html; return r; }
     if (pend) { const r = memberIntent(pend.intent, pend.text); r.html = hello + '<br>' + r.html; return r; }
-    return { html: hello + 'ต้องการดูอะไรคะ', quick: ['แต้มของฉัน', 'วันหมดอายุ', 'การจองของฉัน'], rules: ['D-04'] };
+    return { html: hello + 'ต้องการดูอะไรครับ', quick: ['แต้มของฉัน', 'วันหมดอายุ', 'การจองของฉัน'], rules: ['D-04'] };
   }
-  if (id && S.member && id !== S.member.member_id) return { html: 'ขออภัยค่ะ เอ็กซ์แสดงได้เฉพาะข้อมูลของสมาชิกที่ยืนยันตัวตนในแชตนี้เท่านั้น ไม่สามารถเปิดเผยหรือยืนยันข้อมูลของรหัสสมาชิกอื่นได้', rules: ['N-04'] };
-  if (id && !S.member && has(t, R.otherData)) return { html: 'ขออภัยค่ะ เอ็กซ์ไม่สามารถเปิดเผยหรือยืนยันข้อมูลของสมาชิกคนอื่นได้ รวมถึงไม่บอกว่าใครเป็นสมาชิกหรือไม่ ถ้าเป็นข้อมูลของคุณเอง กรุณายืนยันตัวตนด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้ายค่ะ', sources: ['KB-08'], rules: ['N-04'] };
-  if (has(t, R.otherData)) return { html: 'ขออภัยค่ะ เอ็กซ์ไม่สามารถเปิดเผยหรือยืนยันข้อมูลของสมาชิกคนอื่นได้ รวมถึงไม่บอกว่าใครเป็นสมาชิกหรือไม่ ให้เจ้าของข้อมูลติดต่อร้านเองนะคะ', sources: ['KB-08'], rules: ['N-04'] };
+  if (id && S.member && id !== S.member.member_id) return { html: 'ขออภัยครับ เอ็กซ์แสดงได้เฉพาะข้อมูลของสมาชิกที่ยืนยันตัวตนในแชตนี้เท่านั้น ไม่สามารถเปิดเผยหรือยืนยันข้อมูลของรหัสสมาชิกอื่นได้', rules: ['N-04'] };
+  if (id && !S.member && has(t, R.otherData)) return { html: 'ขออภัยครับ เอ็กซ์ไม่สามารถเปิดเผยหรือยืนยันข้อมูลของสมาชิกคนอื่นได้ รวมถึงไม่บอกว่าใครเป็นสมาชิกหรือไม่ ถ้าเป็นข้อมูลของคุณเอง กรุณายืนยันตัวตนด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้ายครับ', sources: ['KB-08'], rules: ['N-04'] };
+  if (has(t, R.otherData)) return { html: 'ขออภัยครับ เอ็กซ์ไม่สามารถเปิดเผยหรือยืนยันข้อมูลของสมาชิกคนอื่นได้ รวมถึงไม่บอกว่าใครเป็นสมาชิกหรือไม่ ให้เจ้าของข้อมูลติดต่อร้านเองนะครับ', sources: ['KB-08'], rules: ['N-04'] };
 
   /* ---- 3. image ---- */
   if (img) return analyzeImage(img, t);
@@ -1215,7 +1230,7 @@ async function mockAnswer(raw, img) {
   /* ---- 4. discount pressure (N-02) — checked after data guard ---- */
   if (has(t, R.discount)) {
     const act = DB.promotions.filter(p => promoStatus(p) === 'active');
-    return { html: `ขออภัยค่ะ เอ็กซ์ไม่มีสิทธิ์ให้ส่วนลดนอกเหนือจากโปรโมชันที่ประกาศ ส่วนลดอื่นต้องให้ผู้จัดการสาขาอนุมัติเป็นลายลักษณ์อักษรเท่านั้น<br>โปรที่ใช้ได้ตอนนี้:<ul>${act.map(p => `<li>${esc(p.title)} (${p.code})</li>`).join('')}</ul>`, sources: ['KB-07'], rules: ['N-02'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="ขอส่วนลด">ส่งคำขอถึงผู้จัดการ</button>' };
+    return { html: `ขออภัยครับ เอ็กซ์ไม่มีสิทธิ์ให้ส่วนลดนอกเหนือจากโปรโมชันที่ประกาศ ส่วนลดอื่นต้องให้ผู้จัดการสาขาอนุมัติเป็นลายลักษณ์อักษรเท่านั้น<br>โปรที่ใช้ได้ตอนนี้:<ul>${act.map(p => `<li>${esc(p.title)} (${p.code})</li>`).join('')}</ul>`, sources: ['KB-07'], rules: ['N-02'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="ขอส่วนลด">ส่งคำขอถึงผู้จัดการ</button>' };
   }
 
   /* ---- 5. member intents ---- */
@@ -1225,7 +1240,7 @@ async function mockAnswer(raw, img) {
     const [intent] = found;
     const needs = intent !== 'book' || findClass(t);
     if (intent === 'book' && !findClass(t)) { /* fall through to booking policy below */ }
-    else if (intent === 'refund_req') { return { html: 'การคืนเงินต้องให้ผู้จัดการสาขาอนุมัติ เอ็กซ์อนุมัติเองไม่ได้ค่ะ เงื่อนไขคือ คืนเต็มจำนวนถ้ายกเลิกภายใน 7 วันหลังสมัครและยังไม่เคยเข้าใช้ หลังจากนั้นไม่คืนค่าสมาชิก เอ็กซ์ส่งคำขอให้ผู้จัดการตรวจสอบได้ค่ะ', sources: ['KB-05'], rules: ['N-05'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="ขอคืนเงิน">ส่งคำขอคืนเงินให้ผู้จัดการ</button>' }; }
+    else if (intent === 'refund_req') { return { html: 'การคืนเงินต้องให้ผู้จัดการสาขาอนุมัติ เอ็กซ์อนุมัติเองไม่ได้ครับ เงื่อนไขคือ คืนเต็มจำนวนถ้ายกเลิกภายใน 7 วันหลังสมัครและยังไม่เคยเข้าใช้ หลังจากนั้นไม่คืนค่าสมาชิก เอ็กซ์ส่งคำขอให้ผู้จัดการตรวจสอบได้ครับ', sources: ['KB-05'], rules: ['N-05'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="ขอคืนเงิน">ส่งคำขอคืนเงินให้ผู้จัดการ</button>' }; }
     else if (needs) { if (!S.member) return needVerify({ intent, text: t }); return memberIntent(intent, t); }
   }
 
@@ -1234,111 +1249,111 @@ async function mockAnswer(raw, img) {
   if (kb) return kb;
 
   /* ---- 7. greeting / fallback (D-03) ---- */
-  if (/^(สวัสดี|หวัดดี|hello|hi|ดีครับ|ดีค่ะ)/.test(t)) return { html: 'สวัสดีค่ะ มีอะไรให้เอ็กซ์ช่วยคะ', quick: ['ราคาสมาชิก', 'ตารางคลาสวันนี้', 'ทดลองฟรี'] };
-  return { html: 'ขออภัยค่ะ ยังไม่มีข้อมูลเรื่องนี้ในคลังความรู้ของร้าน เอ็กซ์ไม่อยากเดาคำตอบให้ผิดพลาด ส่งเรื่องให้พนักงานตอบได้ค่ะ', rules: ['D-03', 'N-01'], handoff: `<button class="btn btn-ghost btn-sm" data-handoff="${esc(raw.slice(0, 60))}">ส่งต่อพนักงาน</button> หรือโทร 038-000-888`, quick: ['ราคาสมาชิก', 'เวลาเปิดปิด'] };
+  if (/^(สวัสดี|หวัดดี|hello|hi|ดีครับ|ดีค่ะ)/.test(t)) return { html: 'สวัสดีครับ มีอะไรให้เอ็กซ์ช่วยครับ', quick: ['ราคาสมาชิก', 'ตารางคลาสวันนี้', 'ทดลองฟรี'] };
+  return { html: 'ขออภัยครับ ยังไม่มีข้อมูลเรื่องนี้ในคลังความรู้ของร้าน เอ็กซ์ไม่อยากเดาคำตอบให้ผิดพลาด ส่งเรื่องให้พนักงานตอบได้ครับ', rules: ['D-03', 'N-01'], handoff: `<button class="btn btn-ghost btn-sm" data-handoff="${esc(raw.slice(0, 60))}">ส่งต่อพนักงาน</button> หรือโทร 038-000-888`, quick: ['ราคาสมาชิก', 'เวลาเปิดปิด'] };
 }
 
 function memberIntent(intent, t) {
   const m = S.member, p = P(m.package_id), today = iso(new Date());
   if (intent === 'points' || intent === 'redeem') {
     const can = DB.rewards.redeem.filter(r => r.points <= m.points);
-    return { html: `คุณ${esc(m.first_name)}มี <strong>${fmt(m.points)} แต้ม</strong>ค่ะ${can.length ? `<br>แลกได้ตอนนี้:<ul>${can.map(r => `<li>${esc(r.name)} (${fmt(r.points)} แต้ม)</li>`).join('')}</ul>แลกได้ที่ส่วน "แต้มสะสม" บนหน้าเว็บ หรือที่เคาน์เตอร์` : '<br>ยังไม่ถึงของรางวัลขั้นต่ำ (150 แต้ม) เช็กอินวันละ 5 แต้มค่ะ'}`, sources: ['KB-07'], quick: ['วันหมดอายุ'] };
+    return { html: `คุณ${esc(m.first_name)}มี <strong>${fmt(m.points)} แต้ม</strong>ครับ${can.length ? `<br>แลกได้ตอนนี้:<ul>${can.map(r => `<li>${esc(r.name)} (${fmt(r.points)} แต้ม)</li>`).join('')}</ul>แลกได้ที่ส่วน "แต้มสะสม" บนหน้าเว็บ หรือที่เคาน์เตอร์` : '<br>ยังไม่ถึงของรางวัลขั้นต่ำ (150 แต้ม) เช็กอินวันละ 5 แต้มครับ'}`, sources: ['KB-07'], quick: ['วันหมดอายุ'] };
   }
-  if (intent === 'expiry') return { html: `แพ็กเกจ <strong>${esc(p.name_th)}</strong> · ${esc(memberStatusText(m))}${m.status === 'frozen' ? '<br>ระหว่างพักสมาชิก วันหมดอายุจะเลื่อนออกเท่าจำนวนวันที่พักค่ะ' : ''}`, sources: ['KB-05'], quick: ['แต้มของฉัน', 'การจองของฉัน'] };
-  if (intent === 'pt_left') return { html: m.pt_sessions_left ? `คุณ${esc(m.first_name)}เหลือ PT <strong>${m.pt_sessions_left} ครั้ง</strong>ค่ะ นัดกับโค้ชโดยตรงหรือที่เคาน์เตอร์ ยกเลิกต้องแจ้งล่วงหน้า 12 ชั่วโมง` : 'ตอนนี้ไม่มีแพ็กเกจ PT คงเหลือค่ะ PT 10 ครั้งราคา 8,000 บาท', sources: ['KB-04'] };
+  if (intent === 'expiry') return { html: `แพ็กเกจ <strong>${esc(p.name_th)}</strong> · ${esc(memberStatusText(m))}${m.status === 'frozen' ? '<br>ระหว่างพักสมาชิก วันหมดอายุจะเลื่อนออกเท่าจำนวนวันที่พักครับ' : ''}`, sources: ['KB-05'], quick: ['แต้มของฉัน', 'การจองของฉัน'] };
+  if (intent === 'pt_left') return { html: m.pt_sessions_left ? `คุณ${esc(m.first_name)}เหลือ PT <strong>${m.pt_sessions_left} ครั้ง</strong>ครับ นัดกับโค้ชโดยตรงหรือที่เคาน์เตอร์ ยกเลิกต้องแจ้งล่วงหน้า 12 ชั่วโมง` : 'ตอนนี้ไม่มีแพ็กเกจ PT คงเหลือครับ PT 10 ครั้งราคา 8,000 บาท', sources: ['KB-04'] };
   if (intent === 'my_bookings') {
     const up = S.bookings.filter(b => b.member_id === m.member_id && b.status === 'booked' && b.date >= today);
-    return { html: up.length ? `การจองที่ยังไม่ถึงเวลา:<ul>${up.map(b => { const s = DB.schedule.find(x => x.id === b.slot_id); return `<li>${b.id} · ${esc(C(s.class_id).name)} ${thShort(parseISO(b.date))} ${s.start} น.</li>`; }).join('')}</ul>ยกเลิกได้ถึง 2 ชั่วโมงก่อนคลาส` : 'ยังไม่มีคลาสที่จองไว้ค่ะ', sources: ['KB-03'], quick: ['จองมวยไทย', 'ตารางคลาสวันนี้'] };
+    return { html: up.length ? `การจองที่ยังไม่ถึงเวลา:<ul>${up.map(b => { const s = DB.schedule.find(x => x.id === b.slot_id); return `<li>${b.id} · ${esc(C(s.class_id).name)} ${thShort(parseISO(b.date))} ${s.start} น.</li>`; }).join('')}</ul>ยกเลิกได้ถึง 2 ชั่วโมงก่อนคลาส` : 'ยังไม่มีคลาสที่จองไว้ครับ', sources: ['KB-03'], quick: ['จองมวยไทย', 'ตารางคลาสวันนี้'] };
   }
   if (intent === 'due') {
     const d = S.payments.filter(x => x.member_id === m.member_id && x.status !== 'paid');
-    return { html: d.length ? d.map(x => `${esc(x.description)} <strong>${fmt(x.amount.toFixed(2))} บาท</strong> ครบกำหนด ${thDate(x.due)} · ${x.status === 'pending_staff' ? 'รอพนักงานยืนยัน' : 'รอสลิป'}`).join('<br>') + `<br>โอนเข้า ${DB.business.bank.bank} ${DB.business.bank.account_no} ${DB.business.bank.account_name} แล้วส่งสลิปในแชตนี้ค่ะ` : 'ไม่มียอดค้างชำระค่ะ', sources: ['KB-06'], rules: ['D-05'] };
+    return { html: d.length ? d.map(x => `${esc(x.description)} <strong>${fmt(x.amount.toFixed(2))} บาท</strong> ครบกำหนด ${thDate(x.due)} · ${x.status === 'pending_staff' ? 'รอพนักงานยืนยัน' : 'รอสลิป'}`).join('<br>') + `<br>โอนเข้า ${DB.business.bank.bank} ${DB.business.bank.account_no} ${DB.business.bank.account_name} แล้วส่งสลิปในแชตนี้ครับ` : 'ไม่มียอดค้างชำระครับ', sources: ['KB-06'], rules: ['D-05'] };
   }
-  if (intent === 'freeze_req') return { html: `รับเรื่องขอพักสมาชิกค่ะ ค่าธรรมเนียม 100 บาทต่อเดือน พักได้ 1–3 เดือน ต้องแจ้งล่วงหน้า 7 วัน${m.package_id === 'PKG-STU' || m.package_id === 'PKG-DAY' ? '<br><strong>แต่แพ็กเกจของคุณพักไม่ได้</strong>ค่ะ' : ''}`, sources: ['KB-05'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="ขอพักสมาชิก">ส่งคำขอพักสมาชิกให้พนักงาน</button>' };
+  if (intent === 'freeze_req') return { html: `รับเรื่องขอพักสมาชิกครับ ค่าธรรมเนียม 100 บาทต่อเดือน พักได้ 1–3 เดือน ต้องแจ้งล่วงหน้า 7 วัน${m.package_id === 'PKG-STU' || m.package_id === 'PKG-DAY' ? '<br><strong>แต่แพ็กเกจของคุณพักไม่ได้</strong>ครับ' : ''}`, sources: ['KB-05'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="ขอพักสมาชิก">ส่งคำขอพักสมาชิกให้พนักงาน</button>' };
   if (intent === 'book') {
     const cid = findClass(t), day = findDay(t);
     let slots = DB.schedule.filter(s => s.class_id === cid); if (day) slots = slots.filter(s => s.day === day);
-    if (!slots.length) return { html: `${esc(C(cid).name)} ไม่มีรอบใน${day ? 'วัน' + DAY_TH[day] : 'สัปดาห์นี้'}ค่ะ รอบที่มี: ${slotsFor(cid).join(', ')}`, sources: ['KB-03'] };
-    if (slots.length > 1 && !day) return { html: `${esc(C(cid).name)} มี ${slots.length} รอบค่ะ ต้องการวันไหนคะ`, sources: ['KB-03'], quick: slots.map(s => `จอง${C(cid).name_th}วัน${DAY_TH[s.day]}`) };
+    if (!slots.length) return { html: `${esc(C(cid).name)} ไม่มีรอบใน${day ? 'วัน' + DAY_TH[day] : 'สัปดาห์นี้'}ครับ รอบที่มี: ${slotsFor(cid).join(', ')}`, sources: ['KB-03'] };
+    if (slots.length > 1 && !day) return { html: `${esc(C(cid).name)} มี ${slots.length} รอบครับ ต้องการวันไหนครับ`, sources: ['KB-03'], quick: slots.map(s => `จอง${C(cid).name_th}วัน${DAY_TH[s.day]}`) };
     const s = slots[0], date = nextDate(s.day, s.start), r = book(m, s, date);
-    return r.ok ? { html: `จองแล้วค่ะ <strong>${r.id}</strong><br>${esc(C(cid).name)} · ${thShort(date)} ${s.start} น. · ${esc(T(s.trainer_id).nickname)}<br>มาถึงก่อน 10 นาที ยกเลิกได้ถึง 2 ชั่วโมงก่อนคลาส`, sources: ['KB-03'], rules: ['D-04'], quick: ['การจองของฉัน'] }
-                : { html: 'จองไม่สำเร็จค่ะ: ' + esc(r.error), sources: ['KB-03'] };
+    return r.ok ? { html: `จองแล้วครับ <strong>${r.id}</strong><br>${esc(C(cid).name)} · ${thShort(date)} ${s.start} น. · ${esc(T(s.trainer_id).nickname)}<br>มาถึงก่อน 10 นาที ยกเลิกได้ถึง 2 ชั่วโมงก่อนคลาส`, sources: ['KB-03'], rules: ['D-04'], quick: ['การจองของฉัน'] }
+                : { html: 'จองไม่สำเร็จครับ: ' + esc(r.error), sources: ['KB-03'] };
   }
-  return { html: 'ต้องการดูอะไรคะ', quick: ['แต้มของฉัน', 'วันหมดอายุ'] };
+  return { html: 'ต้องการดูอะไรครับ', quick: ['แต้มของฉัน', 'วันหมดอายุ'] };
 }
 
 function kbAnswer(t) {
   const b = DB.business, act = DB.promotions.filter(p => promoStatus(p) === 'active');
   // things the shop does NOT have (N-01 / N-09) — answered from KB, not invented
-  if (/ผ่อน|installment|0\s*%/.test(t)) return { html: 'ร้านไม่มีบริการผ่อนชำระ 0% ค่ะ ชำระได้ด้วยเงินสด บัตรเครดิต/เดบิต พร้อมเพย์ที่เคาน์เตอร์ หรือโอนเงินแล้วส่งสลิป แพ็กเกจรายเดือนตัดบัตรอัตโนมัติได้', sources: ['KB-06'], rules: ['N-09'] };
-  if (/สระ|ว่ายน้ำ|ซาวน่า|sauna|สตีม|จากุซซี่/.test(t)) return { html: 'X Fitness <strong>ไม่มี</strong>สระว่ายน้ำและซาวน่าค่ะ สิ่งอำนวยความสะดวกที่มี: โซนเวท โซนคาร์ดิโอ ห้องคลาส 3 ห้อง ห้องอาบน้ำพร้อมล็อกเกอร์ และเครื่องวัดองค์ประกอบร่างกาย', sources: ['KB-01'], rules: ['N-01'] };
-  if (/ส่ง(ของ|สินค้า|ถึงบ้าน|มาที่บ้าน|ให้ที่บ้าน)|จัดส่ง|delivery|ส่ง.{0,15}ได้ไหม/.test(t) && /เวย์|สินค้า|โปรตีน|ของ|บ้าน/.test(t)) return { html: 'ตอนนี้ร้านขายสินค้าเฉพาะที่เคาน์เตอร์ ยังไม่มีบริการจัดส่งค่ะ', sources: ['KB-07'], rules: ['N-09'] };
-  if (/ฝากเด็ก|ลูก.{0,6}(มา|เข้า)|เด็ก.{0,6}เข้า/.test(t)) return { html: 'ร้านไม่มีบริการรับฝากเด็ก และไม่อนุญาตให้เด็กอายุต่ำกว่า 15 ปีเข้าพื้นที่ออกกำลังกายค่ะ', sources: ['KB-08'], rules: ['N-09'] };
-  if (/สาขา/.test(t)) return { html: 'X Fitness มีสาขาเดียวที่ศรีราชา ชลบุรีค่ะ ' + esc(b.address), sources: ['KB-01'] };
+  if (/ผ่อน|installment|0\s*%/.test(t)) return { html: 'ร้านไม่มีบริการผ่อนชำระ 0% ครับ ชำระได้ด้วยเงินสด บัตรเครดิต/เดบิต พร้อมเพย์ที่เคาน์เตอร์ หรือโอนเงินแล้วส่งสลิป แพ็กเกจรายเดือนตัดบัตรอัตโนมัติได้', sources: ['KB-06'], rules: ['N-09'] };
+  if (/สระ|ว่ายน้ำ|ซาวน่า|sauna|สตีม|จากุซซี่/.test(t)) return { html: 'X Fitness <strong>ไม่มี</strong>สระว่ายน้ำและซาวน่าครับ สิ่งอำนวยความสะดวกที่มี: โซนเวท โซนคาร์ดิโอ ห้องคลาส 3 ห้อง ห้องอาบน้ำพร้อมล็อกเกอร์ และเครื่องวัดองค์ประกอบร่างกาย', sources: ['KB-01'], rules: ['N-01'] };
+  if (/ส่ง(ของ|สินค้า|ถึงบ้าน|มาที่บ้าน|ให้ที่บ้าน)|จัดส่ง|delivery|ส่ง.{0,15}ได้ไหม/.test(t) && /เวย์|สินค้า|โปรตีน|ของ|บ้าน/.test(t)) return { html: 'ตอนนี้ร้านขายสินค้าเฉพาะที่เคาน์เตอร์ ยังไม่มีบริการจัดส่งครับ', sources: ['KB-07'], rules: ['N-09'] };
+  if (/ฝากเด็ก|ลูก.{0,6}(มา|เข้า)|เด็ก.{0,6}เข้า/.test(t)) return { html: 'ร้านไม่มีบริการรับฝากเด็ก และไม่อนุญาตให้เด็กอายุต่ำกว่า 15 ปีเข้าพื้นที่ออกกำลังกายครับ', sources: ['KB-08'], rules: ['N-09'] };
+  if (/สาขา/.test(t)) return { html: 'X Fitness มีสาขาเดียวที่ศรีราชา ชลบุรีครับ ' + esc(b.address), sources: ['KB-01'] };
 
   // promo codes
   const code = (t.toUpperCase().match(/\b(YEAR13|NOJOIN|FRIEND300|MID2)\b/) || [])[1];
   if (code) { const p = DB.promotions.find(x => x.code === code), st = promoStatus(p);
-    return st === 'active' ? { html: `โค้ด <strong>${code}</strong> ใช้ได้ค่ะ: ${esc(p.title)} ถึง ${thDate(p.end)} ใช้ได้ 1 โปรต่อการสมัคร 1 ครั้ง`, sources: ['KB-07'] }
-      : { html: `โค้ด <strong>${code}</strong> ${st === 'expired' ? 'หมดเขตแล้วเมื่อ ' + thDate(p.end) : 'ยังไม่เริ่ม'} ใช้ไม่ได้ค่ะ${act.length ? '<br>โปรที่ใช้ได้ตอนนี้: ' + act.map(x => `${esc(x.title)} (${x.code})`).join(', ') : ''}`, sources: ['KB-07'], rules: ['N-03'] }; }
-  if (/โปร|promotion|ส่วนลด|ลดราคา/.test(t)) return { html: act.length ? `โปรที่ใช้ได้ตอนนี้ค่ะ<ul>${act.map(p => `<li><strong>${esc(p.title)}</strong> · โค้ด ${p.code} · ถึง ${thDate(p.end)}</li>`).join('')}</ul>ใช้ได้ 1 โปรต่อการสมัคร 1 ครั้ง ไม่รวมกับส่วนลดอื่น` : 'ขณะนี้ไม่มีโปรโมชันค่ะ', sources: ['KB-07'], quick: ['สนใจสมัครรายปี'] };
+    return st === 'active' ? { html: `โค้ด <strong>${code}</strong> ใช้ได้ครับ: ${esc(p.title)} ถึง ${thDate(p.end)} ใช้ได้ 1 โปรต่อการสมัคร 1 ครั้ง`, sources: ['KB-07'] }
+      : { html: `โค้ด <strong>${code}</strong> ${st === 'expired' ? 'หมดเขตแล้วเมื่อ ' + thDate(p.end) : 'ยังไม่เริ่ม'} ใช้ไม่ได้ครับ${act.length ? '<br>โปรที่ใช้ได้ตอนนี้: ' + act.map(x => `${esc(x.title)} (${x.code})`).join(', ') : ''}`, sources: ['KB-07'], rules: ['N-03'] }; }
+  if (/โปร|promotion|ส่วนลด|ลดราคา/.test(t)) return { html: act.length ? `โปรที่ใช้ได้ตอนนี้ครับ<ul>${act.map(p => `<li><strong>${esc(p.title)}</strong> · โค้ด ${p.code} · ถึง ${thDate(p.end)}</li>`).join('')}</ul>ใช้ได้ 1 โปรต่อการสมัคร 1 ครั้ง ไม่รวมกับส่วนลดอื่น` : 'ขณะนี้ไม่มีโปรโมชันครับ', sources: ['KB-07'], quick: ['สนใจสมัครรายปี'] };
 
   // packages & price
   if (/สนใจสมัคร|อยากสมัคร|สมัครยังไง|สมัครอย่างไร|วิธีสมัคร/.test(t)) { const pk = /รายปี/.test(t) ? 'PKG-ANNUAL' : /นักศึกษา/.test(t) ? 'PKG-STU' : /สัญญา/.test(t) ? 'PKG-12M' : 'PKG-FLEX';
-    return { html: 'สมัครได้ที่เคาน์เตอร์ ใช้บัตรประชาชน (นักศึกษาใช้บัตรนักศึกษาเพิ่ม) อายุขั้นต่ำ 15 ปี หรือฝากชื่อเล่นและช่องทางติดต่อ ให้พนักงานติดต่อกลับได้ค่ะ', sources: ['KB-02'], handoff: `<button class="btn btn-red btn-sm" data-join="${pk}">ฝากข้อมูลให้พนักงานติดต่อกลับ (${esc(P(pk).name_th)})</button>` }; }
+    return { html: 'สมัครได้ที่เคาน์เตอร์ ใช้บัตรประชาชน (นักศึกษาใช้บัตรนักศึกษาเพิ่ม) อายุขั้นต่ำ 15 ปี หรือฝากชื่อเล่นและช่องทางติดต่อ ให้พนักงานติดต่อกลับได้ครับ', sources: ['KB-02'], handoff: `<button class="btn btn-red btn-sm" data-join="${pk}">ฝากข้อมูลให้พนักงานติดต่อกลับ (${esc(P(pk).name_th)})</button>` }; }
   if (/นักศึกษา|นักเรียน|student/.test(t)) return { html: `แพ็กเกจนักเรียน/นักศึกษา <strong>790 บาท/เดือน</strong> สัญญา 6 เดือน ไม่มีค่าแรกเข้า สำหรับอายุ 15–25 ปี แสดงบัตรนักศึกษาที่ยังไม่หมดอายุ เข้าคลาสได้ไม่จำกัดยกเว้นคลาส Ride อายุ 15–17 ปีต้องมีผู้ปกครองเซ็นยินยอม`, sources: ['KB-02'] };
   if (/รายปี|annual|ทั้งปี/.test(t) && !/เลิก|ยกเลิก|คืน/.test(t)) return { html: `รายปีจ่ายครั้งเดียว <strong>9,900 บาท</strong> เฉลี่ยเดือนละ 825 บาท ไม่มีค่าแรกเข้า วัดองค์ประกอบร่างกายฟรีเดือนละ 1 ครั้ง พาเพื่อนฟรีเดือนละ 1 ครั้ง${act.find(p => p.code === 'YEAR13') ? '<br>ตอนนี้มีโปร YEAR13 แถมฟรี 1 เดือน (ใช้ได้ 13 เดือน)' : ''}`, sources: ['KB-02', 'KB-07'], quick: ['สนใจสมัครรายปี'] };
   if (/day\s*pass|รายวัน|วันเดียว/.test(t)) return { html: 'บัตรรายวัน (Day Pass) <strong>150 บาท</strong> ใช้ได้ 1 วัน แสดงบัตรประชาชน ไม่รวมคลาส ซื้อคลาสเพิ่มคลาสละ 150 บาทที่เคาน์เตอร์', sources: ['KB-02'] };
-  if (/(ยกเลิก|เลิก).{0,12}(สมาชิก|สัญญา)|สัญญา.{0,20}(เลิก|ยกเลิก)|ค่าปรับ.*สัญญา/.test(t)) return { html: 'ยกเลิกสมาชิกต้องแจ้งล่วงหน้า 30 วันค่ะ<table><tr><td>รายเดือนไม่มีสัญญา</td><td>ไม่มีค่าปรับ</td></tr><tr><td>สัญญา 12 เดือน (ยังไม่ครบ)</td><td>1,500 บาท</td></tr><tr><td>นักศึกษา (ยังไม่ครบ 6 เดือน)</td><td>500 บาท</td></tr><tr><td>รายปี</td><td>ยกเลิกไม่ได้ โอนสิทธิ์ได้</td></tr></table>', sources: ['KB-05'] };
-  if (/คืนเงิน|refund/.test(t)) return { html: 'คืนเงินเต็มจำนวนถ้ายกเลิก<strong>ภายใน 7 วัน</strong>หลังสมัครและยังไม่เคยเข้าใช้บริการค่ะ หลังจากนั้นไม่คืนค่าสมาชิก แพ็กเกจ PT ไม่คืนเงินแต่โอนสิทธิ์ได้ 1 ครั้ง การคืนเงินทุกกรณีต้องให้ผู้จัดการอนุมัติ', sources: ['KB-05'], rules: ['N-05'] };
-  if (/คืนสินค้า|เปลี่ยนสินค้า|คืนของ/.test(t)) return { html: 'คืนสินค้าได้ภายใน 7 วันนับจากวันที่ในใบเสร็จ สินค้าต้องยังไม่เปิดใช้ อาหารเสริมที่เปิดแล้วคืนไม่ได้ สินค้าชำรุดจากการผลิตเปลี่ยนได้ภายใน 30 วันค่ะ', sources: ['KB-07'] };
+  if (/(ยกเลิก|เลิก).{0,12}(สมาชิก|สัญญา)|สัญญา.{0,20}(เลิก|ยกเลิก)|ค่าปรับ.*สัญญา/.test(t)) return { html: 'ยกเลิกสมาชิกต้องแจ้งล่วงหน้า 30 วันครับ<table><tr><td>รายเดือนไม่มีสัญญา</td><td>ไม่มีค่าปรับ</td></tr><tr><td>สัญญา 12 เดือน (ยังไม่ครบ)</td><td>1,500 บาท</td></tr><tr><td>นักศึกษา (ยังไม่ครบ 6 เดือน)</td><td>500 บาท</td></tr><tr><td>รายปี</td><td>ยกเลิกไม่ได้ โอนสิทธิ์ได้</td></tr></table>', sources: ['KB-05'] };
+  if (/คืนเงิน|refund/.test(t)) return { html: 'คืนเงินเต็มจำนวนถ้ายกเลิก<strong>ภายใน 7 วัน</strong>หลังสมัครและยังไม่เคยเข้าใช้บริการครับ หลังจากนั้นไม่คืนค่าสมาชิก แพ็กเกจ PT ไม่คืนเงินแต่โอนสิทธิ์ได้ 1 ครั้ง การคืนเงินทุกกรณีต้องให้ผู้จัดการอนุมัติ', sources: ['KB-05'], rules: ['N-05'] };
+  if (/คืนสินค้า|เปลี่ยนสินค้า|คืนของ/.test(t)) return { html: 'คืนสินค้าได้ภายใน 7 วันนับจากวันที่ในใบเสร็จ สินค้าต้องยังไม่เปิดใช้ อาหารเสริมที่เปิดแล้วคืนไม่ได้ สินค้าชำรุดจากการผลิตเปลี่ยนได้ภายใน 30 วันครับ', sources: ['KB-07'] };
   if (/พัก(สมาชิก)?|freeze|ไปต่าง(จังหวัด|ประเทศ)/.test(t)) return { html: 'พักสมาชิกได้ครั้งละ <strong>1–3 เดือน</strong> รวมไม่เกิน 3 เดือนต่อปี ค่าธรรมเนียม <strong>100 บาท/เดือน</strong> แจ้งล่วงหน้าอย่างน้อย 7 วัน วันหมดอายุเลื่อนออกเท่าจำนวนวันที่พัก พักเพราะเหตุผลทางการแพทย์ไม่มีค่าธรรมเนียม (แนบใบรับรองแพทย์) บัตรรายวันและแพ็กเกจนักศึกษาพักไม่ได้', sources: ['KB-05'], quick: ['ขอพักสมาชิก'] };
   if (/ราคา|เท่าไ(หร่|ร)|ค่าสมาชิก|สมาชิก|แพ็กเกจ|package|สมัคร/.test(t) && !/pt|เทรนเนอร์|โค้ช|คลาส|เวย์|สินค้า|วัด/.test(t)) {
-    if (/รายเดือน|เดือนละ|ต่อเดือน/.test(t)) return { html: `สมาชิกรายเดือนมี 3 แบบค่ะ${pkgTable(['PKG-FLEX', 'PKG-12M', 'PKG-STU'])}ถ้าจ่ายรายปี 9,900 บาท เฉลี่ยเดือนละ 825 บาท สนใจแบบไหนคะ`, sources: ['KB-02'], rules: ['D-08'], quick: ['ต่างกันยังไง', 'รายปี', 'นักศึกษา'] };
-    return { html: `แพ็กเกจสมาชิก 5 แบบค่ะ${pkgTable(['PKG-DAY', 'PKG-FLEX', 'PKG-12M', 'PKG-STU', 'PKG-ANNUAL'])}รายเดือนไม่มีสัญญาและสัญญา 12 เดือนมีค่าแรกเข้า 500 บาท${act.find(p => p.code === 'NOJOIN') ? ' (ตอนนี้ยกเว้นด้วยโค้ด NOJOIN)' : ''}`, sources: ['KB-02'], quick: ['รายปี', 'นักศึกษา', 'ทดลองฟรี'] };
+    if (/รายเดือน|เดือนละ|ต่อเดือน/.test(t)) return { html: `สมาชิกรายเดือนมี 3 แบบครับ${pkgTable(['PKG-FLEX', 'PKG-12M', 'PKG-STU'])}ถ้าจ่ายรายปี 9,900 บาท เฉลี่ยเดือนละ 825 บาท สนใจแบบไหนครับ`, sources: ['KB-02'], rules: ['D-08'], quick: ['ต่างกันยังไง', 'รายปี', 'นักศึกษา'] };
+    return { html: `แพ็กเกจสมาชิก 5 แบบครับ${pkgTable(['PKG-DAY', 'PKG-FLEX', 'PKG-12M', 'PKG-STU', 'PKG-ANNUAL'])}รายเดือนไม่มีสัญญาและสัญญา 12 เดือนมีค่าแรกเข้า 500 บาท${act.find(p => p.code === 'NOJOIN') ? ' (ตอนนี้ยกเว้นด้วยโค้ด NOJOIN)' : ''}`, sources: ['KB-02'], quick: ['รายปี', 'นักศึกษา', 'ทดลองฟรี'] };
   }
-  if (/ต่างกัน/.test(t)) return { html: 'รายเดือนไม่มีสัญญา 1,290 บาท ยกเลิกได้ทุกเมื่อ (แจ้ง 30 วัน) ส่วนสัญญา 12 เดือน 990 บาท ถูกกว่าเดือนละ 300 บาท แต่ยกเลิกก่อนครบมีค่าธรรมเนียม 1,500 บาทค่ะ', sources: ['KB-02'] };
-  if (/ทดลอง|ลองเล่น|trial|ลองก่อน/.test(t)) return { html: 'ผู้ที่ไม่เคยเป็นสมาชิก<strong>ทดลองฟรี 1 วัน</strong>ค่ะ (1 ครั้งต่อคน) ลงทะเบียนล่วงหน้า แสดงบัตรประชาชนในวันที่มา รวมคลาสได้ 1 คลาสถ้ามีที่ว่าง', sources: ['KB-02'], handoff: '<button class="btn btn-ghost btn-sm" data-open="trial">ลงทะเบียนทดลองฟรี</button>' };
+  if (/ต่างกัน/.test(t)) return { html: 'รายเดือนไม่มีสัญญา 1,290 บาท ยกเลิกได้ทุกเมื่อ (แจ้ง 30 วัน) ส่วนสัญญา 12 เดือน 990 บาท ถูกกว่าเดือนละ 300 บาท แต่ยกเลิกก่อนครบมีค่าธรรมเนียม 1,500 บาทครับ', sources: ['KB-02'] };
+  if (/ทดลอง|ลองเล่น|trial|ลองก่อน/.test(t)) return { html: 'ผู้ที่ไม่เคยเป็นสมาชิก<strong>ทดลองฟรี 1 วัน</strong>ครับ (1 ครั้งต่อคน) ลงทะเบียนล่วงหน้า แสดงบัตรประชาชนในวันที่มา รวมคลาสได้ 1 คลาสถ้ามีที่ว่าง', sources: ['KB-02'], handoff: '<button class="btn btn-ghost btn-sm" data-open="trial">ลงทะเบียนทดลองฟรี</button>' };
 
   // PT
   if (/pt|เทรนเนอร์|personal|โค้ชส่วนตัว|จ้างโค้ช|จ้าง/.test(t)) {
     const n = (t.match(/(\d+)\s*ครั้ง/) || [])[1]; const p = n && DB.pt.find(x => x.sessions === +n && x.id !== 'PT-DUO');
-    if (p) return { html: `${esc(p.name)} ราคา <strong>${fmt(p.price)} บาท</strong> เฉลี่ย ${fmt(p.per_session)} บาท/ครั้ง ใช้ได้ภายใน ${p.valid_days} วัน ครั้งละ 60 นาที ยกเลิกนัดต้องแจ้งล่วงหน้า 12 ชั่วโมงค่ะ`, sources: ['KB-04'] };
+    if (p) return { html: `${esc(p.name)} ราคา <strong>${fmt(p.price)} บาท</strong> เฉลี่ย ${fmt(p.per_session)} บาท/ครั้ง ใช้ได้ภายใน ${p.valid_days} วัน ครั้งละ 60 นาที ยกเลิกนัดต้องแจ้งล่วงหน้า 12 ชั่วโมงครับ`, sources: ['KB-04'] };
     const coach = DB.trainers.find(c => t.includes(c.nickname.replace('โค้ช', '')));
-    return { html: `${coach ? `${esc(coach.nickname)}ถนัด${esc(coach.specialty.join(' '))} ` : ''}แพ็กเกจเทรนเนอร์ส่วนตัวค่ะ<table>${DB.pt.map(p => `<tr><td>${esc(p.name)}</td><td>${fmt(p.price)} บาท</td></tr>`).join('')}</table>ครั้งละ 60 นาที สมาชิกใหม่ทดลองฟรี 1 ครั้ง (30 นาที)`, sources: ['KB-04'] };
+    return { html: `${coach ? `${esc(coach.nickname)}ถนัด${esc(coach.specialty.join(' '))} ` : ''}แพ็กเกจเทรนเนอร์ส่วนตัวครับ<table>${DB.pt.map(p => `<tr><td>${esc(p.name)}</td><td>${fmt(p.price)} บาท</td></tr>`).join('')}</table>ครั้งละ 60 นาที สมาชิกใหม่ทดลองฟรี 1 ครั้ง (30 นาที)`, sources: ['KB-04'] };
   }
   if (/โค้ช|ครูสอน/.test(t) && /จบ|เรียน|อายุ|แฟน|เบอร์|ประวัติ/.test(t)) return null; // personal details not in KB → fallback
-  if (/โค้ช|coach/.test(t)) return { html: `โค้ชประจำ 6 คนค่ะ<ul>${DB.trainers.map(c => `<li>${esc(c.nickname)} · ${esc(c.specialty.join(', '))}</li>`).join('')}</ul>`, sources: ['KB-04'] };
+  if (/โค้ช|coach/.test(t)) return { html: `โค้ชประจำ 6 คนครับ<ul>${DB.trainers.map(c => `<li>${esc(c.nickname)} · ${esc(c.specialty.join(', '))}</li>`).join('')}</ul>`, sources: ['KB-04'] };
 
   // classes
   const cid = findClass(t), day = findDay(t);
-  if (/ยกเลิก.{0,8}คลาส|คลาส.{0,12}ยกเลิก|no.?show|ไม่ไปเรียน/.test(t) || (/ยกเลิก/.test(t) && /จอง/.test(t))) return { html: 'ยกเลิกคลาสได้ถึง <strong>2 ชั่วโมงก่อนเริ่ม</strong>ค่ะ ถ้าไม่มาโดยไม่ยกเลิกครบ 3 ครั้งในเดือนเดียว จะระงับสิทธิ์จองคลาส 7 วัน', sources: ['KB-03'] };
-  if (/จอง/.test(t) && !cid) return { html: 'จองคลาสได้ผ่านแชต หน้าเว็บ หรือเคาน์เตอร์ค่ะ จองล่วงหน้าได้ 7 วัน ค้างได้สูงสุด 3 คลาส ต้องยืนยันตัวตนก่อน บอกชื่อคลาสกับวันที่ต้องการได้เลย เช่น "จองโยคะวันพุธ"', sources: ['KB-03'], quick: ['จองโยคะวันพุธ', 'จองมวยไทยวันพฤหัสบดี'] };
+  if (/ยกเลิก.{0,8}คลาส|คลาส.{0,12}ยกเลิก|no.?show|ไม่ไปเรียน/.test(t) || (/ยกเลิก/.test(t) && /จอง/.test(t))) return { html: 'ยกเลิกคลาสได้ถึง <strong>2 ชั่วโมงก่อนเริ่ม</strong>ครับ ถ้าไม่มาโดยไม่ยกเลิกครบ 3 ครั้งในเดือนเดียว จะระงับสิทธิ์จองคลาส 7 วัน', sources: ['KB-03'] };
+  if (/จอง/.test(t) && !cid) return { html: 'จองคลาสได้ผ่านแชต หน้าเว็บ หรือเคาน์เตอร์ครับ จองล่วงหน้าได้ 7 วัน ค้างได้สูงสุด 3 คลาส ต้องยืนยันตัวตนก่อน บอกชื่อคลาสกับวันที่ต้องการได้เลย เช่น "จองโยคะวันพุธ"', sources: ['KB-03'], quick: ['จองโยคะวันพุธ', 'จองมวยไทยวันพฤหัสบดี'] };
   if (cid) { const c = C(cid); let list = DB.schedule.filter(s => s.class_id === cid); if (day) list = list.filter(s => s.day === day);
-    return { html: `<strong>${esc(c.name)}</strong> ${c.minutes} นาที · ระดับ${esc(c.level)} · ${esc(c.room)}<br>${list.length ? 'รอบเรียน: ' + list.map(s => `${DAY_TH[s.day]} ${s.start} น. (${T(s.trainer_id).nickname})`).join(', ') : `ไม่มีรอบในวัน${DAY_TH[day]}ค่ะ รอบทั้งหมด: ${slotsFor(cid).join(', ')}`}`, sources: ['KB-03'], quick: list.length ? [`จอง${c.name_th}วัน${DAY_TH[list[0].day]}`] : [] }; }
+    return { html: `<strong>${esc(c.name)}</strong> ${c.minutes} นาที · ระดับ${esc(c.level)} · ${esc(c.room)}<br>${list.length ? 'รอบเรียน: ' + list.map(s => `${DAY_TH[s.day]} ${s.start} น. (${T(s.trainer_id).nickname})`).join(', ') : `ไม่มีรอบในวัน${DAY_TH[day]}ครับ รอบทั้งหมด: ${slotsFor(cid).join(', ')}`}`, sources: ['KB-03'], quick: list.length ? [`จอง${c.name_th}วัน${DAY_TH[list[0].day]}`] : [] }; }
   if (day && /คลาส|ตาราง|มีอะไร/.test(t) || /ตารางคลาส|คลาสวันนี้/.test(t)) { const d = day || todayNum(); const list = DB.schedule.filter(s => s.day === d);
-    return { html: `คลาสวัน${DAY_TH[d]}ค่ะ<table>${list.map(s => `<tr><td>${s.start} ${esc(C(s.class_id).name)}</td><td>${esc(T(s.trainer_id).nickname)}</td></tr>`).join('')}</table>`, sources: ['KB-03'], quick: ['จองคลาส'] }; }
-  if (/มือใหม่|เริ่มต้น|beginner|ไม่เคยเล่น/.test(t)) return { html: 'สำหรับมือใหม่แนะนำค่ะ<ul><li>อยากเริ่มเบา ๆ: Yoga Flow, Pilates Core</li><li>สนุก ไม่ต้องมีพื้นฐาน: Dance Cardio, Ride</li><li>อยากลองต่อยมวย: Muay Thai Basic (มีนวมให้ยืม)</li></ul>สมาชิกใหม่ได้แนะนำการใช้เครื่องฟรี 1 ครั้ง และทดลอง PT ฟรี 1 ครั้งค่ะ', sources: ['KB-03', 'KB-02'], quick: ['ตาราง Yoga', 'ทดลองฟรี'] };
+    return { html: `คลาสวัน${DAY_TH[d]}ครับ<table>${list.map(s => `<tr><td>${s.start} ${esc(C(s.class_id).name)}</td><td>${esc(T(s.trainer_id).nickname)}</td></tr>`).join('')}</table>`, sources: ['KB-03'], quick: ['จองคลาส'] }; }
+  if (/มือใหม่|เริ่มต้น|beginner|ไม่เคยเล่น/.test(t)) return { html: 'สำหรับมือใหม่แนะนำครับ<ul><li>อยากเริ่มเบา ๆ: Yoga Flow, Pilates Core</li><li>สนุก ไม่ต้องมีพื้นฐาน: Dance Cardio, Ride</li><li>อยากลองต่อยมวย: Muay Thai Basic (มีนวมให้ยืม)</li></ul>สมาชิกใหม่ได้แนะนำการใช้เครื่องฟรี 1 ครั้ง และทดลอง PT ฟรี 1 ครั้งครับ', sources: ['KB-03', 'KB-02'], quick: ['ตาราง Yoga', 'ทดลองฟรี'] };
   if (/เผาผลาญ|แคล|ลดไขมัน|ลดน้ำหนัก/.test(t)) return { html: 'คลาสที่เผาผลาญสูง: Muay Thai Basic 550–700, Boxing Fit 500–650, HIIT Blast 450–600, Ride 400–550 กิโลแคลอรีต่อคลาส (ค่าประมาณ ขึ้นกับแต่ละคน)', sources: ['KB-03'] };
-  if (/คลาส|class/.test(t)) return { html: `คลาสกลุ่ม 8 คลาส 29 รอบต่อสัปดาห์ค่ะ: ${DB.classes.map(c => esc(c.name)).join(', ')}<br>สมาชิกรายเดือนและรายปีเข้าได้ไม่จำกัด (แพ็กเกจนักศึกษาเข้า Ride ไม่ได้)`, sources: ['KB-03'], quick: ['ตารางคลาสวันนี้', 'คลาสสำหรับมือใหม่'] };
+  if (/คลาส|class/.test(t)) return { html: `คลาสกลุ่ม 8 คลาส 29 รอบต่อสัปดาห์ครับ: ${DB.classes.map(c => esc(c.name)).join(', ')}<br>สมาชิกรายเดือนและรายปีเข้าได้ไม่จำกัด (แพ็กเกจนักศึกษาเข้า Ride ไม่ได้)`, sources: ['KB-03'], quick: ['ตารางคลาสวันนี้', 'คลาสสำหรับมือใหม่'] };
 
   // hours, location, facilities
   if (/เปิด|ปิด|กี่โมง|เวลา/.test(t)) { const d = day;
     const h = d ? b.hours[d <= 5 ? 0 : 1] : null;
-    return { html: h ? `วัน${DAY_TH[d]}เปิด <strong>${h.open}–${h.close} น.</strong> เข้าได้ถึง 30 นาทีก่อนปิดค่ะ` : `จันทร์–ศุกร์ <strong>06:00–22:00</strong><br>เสาร์–อาทิตย์และวันหยุดนักขัตฤกษ์ <strong>08:00–20:00</strong><br>เข้าได้ถึง 30 นาทีก่อนปิด ปิดทำการ 1 ม.ค. และ 13–14 เม.ย.`, sources: ['KB-01'], rules: ['D-01'] }; }
-  if (/จอดรถ|ที่จอด|parking/.test(t)) return { html: esc(b.parking) + ' เกิน 3 ชั่วโมงชั่วโมงละ 20 บาท มีที่จอดมอเตอร์ไซค์ฟรีด้านข้างอาคารค่ะ', sources: ['KB-01'] };
+    return { html: h ? `วัน${DAY_TH[d]}เปิด <strong>${h.open}–${h.close} น.</strong> เข้าได้ถึง 30 นาทีก่อนปิดครับ` : `จันทร์–ศุกร์ <strong>06:00–22:00</strong><br>เสาร์–อาทิตย์และวันหยุดนักขัตฤกษ์ <strong>08:00–20:00</strong><br>เข้าได้ถึง 30 นาทีก่อนปิด ปิดทำการ 1 ม.ค. และ 13–14 เม.ย.`, sources: ['KB-01'], rules: ['D-01'] }; }
+  if (/จอดรถ|ที่จอด|parking/.test(t)) return { html: esc(b.parking) + ' เกิน 3 ชั่วโมงชั่วโมงละ 20 บาท มีที่จอดมอเตอร์ไซค์ฟรีด้านข้างอาคารครับ', sources: ['KB-01'] };
   if (/ที่อยู่|อยู่ที่ไหน|แผนที่|ไปยังไง|location|ติดต่อ|เบอร์ร้าน|โทร/.test(t)) return { html: `${esc(b.address)}<br>โทร ${b.phone} · LINE ${b.line_oa}`, sources: ['KB-01'] };
-  if (/ล็อกเกอร์|locker|ห้องอาบน้ำ|ผ้าเช็ดตัว|wifi|wi-fi/.test(t)) return { html: 'ล็อกเกอร์รายวันใช้ฟรี (คืนกุญแจก่อนออก กุญแจหายปรับ 300 บาท) เช่าล็อกเกอร์ประจำ 200 บาท/เดือน ผ้าเช็ดตัว 30 บาท/ครั้ง มี Wi-Fi ฟรีค่ะ', sources: ['KB-01', 'KB-07', 'KB-08'] };
-  if (/แต่งตัว|รองเท้า|ใส่อะไร|dress/.test(t)) return { html: 'โซนเวทและคาร์ดิโอต้องใส่รองเท้าผ้าใบหุ้มส้น คลาสโยคะ พิลาทิส มวยไทยเท้าเปล่าได้ ห้ามถอดเสื้อในพื้นที่ออกกำลังกาย และพกผ้าเช็ดตัวค่ะ', sources: ['KB-08'] };
-  if (/อายุ|เด็ก|ขวบ/.test(t)) return { html: 'อายุขั้นต่ำ 15 ปีค่ะ อายุ 15–17 ปีต้องมีผู้ปกครองเซ็นยินยอม', sources: ['KB-08'] };
-  if (/พาเพื่อน|guest|เพื่อนมา/.test(t)) return { html: 'สมาชิกรายปีพาเพื่อนเข้าฟรีเดือนละ 1 ครั้ง แพ็กเกจอื่นให้เพื่อนซื้อบัตรรายวัน 150 บาท เพื่อนต้องอายุ 15 ปีขึ้นไปและแสดงบัตรประชาชนค่ะ', sources: ['KB-05'] };
-  if (/วัดองค์ประกอบ|วัดไขมัน|inbody|body\s*scan|วัดมวล/.test(t)) return { html: 'วัดองค์ประกอบร่างกาย 200 บาท/ครั้ง สมาชิกรายปีฟรีเดือนละ 1 ครั้ง หรือแลก 200 แต้ม ควรวัดตอนเช้าก่อนอาหาร ผู้ที่ใส่เครื่องกระตุ้นหัวใจหรือตั้งครรภ์ไม่ควรใช้ ส่งภาพผลวัดมาให้เอ็กซ์สรุปได้ค่ะ', sources: ['KB-08', 'KB-07'] };
+  if (/ล็อกเกอร์|locker|ห้องอาบน้ำ|ผ้าเช็ดตัว|wifi|wi-fi/.test(t)) return { html: 'ล็อกเกอร์รายวันใช้ฟรี (คืนกุญแจก่อนออก กุญแจหายปรับ 300 บาท) เช่าล็อกเกอร์ประจำ 200 บาท/เดือน ผ้าเช็ดตัว 30 บาท/ครั้ง มี Wi-Fi ฟรีครับ', sources: ['KB-01', 'KB-07', 'KB-08'] };
+  if (/แต่งตัว|รองเท้า|ใส่อะไร|dress/.test(t)) return { html: 'โซนเวทและคาร์ดิโอต้องใส่รองเท้าผ้าใบหุ้มส้น คลาสโยคะ พิลาทิส มวยไทยเท้าเปล่าได้ ห้ามถอดเสื้อในพื้นที่ออกกำลังกาย และพกผ้าเช็ดตัวครับ', sources: ['KB-08'] };
+  if (/อายุ|เด็ก|ขวบ/.test(t)) return { html: 'อายุขั้นต่ำ 15 ปีครับ อายุ 15–17 ปีต้องมีผู้ปกครองเซ็นยินยอม', sources: ['KB-08'] };
+  if (/พาเพื่อน|guest|เพื่อนมา/.test(t)) return { html: 'สมาชิกรายปีพาเพื่อนเข้าฟรีเดือนละ 1 ครั้ง แพ็กเกจอื่นให้เพื่อนซื้อบัตรรายวัน 150 บาท เพื่อนต้องอายุ 15 ปีขึ้นไปและแสดงบัตรประชาชนครับ', sources: ['KB-05'] };
+  if (/วัดองค์ประกอบ|วัดไขมัน|inbody|body\s*scan|วัดมวล/.test(t)) return { html: 'วัดองค์ประกอบร่างกาย 200 บาท/ครั้ง สมาชิกรายปีฟรีเดือนละ 1 ครั้ง หรือแลก 200 แต้ม ควรวัดตอนเช้าก่อนอาหาร ผู้ที่ใส่เครื่องกระตุ้นหัวใจหรือตั้งครรภ์ไม่ควรใช้ ส่งภาพผลวัดมาให้เอ็กซ์สรุปได้ครับ', sources: ['KB-08', 'KB-07'] };
 
   // payment
-  if (/โอน|บัญชี|จ่าย|ชำระ|พร้อมเพย์|บัตรเครดิต|สลิป/.test(t)) return { html: `ชำระได้ที่เคาน์เตอร์ (เงินสด บัตร พร้อมเพย์) หรือโอนเข้า<br><strong>${b.bank.bank} ${b.bank.account_no}<br>${b.bank.account_name}</strong><br>ร้านมีบัญชีนี้บัญชีเดียว ไม่มีนโยบายให้โอนเข้าบัญชีส่วนตัวของพนักงาน โอนแล้วยืนยันตัวตนและส่งสลิปในแชตนี้ได้เลยค่ะ`, sources: ['KB-06'], rules: ['D-05'], quick: ['ยอดค้างของฉัน'] };
+  if (/โอน|บัญชี|จ่าย|ชำระ|พร้อมเพย์|บัตรเครดิต|สลิป/.test(t)) return { html: `ชำระได้ที่เคาน์เตอร์ (เงินสด บัตร พร้อมเพย์) หรือโอนเข้า<br><strong>${b.bank.bank} ${b.bank.account_no}<br>${b.bank.account_name}</strong><br>ร้านมีบัญชีนี้บัญชีเดียว ไม่มีนโยบายให้โอนเข้าบัญชีส่วนตัวของพนักงาน โอนแล้วยืนยันตัวตนและส่งสลิปในแชตนี้ได้เลยครับ`, sources: ['KB-06'], rules: ['D-05'], quick: ['ยอดค้างของฉัน'] };
 
   // products & points info
-  if (/เวย์|whey|โปรตีน|ขวดน้ำ|เสื้อ|ถุงมือ|ยางยืด|สินค้า|ขายอะไร/.test(t)) return { html: `สินค้าที่เคาน์เตอร์ค่ะ<table>${DB.products.map(p => `<tr><td>${esc(p.name)}</td><td>${p.stock ? fmt(p.price) + ' บาท' : 'หมด' + (p.restock ? ' (' + esc(p.restock) + ')' : '')}</td></tr>`).join('')}</table>`, sources: ['KB-07'] };
+  if (/เวย์|whey|โปรตีน|ขวดน้ำ|เสื้อ|ถุงมือ|ยางยืด|สินค้า|ขายอะไร/.test(t)) return { html: `สินค้าที่เคาน์เตอร์ครับ<table>${DB.products.map(p => `<tr><td>${esc(p.name)}</td><td>${p.stock ? fmt(p.price) + ' บาท' : 'หมด' + (p.restock ? ' (' + esc(p.restock) + ')' : '')}</td></tr>`).join('')}</table>`, sources: ['KB-07'] };
   if (/สะสม|รางวัล|point/.test(t)) return { html: `รับแต้ม: เช็กอิน 5 แต้ม/วัน, ใช้จ่ายทุก 10 บาทรับ 1 แต้ม, ชวนเพื่อน 300 แต้ม<br>แลก: โปรตีนเชค 150, วัดองค์ประกอบร่างกาย 200, ผ้าเช็ดตัว 300, ขวดน้ำ 450, PT 1 ครั้ง 900 แต้ม`, sources: ['KB-07'], quick: ['แต้มของฉัน'] };
   return null;
 }
@@ -1353,13 +1368,13 @@ const VISION = {
 };
 async function analyzeImage(img, t) {
   const v = VISION[img.key];
-  if (!v) return { html: 'ได้รับภาพแล้วค่ะ แต่<strong>โหมดจำลอง</strong>วิเคราะห์ได้เฉพาะภาพทดสอบ 5 ภาพในโฟลเดอร์ test-images การวิเคราะห์ภาพทั่วไปต้องเชื่อม Backend API (POST /api/vision) ในหน้าตั้งค่า', rules: ['D-03'] };
+  if (!v) return { html: 'ได้รับภาพแล้วครับ แต่<strong>โหมดจำลอง</strong>วิเคราะห์ได้เฉพาะภาพทดสอบ 5 ภาพในโฟลเดอร์ qa การวิเคราะห์ภาพทั่วไปต้องเชื่อม Backend API (POST /api/vision) ในหน้าตั้งค่า', rules: ['D-03'] };
   const vis = JSON.stringify(v, null, 1);
   if (v.type === 'slip') {
-    if (!S.member) { S.pendingImage = img; return { ...needVerify(null, 'ได้รับสลิปแล้วค่ะ'), vision: vis, sources: ['KB-06'] }; }
-    if (S.usedRefs.has(v.reference)) return { html: `สลิปเลขอ้างอิง <span class="mono">${esc(v.reference)}</span> เคยส่งเข้าระบบแล้วค่ะ ใช้ซ้ำไม่ได้ ถ้าเป็นการโอนครั้งใหม่ กรุณาส่งสลิปใบใหม่`, vision: vis, sources: ['KB-06'], rules: ['D-06'] };
+    if (!S.member) { S.pendingImage = img; return { ...needVerify(null, 'ได้รับสลิปแล้วครับ'), vision: vis, sources: ['KB-06'] }; }
+    if (S.usedRefs.has(v.reference)) return { html: `สลิปเลขอ้างอิง <span class="mono">${esc(v.reference)}</span> เคยส่งเข้าระบบแล้วครับ ใช้ซ้ำไม่ได้ ถ้าเป็นการโอนครั้งใหม่ กรุณาส่งสลิปใบใหม่`, vision: vis, sources: ['KB-06'], rules: ['D-06'] };
     const due = S.payments.find(p => p.member_id === S.member.member_id && p.status === 'pending_slip');
-    if (!due) return { html: 'ไม่พบยอดค้างชำระของคุณที่รอสลิปค่ะ เอ็กซ์ส่งต่อให้พนักงานตรวจสอบนะคะ', vision: vis, sources: ['KB-06'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="สลิปไม่มียอดค้าง">ส่งต่อพนักงาน</button>' };
+    if (!due) return { html: 'ไม่พบยอดค้างชำระของคุณที่รอสลิปครับ เอ็กซ์ส่งต่อให้พนักงานตรวจสอบนะครับ', vision: vis, sources: ['KB-06'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="สลิปไม่มียอดค้าง">ส่งต่อพนักงาน</button>' };
     const dd = (parseISO(v.datetime.slice(0, 10)) - parseISO(due.due)) / 864e5;
     const checks = [
       ['ชื่อบัญชีผู้รับ', v.receiver_name === DB.business.bank.account_name],
@@ -1370,28 +1385,37 @@ async function analyzeImage(img, t) {
     ];
     const pass = checks.every(c => c[1]);
     const list = `<div class="checks">${checks.map(([l, ok]) => `<div class="${ok ? 'y' : 'n'}">${ok ? '✓' : '✗'} ${esc(l)}</div>`).join('')}</div>`;
-    if (pass) { S.usedRefs.add(v.reference); due.status = 'pending_staff'; return { html: `ตรวจสลิปเบื้องต้น <strong>ผ่าน 5/5</strong> สำหรับ ${esc(due.description)}${list}สถานะ: <strong>รอพนักงานยืนยันยอดเข้าบัญชี</strong> ภายใน 1 วันทำการ ยังไม่ถือว่าชำระสำเร็จจนกว่าพนักงานยืนยันค่ะ`, vision: vis, sources: ['KB-06'], rules: ['D-06', 'N-05'] }; }
+    if (pass) { S.usedRefs.add(v.reference); due.status = 'pending_staff'; return { html: `ตรวจสลิปเบื้องต้น <strong>ผ่าน 5/5</strong> สำหรับ ${esc(due.description)}${list}สถานะ: <strong>รอพนักงานยืนยันยอดเข้าบัญชี</strong> ภายใน 1 วันทำการ ยังไม่ถือว่าชำระสำเร็จจนกว่าพนักงานยืนยันครับ`, vision: vis, sources: ['KB-06'], rules: ['D-06', 'N-05'] }; }
     const diff = due.amount - v.amount;
-    return { html: `ตรวจสลิปเบื้องต้น <strong>ไม่ผ่าน</strong>ค่ะ${list}${diff > 0 ? `ยอดโอนขาดอยู่ <strong>${fmt(diff.toFixed(2))} บาท</strong> กรุณาโอนส่วนที่ขาดเพิ่มแล้วส่งสลิปทั้งสองใบ ` : ''}เอ็กซ์ยังไม่บันทึกว่าชำระแล้ว และส่งเรื่องให้พนักงานตรวจสอบค่ะ`, vision: vis, sources: ['KB-06'], rules: ['D-06', 'N-05'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="สลิปยอดไม่ตรง">ส่งต่อพนักงาน</button>' };
+    return { html: `ตรวจสลิปเบื้องต้น <strong>ไม่ผ่าน</strong>ครับ${list}${diff > 0 ? `ยอดโอนขาดอยู่ <strong>${fmt(diff.toFixed(2))} บาท</strong> กรุณาโอนส่วนที่ขาดเพิ่มแล้วส่งสลิปทั้งสองใบ ` : ''}เอ็กซ์ยังไม่บันทึกว่าชำระแล้ว และส่งเรื่องให้พนักงานตรวจสอบครับ`, vision: vis, sources: ['KB-06'], rules: ['D-06', 'N-05'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="สลิปยอดไม่ตรง">ส่งต่อพนักงาน</button>' };
   }
-  if (v.type === 'body_scan') return { html: `สรุปผลวัดค่ะ<table><tr><td>น้ำหนัก</td><td>${v.weight_kg} กก.</td></tr><tr><td>มวลกล้ามเนื้อโครงร่าง</td><td>${v.skeletal_muscle_kg} กก.</td></tr><tr><td>เปอร์เซ็นต์ไขมัน</td><td>${v.body_fat_pct}%</td></tr><tr><td>ไขมันช่องท้อง</td><td>ระดับ ${v.visceral_fat_level}</td></tr><tr><td>BMR</td><td>${fmt(v.bmr_kcal)} kcal</td></tr></table>ถ้าเป้าหมายคือลดไขมัน คลาสที่เหมาะ: <strong>HIIT Blast, Ride, Functional Strength</strong> หรือ PT กับโค้ชเก่งที่ถนัดลดไขมัน<br><span style="color:var(--muted);font-size:13px">ข้อมูลนี้ไม่ใช่คำแนะนำทางการแพทย์ เอ็กซ์ไม่กำหนดอาหารหรือยา ถ้ามีโรคประจำตัวควรปรึกษาแพทย์ก่อน</span>`, vision: vis, sources: ['KB-08', 'KB-03', 'KB-04'], rules: ['N-06'], quick: ['ตาราง HIIT', 'ราคา PT 10 ครั้ง'] };
+  if (v.type === 'body_scan') return { html: `สรุปผลวัดครับ<table><tr><td>น้ำหนัก</td><td>${v.weight_kg} กก.</td></tr><tr><td>มวลกล้ามเนื้อโครงร่าง</td><td>${v.skeletal_muscle_kg} กก.</td></tr><tr><td>เปอร์เซ็นต์ไขมัน</td><td>${v.body_fat_pct}%</td></tr><tr><td>ไขมันช่องท้อง</td><td>ระดับ ${v.visceral_fat_level}</td></tr><tr><td>BMR</td><td>${fmt(v.bmr_kcal)} kcal</td></tr></table>ถ้าเป้าหมายคือลดไขมัน คลาสที่เหมาะ: <strong>HIIT Blast, Ride, Functional Strength</strong> หรือ PT กับโค้ชเก่งที่ถนัดลดไขมัน<br><span style="color:var(--muted);font-size:13px">ข้อมูลนี้ไม่ใช่คำแนะนำทางการแพทย์ เอ็กซ์ไม่กำหนดอาหารหรือยา ถ้ามีโรคประจำตัวควรปรึกษาแพทย์ก่อน</span>`, vision: vis, sources: ['KB-08', 'KB-03', 'KB-04'], rules: ['N-06'], quick: ['ตาราง HIIT', 'ราคา PT 10 ครั้ง'] };
   if (v.type === 'receipt') {
     const days = Math.floor((new Date() - parseISO(v.date)) / 864e5), opened = /เปิด|แกะ|ไม่ชอบ|กินแล้ว/.test(t);
     const defectUntil = parseISO(v.date); defectUntil.setDate(defectUntil.getDate() + 30);
-    return { html: `ใบเสร็จ <strong>${v.receipt_no}</strong> วันที่ ${thDate(v.date)} ยอด ${fmt(v.total)} บาท (ผ่านมา ${days} วัน)<br>${days > 7 ? '<strong>คืนสินค้าไม่ได้</strong>ค่ะ เพราะเกิน 7 วันนับจากวันที่ในใบเสร็จ' : opened ? '<strong>คืนเวย์ไม่ได้</strong>ค่ะ เพราะอาหารเสริมที่เปิดแล้วไม่รับคืน' : 'ยังอยู่ในระยะคืนได้ 7 วัน ถ้าสินค้ายังไม่เปิดใช้ นำมาพร้อมใบเสร็จที่เคาน์เตอร์ค่ะ'}${days > 7 && opened ? ' และอาหารเสริมที่เปิดแล้วไม่รับคืน' : ''}<br>ถ้าสินค้าชำรุดจากการผลิต เปลี่ยนได้ถึง ${thDate(defectUntil)}`, vision: vis, sources: ['KB-07'], rules: ['N-02'] };
+    return { html: `ใบเสร็จ <strong>${v.receipt_no}</strong> วันที่ ${thDate(v.date)} ยอด ${fmt(v.total)} บาท (ผ่านมา ${days} วัน)<br>${days > 7 ? '<strong>คืนสินค้าไม่ได้</strong>ครับ เพราะเกิน 7 วันนับจากวันที่ในใบเสร็จ' : opened ? '<strong>คืนเวย์ไม่ได้</strong>ครับ เพราะอาหารเสริมที่เปิดแล้วไม่รับคืน' : 'ยังอยู่ในระยะคืนได้ 7 วัน ถ้าสินค้ายังไม่เปิดใช้ นำมาพร้อมใบเสร็จที่เคาน์เตอร์ครับ'}${days > 7 && opened ? ' และอาหารเสริมที่เปิดแล้วไม่รับคืน' : ''}<br>ถ้าสินค้าชำรุดจากการผลิต เปลี่ยนได้ถึง ${thDate(defectUntil)}`, vision: vis, sources: ['KB-07'], rules: ['N-02'] };
   }
   if (v.type === 'promo_poster') {
     const p = DB.promotions.find(x => x.code === v.promo_code), st = promoStatus(p), alt = DB.promotions.find(x => promoStatus(x) === 'active' && x.applies_to.includes('PKG-ANNUAL'));
-    return { html: `โปสเตอร์นี้คือโปร <strong>${esc(p.title)}</strong> โค้ด ${p.code}<br>${st === 'expired' ? `<strong>หมดเขตแล้ว</strong>เมื่อ ${thDate(p.end)} จึงใช้ไม่ได้ค่ะ` : 'ยังใช้ได้ค่ะ'}${st === 'expired' && alt ? `<br>โปรรายปีที่ใช้ได้ตอนนี้คือ <strong>${esc(alt.title)}</strong> (โค้ด ${alt.code}) ถึง ${thDate(alt.end)}` : ''}`, vision: vis, sources: ['KB-07'], rules: ['N-03'], quick: alt ? ['สนใจสมัครรายปี'] : [] };
+    return { html: `โปสเตอร์นี้คือโปร <strong>${esc(p.title)}</strong> โค้ด ${p.code}<br>${st === 'expired' ? `<strong>หมดเขตแล้ว</strong>เมื่อ ${thDate(p.end)} จึงใช้ไม่ได้ครับ` : 'ยังใช้ได้ครับ'}${st === 'expired' && alt ? `<br>โปรรายปีที่ใช้ได้ตอนนี้คือ <strong>${esc(alt.title)}</strong> (โค้ด ${alt.code}) ถึง ${thDate(alt.end)}` : ''}`, vision: vis, sources: ['KB-07'], rules: ['N-03'], quick: alt ? ['สนใจสมัครรายปี'] : [] };
   }
 }
 
 /* ================= INIT ================= */
 renderOpen(); setInterval(renderOpen, 60000);
-renderMarquee(); renderPlans(); renderDays(); renderSlots(); renderPT(); renderRewards(); renderMemberPanel(); renderPromos(); renderVisit(); renderFAQ();
+const renderAll = () => { renderMarquee(); renderPlans(); renderDays(); renderSlots(); renderPT(); renderRewards(); renderMemberPanel(); renderPromos(); renderVisit(); renderFAQ(); };
+renderAll();
 $('#year').textContent = new Date().getFullYear() + 543;
 $$('.rv').forEach(el => io.observe(el)); countUp();
-ChatStore.connect({ scope: 'customer', sid: SID }).then(() => {
+// hero parallax: the red slashes follow the mouse a little (mouse only, off for reduced motion)
+if (matchMedia('(pointer:fine) and (prefers-reduced-motion:no-preference)').matches) {
+  const hero = $('.hero'), sl = $('.slashes');
+  hero.addEventListener('mousemove', e => { const r = hero.getBoundingClientRect(); sl.style.setProperty('--px', ((e.clientX - r.left) / r.width - .5) * -40 + 'px'); sl.style.setProperty('--py', ((e.clientY - r.top) / r.height - .5) * -24 + 'px'); });
+  hero.addEventListener('mouseleave', () => { sl.style.setProperty('--px', '0px'); sl.style.setProperty('--py', '0px'); });
+}
+ChatStore.connect({ scope: 'customer', sid: SID }).then(async () => {
+  // backend running: shop data from its database (promotions switched off in the admin page disappear here too)
+  if (ChatStore.online) try { const r = await fetch(ChatStore.base + '/api/data'); if (r.ok) { Object.assign(DB, await r.json()); renderAll(); } } catch {}
   // backend has a Typhoon key → answer with the real LLM instead of the in-page simulation
   if (ChatStore.health?.llm) { $('#apiBase').value = ChatStore.base || location.origin; $('#settings [data-mode="api"]').click(); }
   restoreChat(); setChatMode();

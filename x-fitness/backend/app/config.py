@@ -8,14 +8,17 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(PROJECT_ROOT / "backend" / ".env")
 
 DB_PATH = Path(os.getenv("XF_DB_PATH", PROJECT_ROOT / "backend" / "data" / "chat.sqlite3"))
+SLIPS_DIR = Path(os.getenv("XF_SLIPS_DIR", DB_PATH.parent / "slips"))   # slip images customers send (not in git)
+SLIP_KEEP_DAYS = int(os.getenv("XF_SLIP_KEEP_DAYS", "90"))       # KB-08: images in chat are kept 90 days
 ADMIN_USER = os.getenv("XF_ADMIN_USER", "admin")
 ADMIN_PASS = os.getenv("XF_ADMIN_PASS", "1234")
 CORS_ORIGINS = os.getenv("XF_CORS_ORIGINS", "*").split(",")  # "*" lets the site opened as file:// call the API (local demo only);
                                                              # deployed: the site's own address (render.yaml), so other websites cannot call the API
 WEB_DIR = PROJECT_ROOT / "frontend"  # copied from the root mockup/ folder
-TEST_IMAGES_DIR = PROJECT_ROOT / "test-images"
+TEST_IMAGES_DIR = PROJECT_ROOT / "qa"   # copied from the root qa/test-images folder
 KB_DIR = PROJECT_ROOT / "data" / "knowledge-base"
 DATA_DIR = PROJECT_ROOT / "data" / "db"
+GUARD_REPLIES = PROJECT_ROOT / "data" / "guard" / "replies.md"   # what the bot says when a guard fires — edited without code
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 
 # Abuse limits (limits.py), counted in memory per server process
@@ -45,7 +48,7 @@ if EMBED_API_KEY:
 else:
     EMBED_BASE_URL, EMBED_MODEL, EMBED_DIM = "", "thai-word-hash", 1024
 SYNONYMS_FILE = DATA_DIR / "synonyms.json"   # other names customers use → knowledge base terms (hash embedding only)
-RAG_DIR = Path(os.getenv("XF_RAG_DIR", PROJECT_ROOT / "rag-index"))  # committed, so a fresh server (Render) does not rebuild it
+RAG_DIR = Path(os.getenv("XF_RAG_DIR", PROJECT_ROOT / "data" / "rag-index"))  # committed, so a fresh server (Render) does not rebuild it
 RAG_MODE = os.getenv("XF_RAG_MODE", "mix")         # LightRAG query mode: naive · local · global · hybrid · mix
 RAG_LLM_MAX_TOKENS = int(os.getenv("XF_RAG_LLM_MAX_TOKENS", "8192"))  # answer length for LightRAG extraction calls
 RAG_CHUNK_TOKENS = int(os.getenv("XF_RAG_CHUNK_TOKENS", "500"))       # small chunks: Thai entity lists fit in one answer

@@ -18,7 +18,7 @@ input,textarea,select{background:var(--bg);border:1px solid var(--line-2);paddin
 input:focus,textarea:focus,select:focus{border-color:var(--red)}
 :focus-visible{outline:2px solid var(--red-hot);outline-offset:2px}
 input:focus-visible,textarea:focus-visible,select:focus-visible{outline:none}
-.mono{font-family:var(--mono);font-size:13px}
+.mono{font-family:var(--mono);font-size:13px;white-space:nowrap}
 .dim{color:var(--dim)}
 small{font-size:12px}
 .ico{width:18px;height:18px;flex:none;color:var(--text)}
@@ -30,7 +30,7 @@ small{font-size:12px}
 .btn.red{background:var(--red);color:#fff}.btn.red:hover{background:var(--red-hot)}
 .btn.ghost{box-shadow:inset 0 0 0 1px var(--line-2)}.btn.ghost:hover{box-shadow:inset 0 0 0 1px var(--text)}
 .icon{width:36px;height:36px;display:grid;place-items:center}
-.pill{display:inline-block;padding:2px 8px;font-size:12px;font-weight:500;background:var(--bg-3);box-shadow:inset 0 0 0 1px var(--line-2);color:var(--muted)}
+.pill{white-space:nowrap;display:inline-block;padding:2px 8px;font-size:12px;font-weight:500;background:var(--bg-3);box-shadow:inset 0 0 0 1px var(--line-2);color:var(--muted)}
 .pill.ok{color:#86efac;box-shadow:inset 0 0 0 1px rgba(34,197,94,.5)}
 .pill.warn{color:#fcd34d;box-shadow:inset 0 0 0 1px rgba(245,158,11,.5)}
 .pill.bad{color:#fca5a5;box-shadow:inset 0 0 0 1px rgba(225,6,19,.6)}
@@ -111,6 +111,26 @@ tbody tr:hover{background:rgba(255,255,255,.02)}
 .sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;background:var(--muted);transition:.15s}
 .sw[aria-checked=true]{background:var(--red)}
 .sw[aria-checked=true]::after{left:21px;background:#fff}
+.sw:disabled{opacity:.4;cursor:not-allowed}
+.hint{font-size:13px;color:var(--dim)}
+/* knowledge graph */
+.graph-wrap{display:grid;grid-template-columns:1fr 320px;gap:16px;min-height:0}
+.graph-net{height:70vh;min-height:420px;background:var(--bg-2);border:1px solid var(--line)}
+.graph-info{max-height:70vh;overflow:auto}
+.graph-info p{font-size:13px;color:var(--muted)}
+.graph-rel{list-style:none;padding:0;display:grid;gap:4px;font-size:13px}
+.graph-rel a{color:var(--text)}
+@media (max-width:1000px){.graph-wrap{grid-template-columns:1fr}.graph-net{height:55vh}}
+/* slip viewer (payments) */
+.dlg{margin:auto;border:1px solid var(--line-2);background:var(--bg-2);color:var(--text);padding:0;width:min(560px,94vw);max-height:90vh}
+.dlg::backdrop{background:rgba(0,0,0,.72)}
+.dlg-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.dlg-body{padding:16px;display:grid;gap:18px;overflow:auto;max-height:calc(90vh - 60px)}
+.slip{display:grid;gap:10px;margin:0}
+.slip-img{min-height:120px;display:grid;place-items:center;background:var(--bg);color:var(--dim)}
+.slip-img img{max-width:100%;max-height:60vh;display:block}
+.checks{list-style:none;padding:0;display:grid;gap:4px;font-size:13px}
+.checks .ok{color:#86efac}.checks .bad{color:#fca5a5}
 .seg{display:flex;box-shadow:inset 0 0 0 1px var(--line-2)}
 .seg button{flex:1;padding:6px 8px;font-size:12.5px;color:var(--muted)}
 .seg button[aria-pressed=true]{background:var(--red);color:#fff}

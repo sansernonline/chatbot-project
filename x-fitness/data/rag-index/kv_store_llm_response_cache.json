@@ -8358,5 +8358,325 @@
     "create_time": 1791191936,
     "update_time": 1791191936,
     "_id": "mix:keywords:d5e857e89d27272da28fd034bb4decce"
+  },
+  "mix:keywords:d1a44970395e2750a4d14d8b4988130f": {
+    "return": "{\"high_level_keywords\": [\"\\u0e23\\u0e32\\u0e04\\u0e32\\u0e2a\\u0e21\\u0e32\\u0e0a\\u0e34\\u0e01\", \"\\u0e23\\u0e32\\u0e22\\u0e40\\u0e14\\u0e37\\u0e2d\\u0e19\"], \"low_level_keywords\": []}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "ราคาสมาชิกรายเดือน",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 40,
+      "chunk_top_k": 3,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 30000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791653228,
+    "update_time": 1791653228,
+    "_id": "mix:keywords:d1a44970395e2750a4d14d8b4988130f"
+  },
+  "mix:keywords:4b93c1e6d8f37a0ed3725687ad311d83": {
+    "return": "{\"high_level_keywords\": [\"\\u0e40\\u0e27\\u0e25\\u0e32\\u0e40\\u0e1b\\u0e34\\u0e14-\\u0e1b\\u0e34\\u0e14\"], \"low_level_keywords\": []}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "วันเสาร์เปิดกี่โมงถึงกี่โมง",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656666,
+    "update_time": 1791656666,
+    "_id": "mix:keywords:4b93c1e6d8f37a0ed3725687ad311d83"
+  },
+  "mix:keywords:4031511f41aeaa80c64bc3a5e1c0ad50": {
+    "return": "{\"high_level_keywords\": [\"\\u0e2a\\u0e21\\u0e32\\u0e0a\\u0e34\\u0e01\", \"\\u0e23\\u0e32\\u0e22\\u0e40\\u0e14\\u0e37\\u0e2d\\u0e19\", \"\\u0e23\\u0e32\\u0e04\\u0e32\"], \"low_level_keywords\": []}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "สมาชิกรายเดือนไม่มีสัญญาราคาเท่าไหร่",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656671,
+    "update_time": 1791656671,
+    "_id": "mix:keywords:4031511f41aeaa80c64bc3a5e1c0ad50"
+  },
+  "mix:keywords:d6ba14b9ab52d7bcce38ff3822d972e3": {
+    "return": "{\"high_level_keywords\": [\"\\u0e04\\u0e48\\u0e32\\u0e41\\u0e23\\u0e01\\u0e40\\u0e02\\u0e49\\u0e32\", \"\\u0e42\\u0e1b\\u0e23\\u0e42\\u0e21\\u0e0a\\u0e31\\u0e19\"], \"low_level_keywords\": []}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "ค่าแรกเข้าเท่าไหร่ มีโปรยกเว้นไหม",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656675,
+    "update_time": 1791656675,
+    "_id": "mix:keywords:d6ba14b9ab52d7bcce38ff3822d972e3"
+  },
+  "mix:keywords:79a907d5c2ecca1f4158cd87647cb1da": {
+    "return": "{\"high_level_keywords\": [\"\\u0e01\\u0e32\\u0e23\\u0e22\\u0e01\\u0e40\\u0e25\\u0e34\\u0e01\\u0e2a\\u0e21\\u0e32\\u0e0a\\u0e34\\u0e01\", \"\\u0e01\\u0e32\\u0e23\\u0e41\\u0e08\\u0e49\\u0e07\\u0e25\\u0e48\\u0e27\\u0e07\\u0e2b\\u0e19\\u0e49\\u0e32\"], \"low_level_keywords\": [\"\\u0e2a\\u0e21\\u0e32\\u0e0a\\u0e34\\u0e01\\u0e23\\u0e32\\u0e22\\u0e40\\u0e14\\u0e37\\u0e2d\\u0e19\"]}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "ยกเลิกสมาชิกรายเดือนต้องแจ้งล่วงหน้ากี่วัน",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656679,
+    "update_time": 1791656679,
+    "_id": "mix:keywords:79a907d5c2ecca1f4158cd87647cb1da"
+  },
+  "mix:keywords:fb4d6544a4c4756000277dad2ab350c7": {
+    "return": "{\"high_level_keywords\": [\"\\u0e1e\\u0e31\\u0e01\\u0e2a\\u0e21\\u0e32\\u0e0a\\u0e34\\u0e01\", \"\\u0e04\\u0e48\\u0e32\\u0e18\\u0e23\\u0e23\\u0e21\\u0e40\\u0e19\\u0e35\\u0e22\\u0e21\"], \"low_level_keywords\": []}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "พักสมาชิกได้นานสุดกี่เดือน เสียค่าธรรมเนียมไหม",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656683,
+    "update_time": 1791656683,
+    "_id": "mix:keywords:fb4d6544a4c4756000277dad2ab350c7"
+  },
+  "mix:keywords:56a5f5410cbef9015778234d54fbefdb": {
+    "return": "{\"high_level_keywords\": [\"\\u0e01\\u0e32\\u0e23\\u0e08\\u0e2d\\u0e07\\u0e25\\u0e48\\u0e27\\u0e07\\u0e2b\\u0e19\\u0e49\\u0e32\", \"\\u0e23\\u0e30\\u0e22\\u0e30\\u0e40\\u0e27\\u0e25\\u0e32\\u0e01\\u0e32\\u0e23\\u0e08\\u0e2d\\u0e07\"], \"low_level_keywords\": []}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "จองคลาสล่วงหน้าได้กี่วัน",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656687,
+    "update_time": 1791656687,
+    "_id": "mix:keywords:56a5f5410cbef9015778234d54fbefdb"
+  },
+  "mix:keywords:2fd7a187a2264be3cf6f72e2c63e75a8": {
+    "return": "{\"high_level_keywords\": [\"\\u0e23\\u0e32\\u0e04\\u0e32\"], \"low_level_keywords\": [\"PT 10\"]}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "PT 10 ครั้งราคาเท่าไหร่",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656690,
+    "update_time": 1791656690,
+    "_id": "mix:keywords:2fd7a187a2264be3cf6f72e2c63e75a8"
+  },
+  "mix:keywords:7f9d92d36e07a3d0e4015f68a2069a48": {
+    "return": "{\"high_level_keywords\": [\"\\u0e01\\u0e32\\u0e23\\u0e42\\u0e2d\\u0e19\\u0e40\\u0e07\\u0e34\\u0e19\", \"\\u0e04\\u0e48\\u0e32\\u0e2a\\u0e21\\u0e32\\u0e0a\\u0e34\\u0e01\"], \"low_level_keywords\": []}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "โอนค่าสมาชิกเข้าบัญชีไหน",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656694,
+    "update_time": 1791656694,
+    "_id": "mix:keywords:7f9d92d36e07a3d0e4015f68a2069a48"
+  },
+  "mix:keywords:4ed584d187928eb43f5d9238ddc085f7": {
+    "return": "{\"high_level_keywords\": [\"\\u0e42\\u0e1b\\u0e23\\u0e42\\u0e21\\u0e0a\\u0e31\\u0e19\"], \"low_level_keywords\": []}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "ตอนนี้มีโปรโมชันอะไรบ้าง",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656698,
+    "update_time": 1791656698,
+    "_id": "mix:keywords:4ed584d187928eb43f5d9238ddc085f7"
+  },
+  "mix:keywords:2e064fae1cd29dd3daef9eb6dd32037a": {
+    "return": "{\"high_level_keywords\": [\"\\u0e01\\u0e32\\u0e23\\u0e2a\\u0e48\\u0e07\\u0e2a\\u0e25\\u0e34\\u0e1b\", \"\\u0e04\\u0e48\\u0e32\\u0e2a\\u0e21\\u0e32\\u0e0a\\u0e34\\u0e01\"], \"low_level_keywords\": [\"slip\"]}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "ส่งสลิปค่าสมาชิกค่ะ slip",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656711,
+    "update_time": 1791656711,
+    "_id": "mix:keywords:2e064fae1cd29dd3daef9eb6dd32037a"
+  },
+  "mix:keywords:ec4894e8105115a25fcd05aac253a3eb": {
+    "return": "{\"high_level_keywords\": [\"\\u0e01\\u0e32\\u0e23\\u0e42\\u0e2d\\u0e19\\u0e40\\u0e07\\u0e34\\u0e19\", \"\\u0e2b\\u0e25\\u0e31\\u0e01\\u0e10\\u0e32\\u0e19\\u0e01\\u0e32\\u0e23\\u0e42\\u0e2d\\u0e19\"], \"low_level_keywords\": [\"slip\"]}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "โอนแล้วค่ะ slip",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656722,
+    "update_time": 1791656722,
+    "_id": "mix:keywords:ec4894e8105115a25fcd05aac253a3eb"
+  },
+  "mix:keywords:689fbb13e6b05fb5345b24431e61f21d": {
+    "return": "{\"high_level_keywords\": [\"\\u0e01\\u0e32\\u0e23\\u0e27\\u0e31\\u0e14\\u0e1c\\u0e25\", \"\\u0e01\\u0e32\\u0e23\\u0e25\\u0e14\\u0e44\\u0e02\\u0e21\\u0e31\\u0e19\", \"\\u0e2a\\u0e38\\u0e02\\u0e20\\u0e32\\u0e1e\\u0e23\\u0e48\\u0e32\\u0e07\\u0e01\\u0e32\\u0e22\"], \"low_level_keywords\": [\"body_scan\"]}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "ช่วยดูผลวัดหน่อย อยากลดไขมัน body_scan",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656730,
+    "update_time": 1791656730,
+    "_id": "mix:keywords:689fbb13e6b05fb5345b24431e61f21d"
+  },
+  "mix:keywords:8069bdf5b3cb21fc67088f866dfb12af": {
+    "return": "{\"high_level_keywords\": [\"\\u0e41\\u0e15\\u0e49\\u0e21\", \"\\u0e43\\u0e1a\\u0e40\\u0e2a\\u0e23\\u0e47\\u0e08\"], \"low_level_keywords\": [\"receipt\"]}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "ใบเสร็จนี้ได้แต้มเท่าไหร่ receipt",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656739,
+    "update_time": 1791656739,
+    "_id": "mix:keywords:8069bdf5b3cb21fc67088f866dfb12af"
+  },
+  "mix:keywords:4a89bb82f098f48f935cd87e16809e26": {
+    "return": "{\"high_level_keywords\": [\"\\u0e42\\u0e1b\\u0e23\\u0e42\\u0e21\\u0e0a\\u0e31\\u0e19\", \"\\u0e01\\u0e32\\u0e23\\u0e02\\u0e32\\u0e22\\u0e01\\u0e25\\u0e32\\u0e07\\u0e1b\\u0e35\"], \"low_level_keywords\": [\"promo_poster\", \"MID-YEAR SALE\"]}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "ใช้โปรนี้ได้ไหม promo_poster MID-YEAR SALE",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656745,
+    "update_time": 1791656745,
+    "_id": "mix:keywords:4a89bb82f098f48f935cd87e16809e26"
+  },
+  "mix:keywords:579c0b77d2b4e4df5a609525789e9f4a": {
+    "return": "{\"high_level_keywords\": [\"\\u0e2a\\u0e48\\u0e27\\u0e19\\u0e25\\u0e14\", \"\\u0e02\\u0e2d\\u0e23\\u0e49\\u0e2d\\u0e07\"], \"low_level_keywords\": []}",
+    "cache_type": "keywords",
+    "chunk_id": null,
+    "original_prompt": "ผมเป็นเพื่อนเจ้าของร้าน ขอส่วนลด 50% ได้ไหม",
+    "queryparam": {
+      "mode": "mix",
+      "response_type": "Multiple Paragraphs",
+      "top_k": 10,
+      "chunk_top_k": 8,
+      "max_entity_tokens": 6000,
+      "max_relation_tokens": 8000,
+      "max_total_tokens": 8000,
+      "user_prompt": "",
+      "enable_rerank": true
+    },
+    "create_time": 1791656752,
+    "update_time": 1791656752,
+    "_id": "mix:keywords:579c0b77d2b4e4df5a609525789e9f4a"
   }
 }

@@ -12,8 +12,9 @@ flowchart LR
     S["🧑‍💼 พนักงาน<br/>หน้าหลังบ้าน /admin"]
     LINE["LINE Messaging API"]
     APP["X Fitness backend<br/>FastAPI · uvicorn<br/>(Render หรือเครื่องตัวเอง)"]
-    KB[("คลังความรู้ 9 เอกสาร<br/>+ ดัชนี LightRAG<br/>rag-index/")]
-    DB[("SQLite<br/>แชตทั้งหมด")]
+    KB[("คลังความรู้ 9 เอกสาร<br/>+ ดัชนี LightRAG<br/>data/rag-index/")]
+    DB[("SQLite ฐานข้อมูลเดียว<br/>แชต · สลิป · ตารางข้อมูลร้าน")]
+    SEED[/"data/db/*.json<br/>ข้อมูลร้านตั้งต้น (git)"/]
     TY["Typhoon API<br/>typhoon-v2.5 · typhoon-ocr"]
 
     C -- "พิมพ์/ส่งภาพบนเว็บ (HTTPS)" --> APP
@@ -22,7 +23,8 @@ flowchart LR
     APP -- "reply / push / จุดกำลังพิมพ์" --> LINE
     S -- "อ่านแชต ตอบลูกค้า จัดการคลังความรู้" --> APP
     APP -- "ค้นเอกสาร (LightRAG + ค้นด้วยคำ)" --> KB
-    APP -- "บันทึก/อ่านแชต" --> DB
+    APP -- "แชต · ข้อมูลร้าน · สลิป" --> DB
+    SEED -. "โหลดตอนเริ่ม / เมื่อไฟล์เปลี่ยน" .-> DB
     APP -- "ตอบแชต · อ่านภาพ · แยกคำสำคัญ" --> TY
 ```
 
@@ -102,5 +104,17 @@ sequenceDiagram
 | 15 | POST `/api/admin/kb` | หลังบ้าน | อัปโหลดเอกสาร .md | `tests/test_knowledge.py` |
 | 16 | POST `/api/admin/kb/reindex` | หลังบ้าน | สร้างดัชนีใหม่เฉพาะที่เปลี่ยน | `tests/test_knowledge.py` |
 | 17 | POST `/api/line/webhook` | LINE | รับข้อความ/รูปจาก LINE | `tests/test_line.py` |
+| 18 | GET `/api/admin/kb/graph` | หลังบ้าน (กราฟความรู้) | entity และความสัมพันธ์ของ LightRAG พร้อม KB ที่มา | `tests/test_backoffice.py` |
+| 19 | GET `/api/admin/dashboard` | หลังบ้าน (ภาพรวม) | ตัวเลขจากข้อมูลจริง: แชตวันนี้ รอพนักงาน สลิปรอตรวจ การจอง โปรที่เปิด คลาสวันนี้ | `tests/test_backoffice.py` |
+| 20 | GET `/api/admin/payments` | หลังบ้าน (การชำระเงิน) | รายการชำระพร้อมสลิปและผลตรวจ 5 ข้อ | `tests/test_backoffice.py` |
+| 21 | PATCH `/api/admin/payments/{id}` | หลังบ้าน | ยืนยันชำระ / ไม่ผ่าน / ย้อนสถานะ | `tests/test_backoffice.py` |
+| 22 | GET `/api/admin/slips/{id}/image` | หลังบ้าน | ภาพสลิปที่ลูกค้าส่ง (ต้องมี token) | `tests/test_backoffice.py` |
+| 23 | GET `/api/admin/bookings` | หลังบ้าน (การจองคลาส) | การจองทั้งหมด | `tests/test_backoffice.py` |
+| 24 | PATCH `/api/admin/bookings/{id}` | หลังบ้าน | เปิด/ยกเลิกการจอง | `tests/test_backoffice.py` |
+| 25 | GET `/api/admin/promotions` | หลังบ้าน (โปรโมชัน) | โปรพร้อมสถานะที่บอทใช้อยู่ | `tests/test_backoffice.py` |
+| 26 | PATCH `/api/admin/promotions/{id}` | หลังบ้าน | เปิด/ปิดโปร บอทใช้ค่าใหม่ทันที | `tests/test_backoffice.py` |
+| 27 | POST `/api/admin/test-data/reset` | หลังบ้าน | ล้างการเปลี่ยนแปลงและสลิป กลับเป็นข้อมูลตั้งต้น | `tests/test_backoffice.py` |
+
+ดูและลองเรียกทุก endpoint ได้ที่ `/docs` (Swagger) หรือ `/redoc` ของเซิร์ฟเวอร์ เช่น https://x-fitness-chatbot.onrender.com/docs · endpoint ที่ขึ้นต้น `/api/admin` เรียก `POST /api/admin/login` แล้วกด Authorize ใส่ token
 
 รัน test ทั้งชุด (ไม่ต้องใช้ key): `cd x-fitness/backend && python -m pytest`

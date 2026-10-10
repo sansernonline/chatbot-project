@@ -26,7 +26,7 @@ def client(tmp_path, monkeypatch):
 def sent(monkeypatch):
     calls = []
     monkeypatch.setattr(line, "send", lambda path, payload: calls.append((path, payload)))
-    monkeypatch.setattr(llm, "chat", lambda messages, **kw: '{"type": "slip", "amount": 990}' if kw.get("json_mode") else "คำตอบทดสอบค่ะ")
+    monkeypatch.setattr(llm, "chat", lambda messages, **kw: '{"type": "slip", "amount": 990}' if kw.get("json_mode") else "คำตอบทดสอบครับ")
     return calls
 
 
@@ -56,7 +56,7 @@ def test_not_configured_is_503(client, monkeypatch):
 
 def test_question_answered_and_logged(client, sent):
     post(client, text("วันเสาร์เปิดกี่โมง"))
-    assert replies(sent) == ["คำตอบทดสอบค่ะ"] and ("chat/loading/start", {"chatId": USER, "loadingSeconds": 20}) in sent
+    assert replies(sent) == ["คำตอบทดสอบครับ"] and ("chat/loading/start", {"chatId": USER, "loadingSeconds": 20}) in sent
     conv = db.get(line.ticket(USER))
     assert re.fullmatch(r"([A-Z][0-9]){5}", conv["id"]) and conv["name"] == "ลูกค้า LINE"
     assert [m["from"] for m in conv["msgs"]] == ["user", "bot"]
@@ -88,16 +88,16 @@ def test_handoff_then_staff_reply_pushed(client, sent):
     assert db.get(cid)["status"] == "waiting" and len(replies(sent)) == 1
 
     token = client.post("/api/admin/login", json={"user": "admin", "password": "1234"}).json()["token"]
-    client.post(f"/api/admin/conversations/{cid}/messages", json={"from": "agent", "text": "สวัสดีค่ะ พนักงานรับเรื่องแล้ว"},
+    client.post(f"/api/admin/conversations/{cid}/messages", json={"from": "agent", "text": "สวัสดีครับ พนักงานรับเรื่องแล้ว"},
                 headers={"Authorization": f"Bearer {token}"})
-    assert ("message/push", {"to": USER, "messages": [{"type": "text", "text": "สวัสดีค่ะ พนักงานรับเรื่องแล้ว"}]}) in sent
+    assert ("message/push", {"to": USER, "messages": [{"type": "text", "text": "สวัสดีครับ พนักงานรับเรื่องแล้ว"}]}) in sent
 
 
 def test_image_read_and_answered(client, sent, monkeypatch):
     monkeypatch.setattr(line, "download", lambda mid: (b"PNG", "image/png"))
     monkeypatch.setattr(llm, "vision", lambda *a: "โอนเงินสำเร็จ 990.00 บาท")
     post(client, {**text(""), "message": {"type": "image", "id": "2"}})
-    assert replies(sent) == ["คำตอบทดสอบค่ะ"] and db.get(line.ticket(USER))["msgs"][0]["text"] == "[ส่งรูปภาพ]"
+    assert replies(sent) == ["คำตอบทดสอบครับ"] and db.get(line.ticket(USER))["msgs"][0]["text"] == "[ส่งรูปภาพ]"
 
 
 def test_typhoon_down_gets_polite_error(client, sent, monkeypatch):

@@ -30,7 +30,7 @@ def test_customer_handoff_then_admin_reply(client):
     h = admin_headers(client)
     assert [c["id"] for c in client.get("/api/admin/conversations", headers=h).json()] == ["K3M8P2Q7R5"]
     client.patch("/api/admin/conversations/K3M8P2Q7R5", json={"status": "agent", "agent": "แอดมิน"}, headers=h)
-    client.post("/api/admin/conversations/K3M8P2Q7R5/messages", json={"from": "agent", "text": "รับเรื่องแล้วค่ะ", "by": "แอดมิน"}, headers=h)
+    client.post("/api/admin/conversations/K3M8P2Q7R5/messages", json={"from": "agent", "text": "รับเรื่องแล้วครับ", "by": "แอดมิน"}, headers=h)
 
     mine = client.get("/api/conversations/K3M8P2Q7R5").json()
     assert mine["status"] == "agent"

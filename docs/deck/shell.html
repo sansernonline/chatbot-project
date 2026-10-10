@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X Fitness Chatbot — นำเสนอ 10 นาที</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{--bg:#09090a;--panel:#16161a;--line:#2a2a30;--text:#f5f5f4;--soft:#d4d4d8;--muted:#a3a3a8;--dim:#8a8a92;--red:#e10613;--red2:#ff2536;--ok:#22c55e;--warn:#f59e0b;--blue:#60a5fa;
+  --head:'Chakra Petch',Tahoma,sans-serif;--body:'IBM Plex Sans Thai',Tahoma,sans-serif;--mono:'JetBrains Mono',Consolas,monospace}
+*{margin:0;box-sizing:border-box}
+html,body{height:100%;background:#000;overflow:hidden;font-family:var(--body);color:var(--text)}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:0 0}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s;background:var(--bg);padding:112px 128px 150px;display:flex;flex-direction:column;gap:36px}
+.slide.on{opacity:1;visibility:visible}
+.slide aside{display:none}
+.kicker{font-family:var(--head);font-size:24px;font-weight:700;color:var(--red2)}
+h1{font-family:var(--head);font-size:132px;font-weight:700;line-height:1.05}
+h2{font-family:var(--head);font-size:56px;font-weight:700;line-height:1.2}
+h3{font-size:32px;font-weight:700;line-height:1.4}
+p,li{line-height:1.5}
+.foot{position:absolute;left:128px;bottom:56px;font-size:22px;color:var(--dim)}
+.pg{position:absolute;right:128px;bottom:56px;font-size:22px;color:var(--muted)}
+.row{display:flex;gap:32px}.col{display:flex;flex-direction:column;gap:16px}.grow{flex:1;min-height:0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px}
+.mono{font-family:var(--mono)}
+.tag{display:inline-block;font:600 18px var(--mono);padding:4px 10px;border-radius:8px;background:#26262b;color:var(--soft)}
+.tag.red{background:#3a0c10;color:#ff6b75}.tag.ok{background:#0f2e1b;color:#4ade80}.tag.blue{background:#0f2340;color:#93c5fd}
+.big{font-family:var(--head);font-size:96px;font-weight:700;line-height:1;color:var(--red2)}
+/* clickable things */
+[data-pick]{cursor:pointer;transition:border-color .15s,background .15s,transform .15s}
+[data-pick]:hover{border-color:#55555d}
+[data-pick].sel{border-color:var(--red2);background:#1d0d10}
+/* detail panel */
+.detail{background:#0f0f12;border:1px solid var(--line);border-radius:16px;padding:28px 32px;display:flex;flex-direction:column;gap:14px;overflow:auto}
+.detail .path{font:600 24px var(--mono);color:var(--red2);word-break:break-all}
+.detail p{font-size:26px;color:var(--soft)}
+.detail pre{font:19px/1.5 var(--mono);color:#cbd5e1;background:#000;border:1px solid #222;border-radius:10px;padding:16px 18px;white-space:pre-wrap;word-break:break-word;max-height:330px;overflow:auto}
+.detail .meta{display:flex;gap:10px;flex-wrap:wrap}
+/* architecture diagram */
+.arch{position:relative;flex:1}
+.node{position:absolute;background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:4px}
+.node b{font-size:26px}.node span{font:18px var(--mono);color:var(--muted)}
+.node.ext{border-style:dashed}
+.arch svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.arch svg path{stroke:#4a4a52;stroke-width:3;fill:none;marker-end:url(#ah)}
+.arch svg path.hot{stroke:var(--red2);stroke-width:4}
+/* tree */
+.tree{font:22px/1.65 var(--mono);color:var(--soft)}
+.tree div{padding:1px 10px;border-radius:8px;border:1px solid transparent;white-space:pre}
+.tree .d{color:var(--blue)}.tree .n{color:var(--dim)}
+/* demo */
+.demo{display:grid;grid-template-columns:560px 1fr;gap:32px;flex:1;min-height:0;margin-bottom:-40px}
+.cases{display:flex;flex-direction:column;gap:10px;overflow:auto;padding-right:6px}
+.case{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:9px 16px;display:flex;gap:14px;align-items:center}
+.case .id{font:600 20px var(--mono);color:var(--red2);width:64px;flex:none}
+.case .q{font-size:21px;line-height:1.4;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.case .live{font-size:15px;color:#fbbf24;border:1px solid #6b4e0a;border-radius:6px;padding:2px 6px;flex:none}
+.stagebox{display:grid;grid-template-columns:400px 1fr;gap:28px;min-height:0;height:100%}
+.phone{width:400px;height:100%;border:10px solid #26262b;border-radius:44px;background:#0d0d10;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.phone .bar{background:#141418;padding:16px 18px;font-size:18px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #222}
+.phone .bar i{width:10px;height:10px;border-radius:50%;background:var(--ok);display:inline-block}
+.chatlog{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.b{max-width:85%;padding:12px 15px;border-radius:16px;font-size:19px;line-height:1.5;white-space:pre-wrap}
+.b.u{align-self:flex-end;background:var(--red);color:#fff;border-bottom-right-radius:4px}
+.b.a{align-self:flex-start;background:#1f1f24;color:var(--text);border-bottom-left-radius:4px}
+.b img{max-width:100%;border-radius:10px;display:block}
+.typing{align-self:flex-start;background:#1f1f24;border-radius:16px;padding:12px 16px;display:flex;gap:6px}
+.typing span{width:9px;height:9px;border-radius:50%;background:#777;animation:bl 1s infinite}.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bl{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.info{display:flex;flex-direction:column;gap:16px;min-height:0;overflow:auto}
+.info .lab{font:600 18px var(--mono);color:var(--dim);letter-spacing:.06em}
+.info .val{font-size:26px;color:var(--soft);line-height:1.5}
+.copy{font:600 18px var(--body);background:#26262b;color:var(--text);border:1px solid #3a3a40;border-radius:8px;padding:6px 12px;cursor:pointer}
+.copy:hover{background:#33333a}
+.btn{font:600 22px var(--body);background:var(--red);color:#fff;border:0;border-radius:10px;padding:12px 22px;cursor:pointer}
+.btn.ghost{background:#26262b;border:1px solid #3a3a40}
+.shot{max-width:100%;max-height:420px;border-radius:10px;border:1px solid #333;cursor:zoom-in;align-self:flex-start}
+#zoom{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:20;cursor:zoom-out}
+#zoom.on{display:flex}#zoom img{max-width:94vw;max-height:94vh}
+/* tables, lists, graph */
+.tbl{width:100%;border-collapse:collapse;font-size:24px}
+.tbl th{font:600 18px var(--mono);color:var(--dim);text-align:left;padding:8px 12px;border-bottom:1px solid var(--line)}
+.tbl td{padding:9px 12px;border-bottom:1px solid #1f1f24;color:var(--soft);vertical-align:top}
+.tbl td.m{font:20px var(--mono);color:var(--text)}
+.pills{display:flex;flex-wrap:wrap;gap:10px}
+.pill{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;font-size:22px}
+.pill b{font-family:var(--mono);color:var(--red2);margin-right:8px}
+.list{display:flex;flex-direction:column;gap:8px;overflow:auto}
+.list>div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;font-size:22px;display:flex;gap:12px;align-items:baseline}
+.list>div b{font:600 19px var(--mono);color:var(--red2);flex:none}
+.graph text{font:19px var(--body);fill:#e5e5e5}
+#indexfiles .tbl td{padding:5px 12px;font-size:20px}
+#indexfiles .tbl td.m{font-size:18px}
+.graph circle{fill:#16161a;stroke:#55555d;stroke-width:2;cursor:pointer}
+.graph g.sel circle{stroke:var(--red2);fill:#2a0a0d}
+.graph line{stroke:#3a3a40;stroke-width:2}
+.divider{justify-content:center;background:radial-gradient(ellipse at 20% 50%,#2a0a0d,#09090a 60%)}
+.divider .num{font-family:var(--head);font-size:200px;font-weight:700;color:#2a2a30;line-height:1}
+/* chrome */
+#bar{position:fixed;left:0;right:0;bottom:0;height:20px;display:flex;gap:1px;z-index:6}
+#bar i{flex:1;height:100%;position:relative;cursor:pointer}
+#bar i::after{content:'';position:absolute;left:0;right:0;bottom:0;height:5px;background:#2a2a30;transition:background .3s,height .15s}
+#bar i.done::after,#bar i.now::after{background:var(--red2)}
+#bar i:hover::after{height:10px;background:#fff}
+#bartip{position:fixed;bottom:26px;z-index:7;background:#16161a;color:#fff;border:1px solid #3a3a40;border-radius:8px;padding:6px 12px;font:15px var(--body);white-space:nowrap;pointer-events:none;display:none;transform:translateX(-50%)}
+#bartip b{font:600 13px var(--mono);color:var(--red2);margin-right:8px}#bartip span{color:var(--dim);margin-left:8px;font-size:13px}
+#ui{position:fixed;right:16px;bottom:14px;display:flex;gap:8px;align-items:center;z-index:5;font:14px Tahoma,sans-serif;color:var(--muted);opacity:.35;transition:opacity .2s}
+#ui:hover{opacity:1}
+#ui button{background:#16161a;color:var(--text);border:1px solid #3a3a40;border-radius:8px;padding:6px 12px;font:14px Tahoma,sans-serif;cursor:pointer}
+#clock{font:600 14px var(--mono);color:var(--muted);min-width:110px;text-align:right}
+#clock.over{color:var(--red2)}
+#notes{position:fixed;left:16px;right:16px;bottom:24px;max-height:32vh;overflow:auto;background:rgba(18,18,20,.96);color:#e5e5e5;border:1px solid #3a3a40;border-radius:12px;padding:16px 20px;font:18px/1.6 var(--body);display:none;z-index:6}
+#notes.on{display:block}
+#notes .nclose{position:sticky;top:0;float:right;margin:-6px -8px 4px 12px;font:700 18px var(--body);background:#26262b;color:#fff;border:1px solid #3a3a40;border-radius:8px;width:36px;height:36px;cursor:pointer}
+#notes .nclose:hover{background:var(--red)}
+#menu{position:fixed;inset:0;background:rgba(6,6,8,.96);z-index:15;display:none;overflow:auto;padding:32px 4vw 40px}
+#menu.on{display:block}
+#menu .mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+#menu .mhead b{font:700 30px var(--head);color:#fff}#menu .mhead span{font-size:15px;color:var(--dim);margin-left:14px;font-weight:400}
+#menu .mclose{font:600 17px var(--body);background:#26262b;color:#fff;border:1px solid #3a3a40;border-radius:10px;padding:9px 18px;cursor:pointer}#menu .mclose:hover{background:var(--red);border-color:var(--red)}
+#menuList{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;grid-auto-rows:1fr;align-items:stretch}
+#menu .part{background:#121215;border:1px solid #26262b;border-radius:14px;padding:16px 18px}
+#menu .part h5{font:700 21px var(--head);color:var(--red2);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #2a2a30}
+#menu .part.cur h5{color:#fff}
+#menu ul{list-style:none;padding:0;margin:0}
+#menu li{list-style:none;display:flex;gap:10px;align-items:baseline;padding:4px 8px;margin:1px -9px;border:1px solid transparent;border-radius:8px;cursor:pointer;font-size:16px;color:var(--soft)}
+#menu li i{font:700 15px var(--mono);color:var(--red2);font-style:normal;width:22px;flex:none}
+#menu li:hover{background:#1f1f24;color:#fff}
+#menu li.tryit{color:#4ade80}
+#menu li.cur{background:#2a0a0d;color:#fff;font-weight:700;border-color:var(--red2);animation:glowS 1.4s ease-in-out infinite}
+@keyframes glowS{0%,100%{box-shadow:0 0 0 0 rgba(255,37,54,0)}50%{box-shadow:0 0 0 3px rgba(255,37,54,.3)}}
+/* red edge strips: click to go back / forward */
+.edge{position:fixed;top:0;bottom:0;width:64px;z-index:4;cursor:pointer;display:flex;align-items:center;justify-content:center;font:400 64px var(--head);color:transparent;transition:color .2s,transform .2s;user-select:none}
+.edge.l{left:0}.edge.r{right:0}
+.edge:hover{color:#fff}.edge.l:hover{transform:translateX(-3px)}.edge.r:hover{transform:translateX(3px)}
+.edge.off{display:none}
+.toc{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:16px 40px}
+.toc a{display:flex;gap:20px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 24px;color:var(--text);text-decoration:none;cursor:pointer}
+.toc a:hover{border-color:var(--red2)}
+.toc .n{font:800 44px var(--head);color:var(--red2);width:50px;flex:none}
+.toc b{font-size:30px}.toc span{font-size:22px;color:var(--muted);display:block}
+.toc .p{margin-left:auto;font:18px var(--mono);color:var(--dim)}
+#notes b{color:var(--red2)}
+/*PLAYCSS*/
+</style></head><body>
+<div id="stage">
+<!--SLIDES-->
+</div>
+<div id="menu"><div class="mhead"><b>สารบัญ<span>คลิกหน้าที่ต้องการ · กด M หรือ Esc เพื่อปิด</span></b><button class="mclose" type="button">✕ ปิด</button></div><div id="menuList"></div></div><div class="edge l" title="ก่อนหน้า (←)">‹</div><div class="edge r" title="ถัดไป (→)">›</div><div id="bar"></div><div id="bartip"></div><div id="notes"><button class="nclose" type="button" title="ปิดบันทึก (N)">✕</button><div id="notesBody"></div></div><div id="zoom"><img alt=""></div>
+<div id="ui"><span id="clock" title="เวลาที่ใช้ / เวลาที่ควรถึงหน้านี้ (กด T เริ่ม/หยุด)">0:00</span><button id="prev" title="ก่อนหน้า (←)">‹</button><span id="count"></span><button id="next" title="ถัดไป (→)">›</button><button id="mb" title="สารบัญทุกหน้า (M)">สารบัญ</button><button id="nb" title="บันทึกผู้พูด (N)">โน้ต</button><button id="fs" title="เต็มจอ (F)">เต็มจอ</button></div>
+<script>
+const DATA=/*DATA*/null;
+const S=[...document.querySelectorAll('.slide')],stage=document.getElementById('stage'),notes=document.getElementById('notes');
+let i=Math.min(Math.max(parseInt(location.hash.slice(1))||1,1),S.length)-1;
+document.getElementById('bar').innerHTML=S.map((s,j)=>`<i data-n="${j}"></i>`).join('');
+S.forEach((s,j)=>{const p=s.querySelector('.pg');if(p)p.textContent=String(j+1).padStart(2,'0')});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function fit(){const k=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`scale(${k}) translate(-50%,-50%)`;}
+function show(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach((s,j)=>s.classList.toggle('on',j===i));
+  document.getElementById('count').textContent=`${i+1} / ${S.length}`;document.querySelectorAll('#bar i').forEach((b,j)=>b.className=j<i?'done':j===i?'now':'');
+  const a=S[i].querySelector('aside');document.getElementById('notesBody').innerHTML=a?a.innerHTML:'(ไม่มีบันทึก)';history.replaceState(null,'','#'+(i+1));tick();document.querySelector('.edge.l').classList.toggle('off',i===0);document.querySelector('.edge.r').classList.toggle('off',i===S.length-1);if(typeof onSlide==='function')onSlide(S[i]);}
+/* presenter clock: data-at="m:ss" on each slide = time you should reach it */
+let t0=null,acc=0;
+function secs(){return acc+(t0?(Date.now()-t0)/1000:0)}
+function fmt(s){s=Math.floor(s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+function tick(){const c=document.getElementById('clock'),at=S[i].dataset.at||'';c.textContent=fmt(secs())+(at?' / '+at:'');
+  const [m,s]=(at||'99:0').split(':').map(Number);c.classList.toggle('over',secs()>m*60+s+30);}
+setInterval(tick,1000);
+function timer(){if(t0){acc=secs();t0=null}else t0=Date.now();tick()}
+function key(k){if(document.activeElement&&/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  if(['ArrowRight','PageDown',' '].includes(k))show(i+1);else if(['ArrowLeft','PageUp','Backspace'].includes(k))show(i-1);
+  else if(k==='Home')show(0);else if(k==='End')show(S.length-1);else if(k==='f'||k==='F')fs();else if(k==='n'||k==='N')notes.classList.toggle('on');
+  else if(k==='t'||k==='T')timer();else if(k==='m'||k==='M')menu();else if(k==='Escape'){document.getElementById('zoom').classList.remove('on');menu(false);}}
+function fs(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+addEventListener('keydown',e=>{if(e.key===' '&&e.target.tagName==='BUTTON')e.preventDefault();key(e.key)});addEventListener('resize',fit);addEventListener('hashchange',()=>{const n=parseInt(location.hash.slice(1));if(n)show(n-1);});
+/* click empty slide area = next/prev; interactive things stop it */
+/* pages change only with the side arrows, the bottom buttons, the keyboard or a swipe */
+let x0=null;addEventListener('touchstart',e=>x0=e.touches[0].clientX);addEventListener('touchend',e=>{if(x0===null)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>80)show(d<0?i+1:i-1);x0=null;});
+document.getElementById('prev').onclick=()=>show(i-1);document.getElementById('next').onclick=()=>show(i+1);
+document.getElementById('nb').onclick=()=>notes.classList.toggle('on');notes.querySelector('.nclose').onclick=()=>notes.classList.remove('on');document.getElementById('fs').onclick=fs;
+/* page menu (M) and links that jump to a slide id: data-goto="arch" */
+const idx=id=>S.findIndex(s=>s.id===id);
+/* menu = big section headings (data-part) with their pages (data-menu) under each */
+document.getElementById('menuList').innerHTML=S.reduce((h,s,j)=>{const name=s.dataset.menu||(s.querySelector('h2,h1')||{}).textContent||'';
+  return h+(s.dataset.part?(j?'</ul></div>':'')+`<div class="part"><h5>${esc(s.dataset.part)}</h5><ul>`:'')
+    +`<li data-n="${j}" class="${name.startsWith('▶')?'tryit':''}"><i>${String(j+1).padStart(2,'0')}</i>${esc(name)}</li>`},'')+'</ul></div>';
+const menuEl=document.getElementById('menu');
+function menu(open){menuEl.classList.toggle('on',open===undefined?!menuEl.classList.contains('on'):open);
+  menuEl.querySelectorAll('li').forEach(l=>l.classList.toggle('cur',+l.dataset.n===i));
+  menuEl.querySelectorAll('.part').forEach(p=>p.classList.toggle('cur',!!p.querySelector('li.cur')));}
+document.getElementById('menuList').addEventListener('click',e=>{const l=e.target.closest('li');if(l){show(+l.dataset.n);menu(false);}});
+menuEl.querySelector('.mclose').onclick=()=>menu(false);
+menuEl.addEventListener('click',e=>{if(e.target===menuEl)menu(false);});
+document.querySelector('.edge.l').onclick=()=>show(i-1);document.querySelector('.edge.r').onclick=()=>show(i+1);
+document.getElementById('mb').onclick=menu;
+document.addEventListener('click',e=>{const a=e.target.closest('[data-goto]');if(a){e.preventDefault();show(idx(a.dataset.goto));}});
+S.forEach(s=>s.querySelectorAll('[data-goto]').forEach(a=>{const p=a.querySelector('.p');if(p)p.textContent='หน้า '+(idx(a.dataset.goto)+1);}));
+/* progress bar: one piece per page · hover shows the page name · click jumps there */
+{const bar=document.getElementById('bar'),tip=document.getElementById('bartip');let part='';
+ const partOf=j=>{for(let k=j;k>=0;k--)if(S[k].dataset.part)return S[k].dataset.part;return ''};
+ bar.addEventListener('mousemove',e=>{const b=e.target.closest('i');if(!b){tip.style.display='none';return}const j=+b.dataset.n,s=S[j];
+   tip.innerHTML=`<b>${String(j+1).padStart(2,'0')}</b>${esc(s.dataset.menu||'')}<span>${esc(partOf(j))}</span>`;tip.style.display='block';
+   const r=b.getBoundingClientRect(),w=tip.offsetWidth/2;tip.style.left=Math.max(w+8,Math.min(innerWidth-w-8,r.left+r.width/2))+'px';});
+ bar.addEventListener('mouseleave',()=>tip.style.display='none');
+ bar.addEventListener('click',e=>{const b=e.target.closest('i');if(b)show(+b.dataset.n);});}
+const zoom=document.getElementById('zoom');zoom.onclick=()=>zoom.classList.remove('on');
+document.addEventListener('click',e=>{const im=e.target.closest('img.shot');if(im){zoom.querySelector('img').src=im.src;zoom.classList.add('on');}});
+
+/* ---------- pickers: click an item, fill its detail panel ---------- */
+function picker(group,render){const items=[...document.querySelectorAll(`[data-pick="${group}"]`)],box=document.getElementById('d-'+group);
+  const go=el=>{items.forEach(x=>x.classList.toggle('sel',x===el));box.innerHTML=render(el.dataset.key);
+    document.querySelectorAll(`[data-hot="${group}"]`).forEach(p=>{if(p.classList.toggle('hot',(p.dataset.on||'').split(' ').includes(el.dataset.key)))p.parentNode.appendChild(p);});};
+  items.forEach(el=>el.addEventListener('click',()=>go(el)));if(items[0])go(items[0]);}
+function fileCard(f){return `<div class="path">${esc(f.path)}</div><div class="meta">${(f.tags||[]).map(t=>`<span class="tag ${t[1]||''}">${esc(t[0])}</span>`).join('')}</div>
+  <p>${f.what}</p>${f.code?`<pre>${esc(f.code)}</pre>`:''}`;}
+if(DATA){
+  Object.keys(DATA.cards).forEach(g=>picker(g,k=>fileCard(DATA.cards[g][k])));
+  ['q','img','safe'].forEach(setupDemo);
+  const all=[...DATA.demo.q,...DATA.demo.img,...DATA.demo.safe],mx=Math.max(...all.map(c=>+c.sec)),col={Q:'#60a5fa',I:'#ff2536',S:'#22c55e'};
+  document.getElementById('bars').innerHTML='<p style="font-size:20px;color:var(--muted)">เวลาตอบรายข้อ (วินาที) · <span style="color:#60a5fa">คำถาม</span> · <span style="color:#ff2536">ภาพ</span> · <span style="color:#22c55e">ความปลอดภัย</span></p><div style="display:flex;gap:8px;align-items:flex-end;height:250px">'+
+    all.map(c=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;justify-content:flex-end;height:100%"><span class="mono" style="font-size:16px;color:var(--soft)">${c.sec}</span><div class="growbar" data-h="${+c.sec/mx*190}" style="width:100%;height:0;background:${col[c.id[0]]};border-radius:6px 6px 0 0"></div><span class="mono" style="font-size:15px;color:var(--dim)">${c.id}</span></div>`).join('')+'</div>';
+}
+
+/* ---------- demo sets: list of cases + replay in a phone ---------- */
+function setupDemo(set){const list=document.getElementById('list-'+set);if(!list)return;const cases=DATA.demo[set];
+  list.innerHTML=cases.map((c,n)=>`<div class="case" data-pick="c-${set}" data-n="${n}"><span class="id">${esc(c.id)}</span><span class="q">${esc(c.q)}</span>${c.live?'<span class="live">โชว์สด</span>':''}</div>`).join('');
+  const rows=[...list.children],log=document.getElementById('log-'+set),info=document.getElementById('info-'+set);let run=0;
+  async function play(n){const c=cases[n],me=++run;rows.forEach((r,j)=>r.classList.toggle('sel',j===n));
+    info.innerHTML=`<div><div class="lab">ข้อความที่พิมพ์ในแชตบอทจริง</div><div class="val" style="display:flex;gap:12px;align-items:flex-start"><span style="flex:1">${esc(c.q)}</span><button class="copy" data-copy="${esc(c.q)}">คัดลอก</button></div></div>
+      ${c.hint?`<div><div class="lab">ก่อนส่ง</div><div class="val" style="display:flex;gap:12px"><span style="flex:1">${esc(c.hint)}</span><button class="copy" data-copy="${esc(c.hint.split(': ')[1].split(' (')[0])}">คัดลอก</button></div></div>`:''}
+      ${c.img?`<div><div class="lab">ภาพที่แนบ</div><div class="val mono" style="font-size:20px">${esc(c.imgPath)}</div></div>`:''}
+      <div><div class="lab">บอทต้องทำ</div><div class="val">${esc(c.expect)}</div></div>
+      <div class="row" style="gap:12px;flex-wrap:wrap"><span class="tag ok">ผ่าน</span><span class="tag">ตอบใน ${esc(c.sec)} วินาที</span>${(c.badges||[]).map(b=>`<span class="tag red">${esc(b)}</span>`).join('')}</div>
+      ${c.shot?`<div><div class="lab">ภาพหน้าจอจากการทดสอบ (คลิกขยาย)</div><img class="shot" src="${c.shot}" alt="ภาพหน้าจอ ${esc(c.id)}"></div>`:''}`;
+    log.innerHTML='';const add=(cls,html)=>{const d=document.createElement('div');d.className=cls;d.innerHTML=html;log.appendChild(d);log.scrollTop=log.scrollHeight;return d};
+    if(c.img)add('b u',`<img src="${c.img}" alt="">`);add('b u',esc(c.q));
+    const ty=add('typing','<span></span><span></span><span></span>');await new Promise(r=>setTimeout(r,900));if(me!==run)return;ty.remove();
+    const b=add('b a','');const txt=c.a;for(let k=0;k<=txt.length;k+=3){if(me!==run)return;b.textContent=txt.slice(0,k);log.scrollTop=log.scrollHeight;await new Promise(r=>setTimeout(r,12));}
+    b.textContent=txt;}
+  rows.forEach((r,n)=>r.addEventListener('click',()=>play(n)));
+  document.getElementById('replay-'+set).onclick=()=>{const s=rows.findIndex(r=>r.classList.contains('sel'));play(s<0?0:s)};
+  play(0);}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-copy]');if(!b)return;navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy).then(()=>{b.textContent='คัดลอกแล้ว';setTimeout(()=>b.textContent='คัดลอก',1200)})});
+/*PLAYJS*/
+fit();show(i);
+</script>
+</body></html>

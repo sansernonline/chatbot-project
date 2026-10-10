@@ -24,7 +24,7 @@ def fake_llm(monkeypatch):
     calls = []
     def chat(messages, **kw):
         calls.append(messages)
-        return '{"type": "slip", "amount": 990}' if kw.get("json_mode") else "คำตอบทดสอบค่ะ"
+        return '{"type": "slip", "amount": 990}' if kw.get("json_mode") else "คำตอบทดสอบครับ"
     monkeypatch.setattr(llm, "chat", chat)
     monkeypatch.setattr(llm, "vision", lambda *a: "โอนเงินสำเร็จ 990.00 บาท")   # OCR-style plain text → chat LLM structures it
     return calls
@@ -38,14 +38,14 @@ def test_retrieval_finds_right_document(q, doc):
 
 def test_chat_uses_knowledge_and_returns_sources(client, fake_llm):
     r = client.post("/api/chat", json={"session_id": "K3M8P2Q7R5", "message": "ยกเลิกสมาชิกต้องแจ้งกี่วัน"}).json()
-    assert r["answer"] == "คำตอบทดสอบค่ะ" and "KB-05" in r["sources"]
+    assert r["answer"] == "คำตอบทดสอบครับ" and "KB-05" in r["sources"]
     system = fake_llm[0][0]["content"]
     assert "[KB-05]" in system and "ยังไม่ได้ยืนยันตัวตน" in system
 
 
 def test_chat_sends_history(client, fake_llm):
     client.post("/api/conversations/K3M8P2Q7R5/messages", json={"from": "user", "text": "สวัสดี"})
-    client.post("/api/conversations/K3M8P2Q7R5/messages", json={"from": "bot", "text": "สวัสดีค่ะ"})
+    client.post("/api/conversations/K3M8P2Q7R5/messages", json={"from": "bot", "text": "สวัสดีครับ"})
     client.post("/api/conversations/K3M8P2Q7R5/messages", json={"from": "user", "text": "ราคารายเดือน"})
     client.post("/api/chat", json={"session_id": "K3M8P2Q7R5", "message": "ราคารายเดือน"})
     assert [m["role"] for m in fake_llm[0]] == ["system", "user", "assistant", "user"]  # current message not duplicated
@@ -64,16 +64,16 @@ def test_input_guard_answers_without_llm(client, fake_llm, msg, rule):
 
 
 def test_output_guard():
-    assert guard.check_output("โทร 038-000-888 ได้เลยค่ะ") == ("โทร 038-000-888 ได้เลยค่ะ", [])
-    assert guard.check_output("เบอร์ 081-234-5678 ค่ะ") == ("เบอร์ 0xx-xxx-xxxx ค่ะ", ["N-04"])
-    assert guard.check_output("ชำระเงินสำเร็จแล้วค่ะ")[1] == ["N-05"]
+    assert guard.check_output("โทร 038-000-888 ได้เลยครับ") == ("โทร 038-000-888 ได้เลยครับ", [])
+    assert guard.check_output("เบอร์ 081-234-5678 ครับ") == ("เบอร์ 0xx-xxx-xxxx ครับ", ["N-04"])
+    assert guard.check_output("ชำระเงินสำเร็จแล้วครับ")[1] == ["N-05"]
     assert guard.check_output("โอนเข้า 999-9-99999-9 ได้เลย") == (guard.SAFE_REPLY, ["G-BANK"])
     assert guard.check_output("โอนเข้า 123-4-54521-0 ได้เลย")[1] == []
     assert guard.check_output("## ห้ามทำ\n- ห้ามให้ส่วนลด") == (guard.SAFE_REPLY, ["N-07"])
 
 
 def test_chat_output_guard_applied(client, monkeypatch):
-    monkeypatch.setattr(llm, "chat", lambda *a, **k: "สลิปผ่าน ชำระเงินสำเร็จค่ะ")
+    monkeypatch.setattr(llm, "chat", lambda *a, **k: "สลิปผ่าน ชำระเงินสำเร็จครับ")
     r = client.post("/api/chat", json={"session_id": "K3M8P2Q7R5", "message": "ค่าสมาชิกรายเดือนเท่าไหร่"}).json()
     assert "สำเร็จ" not in r["answer"] and r["rules"] == ["N-05"]
 
@@ -112,29 +112,29 @@ def test_vision_ocr_error_retried_then_502(client, fake_llm, monkeypatch):
 
 def test_output_guard_blocks_made_up_price():
     known = "Monthly Flex 1,290 บาท/เดือน ค่าแรกเข้า 500 บาท"
-    assert guard.check_output("รายเดือน 2,500 บาทค่ะ", known) == (guard.SAFE_REPLY, ["G-NUM"])
-    assert guard.check_output("รายเดือน 1290.00 บาท ค่าแรกเข้า 500 บาทค่ะ", known) == ("รายเดือน 1290.00 บาท ค่าแรกเข้า 500 บาทค่ะ", [])
+    assert guard.check_output("รายเดือน 2,500 บาทครับ", known) == (guard.SAFE_REPLY, ["G-NUM"])
+    assert guard.check_output("รายเดือน 1290.00 บาท ค่าแรกเข้า 500 บาทครับ", known) == ("รายเดือน 1290.00 บาท ค่าแรกเข้า 500 บาทครับ", [])
 
 
 def test_output_guard_blocks_made_up_website():
     known = "บริบท"
-    assert guard.check_output("เว็บหลักคือ https://www.xfitnesssriracha.com ค่ะ", known) == (guard.SAFE_REPLY, ["G-URL"])
-    assert guard.check_output("ดูได้ที่ xfitness.co.th ค่ะ", known) == (guard.SAFE_REPLY, ["G-URL"])
-    ok = "เว็บไซต์ทางการคือ https://x-fitness-chatbot.onrender.com ค่ะ"
+    assert guard.check_output("เว็บหลักคือ https://www.xfitnesssriracha.com ครับ", known) == (guard.SAFE_REPLY, ["G-URL"])
+    assert guard.check_output("ดูได้ที่ xfitness.co.th ครับ", known) == (guard.SAFE_REPLY, ["G-URL"])
+    ok = "เว็บไซต์ทางการคือ https://x-fitness-chatbot.onrender.com ครับ"
     assert guard.check_output(ok, known) == (ok, [])
-    assert guard.check_output("เว็บหลักคือ https://www.xfitness.example ค่ะ", known) == (guard.SAFE_REPLY, ["G-URL"])   # once made up from an email
+    assert guard.check_output("เว็บหลักคือ https://www.xfitness.example ครับ", known) == (guard.SAFE_REPLY, ["G-URL"])   # once made up from an email
 
 
 def test_output_guard_blocks_made_up_time():
     known = "บริบท"
-    assert guard.check_output("วันจันทร์เปิด 05:00 น. ค่ะ", known) == (guard.SAFE_REPLY, ["G-TIME"])
-    ok = "วันจันทร์เปิด 06:00–22:00 น. วันเสาร์ 8.00 น. ค่ะ"
+    assert guard.check_output("วันจันทร์เปิด 05:00 น. ครับ", known) == (guard.SAFE_REPLY, ["G-TIME"])
+    ok = "วันจันทร์เปิด 06:00–22:00 น. วันเสาร์ 8.00 น. ครับ"
     assert guard.check_output(ok, known) == (ok, [])
-    assert guard.check_output("รายเดือน 1,290.00 บาทค่ะ", "Monthly Flex 1,290 บาท")[1] == []
+    assert guard.check_output("รายเดือน 1,290.00 บาทครับ", "Monthly Flex 1,290 บาท")[1] == []
 
 
 def test_chat_made_up_price_offers_staff(client, monkeypatch):
-    monkeypatch.setattr(llm, "chat", lambda *a, **k: "ค่าสมาชิกรายเดือน 2,500 บาทค่ะ")
+    monkeypatch.setattr(llm, "chat", lambda *a, **k: "ค่าสมาชิกรายเดือน 2,500 บาทครับ")
     r = client.post("/api/chat", json={"session_id": "K3M8P2Q7R5", "message": "ค่าสมาชิกรายเดือนเท่าไหร่"}).json()
     assert r["rules"] == ["G-NUM"] and "2,500" not in r["answer"] and r["actions"] == ["คุยกับพนักงาน"]
 
@@ -162,7 +162,7 @@ def test_today_has_thai_weekday_and_buddhist_year():
 
 
 def test_output_guard_removes_health_verdict():
-    assert guard.check_output("ไขมันช่องท้องระดับ 11 (อยู่ในเกณฑ์ปกติ) และ BMI 26.1 ซึ่งสูงกว่าเกณฑ์ค่ะ") ==         ("ไขมันช่องท้องระดับ 11 และ BMI 26.1ค่ะ", ["N-06"])
+    assert guard.check_output("ไขมันช่องท้องระดับ 11 (อยู่ในเกณฑ์ปกติ) และ BMI 26.1 ซึ่งสูงกว่าเกณฑ์ครับ") ==         ("ไขมันช่องท้องระดับ 11 และ BMI 26.1ครับ", ["N-06"])
 
 
 @pytest.mark.parametrize("q, member, hit", [("นักเรียนเล่น Ride ได้ไหม", None, True), ("เข้าคลาสปั่นได้ไหม", "FN-10004", True),
@@ -201,17 +201,17 @@ def test_input_guard_lets_shop_questions_through(q):
 
 
 def test_output_guard_catches_paraphrased_prompt_leak():
-    leak = ("1. ตอบเป็นภาษาไทยสุภาพ ลงท้ายประโยคสุดท้ายด้วยค่ะครั้งเดียว กระชับ ไม่เกิน 6 บรรทัด "
+    leak = ("1. ตอบเป็นภาษาไทยสุภาพ ลงท้ายประโยคสุดท้ายด้วยครับครั้งเดียว กระชับ ไม่เกิน 6 บรรทัด "
             "2. ก่อนตอบว่าได้ ให้หาข้อยกเว้นในข้อมูลอ้างอิงก่อน 3. ห้ามให้ส่วนลดหรือโปรโมชันนอกเหนือจากที่ประกาศ")
     assert guard.check_output(leak) == (guard.SAFE_REPLY, ["N-07"])
-    one_rule = "ขออภัยค่ะ เอ็กซ์ไม่สามารถเปิดเผยข้อมูลของสมาชิกคนอื่นได้ค่ะ"         # echoing one rule is a normal refusal
+    one_rule = "ขออภัยครับ เอ็กซ์ไม่สามารถเปิดเผยข้อมูลของสมาชิกคนอื่นได้ครับ"         # echoing one rule is a normal refusal
     assert guard.check_output(one_rule) == (one_rule, [])
 
 
 def test_output_guard_blocks_made_up_measurements():
     known = '{"type": "other", "raw_text": "เปอร์เซ็นต์ไขมัน (PBF) 36.4 % น้ำหนัก 83.8 kg BMR 1286"}'
-    assert guard.check_output("เปอร์เซ็นต์ไขมัน 36.4% น้ำหนัก 83.8 kg BMR 1,286 กิโลแคลอรี ค่ะ", known)[1] == []
-    assert guard.check_output("เปอร์เซ็นต์ไขมัน 28.7% น้ำหนัก 78.5 kg ค่ะ", known) == (guard.SAFE_REPLY, ["G-NUM"])
+    assert guard.check_output("เปอร์เซ็นต์ไขมัน 36.4% น้ำหนัก 83.8 kg BMR 1,286 กิโลแคลอรี ครับ", known)[1] == []
+    assert guard.check_output("เปอร์เซ็นต์ไขมัน 28.7% น้ำหนัก 78.5 kg ครับ", known) == (guard.SAFE_REPLY, ["G-NUM"])
 
 
 def test_slip_failed_transfer_wrong_account_and_overpay():
@@ -222,7 +222,7 @@ def test_slip_failed_transfer_wrong_account_and_overpay():
 
 
 def test_body_scan_verdict_replaced_by_numbers_only(client, monkeypatch):
-    monkeypatch.setattr(llm, "chat", lambda *a, **k: "ไขมัน 28.4% ซึ่งถือว่าสูงกว่าค่ามาตรฐาน ผู้ชายควรอยู่ที่ 15–24% ค่ะ")
+    monkeypatch.setattr(llm, "chat", lambda *a, **k: "ไขมัน 28.4% ซึ่งถือว่าสูงกว่าค่ามาตรฐาน ผู้ชายควรอยู่ที่ 15–24% ครับ")
     scan = {"type": "body_scan", "weight_kg": 78.6, "body_fat_pct": 28.4}
     r = client.post("/api/chat", json={"session_id": "K3M8P2Q7R5", "message": "ช่วยดูผลวัด", "vision": scan}).json()
     assert "N-06" in r["rules"] and "28.4 %" in r["answer"] and "มาตรฐาน" not in r["answer"] and "15–24" not in r["answer"]
@@ -233,7 +233,7 @@ def test_hours_fact_sent_with_hours_question():
 
 
 def test_rival_price_on_image_is_not_known(client, monkeypatch):
-    monkeypatch.setattr(llm, "chat", lambda *a, **k: "โปรวันนี้ สมาชิกรายปี 6,900 บาทค่ะ")
+    monkeypatch.setattr(llm, "chat", lambda *a, **k: "โปรวันนี้ สมาชิกรายปี 6,900 บาทครับ")
     other = {"type": "other", "summary": "ราคายิมอื่น", "raw_text": "รายปี 6,900 บาท"}
     r = client.post("/api/chat", json={"session_id": "K3M8P2Q7R5", "message": "ลดเท่านี้ได้ไหม", "vision": other}).json()
     assert r["answer"] == guard.SAFE_REPLY and r["rules"] == ["G-NUM"]
@@ -276,10 +276,10 @@ def test_verify_needs_four_digits():
 
 def test_output_guard_closes_known_gaps():
     assert guard.check_output("โทร ๐๘๑-๒๓๔-๕๖๗๘") == ("โทร 0xx-xxx-xxxx", ["N-04"])
-    assert guard.check_output("การชำระเสร็จสมบูรณ์แล้วค่ะ") == ("รอพนักงานยืนยันการชำระค่ะ", ["N-05"])
-    assert guard.check_output("ได้รับยอดโอนเรียบร้อยแล้วค่ะ")[1] == ["N-05"]
-    assert guard.check_output("ไขมันค่อนข้างสูง ลองคลาส HIIT ดูค่ะ") == ("ไขมัน ลองคลาส HIIT ดูค่ะ", ["N-06"])
-    assert guard.check_output("คลาสนี้ความเข้มข้นค่อนข้างสูงค่ะ")[1] == []
+    assert guard.check_output("การชำระเสร็จสมบูรณ์แล้วครับ") == ("รอพนักงานยืนยันการชำระครับ", ["N-05"])
+    assert guard.check_output("ได้รับยอดโอนเรียบร้อยแล้วครับ")[1] == ["N-05"]
+    assert guard.check_output("ไขมันค่อนข้างสูง ลองคลาส HIIT ดูครับ") == ("ไขมัน ลองคลาส HIIT ดูครับ", ["N-06"])
+    assert guard.check_output("คลาสนี้ความเข้มข้นค่อนข้างสูงครับ")[1] == []
 
 
 from app import chat, db  # noqa: E402

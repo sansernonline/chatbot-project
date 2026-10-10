@@ -46,6 +46,13 @@ const ChatStore = (() => {
     if (!r.ok) throw new Error(`${method} ${path} → HTTP ${r.status}`);
     return r.status === 204 ? null : r.json();
   }
+  // a protected file (e.g. a slip image) → object URL; <img src> cannot send the admin token itself
+  async function blob(path) {
+    const r = await fetch(base + path, { headers: token ? { Authorization: 'Bearer ' + token } : {} });
+    if (r.status === 401 && scope === 'admin') { onAuthError(); throw new Error('unauthorized'); }
+    if (!r.ok) throw new Error(`GET ${path} → HTTP ${r.status}`);
+    return URL.createObjectURL(await r.blob());
+  }
   const ROUTES = {   // op → [method, path, body] per scope
     customer: { push: (id, a) => ['POST', `/api/conversations/${id}/messages`, a.msg], handoff: (id, a) => ['POST', `/api/conversations/${id}/handoff`, a] },
     admin: {
@@ -84,7 +91,7 @@ const ChatStore = (() => {
     get online() { return online; },
     get health() { return health; },
     get base() { return base; },
-    ticket, newTicket, api,
+    ticket, newTicket, api, blob,
     // backend is the same origin when served by uvicorn, else localhost:8000 (page opened as file://)
     async connect(opts = {}) {
       ({ scope = 'customer', sid = null, onAuthError = () => {} } = opts);

@@ -1,7 +1,7 @@
 """Retrieval over data/knowledge-base/*.md with LightRAG (knowledge graph + vector search).
 
 LightRAG uses the chat LLM (Typhoon) to pull entities and relations out of each document once, at indexing time,
-and hash_embed() (Thai word + character n-gram hashing with a synonym list, no model) for vectors. Index files live in x-fitness/rag-index/ (committed) and are reused
+and hash_embed() (Thai word + character n-gram hashing with a synonym list, no model) for vectors. Index files live in x-fitness/data/rag-index/ (committed) and are reused
 across restarts; only documents whose content changed are indexed again (tracked in manifest.json).
 Without TYPHOON_API_KEY the same functions fall back to keyword search (keyword_search.py).
 """
