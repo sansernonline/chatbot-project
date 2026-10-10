@@ -4,7 +4,7 @@
 
 Reads slides.html + shell.html + content.py, takes the 20 demo cases (10 questions, 5 images, 5 safety)
 from qa/report/results/x-fitness-ui-results.md, embeds the test images and screenshots, and writes
-docs/XFitness-Chatbot_Presentation-Deck.html. Needs Pillow."""
+docs/XFitness-Chatbot_Presentation-Deck-v1.0.html. Needs Pillow."""
 import base64, io, json, math, re, sys
 from html import escape as html_escape, unescape
 from pathlib import Path
@@ -15,7 +15,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 RESULTS = ROOT / "qa/report/results/x-fitness-ui-results.md"
 IMAGES = ROOT / "x-fitness/qa"
-OUT = ROOT / "docs/XFitness-Chatbot_Presentation-Deck.html"
+OUT = ROOT / "docs/XFitness-Chatbot_Presentation-Deck-v1.0.html"
 KB = ROOT / "x-fitness/data/knowledge-base"
 RAG_INDEX = ROOT / "x-fitness/data/rag-index"
 REPLIES = ROOT / "x-fitness/data/guard/replies.md"
