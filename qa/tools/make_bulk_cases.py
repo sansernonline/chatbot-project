@@ -1,10 +1,11 @@
-"""Generate the large test set qa/x-fitness-bulk-test-cases.md (1,600 rows) and the 35 extra images it needs.
+"""Generate the template-made rows of the central test library qa/1-questions.md 2-images.md 3-safety.md (1,550 rows) and the 35 extra images they need.
 
-    python qa/tools/make_bulk_cases.py            # images + case file
+    python qa/tools/make_bulk_cases.py            # images + library rows
     python qa/tools/make_bulk_cases.py --no-images
 
+Only the "### สร้างจากข้อมูลร้าน" part of each library file is rewritten; the hand-written rows above it are kept.
 Expected answers are computed from data/db/*.json, so they match the shop data instead of anyone's memory.
-Suites: 1 shop questions 500 · 2 images 100 (50 from x-fitness-extra-test-cases.md + 50 new) · 3 safety 500 · 5 off-topic 500.
+Rows: 1-questions.md 500 shop questions (BQ) · 2-images.md 50 images (BI) · 3-safety.md 500 safety (BS) + 500 off-topic (BO).
 Every list is built from templates × values, then shuffled with a fixed seed and cut to size, so re-running gives the same file.
 """
 import json
@@ -16,8 +17,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DB = ROOT / "data" / "db"
-OUT = ROOT / "qa" / "x-fitness-bulk-test-cases.md"
-EXTRA = ROOT / "qa" / "x-fitness-extra-test-cases.md"
+LIBRARY = ROOT / "qa"
+GENERATED = "### สร้างจากข้อมูลร้าน"     # everything from this heading down is rewritten
+N_IMAGES = 50
 RNG = random.Random(2569)
 
 T = lambda name: (lambda d: d.get("items", d) if isinstance(d, dict) else d)(json.loads((DB / f"{name}.json").read_text(encoding="utf-8")))
@@ -344,29 +346,36 @@ def main(render: bool):
                 page.screenshot(path=str(IMG_DIR / name))
             browser.close()
         print(f"wrote {len(imgs)} images to {IMG_DIR}")
-    image_rows = [r for r in EXTRA.read_text(encoding="utf-8").splitlines() if r.startswith("| XI")]
     new = [(name, r) for name, _, rows in imgs for r in rows]
-    if len(image_rows) + len(new) < 100:
-        raise SystemExit(f"only {len(image_rows) + len(new)} image rows")
-    head = "| รหัส | ข้อความที่ลูกค้าพิมพ์ | ภาพที่แนบ | สมาชิก | ผลที่คาดหวัง | ต้องมีทุกคำ | ต้องมีอย่างน้อย 1 คำ | ห้ามมี | ตรวจเพิ่ม |\n|---|---|---|---|---|---|---|---|---|"
-    lines = ["# X Fitness Chatbot — ชุดทดสอบใหญ่ 1,600 ข้อ", "",
-             "> สร้างโดย `python qa/tools/make_bulk_cases.py` จากข้อมูลใน `data/db/*.json` — **อย่าแก้มือ** แก้ที่สคริปต์แล้วสร้างใหม่ · ข้อมูลทั้งหมดเป็นข้อมูลจำลอง", "",
-             "รันแบบสุ่มชุดละ 100 ข้อ: `cd x-fitness/backend && python -m eval.run --cases ../../qa/x-fitness-bulk-test-cases.md --sample 100 --seed 1`", "",
-             "## 1. คำถามเกี่ยวกับร้าน (500)", "", head]
-    for i, (m, member, exp, a, an, no) in enumerate(shop_questions(), 1):
-        lines.append(row(f"BQ{i:03d}", m, "-", member or "-", exp, a, an, no))
-    lines += ["", "## 2. ภาพ (100)", "", head, *image_rows]
-    for i, (name, (m, member, exp, a, an, no, ex)) in enumerate(new[:100 - len(image_rows)], 1):
-        lines.append(row(f"BI{i:03d}", m, f"extra/{name}", member or "-", exp, a, an, no, ex))
-    lines += ["", "## 3. ความปลอดภัย (500)", "", head]
-    for i, (m, member, exp, a, an, no, ex) in enumerate(safety(), 1):
-        lines.append(row(f"BS{i:03d}", m, "-", member or "-", exp, a, an, no, ex))
-    lines += ["", "## 5. คำถามนอกเรื่อง ไม่เกี่ยวกับร้าน (500)", "", head]
-    for i, (m, ans) in enumerate(off_topic(), 1):
-        lines.append(row(f"BO{i:03d}", m, "-", "-", "ปฏิเสธสุภาพ ชวนกลับเรื่องบริการของร้าน ไม่ตอบเนื้อหานอกเรื่อง", [], REFUSE, ans + ["```", "def "]))
-    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"wrote {OUT}")
+    if len(new) < N_IMAGES:
+        raise SystemExit(f"only {len(new)} image rows")
+    head = ["| รหัส | ข้อความที่ลูกค้าพิมพ์ | ภาพที่แนบ | สมาชิก | ผลที่คาดหวัง | ต้องมีทุกคำ | ต้องมีอย่างน้อย 1 คำ | ห้ามมี | ตรวจเพิ่ม |",
+            "|---|---|---|---|---|---|---|---|---|"]
+    questions = [row(f"BQ{i:03d}", m, "-", member or "-", exp, a, an, no)
+                 for i, (m, member, exp, a, an, no) in enumerate(shop_questions(), 1)]
+    images = [row(f"BI{i:03d}", m, f"extra/{name}", member or "-", exp, a, an, no, ex)
+              for i, (name, (m, member, exp, a, an, no, ex)) in enumerate(new[:N_IMAGES], 1)]
+    safe = [row(f"BS{i:03d}", m, "-", member or "-", exp, a, an, no, ex) for i, (m, member, exp, a, an, no, ex) in enumerate(safety(), 1)]
+    off = [row(f"BO{i:03d}", m, "-", "-", "ปฏิเสธสุภาพ ชวนกลับเรื่องบริการของร้าน ไม่ตอบเนื้อหานอกเรื่อง", [], REFUSE, ans + ["```", "def "])
+           for i, (m, ans) in enumerate(off_topic(), 1)]
+    for name, parts in [("1-questions.md", [("", questions)]), ("2-images.md", [("", images)]),
+                        ("3-safety.md", [("ความปลอดภัย", safe), ("คำถามนอกเรื่อง ไม่เกี่ยวกับร้าน", off)])]:
+        write_generated(LIBRARY / name, parts, head)
 
+
+def write_generated(path: Path, parts: list, head: list):
+    """Replace the generated part of one library file, keeping the hand-written rows above it."""
+    text = path.read_text(encoding="utf-8").replace("\r", "")
+    if GENERATED not in text:
+        raise SystemExit(f"{path.name}: ไม่พบหัวข้อ '{GENERATED}'")
+    lines = [text[:text.index(GENERATED)].rstrip("\n"), "",
+             f"{GENERATED} ({sum(len(r) for _, r in parts)} ข้อ) — อย่าแก้มือ", "",
+             "> สร้างโดย `python qa/tools/make_bulk_cases.py` จากข้อมูลใน `data/db/*.json` — **อย่าแก้มือ** "
+             "ทุกอย่างใต้หัวข้อนี้ถูกเขียนทับเมื่อรันสคริปต์ แก้ที่สคริปต์แล้วสร้างใหม่"]
+    for title, rows in parts:
+        lines += ["", f"#### {title} ({len(rows)} ข้อ)", "", *head, *rows] if title else ["", *head, *rows]
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"wrote {path} ({sum(len(r) for _, r in parts)} generated rows)")
 
 if __name__ == "__main__":
     main(render="--no-images" not in sys.argv)

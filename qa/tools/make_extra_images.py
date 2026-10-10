@@ -1,4 +1,4 @@
-"""Draw the extra test images (qa/test-images/extra/*.png) used by qa/x-fitness-extra-test-cases.md.
+"""Draw the extra test images (qa/test-images/extra/*.png) used by the central library qa/2-images.md.
 
     x-fitness/backend/.venv/Scripts/python qa/tools/make_extra_images.py
 
