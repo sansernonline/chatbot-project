@@ -25,6 +25,10 @@ const CASES = pick(testcases.load());
 const meta = { started: new Date().toLocaleString('th-TH'), baseURL: '', mode: '',
                note: process.env.E2E_SAMPLE ? `· สุ่มหมวดละ ${process.env.E2E_SAMPLE} ข้อ (E2E_SEED=${seed})` : '· ทุกข้อ' };
 
+const GAP_MS = Number(process.env.E2E_GAP_MS || 0);
+// "msg 1 ⏎ msg 2" → two messages · "msg ×31" → the same message 31 times
+const messagesOf = cell => cell.split(' ⏎ ').flatMap(m => { const r = m.match(/^(.*) ×(\d+)$/); return r ? Array(Number(r[2])).fill(r[1]) : [m]; });
+
 const norm = s => s.replace(/,/g, '');
 function check(spec, r) {
   const a = norm(r.answer), problems = [], notes = [];
@@ -40,7 +44,9 @@ function check(spec, r) {
     if (typeof want === 'number' ? Math.abs(Number(got) - want) > 0.01 : got !== want) problems.push(`อ่านภาพ ${k}=${got} (ควรเป็น ${want})`);
   }
   if ('slip' in spec) notes.push('สลิปผ่าน ตรวจได้เฉพาะสคริปต์ API');
-  if (r.error) problems.push(`หน้าเว็บแสดง error: ${r.error}`);
+  if (spec.error) { if (!r.error?.includes(spec.error)) problems.push(`หน้าเว็บไม่แจ้ง "${spec.error}"`); }
+  else if (r.error) problems.push(`หน้าเว็บแสดง error: ${r.error}`);
+  if (spec.noHarm && r.rules.some(x => /^S\d+$/.test(x))) problems.push(`ถูกกันเป็นหมวดอันตราย ${r.rules.join(', ')} ทั้งที่ควรถึง AI`);
   return { problems, notes };
 }
 
@@ -61,14 +67,19 @@ CASES.forEach((c, i) => {
       await page.waitForFunction(id => S.member?.member_id === id, c.member, { timeout: 5_000 });
     }
 
+    if (GAP_MS) await page.waitForTimeout(GAP_MS);              // keep a whole run under the per-minute message limit
     await page.click('#fab');
     if (c.image) await page.setInputFiles('#file', path.join(IMAGES_DIR, c.image));
-    if (c.message) await page.fill('#input', c.message);
-    const before = await page.locator('#cBody .msg.bot').count();
-    const t0 = Date.now();
-    await page.click('#btnSend');
-    await expect(page.locator('#cBody .msg.bot')).toHaveCount(before + 1, { timeout: 90_000 });
-    await expect(page.locator('#cBody .thinking')).toHaveCount(0);
+    const messages = messagesOf(c.message);
+    let t0 = Date.now();
+    for (const [n, text] of messages.entries()) {               // the check below looks at the last answer only
+      if (text) await page.fill('#input', text);
+      const before = await page.locator('#cBody .msg.bot').count();
+      t0 = Date.now();
+      await page.click('#btnSend');
+      await expect(page.locator('#cBody .msg.bot')).toHaveCount(before + 1, { timeout: 90_000 });
+      await expect(page.locator('#cBody .thinking')).toHaveCount(0);
+    }
     const seconds = Math.round((Date.now() - t0) / 100) / 10;
 
     const bot = page.locator('#cBody .msg.bot').last();
