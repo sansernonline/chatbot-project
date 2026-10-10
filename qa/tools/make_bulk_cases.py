@@ -1,11 +1,14 @@
-"""Generate the template-made rows of the central test library qa/1-questions.md 2-images.md 3-safety.md (1,550 rows) and the 35 extra images they need.
+"""Generate the template-made rows of the central test library qa/1-questions.md 2-images.md 3-safety.md (2,550 rows) and the 35 extra images they need.
 
     python qa/tools/make_bulk_cases.py            # images + library rows
     python qa/tools/make_bulk_cases.py --no-images
+    python qa/tools/make_bulk_cases.py --extra-only     # keep every row already in the files, (re)write only BQ501-BQ1500
 
 Only the "### สร้างจากข้อมูลร้าน" part of each library file is rewritten; the hand-written rows above it are kept.
 Expected answers are computed from data/db/*.json, so they match the shop data instead of anyone's memory.
-Rows: 1-questions.md 500 shop questions (BQ) · 2-images.md 50 images (BI) · 3-safety.md 500 safety (BS) + 500 off-topic (BO).
+Rows: 1-questions.md 500 + 1,000 shop questions (BQ) · 2-images.md 50 images (BI) · 3-safety.md 500 safety (BS) + 500 off-topic (BO).
+The second 1,000 questions come from extra_questions.json (facts written in data/knowledge-base) plus phrasings the first 500 did not use.
+They use their own random seed. --extra-only adds them without rewriting the rows already in the files, whose test results refer to them.
 Every list is built from templates × values, then shuffled with a fixed seed and cut to size, so re-running gives the same file.
 """
 import json
@@ -20,6 +23,8 @@ DB = ROOT / "data" / "db"
 LIBRARY = ROOT / "qa"
 GENERATED = "### สร้างจากข้อมูลร้าน"     # everything from this heading down is rewritten
 N_IMAGES = 50
+N_EXTRA = 1000
+EXTRA_FACTS = Path(__file__).with_name("extra_questions.json")   # [{topic, fact, source, all, any, questions}]
 RNG = random.Random(2569)
 
 T = lambda name: (lambda d: d.get("items", d) if isinstance(d, dict) else d)(json.loads((DB / f"{name}.json").read_text(encoding="utf-8")))
@@ -138,7 +143,21 @@ def shop_questions() -> list[tuple]:
     for msg, member, exp, a, an, no in q:
         for t in RNG.sample(ASK, 3):
             out.append((t.format(msg), member, exp, a, an, no))
-    return pick(out, 500)
+    return pick(out, 500), out
+
+
+def extra_questions(taken: list, unused: list) -> list[tuple]:
+    """1,000 more shop questions: knowledge-base facts not covered above, plus phrasings the first 500 did not use."""
+    rng = random.Random(25692)
+    facts = json.loads(EXTRA_FACTS.read_text(encoding="utf-8"))
+    new = [(t.format(m), None, f["fact"], f.get("all", []), f.get("any", []), [])
+           for f in facts for m in f["questions"] for t in rng.sample(ASK, 3)]
+    seen = {(i[0], i[1]) for i in taken}
+    items = list({(i[0], i[1]): i for i in new + unused if (i[0], i[1]) not in seen}.values())
+    rng.shuffle(items)
+    if len(items) < N_EXTRA:
+        raise SystemExit(f"extra templates make only {len(items)} items, need {N_EXTRA}")
+    return items[:N_EXTRA]
 
 
 # ───────────────────────────── 3. safety
@@ -351,8 +370,9 @@ def main(render: bool):
         raise SystemExit(f"only {len(new)} image rows")
     head = ["| รหัส | ข้อความที่ลูกค้าพิมพ์ | ภาพที่แนบ | สมาชิก | ผลที่คาดหวัง | ต้องมีทุกคำ | ต้องมีอย่างน้อย 1 คำ | ห้ามมี | ตรวจเพิ่ม |",
             "|---|---|---|---|---|---|---|---|---|"]
+    first, pool = shop_questions()
     questions = [row(f"BQ{i:03d}", m, "-", member or "-", exp, a, an, no)
-                 for i, (m, member, exp, a, an, no) in enumerate(shop_questions(), 1)]
+                 for i, (m, member, exp, a, an, no) in enumerate(first + extra_questions(first, pool), 1)]
     images = [row(f"BI{i:03d}", m, f"extra/{name}", member or "-", exp, a, an, no, ex)
               for i, (name, (m, member, exp, a, an, no, ex)) in enumerate(new[:N_IMAGES], 1)]
     safe = [row(f"BS{i:03d}", m, "-", member or "-", exp, a, an, no, ex) for i, (m, member, exp, a, an, no, ex) in enumerate(safety(), 1)]
@@ -361,6 +381,24 @@ def main(render: bool):
     for name, parts in [("1-questions.md", [("", questions)]), ("2-images.md", [("", images)]),
                         ("3-safety.md", [("ความปลอดภัย", safe), ("คำถามนอกเรื่อง ไม่เกี่ยวกับร้าน", off)])]:
         write_generated(LIBRARY / name, parts, head)
+
+
+def extra_only():
+    """Add BQ501-BQ1500 to qa/1-questions.md and keep BQ001-BQ500 and every other file as they are."""
+    path = LIBRARY / "1-questions.md"
+    bq = re.compile(r"\| BQ(\d+) \|")
+    lines = path.read_text(encoding="utf-8").replace("\r", "").split("\n")
+    keep = [l for l in lines if not bq.match(l) or int(bq.match(l).group(1)) <= 500]
+    old = [l for l in keep if bq.match(l)]
+    taken = [(c[2].strip(), None if c[4].strip() == "-" else c[4].strip()) for c in (l.split("|") for l in old)]
+    _, pool = shop_questions()
+    extra = [row(f"BQ{i:03d}", m, "-", member or "-", exp, a, an, no)
+             for i, (m, member, exp, a, an, no) in enumerate(extra_questions(taken, pool), len(old) + 1)]
+    at = max(i for i, l in enumerate(keep) if bq.match(l)) + 1
+    keep[at:at] = extra
+    text = re.sub(r"### สร้างจากข้อมูลร้าน \(\d+ ข้อ\)", f"{GENERATED} ({len(old) + len(extra)} ข้อ)", "\n".join(keep))
+    path.write_text(text, encoding="utf-8", newline="\n")
+    print(f"wrote {path} ({len(old)} kept + {len(extra)} new rows)")
 
 
 def write_generated(path: Path, parts: list, head: list):
@@ -378,4 +416,4 @@ def write_generated(path: Path, parts: list, head: list):
     print(f"wrote {path} ({sum(len(r) for _, r in parts)} generated rows)")
 
 if __name__ == "__main__":
-    main(render="--no-images" not in sys.argv)
+    extra_only() if "--extra-only" in sys.argv else main(render="--no-images" not in sys.argv)

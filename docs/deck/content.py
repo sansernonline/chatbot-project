@@ -173,6 +173,13 @@ INDEX_DESC = {
     "manifest.json": "ชื่อ embedder + hash ของ 9 เอกสาร",
 }
 GRAPH_CENTER = "เอ็กซ์ ฟิตเนส"
+GRAPH_STORY = dict(   # page 18: one real question followed through two edges of rag-index/graph_chunk_entity_relation.graphml
+    q="แพ็กนักเรียนปั่นจักรยานได้ไหม", src="KB-02 · KB-03", hub="นักเรียน/นักศึกษา", hit="Ride", hit_label="เข้าไม่ได้",
+    more=[("Yoga Flow", "เข้าได้"), ("Boxing Fit", "เข้าได้"), ("Dance Cardio", "เข้าได้"), ("ค่าแรกเข้า", "ไม่ต้องจ่าย"),
+          ("ค่าธรรมเนียมยกเลิก 500 บาท", "ยกเลิกก่อน 6 เดือน")],
+    names={"ค่าธรรมเนียมยกเลิก 500 บาท": "ค่ายกเลิก 500 บาท", "นักเรียน/นักศึกษา": "นักเรียน/นักศึกษา"},
+    what='เริ่มที่จุด <b>นักเรียน/นักศึกษา</b> แล้วเดินเส้น <b>ไม่สามารถเข้าร่วม → Ride</b> '
+         'บอทจึงตอบว่าเข้า Ride ไม่ได้ และบอกต่อได้ว่าคลาสไหนเข้าได้')
 MEMBER_HINT = {"I01": "พิมพ์ก่อน: FN-10003 5531 (ยืนยันสมาชิก)", "I02": "พิมพ์ก่อน: FN-10007 3364 (ยืนยันสมาชิก)"}
 
 # boxes added when the diagram was checked against the imports
@@ -184,6 +191,16 @@ ARCH["ragindex"] = RAG["kv"] | dict(path="x-fitness/data/rag-index/  (13 ไฟ�
 ARCH["backoffice"] = ARCH["backoffice"] | dict(path="x-fitness/backend/app/backoffice.py · conversations.py · knowledge.py",
     what="API ของหลังบ้าน: กล่องแชต (conversations.py) · สลิป การจอง โปรโมชัน แดชบอร์ด (backoffice.py) · คลังความรู้ (knowledge.py) ทุกตัวต้องล็อกอิน")
 
+# inner content of the two big boxes on the vision flowchart (facts from prompts/vision.md and business.check_slip)
+VISION_TYPES = ('<table class="ftab">'
+    '<tr><td><i>slip</i> สลิป</td><td>ยอด · ผู้รับ · เลขบัญชี · วันเวลา · เลขอ้างอิง</td><td>→ ④ ตรวจ 5 ข้อ</td></tr>'
+    '<tr><td><i>receipt</i> ใบเสร็จ</td><td>เลขที่ · วันที่ · รายการ · ยอดรวม</td><td>→ answer()</td></tr>'
+    '<tr><td><i>body_scan</i> ผลวัด</td><td>น้ำหนัก · กล้ามเนื้อ · ไขมัน · BMI · BMR</td><td>→ บอกค่า ไม่ประเมิน</td></tr>'
+    '<tr><td><i>promo_poster</i> โปสเตอร์</td><td>ชื่อโปร · โค้ด · วันเริ่ม–หมดเขต</td><td>→ เทียบกับวันนี้</td></tr>'
+    '<tr><td><i>other</i> ภาพอื่น</td><td>สรุปสั้น ๆ + ข้อความที่อ่านได้</td><td>→ answer()</td></tr></table>')
+SLIP_CHECKS = ('<ol class="flist"><li>ชื่อบัญชีผู้รับเป็น <em>บจก. เอ็กซ์ ฟิตเนส</em></li><li>เลขบัญชีผู้รับลงท้าย <em>4521-0</em></li>'
+    '<li>ยอดเงิน<em>ตรงกับยอดค้าง</em>ของสมาชิก</li><li>วันที่โอนห่างวันครบกำหนด<em>ไม่เกิน 7 วัน</em></li>'
+    '<li>เลขอ้างอิง<em>ไม่เคยใช้</em>กับสลิปอื่น</li></ol><p class="fnote">ยืนยันสมาชิกก่อน · สลิป "โอนไม่สำเร็จ" ไม่ผ่านเสมอ</p>')
 # flowcharts. Each: box size, canvas size, boxes (key, title, sub, x, y, shape) and arrows (from, to, label, "bus" = route
 # along the bottom back to the end box). shape: end · step · check (can stop the message) · exit · data · ext (outside system).
 # Arrows are drawn by build.py: same row → straight · target lower → down first · target higher → across first.
@@ -225,17 +242,24 @@ FLOWS = {
     ("q", "kw", ""), ("kw", "local", "", "across"), ("kw", "global", "", "across"), ("kw", "naive", "", "across"), ("q", "kws", "", "bus"),
     ("local", "ctx", "", "across"), ("global", "ctx", "", "across"), ("naive", "ctx", "", "across"), ("kws", "ctx", "", "across"),
     ("ctx", "ans", ""), ("store", "local", "อ่านดัชนี")]),
-  "vision": dict(w=1664, h=480, nw=220, nh=78, nodes=[    # chat.read_image() + business.check_slip()
-    ("img", "ภาพจากลูกค้า", "PNG/JPG ≤ 5 MB", 0, 200, "end"),
-    ("ocr", "① typhoon-ocr", "อ่านตัวอักษร · ลองซ้ำ 1 ครั้ง", 290, 200, "ext"),
-    ("json", "② Typhoon → JSON", "type + ตัวเลขในภาพ", 580, 200, "ext"),
-    ("type", "ภาพชนิดไหน", "slip · receipt · scan · poster", 870, 200, "check"),
-    ("slip", "③ ตรวจสลิป 5 ข้อ", "โค้ด ไม่ใช่ AI", 1160, 20, "step"),
-    ("pass", "ผ่าน 5/5", "รอพนักงานยืนยัน", 1444, 20, "exit"),
-    ("fail", "ไม่ผ่าน", "บอกยอดที่ขาด + ปุ่มพนักงาน", 1444, 200, "exit"),
-    ("other", "③ chat.answer()", "ตัวเลขในภาพ + ข้อมูลร้าน", 1160, 380, "step")],
-   edges=[("img", "ocr", ""), ("ocr", "json", ""), ("json", "type", ""), ("type", "slip", "slip"), ("type", "other", "อื่น ๆ"),
-    ("slip", "pass", "ครบ"), ("slip", "fail", "ไม่ครบ")]),
+  "vision": dict(w=1664, h=484, nw=210, nh=64, nodes=[    # chat.vision() + read_image() + answer(), business.check_slip()
+    ("img", "ภาพจากลูกค้า", "เว็บ หรือ LINE", 0, 0, "end"),
+    ("gate", "① ตรวจไฟล์", "PNG/JPG ≤ 5 MB", 262, 0, "check"),
+    ("ocr", "② typhoon-ocr", "อ่านตัวอักษร · ลองซ้ำ 1 ครั้ง", 524, 0, "ext"),
+    ("json", "③ จัดเป็น JSON", "Typhoon เลือกชนิด + ดึงช่อง", 786, 0, "ext"),
+    ("type", "ภาพชนิดไหน", "Typhoon เลือก 1 ชนิด", 1050, 0, "check", dict(w=614, h=220, html=VISION_TYPES)),
+    ("slip", "④ ตรวจสลิป 5 ข้อ", "check_slip() · โค้ด ไม่ใช่ AI", 1050, 270, "step", dict(w=430, h=214, html=SLIP_CHECKS)),
+    ("pass", "ผ่านครบ 5/5", "รอพนักงานยืนยัน", 1510, 270, "exit", dict(w=154, h=96)),
+    ("fail", "ไม่ผ่าน", "บอกยอดที่ขาด + ปุ่มพนักงาน", 1510, 388, "exit", dict(w=154, h=96)),
+    ("answer", "④ answer() ตอบ", "ตัวเลขในภาพ + ข้อมูลร้าน", 524, 300, "step"),
+    ("gout", "⑤ guard ขาออก", "ตัดตัวเลขที่ไม่มีที่มา", 262, 300, "check"),
+    ("reply", "ส่งคำตอบ", "+ ปุ่มพนักงานถ้าต้องส่งต่อ", 0, 300, "end"),
+    ("xfile", "ปฏิเสธไฟล์", "ชนิดผิด · เกิน 5 MB · ส่งถี่", 262, 130, "exit"),
+    ("xocr", "อ่านภาพไม่สำเร็จ", "OCR ขัดข้อง 2 ครั้ง → ส่งใหม่", 524, 130, "exit")],
+   edges=[("img", "gate", ""), ("gate", "ocr", "ผ่าน"), ("ocr", "json", ""), ("json", "type", ""),
+    ("type", "slip", "slip"), ("slip", "pass", "", "across"), ("slip", "fail", "", "across"),
+    ("type", "answer", "ชนิดอื่น", "across"), ("answer", "gout", ""), ("gout", "reply", ""),
+    ("gate", "xfile", "ไม่ผ่าน"), ("ocr", "xocr", "ขัดข้อง")]),
   "line": dict(w=1664, h=500, nw=184, nh=92, nodes=[      # app/line.py
     ("user", "ลูกค้า LINE", "ข้อความหรือภาพ", 0, 210, "end"),
     ("plat", "LINE Platform", "ส่ง webhook", 210, 210, "ext"),

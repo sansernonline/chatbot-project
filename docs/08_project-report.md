@@ -432,11 +432,11 @@ RAG ย่อมาจาก Retrieval-Augmented Generation คือค้น�
 | ไฟล์ | เนื้อหา |
 |---|---|
 | `docs/03_bot-rules.md` | ข้อกำหนดต้องทำ 10 ข้อ / ห้ามทำ 10 ข้อ · ตัวตรวจขาออก G-xx · หมวดอันตราย S1–S14 และวิธีบังคับใช้ |
-| `docs/XFitness-Chatbot_Presentation-v1.0.pptx` | สไลด์นำเสนอ 34 หน้า แผนภาพแต่ละหน้ามีหน้าตัวอย่างตามมา |
+| `docs/XFitness-Chatbot_Presentation-v1.2.pptx` | สไลด์นำเสนอ 34 หน้า แผนภาพแต่ละหน้ามีหน้าตัวอย่างตามมา |
 | `x-fitness/backend/tests/test_guard14.py` | ข้อความทดสอบหมวดอันตราย S1–S14 |
 | `docs/06_diagrams.md` | แผนภาพส่วนประกอบภายใน · การไหลของข้อมูล · endpoint ทั้ง 27 ตัว (ลองเรียกได้ที่ /docs) |
 | `docs/07_demo-script.md` | สคริปต์คลิปนำเสนอ |
-| `qa/1-questions.md` `qa/2-images.md` `qa/3-safety.md` | คลังกลางชุดทดสอบ 1,690 กรณี: คำถาม (รวมข้อทดสอบกฎต้องทำ/ห้ามทำ) · ภาพ · ความปลอดภัย |
+| `qa/1-questions.md` `qa/2-images.md` `qa/3-safety.md` | คลังกลางชุดทดสอบ 2,690 กรณี: คำถาม (รวมข้อทดสอบกฎต้องทำ/ห้ามทำ) · ภาพ · ความปลอดภัย |
 | `qa/report/x-fitness-test-cases.md` | ชุดทำรายงาน 20 กรณี หยิบจากคลัง (คำถาม 10 · ภาพ 5 · ความปลอดภัย 5) |
 | `qa/report/results/` | ผลทดสอบชุดทำรายงานผ่านหน้าเว็บ (Playwright) และผ่าน API พร้อมภาพหน้าจอ |
 | `qa/system/results/` | ผลทดสอบระบบรวมจากคลัง |

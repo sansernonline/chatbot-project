@@ -36,12 +36,12 @@ p,li{line-height:1.5}
 .detail .meta{display:flex;gap:10px;flex-wrap:wrap}
 /* architecture diagram */
 .arch{position:relative;flex:1}
-.node{position:absolute;background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:4px}
+.node{position:absolute;background:#232327;border:2px solid #4a4a52;border-radius:14px;padding:14px 18px;display:flex;flex-direction:column;gap:4px}
 .node b{font-size:26px}.node span{font:18px var(--mono);color:var(--muted)}
 .node.ext{border-style:dashed}
 .arch svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.arch svg path{stroke:#4a4a52;stroke-width:3;fill:none;marker-end:url(#ah)}
-.arch svg path.hot{stroke:var(--red2);stroke-width:4}
+.arch svg path{stroke:#4a4a52;stroke-width:2;fill:none;marker-end:url(#ah)}
+.arch svg path.hot{stroke:var(--red2);stroke-width:3}
 /* tree */
 .tree{font:22px/1.65 var(--mono);color:var(--soft)}
 .tree div{padding:1px 10px;border-radius:8px;border:1px solid transparent;white-space:pre}
@@ -92,6 +92,14 @@ p,li{line-height:1.5}
 .graph circle{fill:#16161a;stroke:#55555d;stroke-width:2;cursor:pointer}
 .graph g.sel circle{stroke:var(--red2);fill:#2a0a0d}
 .graph line{stroke:#3a3a40;stroke-width:2}
+.graph line.ov,.slide.on .graph line.ov{stroke:none;animation:none}
+.slide .graph line.ov.hot{stroke:var(--red2);stroke-width:4;stroke-dasharray:1;stroke-dashoffset:1;animation:gdraw .5s ease-out .1s forwards}
+.slide .graph line.ov.seg2.hot{animation-delay:.55s}@keyframes gdraw{to{stroke-dashoffset:0}}
+.graph g.h2 circle{fill:#0f1623;stroke:#3b5b8a}.graph g.h2.hit circle{stroke:var(--red2)}.graph g.hub circle{stroke:#d4d4d8;stroke-width:3}
+.graph text.elab{font:600 15px var(--body);fill:#7f9cc7}.graph text.elab.no{fill:var(--red2)}
+.graph g.ask rect{fill:#1d0d10;stroke:var(--red2);stroke-width:2;cursor:pointer}.graph g.ask.sel rect{fill:#2a0a0d}
+.graph g.ask .k{font:600 16px var(--body);fill:var(--red2)}.graph g.ask .v{font:600 22px var(--body);fill:#f5f5f4}
+.graph text.legend{font:15px var(--body);fill:#8a8a92}
 .divider{justify-content:center;background:radial-gradient(ellipse at 20% 50%,#2a0a0d,#09090a 60%)}
 .divider .num{font-family:var(--head);font-size:200px;font-weight:700;color:#2a2a30;line-height:1}
 /* chrome */
@@ -138,6 +146,10 @@ p,li{line-height:1.5}
 .toc .n{font:800 44px var(--head);color:var(--red2);width:50px;flex:none}
 .toc b{font-size:30px}.toc span{font-size:22px;color:var(--muted);display:block}
 .toc .p{margin-left:auto;font:18px var(--mono);color:var(--dim)}
+.toc .tp{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:10px}
+.toc .tp em{font:600 16px var(--body);font-style:normal;color:var(--dim);margin-right:2px}.toc .tp em.try{color:var(--red2)}.toc .tp i+em{margin-left:12px}
+.toc .tp i{font:600 16px var(--mono);font-style:normal;min-width:34px;text-align:center;border:1px solid #3a3a40;border-radius:999px;padding:2px 10px;color:var(--soft);cursor:pointer}
+.toc .tp i.try{background:var(--red);border-color:var(--red);color:#fff}.toc .tp i:hover{border-color:#fff;color:#fff}
 #notes b{color:var(--red2)}
 /*PLAYCSS*/
 </style></head><body>
@@ -192,7 +204,7 @@ menuEl.addEventListener('click',e=>{if(e.target===menuEl)menu(false);});
 document.querySelector('.edge.l').onclick=()=>show(i-1);document.querySelector('.edge.r').onclick=()=>show(i+1);
 document.getElementById('mb').onclick=menu;
 document.addEventListener('click',e=>{const a=e.target.closest('[data-goto]');if(a){e.preventDefault();show(idx(a.dataset.goto));}});
-S.forEach(s=>s.querySelectorAll('[data-goto]').forEach(a=>{const p=a.querySelector('.p');if(p)p.textContent='หน้า '+(idx(a.dataset.goto)+1);}));
+S.forEach(s=>s.querySelectorAll('[data-goto]').forEach(a=>{const n=idx(a.dataset.goto)+1;if(a.tagName==='I'){a.textContent=n;return}const p=a.querySelector(':scope>.p');if(p)p.textContent='หน้า '+n;}));
 /* progress bar: one piece per page · hover shows the page name · click jumps there */
 {const bar=document.getElementById('bar'),tip=document.getElementById('bartip');let part='';
  const partOf=j=>{for(let k=j;k>=0;k--)if(S[k].dataset.part)return S[k].dataset.part;return ''};

@@ -4,7 +4,7 @@
 
 Reads slides.html + shell.html + content.py, takes the 20 demo cases (10 questions, 5 images, 5 safety)
 from qa/report/results/x-fitness-ui-results.md, embeds the test images and screenshots, and writes
-docs/XFitness-Chatbot_Presentation-Deck-v1.0.html. Needs Pillow."""
+docs/XFitness-Chatbot_Presentation-Deck-v1.5.html. Needs Pillow."""
 import base64, io, json, math, re, sys
 from html import escape as html_escape, unescape
 from pathlib import Path
@@ -15,7 +15,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 RESULTS = ROOT / "qa/report/results/x-fitness-ui-results.md"
 IMAGES = ROOT / "x-fitness/qa"
-OUT = ROOT / "docs/XFitness-Chatbot_Presentation-Deck-v1.0.html"
+OUT = ROOT / "docs/XFitness-Chatbot_Presentation-Deck-v1.5.html"
 KB = ROOT / "x-fitness/data/knowledge-base"
 RAG_INDEX = ROOT / "x-fitness/data/rag-index"
 REPLIES = ROOT / "x-fitness/data/guard/replies.md"
@@ -119,37 +119,69 @@ def kb_cards(docs: dict) -> dict:
 
 
 def graph() -> tuple[str, dict]:
-    """The centre entity and its first 12 neighbours (all weights are 1.0) from the real graphml → (svg, cards)."""
+    """Two hops of the real graphml: the centre entity with 12 neighbours, then the student package with its own
+    neighbours, so one customer question can be followed edge by edge (content.GRAPH_STORY) → (svg, cards)."""
     g = (RAG_INDEX / "graph_chunk_entity_relation.graphml").read_text(encoding="utf-8")
     fields = lambda body: {k: unescape(v) for k, v in re.findall(r'<data key="(d\d+)">(.*?)</data>', body, re.S)}
     nodes = {unescape(i): fields(b) for i, b in re.findall(r'<node id="(.*?)">(.*?)</node>', g, re.S)}
-    c, edges = content.GRAPH_CENTER, []
+    edges = {}
     for src, dst, body in re.findall(r'<edge source="(.*?)" target="(.*?)">(.*?)</edge>', g, re.S):
-        src, dst = unescape(src), unescape(dst)
-        if c in (src, dst):
-            d = fields(body)
-            edges.append((float(d.get("d7", 0)), dst if src == c else src, d))
-    edges = sorted(edges, key=lambda e: -e[0])[:12]
+        edges[frozenset((unescape(src), unescape(dst)))] = fields(body)
+    near = lambda n: [next(iter(k - {n})) for k in edges if n in k and len(k) == 2]
+    st = content.GRAPH_STORY
+    c, hub, hit = content.GRAPH_CENTER, st["hub"], st["hit"]
+    ring = [hub] + [n for n in near(c) if n != hub][:11]
+    hop2 = [hit] + [n for n, _ in st["more"]]
     first = lambda s: s.split("<SEP>")[0]
     node = lambda n: nodes.get(n, {})
-    cards = {"c": dict(path=f'node "{c}"', tags=[[node(c).get("d1", ""), "blue"], [f"แสดง {len(edges)} เส้น", ""]],
-                       what=html_escape(first(node(c).get("d2", ""))),
-                       code=f'<node id="{c}">\n  type: {node(c).get("d1")}\n  source_id: {node(c).get("d3", "")}')}
-    W, H, R = 900, 600, 235
-    pts = []
-    for n, (_, name, d) in enumerate(edges):
-        a = 2 * math.pi * n / len(edges) - math.pi / 2
-        pts.append((W / 2 + R * 1.5 * math.cos(a), H / 2 + R * math.sin(a), name))
-        cards[f"n{n}"] = dict(path=f'edge "{c}" — "{name}"', tags=[[d.get("d9", ""), "red"], [first(d.get("d10", "")), ""]],
-                              what=html_escape(d.get("d8", "")),
-                              code=f'node "{name}" ({node(name).get("d1", "")})\n' + first(node(name).get("d2", ""))[:300])
-    label = lambda t: html_escape(t if len(t) <= 14 else t[:13] + "…")
+    edge = lambda a, z: edges[frozenset((a, z))]
+    card = lambda a, z: dict(path=f'edge "{a}" — "{z}"', tags=[[edge(a, z).get("d9", ""), "red"], [first(edge(a, z).get("d10", "")), ""]],
+                             what=html_escape(edge(a, z).get("d8", "")),
+                             code=f'node "{z}" ({node(z).get("d1", "")})\n' + first(node(z).get("d2", ""))[:300])
+    cards = {"q": dict(path=f'ลูกค้าถาม: "{st["q"]}"', tags=[["เดิน 2 เส้น", "red"], [st["src"], ""]], what=st["what"],
+                       code=f'เส้นที่ 1  {c} → {hub}  ({edge(c, hub).get("d9", "").split(",")[0]})\n'
+                            f'เส้นที่ 2  {hub} → {hit}  ({edge(hub, hit).get("d9", "").split(",")[0]})'),
+             "c": dict(path=f'node "{c}"', tags=[[node(c).get("d1", ""), "blue"], [f"โยงตรงกับ {len(near(c))} จุด", ""]],
+                       what=html_escape(first(node(c).get("d2", ""))), code=f'<node id="{c}">\n  type: {node(c).get("d1")}')}
+    W, H, (cx, cy), R = 1000, 600, (300, 312), 225
+    short = lambda s: html_escape(st["names"].get(s, s if len(s) <= 15 else s[:14] + "…"))
     svg = [f'<svg class="graph" viewBox="0 0 {W} {H}" width="100%" height="100%">']
-    svg += [f'<line x1="{W / 2}" y1="{H / 2}" x2="{x:.0f}" y2="{y:.0f}" pathLength="1" style="--i:{n}"/>' for n, (x, y, _) in enumerate(pts)]
-    svg += [f'<g data-pick="graph" data-key="n{n}" style="--i:{n}"><circle cx="{x:.0f}" cy="{y:.0f}" r="30"/>'
-            f'<text x="{x:.0f}" y="{y + 52:.0f}" text-anchor="middle">{label(name)}</text></g>' for n, (x, y, name) in enumerate(pts)]
-    svg.append(f'<g data-pick="graph" data-key="c"><circle cx="{W / 2}" cy="{H / 2}" r="62" style="stroke:#ff2536"/>'
-               f'<text x="{W / 2}" y="{H / 2 + 6}" text-anchor="middle" style="font-weight:700;font-size:18px">{html_escape(c)}</text></g></svg>')
+    pos1 = []
+    for n, name in enumerate(ring):                                   # hop 1: the hub sits at 3 o'clock, nearest hop 2
+        a = 2 * math.pi * n / len(ring)
+        pos1.append((cx + R * math.cos(a), cy + R * math.sin(a) * 0.86, name))
+        cards[f"n{n}"] = card(c, name)
+    hx, hy = pos1[0][0], pos1[0][1]
+    ys = [cy] + [72, 150, 228, 400, 478][:len(hop2) - 1]
+    pos2 = [(800, y, name) for y, name in zip(ys, hop2)]
+    for n, (_, _, name) in enumerate(pos2):
+        cards[f"s{n}"] = card(hub, name)
+    def seg(x1, y1, r1, x2, y2, r2):
+        d = math.hypot(x2 - x1, y2 - y1)
+        return (f'x1="{x1 + (x2 - x1) * r1 / d:.0f}" y1="{y1 + (y2 - y1) * r1 / d:.0f}" '
+                f'x2="{x2 - (x2 - x1) * r2 / d:.0f}" y2="{y2 - (y2 - y1) * r2 / d:.0f}"')
+    ring_seg = [seg(cx, cy, 56, x, y, 30 if n == 0 else 24) for n, (x, y, _) in enumerate(pos1)]
+    hop_seg = [seg(hx, hy, 30, x, y, 20) for x, y, _ in pos2]
+    # gray base lines; a red copy of each runs over it when its end node (or the question) is picked
+    svg += [f'<line {s} pathLength="1" style="--i:{n}"/>' for n, s in enumerate(ring_seg)]
+    svg += [f'<line class="hop2" {s} pathLength="1" style="--i:{len(ring_seg) + j}"/>' for j, s in enumerate(hop_seg)]
+    on_hub = " ".join(["n0", "q"] + [f"s{j}" for j in range(len(pos2))])
+    svg += [f'<line class="ov" {s} pathLength="1" data-hot="graph" data-on="{on_hub if n == 0 else f"n{n}"}"/>' for n, s in enumerate(ring_seg)]
+    svg += [f'<line class="ov seg2" {s} pathLength="1" data-hot="graph" data-on="s{j}{" q" if j == 0 else ""}"/>' for j, s in enumerate(hop_seg)]
+    labels = [st["hit_label"]] + [lab for _, lab in st["more"]]
+    for n, ((x, y, _), lab) in enumerate(zip(pos2, labels)):
+        svg.append(f'<text class="elab{" no" if n == 0 else ""}" x="{(hx + x) / 2 + 10:.0f}" y="{(hy + y) / 2 - 8:.0f}" text-anchor="middle">{html_escape(lab)}</text>')
+    svg += [f'<g data-pick="graph" data-key="n{n}" style="--i:{n}"{" class=\"hub\"" if n == 0 else ""}><circle cx="{x:.0f}" cy="{y:.0f}" r="{30 if n == 0 else 24}"/>'
+            f'<text x="{x:.0f}" y="{y + (50 if n == 0 else 44):.0f}" text-anchor="middle">{short(name)}</text></g>' for n, (x, y, name) in enumerate(pos1)]
+    svg += [f'<g data-pick="graph" data-key="s{n}" class="h2{" hit" if n == 0 else ""}"><circle cx="{x}" cy="{y}" r="20"/>'
+            f'<text x="{x + 30}" y="{y + 6}">{short(name)}</text></g>' for n, (x, y, name) in enumerate(pos2)]
+    svg.append(f'<g data-pick="graph" data-key="c"><circle cx="{cx}" cy="{cy}" r="56" style="stroke:#ff2536"/>'
+               f'<text x="{cx}" y="{cy + 6}" text-anchor="middle" style="font-weight:700;font-size:18px">{html_escape(c)}</text></g>')
+    svg.insert(1, f'<g data-pick="graph" data-key="q" class="ask"><rect x="8" y="8" width="420" height="70" rx="12"/>'
+                  f'<text x="26" y="35" class="k">ลูกค้าถาม · คลิกดูทางที่ LightRAG เดิน</text>'
+                  f'<text x="26" y="64" class="v">"{html_escape(st["q"])}"</text></g>')
+    svg.append(f'<text x="8" y="{H - 10}" class="legend"><tspan fill="#8a8a92">●</tspan> ชั้นที่ 1 โยงกับร้านตรง ๆ ({len(near(c))} จุด แสดง 12)'
+               f'   <tspan fill="#5b8bd0">●</tspan> ชั้นที่ 2 โยงผ่าน "{html_escape(hub)}" ({len(near(hub))} จุด แสดง {len(hop2)})</text></svg>')
     return "".join(svg), cards
 
 
@@ -244,7 +276,7 @@ def arch_diagram() -> str:
         y1, y2, mid = ay + NH / 2, by + NH / 2, (x1 + x2) / 2
         return f"M{x1},{y1} H{mid} V{y2} H{x2}"            # across, up/down, across: straight lines only
 
-    marker = lambda i, color: (f'<marker id="{i}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" '
+    marker = lambda i, color: (f'<marker id="{i}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" '
                                f'orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="{color}" stroke="none"/></marker>')
     svg = [f'<svg viewBox="0 0 {W} {H}" width="{W}" height="{H}"><defs>{marker("ah", "#8a8a92")}{marker("ahr", "#ff2536")}{marker("ahb", "#ff2536").replace('orient="auto"', 'orient="auto-start-reverse"')}</defs>']
     svg += [f'<path id="e-{a}-{b}" data-hot="arch" data-on="{a} {b}" d="{path(a, b)}"/>' for a, b in content.ARCH_EDGES]
@@ -266,30 +298,38 @@ def tour() -> list:
 
 
 def flow_diagram(name: str) -> str:
-    """One flowchart from content.FLOWS[name]: boxes + arrows (straight, down-first or across-first, or the bottom bus)."""
+    """One flowchart from content.FLOWS[name]: boxes + arrows (straight, down-first or across-first, or the bottom bus).
+    A node may end with dict(w=, h=, html=) for a bigger box that holds a list or table."""
     f = content.FLOWS[name]
     W, H, NW, NH = f["w"], f["h"], f["nw"], f["nh"]
-    pos = {k: (x, y) for k, _, _, x, y, _ in f["nodes"]}
+    box = {k: (x, y, *(((more[0].get("w", NW), more[0].get("h", NH))) if more else (NW, NH)))
+           for k, _, _, x, y, _, *more in f["nodes"]}
 
     def path(a: str, b: str, bus: bool, across: bool = False) -> tuple[str, float, float, str]:
-        (ax, ay), (bx, by) = pos[a], pos[b]
+        (ax, ay, aw, ah), (bx, by, bw, bh) = box[a], box[b]
         if bus:                                                    # an early exit runs along the bottom to the end box
-            return f"M{ax + NW / 2},{ay + NH} V{H - 14} H{bx + NW / 2} V{by + NH + 4}", 0, 0, "start"
-        if ay == by:
-            x1, x2 = (ax + NW, bx - 4) if bx > ax else (ax, bx + NW + 4)
-            ly = ay - 8 if abs(x2 - x1) < 40 else ay + NH / 2 - 10   # gap too narrow: label sits above the boxes
-            return f"M{x1},{ay + NH / 2} L{x2},{by + NH / 2}", (x1 + x2) / 2, ly, "middle"
-        if ax == bx:
-            y1, y2 = (ay + NH, by - 4) if by > ay else (ay, by + NH + 4)
-            return f"M{ax + NW / 2},{y1} L{bx + NW / 2},{y2}", ax + NW / 2 + 10, (y1 + y2) / 2 + 6, "start"
+            return f"M{ax + aw / 2},{ay + ah} V{H - 14} H{bx + bw / 2} V{by + bh + 4}", 0, 0, "start"
+        top, bottom, left, right = max(ay, by), min(ay + ah, by + bh), max(ax, bx), min(ax + aw, bx + bw)
+        if not across and top < bottom and (bx >= ax + aw or bx + bw <= ax):    # side by side: straight across
+            y = (top + bottom) / 2
+            x1, x2 = (ax + aw, bx - 4) if bx > ax else (ax, bx + bw + 4)
+            ly = top - 8 if abs(x2 - x1) < 40 else y - 10      # gap too narrow: label sits above the boxes
+            return f"M{x1},{y} L{x2},{y}", (x1 + x2) / 2, ly, "middle"
+        if not across and left < right and (by >= ay + ah or by + bh <= ay):    # stacked: straight up or down
+            x = (left + right) / 2
+            y1, y2 = (ay + ah, by - 4) if by > ay else (ay, by + bh + 4)
+            return f"M{x},{y1} L{x},{y2}", x + 10, (y1 + y2) / 2 + 6, "start"
         if by > ay and not across:                                 # down first, then across, then down into the box
-            mid = (ay + NH + by) / 2
-            return f"M{ax + NW / 2},{ay + NH} V{mid} H{bx + NW / 2} V{by - 4}", (ax + bx + NW) / 2, mid - 8, "middle"
-        mid = (ax + NW + bx) / 2 if bx > ax else (ax + bx + NW) / 2   # across first, then up/down, then across into the box
-        x1, x2 = (ax + NW, bx - 4) if bx > ax else (ax, bx + NW + 4)
-        return f"M{x1},{ay + NH / 2} H{mid} V{by + NH / 2} H{x2}", mid + 8, (ay + by + NH) / 2, "start"
+            mid = (ay + ah + by) / 2
+            return f"M{ax + aw / 2},{ay + ah} V{mid} H{bx + bw / 2} V{by - 4}", (ax + aw / 2 + bx + bw / 2) / 2, mid - 8, "middle"
+        x1, x2 = (ax + aw, bx - 4) if bx > ax else (ax, bx + bw + 4)   # across first, then up/down, then across into the box
+        mid = (ax + aw + bx) / 2 if bx > ax else (ax + bx + bw) / 2
+        d = f"M{x1},{ay + ah / 2} H{mid} V{by + bh / 2} H{x2}"
+        if bx < ax:                                                # going left: label on the last stretch, clear of the source box
+            return d, (mid + x2) / 2, by + bh / 2 - 10, "middle"
+        return d, mid + 8, (ay + ah / 2 + by + bh / 2) / 2, "start"
 
-    marker = lambda i, color: (f'<marker id="{i}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="14" markerHeight="14" '
+    marker = lambda i, color: (f'<marker id="{i}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" '
                                f'markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="{color}"/></marker>')
     svg = [f'<svg viewBox="0 0 {W} {H}" width="{W}" height="{H}"><defs>{marker(f"fh-{name}", "#8a8a92")}{marker(f"fhr-{name}", "#ff2536")}</defs>']
     for a, b, label, *flag in f["edges"]:
@@ -298,8 +338,9 @@ def flow_diagram(name: str) -> str:
         if label:
             svg.append(f'<text x="{lx}" y="{ly}" text-anchor="{anchor}">{html_escape(label)}</text>')
     svg.append("</svg>")
-    boxes = [f'<div class="fnode {shape}" data-f="{k}" style="left:{x}px;top:{y}px;width:{NW}px;height:{NH}px">'
-             f'<b>{html_escape(t)}</b><span>{html_escape(sub)}</span></div>' for k, t, sub, x, y, shape in f["nodes"]]
+    boxes = [f'<div class="fnode {shape}{" fbig" if more else ""}" data-f="{k}" style="left:{x}px;top:{y}px;width:{box[k][2]}px;height:{box[k][3]}px">'
+             f'<b>{html_escape(t)}</b><span>{html_escape(sub)}</span>{more[0].get("html", "") if more else ""}</div>'
+             for k, t, sub, x, y, shape, *more in f["nodes"]]
     return f'<div class="flowmap" data-flow="{name}" style="width:{W}px;height:{H}px">{"".join(svg)}{"".join(boxes)}</div>'
 
 
@@ -320,15 +361,23 @@ def flow_walks(every: dict, canned_: dict) -> dict:
         c = every[cid]
         kind = c["vision"].split(",")[0].replace("type=", "")
         steps = [(None, "img", "ok", c["imgPath"].split("/")[-1] + (" · " + c["hint"].split(": ")[1] if c["hint"] else "")),
-                 ("img-ocr", "ocr", "ok", "อ่านตัวอักษรในภาพ"), ("ocr-json", "json", "ok", c["vision"][:110]),
+                 ("img-gate", "gate", "ok", "ไฟล์ PNG ไม่เกิน 5 MB ผ่าน"),
+                 ("gate-ocr", "ocr", "ok", "อ่านตัวอักษรในภาพ"), ("ocr-json", "json", "ok", c["vision"][:110]),
                  ("json-type", "type", "hit", f"ชนิด {kind}")]
         if kind == "slip":
             ok = "ผ่านทุกเกณฑ์" in c["a"] or "ผ่านครบ" in c["a"]
             steps += [("type-slip", "slip", "hit", "ตรวจ 5 ข้อด้วยโค้ด", {"slip": "ผ่านครบ 5 ข้อ" if ok else "ไม่ผ่านข้อ 3: ยอดเงินไม่ตรงยอดค้าง"}),
                       ("slip-pass", "pass", "ok", "ผ่าน → รอพนักงานยืนยัน") if ok else ("slip-fail", "fail", "stop", "ยอดไม่ตรง → บอกยอดที่ขาด + ปุ่มคุยกับพนักงาน")]
         else:
-            steps += [("type-other", "other", "ok", "ตอบจากตัวเลขในภาพและข้อมูลร้าน")]
+            steps += [("type-answer", "answer", "ok", "ส่งตัวเลขในภาพไปให้ answer() ตอบคู่กับข้อมูลร้าน"),
+                      ("answer-gout", "gout", "hit", "ตรวจคำตอบก่อนส่ง" + (": ตัวเลขในโปสเตอร์ไม่นับเป็นราคาของร้าน" if kind == "promo_poster" else ": ตัวเลขทุกตัวต้องมีในภาพหรือข้อมูลร้าน")),
+                      ("gout-reply", "reply", "ok", "ส่งคำตอบให้ลูกค้า")]
         out["vision"].append(walk(f"{cid} {label}", steps, sec=c["sec"], answer=c["a"]))
+    out["vision"].append(walk("ไฟล์ PDF ถูกปฏิเสธ", [                   # chat.vision(): checked before any AI call (code facts, not a test case)
+        (None, "img", "ok", "ลูกค้าแนบไฟล์ใบเสร็จ.pdf"),
+        ("img-gate", "gate", "stop", "ไม่ใช่ PNG/JPG → หน้าเว็บเตือนก่อนส่ง และ /api/vision ตอบ 415 ซ้ำอีกชั้น"),
+        ("gate-xfile", "xfile", "stop", "ตอบทันที ไม่เรียก typhoon-ocr และไม่เสียโควตา AI")],
+        answer="รองรับเฉพาะภาพ JPG หรือ PNG ไม่เกิน 5 MB · ส่งถี่เกิน 6 ภาพต่อนาทีก็ถูกปฏิเสธเหมือนกัน (429)"))
     return out
 
 
