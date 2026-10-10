@@ -21,7 +21,7 @@ def member(member_id: str | None) -> dict | None:
 def verify(member_id: str, last4: str) -> dict | None:
     """The member when member_id and the last 4 phone digits match (same check as the website's verify step)."""
     m = member(member_id.upper())
-    return m if m and m["phone"].replace("-", "").endswith(last4) else None
+    return m if m and re.fullmatch(r"\d{4}", last4 or "") and m["phone"].replace("-", "").endswith(last4) else None
 
 
 def _hours() -> str:

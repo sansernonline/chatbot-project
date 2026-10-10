@@ -19,6 +19,8 @@ services:
         sync: false
       - key: XF_ADMIN_PASS
         sync: false
+      - key: XF_CORS_ORIGINS     # only the site itself may call the API (the local demo default is "*")
+        value: https://x-fitness-chatbot.onrender.com
       - key: LINE_CHANNEL_SECRET        # optional: leave empty to keep the LINE channel off
         sync: false
       - key: LINE_CHANNEL_ACCESS_TOKEN

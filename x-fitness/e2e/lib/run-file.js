@@ -2,10 +2,9 @@
 // and the report is built once at the very end (global teardown).
 const fs = require('fs');
 const path = require('path');
-const { QA_DIR } = require('./testcases');
+const { OUT_DIR } = require('./testcases');
 const report = require('./report');
 
-const OUT_DIR = path.join(QA_DIR, 'results');
 const RUN_FILE = path.join(OUT_DIR, '.ui-run.jsonl');
 
 function reset() {

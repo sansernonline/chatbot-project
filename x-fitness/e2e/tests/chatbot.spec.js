@@ -1,28 +1,29 @@
-// Use the X Fitness website like a customer, one case per test, cases from qa/x-fitness-test-cases.md.
+// Use the X Fitness website like a customer, one case per test, cases from qa/report/x-fitness-test-cases.md (or E2E_CASES).
 // Knows the site only by what a customer sees (element ids, text) — no chatbot code is imported.
 //
-// E2E_SUITES=questions,images   only these suites        E2E_RULES=10 E2E_SEED=7   random sample of suite 4
+// E2E_SUITES=questions,images   only these suites        E2E_SAMPLE=20 E2E_SEED=7   random sample from each suite
 const { test, expect } = require('@playwright/test');
 const path = require('path');
 const testcases = require('../lib/testcases');
 const runFile = require('../lib/run-file');
 
 const IMAGES_DIR = path.join(testcases.QA_DIR, 'test-images');   // test assets live with the test cases
-const suites = (process.env.E2E_SUITES || 'questions,images,safety,rules').split(',');
+const suites = (process.env.E2E_SUITES || 'questions,images,safety').split(',');
 const seed = Number(process.env.E2E_SEED || Math.floor(Math.random() * 1000));
 
 function pick(cases) {
-  const rules = cases.filter(c => c.suite === 'rules');
-  const n = Number(process.env.E2E_RULES || rules.length);
+  const n = Number(process.env.E2E_SAMPLE || 0);             // 0 = every case
   let s = seed;                                               // small seeded shuffle so a draw can be repeated
   const rand = () => ((s = (s * 9301 + 49297) % 233280) / 233280);
-  const sample = [...rules].sort(() => rand() - 0.5).slice(0, n);
-  return cases.filter(c => suites.includes(c.suite) && (c.suite !== 'rules' || sample.includes(c)));
+  return suites.flatMap(suite => {
+    const pool = cases.filter(c => c.suite === suite);
+    return n ? [...pool].sort(() => rand() - 0.5).slice(0, n) : pool;
+  });
 }
 
 const CASES = pick(testcases.load());
 const meta = { started: new Date().toLocaleString('th-TH'), baseURL: '', mode: '',
-               note: `· สุ่มหมวด 4: ${process.env.E2E_RULES ? `${process.env.E2E_RULES} ข้อ (E2E_SEED=${seed})` : 'ทุกข้อ'}` };
+               note: process.env.E2E_SAMPLE ? `· สุ่มหมวดละ ${process.env.E2E_SAMPLE} ข้อ (E2E_SEED=${seed})` : '· ทุกข้อ' };
 
 const norm = s => s.replace(/,/g, '');
 function check(spec, r) {

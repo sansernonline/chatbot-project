@@ -1,4 +1,4 @@
-// Turn the collected results into qa/results/x-fitness-ui-results.md (+ .json), with links to the screenshots.
+// Turn the collected results into <set>/results/x-fitness-ui-results.md (+ .json), with links to the screenshots.
 const fs = require('fs');
 const path = require('path');
 
@@ -6,7 +6,6 @@ const SUITES = {
   questions: ['1. ชุดคำถามทดสอบ', 'ผลตอบที่หน้าเว็บแสดง'],
   images: ['2. ชุดภาพทดสอบ', 'ผลวิเคราะห์ภาพ (JSON ที่หน้าเว็บแสดง) และคำตอบ'],
   safety: ['3. ชุดทดสอบความปลอดภัย', 'มาตรการที่ทำงาน และคำตอบ'],
-  rules: ['4. รายการต้องทำ/ห้ามทำ', 'ผลตอบที่หน้าเว็บแสดง'],
 };
 const cell = s => String(s ?? '').replace(/\|/g, '/').replace(/\s*\n\s*/g, ' ').trim();
 const avg = xs => (xs.reduce((a, b) => a + b, 0) / (xs.length || 1)).toFixed(1);
@@ -29,7 +28,7 @@ function write(results, outDir, meta) {
     '| โครงงาน | X Fitness Chatbot |', '| ผู้พัฒนา | 68076040 เบญจมาภรณ์ เจียนเกาะ · 68076065 สรรเสริญ มากเจริญ |',
     `| วันเวลาที่ทดสอบ | ${meta.started} |`,
     `| เว็บที่ทดสอบ | ${meta.baseURL} (${meta.mode}) |`,
-    `| ชุดทดสอบ | \`qa/x-fitness-test-cases.md\` ${meta.note} |`,
+    `| ชุดทดสอบ | \`${require('./testcases').label}\` ${meta.note} |`,
     '| วิธีทดสอบ | Playwright เปิด Chromium → ยืนยันสมาชิก (ถ้ามี) → เปิดแชต → แนบภาพ/พิมพ์ข้อความ → รอคำตอบ → ตรวจข้อความที่แสดงบนหน้าเว็บ → ถ่ายภาพหน้าจอ |',
     '| เวลาตอบ | วินาที จากกดส่งถึงคำตอบขึ้นบนหน้าจอ (รวมเวลาอ่านภาพ) |', '',
     '## สรุปผล', '', '| ชุดทดสอบ | ผ่าน | ไม่ผ่าน | เวลาตอบเฉลี่ย (วินาที) | เร็วสุด–ช้าสุด |', '|---|---|---|---|---|',
@@ -59,7 +58,7 @@ function write(results, outDir, meta) {
   }
   lines.push('', '## หมายเหตุ', '',
     '- ตัดสินผลอัตโนมัติจากข้อความที่หน้าเว็บแสดง ควรให้ผู้ทดสอบอ่านคำตอบและภาพหน้าจอทวน',
-    '- "สลิปผ่าน" ตรวจไม่ได้จากหน้าเว็บ (หน้าเว็บไม่แสดงผลตรวจแยก) — ดูจากคำตอบ หรือผลของสคริปต์ API `qa/results/x-fitness-api-results.md`',
+    '- "สลิปผ่าน" ตรวจไม่ได้จากหน้าเว็บ (หน้าเว็บไม่แสดงผลตรวจแยก) — ดูจากคำตอบ หรือผลของสคริปต์ API `qa/report/results/x-fitness-api-results.md`',
     '- คำตอบของ LLM ต่างกันได้เล็กน้อยในแต่ละรอบ · ข้อมูลทั้งหมดเป็นข้อมูลจำลอง');
   fs.writeFileSync(path.join(outDir, 'x-fitness-ui-results.md'), lines.join('\n') + '\n');
   fs.writeFileSync(path.join(outDir, 'x-fitness-ui-results.json'), JSON.stringify(results, null, 1));

@@ -1,12 +1,16 @@
-// Read qa/x-fitness-test-cases.md — the test case document the team edits (same file the API script reads).
-// Each table row under "## 1." … "## 4." is one case:
+// Read the report set qa/report/x-fitness-test-cases.md (same file the API script reads; built from the library qa/1-3).
+// E2E_CASES=<file or folder> reads another set, e.g. E2E_CASES=../../qa for the whole library (qa/1-questions.md 2-images.md 3-safety.md).
+// Each table row under "## 1." … "## 3." is one case ("###" sub-headings stay in the same suite):
 // | รหัส | ข้อความ | ภาพ | สมาชิก | ผลที่คาดหวัง | ต้องมีทุกคำ | ต้องมีอย่างน้อย 1 คำ | ห้ามมี | ตรวจเพิ่ม |
 const fs = require('fs');
 const path = require('path');
 
 const QA_DIR = path.resolve(__dirname, '../../../qa');
-const CASES_FILE = path.join(QA_DIR, 'x-fitness-test-cases.md');
-const SUITES = { 1: 'questions', 2: 'images', 3: 'safety', 4: 'rules' };
+const REPORT_FILE = path.join(QA_DIR, 'report', 'x-fitness-test-cases.md');
+const CASES_FILE = process.env.E2E_CASES ? path.resolve(process.env.E2E_CASES) : REPORT_FILE;
+const IS_REPORT = CASES_FILE === REPORT_FILE;
+const OUT_DIR = path.join(QA_DIR, IS_REPORT ? 'report' : 'system', 'results');   // results sit next to their set
+const SUITES = { 1: 'questions', 2: 'images', 3: 'safety' };
 
 const list = cell => (cell === '-' || !cell ? [] : cell.split(' ; ').map(s => s.trim()).filter(Boolean));
 
@@ -23,6 +27,8 @@ function spec(all, any, none, extra) {
 }
 
 function load(file = CASES_FILE) {
+  if (fs.statSync(file).isDirectory())                                   // the library: 1-questions.md 2-images.md 3-safety.md
+    return fs.readdirSync(file).filter(f => /^\d-.*\.md$/.test(f)).sort().flatMap(f => load(path.join(file, f)));
   const cases = [];
   let suite = null;
   for (const line of fs.readFileSync(file, 'utf8').split(/\r?\n/)) {
@@ -38,4 +44,4 @@ function load(file = CASES_FILE) {
   return cases;
 }
 
-module.exports = { load, QA_DIR, CASES_FILE };
+module.exports = { load, QA_DIR, CASES_FILE, OUT_DIR, label: path.relative(path.dirname(QA_DIR), CASES_FILE).replace(/\\/g, '/') };

@@ -1,14 +1,12 @@
 """Run the checklist test sets against the real bot and write the results table.
 
     cd x-fitness/backend
-    python -m eval.run                  # questions + images + safety + 10 random do/don't rules
-    python -m eval.run --rules all      # every rule test
-    python -m eval.run --seed 7         # repeat a previous random draw
-    python -m eval.run --cases ../../qa/x-fitness-extra-test-cases.md   # another case file → qa/results/x-fitness-extra-api-results.md
-    python -m eval.run --cases ../../qa/x-fitness-bulk-test-cases.md --sample 100   # 100 random cases from each suite
+    python -m eval.run                  # report set: questions 10 + images 5 + safety 5
+    python -m eval.run --system --sample 100 --seed 1   # system test: 100 random cases from each suite of the whole library
 
 Needs TYPHOON_API_KEY in backend/.env and the committed rag-index. Uses a throwaway chat database.
-Reads the cases from qa/x-fitness-test-cases.md; writes qa/results/x-fitness-api-results.md (+ .json).
+Report set: reads qa/report/x-fitness-test-cases.md → qa/report/results/x-fitness-api-results.md (+ .json).
+System test: reads the library qa/1-questions.md 2-images.md 3-safety.md → qa/system/results/x-fitness-system-api-results.md (+ .json).
 """
 import argparse
 import json
@@ -20,12 +18,21 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from app import config, db, rag
+from app import business, config, db, rag
 from eval import testcases
 
 QA_DIR = config.PROJECT_ROOT.parent / "qa"
-CASES_FILE = QA_DIR / "x-fitness-test-cases.md"
-OUT_DIR = QA_DIR / "results"
+CASES_FILE = QA_DIR / "report" / "x-fitness-test-cases.md"     # the report set (picked from the library)
+LIBRARY = QA_DIR                                                 # the central library qa/1-*.md 2-*.md 3-*.md — the system test runs all of it
+
+
+def out_path(cases: Path) -> Path:
+    """Results go next to the set they came from: qa/report/results/ or qa/system/results/."""
+    cases = cases.resolve()
+    if cases == CASES_FILE.resolve():
+        return QA_DIR / "report" / "results" / "x-fitness-api-results"
+    name = "x-fitness-system" if cases.is_dir() else cases.stem.replace("-test-cases", "")
+    return QA_DIR / "system" / "results" / f"{name}-api-results"
 
 
 def check(spec: dict, res: dict, vision: dict | None = None) -> list[str]:
@@ -65,7 +72,8 @@ class Bot:
     def ask(self, message: str, member: str | None = None, vision: dict | None = None) -> dict:
         self.n += 1
         session = "".join(f"{c}{d}" for c, d in zip("EVALTEST", f"{self.n:05d}"))[:10]   # fresh chat, no history
-        r = self.client.post("/api/chat", json={"session_id": session, "message": message, "member_id": member, "vision": vision})
+        r = self.client.post("/api/chat", json={"session_id": session, "message": message, "member_id": member, "vision": vision,
+                                                  "phone_last4": member and business.member(member)["phone_last4"]})   # the verify step on the site
         return r.json() if r.status_code == 200 else {"answer": "", "error": f"HTTP {r.status_code}: {r.text[:120]}"}
 
     def read(self, image: Path) -> dict:
@@ -73,7 +81,7 @@ class Bot:
         return r.json() if r.status_code == 200 else {"error": f"HTTP {r.status_code}: {r.text[:120]}"}
 
 
-def run(cases_file: Path, rule_sample: int | None, seed: int, sample: int | None = None) -> dict:
+def run(cases_file: Path, seed: int, sample: int | None = None) -> dict:
     bot, results = Bot(), {}
 
     def record(suite, cid, label, expected, ask, spec, vision=None, extra_secs=0.0):
@@ -88,13 +96,11 @@ def run(cases_file: Path, rule_sample: int | None, seed: int, sample: int | None
         print(f"{'PASS' if not bad else 'FAIL'} {cid} {secs:>5}s {label[:50]}" + (f"  ← {'; '.join(bad)}" if bad else ""))
 
     cases = testcases.load(cases_file)
-    rules = [c for c in cases if c["suite"] == "rules"]
-    picked = rules if rule_sample is None else random.Random(seed).sample(rules, min(rule_sample, len(rules)))
-    if sample:                                  # --sample N: N random cases from each suite (the large case file)
+    if sample:                                  # --sample N: N random cases from each suite (the library)
         pool = lambda suite: [c for c in cases if c["suite"] == suite]
-        cases = [c for suite in dict.fromkeys(c["suite"] for c in cases if c["suite"] != "rules")
+        cases = [c for suite in dict.fromkeys(c["suite"] for c in cases)
                  for c in random.Random(seed).sample(pool(suite), min(sample, len(pool(suite))))]
-    for c in [c for c in cases if c["suite"] != "rules"] + picked:
+    for c in cases:
         msg, member, label = c["message"], c["member"], f"\"{c['message']}\"" + (f" · สมาชิก {c['member']}" if c["member"] else "")
         vision, extra = None, 0.0
         if c["image"]:
@@ -129,8 +135,6 @@ SUITES = {  # key: (title, column heading for the result) — {n} = number of ca
     "questions": ("1. ชุดคำถามทดสอบ {n} ข้อ", "ผลตอบของบอท"),
     "images": ("2. ชุดภาพทดสอบ {n} ภาพ", "ผลวิเคราะห์ (อ่านภาพ · ตรวจสลิป) และคำตอบ"),
     "safety": ("3. ชุดทดสอบความปลอดภัย {n} กรณี", "ผลวิเคราะห์ (มาตรการที่ทำงาน) และคำตอบ"),
-    "rules": ("4. ภาคผนวก: สุ่มทดสอบรายการต้องทำ/ห้ามทำ", "ผลตอบของบอท"),
-    "offtopic": ("5. คำถามนอกเรื่อง {n} ข้อ", "ผลตอบของบอท"),
 }
 
 
@@ -143,9 +147,9 @@ def report(results: dict, seed: int, sample: int | None, cases_file: Path = CASE
              "| ผู้พัฒนา | 68076040 เบญจมาภรณ์ เจียนเกาะ · 68076065 สรรเสริญ มากเจริญ |",
              f"| วันเวลาที่ทดสอบ | {datetime.now():%Y-%m-%d %H:%M} |",
              f"| ระบบที่ทดสอบ | backend จริง (FastAPI) · LLM `{config.CHAT_MODEL}` · อ่านภาพ `{config.VISION_MODEL}` · ค้นคลังความรู้ {rag.engine()} |",
-             f"| วิธีทดสอบ | `cd x-fitness/backend && python -m eval.run` ยิงคำถามเข้า `/api/chat` และ `/api/vision` แล้วตรวจคำตอบอัตโนมัติ · "
-             f"สุ่มกฎ {'ทั้งหมด' if sample is None else f'{sample} ข้อ (seed {seed})'} |",
-             f"| เกณฑ์ผ่าน | คำตอบมีข้อมูลที่ต้องมีครบ ไม่มีข้อความต้องห้าม และมาตรการ (guard) ที่ควรทำงานได้ทำงาน — เกณฑ์แต่ละข้ออยู่ใน `qa/{cases_file.name}` |",
+             f"| วิธีทดสอบ | `cd x-fitness/backend && python -m eval.run` ยิงคำถามเข้า `/api/chat` และ `/api/vision` แล้วตรวจคำตอบอัตโนมัติ · " +
+             (f"สุ่มหมวดละ {sample} ข้อ (seed {seed})" if sample else "ทุกข้อในชุด") + " |",
+             f"| เกณฑ์ผ่าน | คำตอบมีข้อมูลที่ต้องมีครบ ไม่มีข้อความต้องห้าม และมาตรการ (guard) ที่ควรทำงานได้ทำงาน — เกณฑ์แต่ละข้ออยู่ใน `{cases_file.resolve().relative_to(QA_DIR.parent.resolve()).as_posix()}` |",
              "| เวลาตอบ | วินาที วัดจากส่งคำขอถึงได้คำตอบ (ภาพรวมเวลาอ่านภาพด้วย) |", "",
              "## สรุปผล", "", "| ชุดทดสอบ | ผ่าน | ไม่ผ่าน | เวลาตอบเฉลี่ย (วินาที) | เร็วสุด–ช้าสุด |", "|---|---|---|---|---|"]
     for key, (title, _) in SUITES.items():
@@ -176,18 +180,19 @@ def report(results: dict, seed: int, sample: int | None, cases_file: Path = CASE
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--rules", default="10", help="how many do/don't rule tests to draw at random, or 'all'")
     ap.add_argument("--sample", type=int, help="run only N random cases from each suite (same --seed = same draw)")
     ap.add_argument("--seed", type=int, default=random.randrange(1000))
-    ap.add_argument("--cases", type=Path, default=CASES_FILE, help="test case file (same table layout as qa/x-fitness-test-cases.md)")
+    ap.add_argument("--system", action="store_true", help="system test: run the whole library qa/1-3 (use with --sample)")
+    ap.add_argument("--cases", type=Path, default=CASES_FILE, help="case file or folder (same table layout as the library)")
     a = ap.parse_args()
-    sample = None if a.rules == "all" else int(a.rules)
+    if a.system:
+        a.cases = LIBRARY
     if not config.TYPHOON_API_KEY:
         raise SystemExit("ต้องใส่ TYPHOON_API_KEY ใน backend/.env ก่อน")
     print(f"seed {a.seed} · engine {rag.engine()}")
-    results = run(a.cases, sample, a.seed, a.sample)
-    out = OUT_DIR / a.cases.stem.replace("test-cases", "api-results")
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    out.with_suffix(".md").write_text(report(results, a.seed, sample, a.cases), encoding="utf-8")
+    results = run(a.cases, a.seed, a.sample)
+    out = out_path(a.cases)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.with_suffix(".md").write_text(report(results, a.seed, a.sample, a.cases), encoding="utf-8")
     out.with_suffix(".json").write_text(json.dumps(results, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"\nเขียนผลที่ {out.with_suffix('.md')}")

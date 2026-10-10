@@ -26,7 +26,7 @@ x-fitness/
 │   │   ├── llm.py · config.py · auth.py · db.py
 │   │   └── prompts/           system.md · vision.md
 │   ├── tests/              pytest (ไม่ต้องใช้ key)
-│   ├── eval/               ทดสอบผ่าน API กับ Typhoon จริง: อ่าน qa/x-fitness-test-cases.md → qa/results/x-fitness-api-results.md
+│   ├── eval/               ทดสอบผ่าน API กับ Typhoon จริง: อ่าน qa/report/x-fitness-test-cases.md → qa/report/results/x-fitness-api-results.md
 │   ├── requirements.txt
 │   └── .env.example
 ├── e2e/           ทดสอบผ่านหน้าเว็บด้วย Playwright (ไม่แตะโค้ดแชตบอท) — ดู e2e/README.md
@@ -82,14 +82,14 @@ python -m pytest
 
 ไม่ต้องใช้ key และไม่ต่อเน็ต — test ปลอม LLM และ LINE เอง (embedding ใช้ของจริงเพราะเป็นสูตรคำนวณ) แม้ใน `.env` จะมี key ก็ไม่เรียก Typhoon จริง
 
-**ชุดทดสอบตาม checklist ของวิชา** (ใช้ Typhoon จริง ต้องมี key): คำถาม 10 ข้อ · ภาพ 5 ภาพ · ความปลอดภัย 5 กรณี · สุ่มกฎต้องทำ/ห้ามทำ 10 ข้อ
+**ชุดทดสอบตาม checklist ของวิชา** (ใช้ Typhoon จริง ต้องมี key): คำถาม 10 ข้อ · ภาพ 5 ภาพ · ความปลอดภัย 5 กรณี
 
 ```bash
-python -m eval.run              # อ่าน ../../qa/x-fitness-test-cases.md → เขียน ../../qa/results/x-fitness-api-results.md
-python -m eval.run --rules all  # ทดสอบกฎครบ 20 ข้อ
+python -m eval.run              # อ่าน ../../qa/report/x-fitness-test-cases.md → เขียน ../../qa/report/results/x-fitness-api-results.md
+python -m eval.run --system --sample 100 --seed 1   # ทดสอบระบบรวม: สุ่มหมวดละ 100 ข้อจากคลัง ../../qa/1-3 → ../../qa/system/results/
 ```
 
-ชุดทดสอบ (แก้/เพิ่มได้) อยู่ที่ `qa/x-fitness-test-cases.md` · ทดสอบผ่านหน้าเว็บด้วย Playwright ดู `e2e/README.md` · กฎแต่ละข้ออธิบายใน `docs/03_bot-rules.md`
+ชุดทดสอบแก้/เพิ่มที่คลังกลาง `qa/1-questions.md` `qa/2-images.md` `qa/3-safety.md` แล้วสร้างชุดทำรายงานใหม่ด้วย `python qa/tools/build_report_set.py` (วิธีเขียนแถวอยู่ต้นไฟล์ `qa/report/x-fitness-test-cases.md`) · ทดสอบผ่านหน้าเว็บด้วย Playwright ดู `e2e/README.md` · กฎแต่ละข้ออธิบายใน `docs/03_bot-rules.md`
 
 ## ตั้งค่า (`backend/.env`)
 
@@ -103,6 +103,9 @@ python -m eval.run --rules all  # ทดสอบกฎครบ 20 ข้อ
 | `XF_RAG_MODE` | `mix` | โหมดค้นของ LightRAG: `naive` `local` `global` `hybrid` `mix` |
 | `XF_ADMIN_USER` / `XF_ADMIN_PASS` | `admin` / `1234` | บัญชีหลังบ้าน |
 | `XF_DB_PATH` | `backend/data/chat.sqlite3` | ที่เก็บแชต |
+| `XF_CORS_ORIGINS` | `*` | เว็บที่เรียก API ได้ · บน Render ตั้งใน `render.yaml` เป็นเว็บของร้านเท่านั้น |
+| `XF_RATE_LIMIT_PER_MIN` / `XF_VISION_LIMIT_PER_MIN` | `30` / `6` | ข้อความและภาพต่อนาที ต่อ IP (หน้าเว็บ) หรือต่อผู้ใช้ LINE · เกินแล้วตอบ 429 ไม่เรียก Typhoon |
+| `XF_VERIFY_MAX_FAILS` / `XF_VERIFY_LOCK_MIN` | `5` / `15` | ใส่เบอร์ 4 ตัวท้ายผิดกี่ครั้งต่อรหัสสมาชิก (รวมทุกแชต) แล้วล็อกรหัสนั้นกี่นาที |
 
 ## ข้อมูลที่ระบบสร้างเอง
 

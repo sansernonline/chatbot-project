@@ -1,13 +1,14 @@
-"""Read the test cases from qa/x-fitness-test-cases.md (the same file the Playwright tests in x-fitness/e2e read).
+"""Read test cases from a case file (qa/report/x-fitness-test-cases.md, the same file the Playwright tests read)
+or from the folder holding the central library (qa/1-questions.md 2-images.md 3-safety.md).
 
-Each table row under "## 1." … "## 5." is one case (5 = off-topic questions, used by the large case file):
+Each table row under "## 1." … "## 3." is one case ("###" sub-headings stay in the same suite):
 | รหัส | ข้อความ | ภาพ | สมาชิก | ผลที่คาดหวัง | ต้องมีทุกคำ | ต้องมีอย่างน้อย 1 คำ | ห้ามมี | ตรวจเพิ่ม |
 Lists are separated by " ; " and "-" means empty.
 """
 import re
 from pathlib import Path
 
-SUITES = {"1": "questions", "2": "images", "3": "safety", "4": "rules", "5": "offtopic"}
+SUITES = {"1": "questions", "2": "images", "3": "safety"}
 
 
 def _list(cell: str) -> list[str]:
@@ -37,6 +38,8 @@ def _spec(must_all: str, must_any: str, must_not: str, extra: str) -> dict:
 
 
 def load(path: Path) -> list[dict]:
+    if path.is_dir():                                   # the library: 1-questions.md 2-images.md 3-safety.md
+        return [c for f in sorted(path.glob("[0-9]-*.md")) for c in load(f)]
     cases, suite = [], None
     for line in path.read_text(encoding="utf-8").splitlines():
         if m := re.match(r"## (\d)\.", line):

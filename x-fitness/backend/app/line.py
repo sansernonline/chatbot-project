@@ -9,18 +9,16 @@ import hashlib
 import hmac
 import json
 import logging
-import re
 
 import httpx
 from fastapi import APIRouter, BackgroundTasks, Header, HTTPException, Request
 from fastapi.concurrency import run_in_threadpool
 
-from . import business, chat, config, db, llm
+from . import chat, config, db, limits, llm
 
 log = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/line", tags=["LINE"])
 API = "https://api.line.me/v2/bot"
-VERIFY = re.compile(r"FN\s*-?\s*(\d{5})\D+(\d{4})(?!\d)", re.I)       # "FN-10003 5531"
 STAFF_BUSY = ("waiting", "agent")                                     # staff has the chat: bot stays quiet
 ERROR_REPLY = {"answer": f"ขออภัยค่ะ ระบบขัดข้องชั่วคราว ลองใหม่อีกครั้ง หรือพิมพ์ \"{chat.HANDOFF}\"", "actions": [chat.HANDOFF]}
 
@@ -53,7 +51,9 @@ async def handle(event: dict) -> None:
     if conv["status"] in STAFF_BUSY:
         return
     try:
-        if msg["type"] == "text":
+        if not limits.allow("line:" + user_id, config.RATE_LIMIT_PER_MIN):   # no model call: the reply itself is free
+            result = {"answer": limits.TOO_FAST, "actions": []}
+        elif msg["type"] == "text":
             result = await on_text(cid, user_id, msg["text"].strip()[:500], conv)
         elif msg["type"] == "image":
             loading(user_id)
@@ -75,15 +75,11 @@ async def on_text(cid: str, user_id: str, text: str, conv: dict) -> dict:
         db.handoff(cid, "ขอคุยกับพนักงาน (LINE)", conv["name"], conv["member_id"])
         return {"answer": "ส่งเรื่องให้พนักงานแล้วค่ะ พนักงานตอบทุกวัน 09:00–20:00 น. ภายในประมาณ 15 นาที "
                           "ระหว่างนี้พิมพ์รายละเอียดเพิ่มได้เลยค่ะ", "actions": []}
-    if m := VERIFY.search(text):                                       # LINE has no verify form: member types it
-        member = business.verify(f"FN-{m.group(1)}", m.group(2))
-        if not member:
-            return {"answer": "รหัสสมาชิกหรือเบอร์โทร 4 ตัวท้ายไม่ตรงกันค่ะ ลองพิมพ์ใหม่ เช่น FN-10003 5531", "actions": []}
-        db.patch(cid, {"member_id": member["member_id"]})
-        return {"answer": f"ยืนยันตัวตนแล้วค่ะ คุณ{member['first_name']} ถามเรื่องแต้ม ยอดค้างชำระ หรือส่งสลิปได้เลยค่ะ",
-                "actions": ["แต้มของฉัน", "ยอดค้างชำระ"]}
     loading(user_id)
-    return await chat.answer(text, cid, conv["member_id"])
+    result = await chat.answer(text, cid, conv["member_id"])          # LINE has no verify form: the member types it (chat.verify_step)
+    if member := result.pop("member", None):
+        db.patch(cid, {"member_id": member["member_id"]})
+    return result
 
 
 def push(cid: str, text: str) -> None:

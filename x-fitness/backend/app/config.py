@@ -10,12 +10,19 @@ load_dotenv(PROJECT_ROOT / "backend" / ".env")
 DB_PATH = Path(os.getenv("XF_DB_PATH", PROJECT_ROOT / "backend" / "data" / "chat.sqlite3"))
 ADMIN_USER = os.getenv("XF_ADMIN_USER", "admin")
 ADMIN_PASS = os.getenv("XF_ADMIN_PASS", "1234")
-CORS_ORIGINS = os.getenv("XF_CORS_ORIGINS", "*").split(",")  # "*" lets the site opened as file:// call the API
+CORS_ORIGINS = os.getenv("XF_CORS_ORIGINS", "*").split(",")  # "*" lets the site opened as file:// call the API (local demo only);
+                                                             # deployed: the site's own address (render.yaml), so other websites cannot call the API
 WEB_DIR = PROJECT_ROOT / "frontend"  # copied from the root mockup/ folder
 TEST_IMAGES_DIR = PROJECT_ROOT / "test-images"
 KB_DIR = PROJECT_ROOT / "data" / "knowledge-base"
 DATA_DIR = PROJECT_ROOT / "data" / "db"
 PROMPTS_DIR = Path(__file__).parent / "prompts"
+
+# Abuse limits (limits.py), counted in memory per server process
+RATE_LIMIT_PER_MIN = int(os.getenv("XF_RATE_LIMIT_PER_MIN", "30"))    # messages per IP (website) or per LINE user; a gym's shared Wi-Fi is one IP
+VISION_LIMIT_PER_MIN = int(os.getenv("XF_VISION_LIMIT_PER_MIN", "6"))  # images per IP: each one is 2 model calls (OCR + structuring)
+VERIFY_MAX_FAILS = int(os.getenv("XF_VERIFY_MAX_FAILS", "5"))         # wrong phone digits per member code, across all chats …
+VERIFY_LOCK_MIN = int(os.getenv("XF_VERIFY_LOCK_MIN", "15"))          # … within this many minutes locks that code for the same time
 
 # Typhoon (OpenAI-compatible API) answers chats, reads images and builds the LightRAG index — https://docs.opentyphoon.ai
 TYPHOON_API_KEY = os.getenv("TYPHOON_API_KEY", "")

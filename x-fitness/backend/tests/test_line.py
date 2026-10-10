@@ -74,6 +74,13 @@ def test_member_verify(client, sent):
     assert db.get(line.ticket(USER))["member_id"] == "FN-10003"
 
 
+def test_member_code_alone_then_digits(client, sent):
+    post(client, text("FN-10007"))
+    post(client, text("3364"))
+    assert "4 ตัวท้าย" in replies(sent)[0] and "คุณวรเมธ" in replies(sent)[1]
+    assert db.get(line.ticket(USER))["member_id"] == "FN-10007"
+
+
 def test_handoff_then_staff_reply_pushed(client, sent):
     post(client, text("คุยกับพนักงาน"))
     post(client, text("ขอคืนเงินค่ะ"))                            # staff has it now: logged, bot quiet

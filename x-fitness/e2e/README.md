@@ -2,8 +2,8 @@
 
 ใช้หน้าเว็บจริงเหมือนลูกค้า: เปิดเว็บ → ยืนยันสมาชิก (ถ้ามี) → เปิดแชต → แนบภาพ/พิมพ์ → รอคำตอบ → ตรวจข้อความที่ขึ้นบนจอ → ถ่ายภาพหน้าจอ
 
-- **ชุดทดสอบ (อ่าน):** `qa/x-fitness-test-cases.md` นอก `x-fitness/` — แก้/เพิ่มแถวในไฟล์นั้น ไม่ต้องแก้โค้ดที่นี่
-- **ผล (เขียน):** `qa/results/x-fitness-ui-results.md` (ผลตอบ · ผ่าน/ไม่ผ่าน · เวลาตอบ · ลิงก์ภาพหน้าจอ) · `qa/results/screenshots/` · `qa/results/x-fitness-ui-results.json`
+- **ชุดทดสอบ (อ่าน):** `qa/report/x-fitness-test-cases.md` นอก `x-fitness/` (หยิบจากคลังกลาง `qa/1-questions.md` `qa/2-images.md` `qa/3-safety.md` — แก้/เพิ่มแถวในคลังแล้วรัน `python qa/tools/build_report_set.py` ไม่ต้องแก้โค้ดที่นี่) · ทั้งคลัง: `E2E_CASES=../../qa npm test` → ผลไปที่ `qa/system/results/`
+- **ผล (เขียน):** `qa/report/results/x-fitness-ui-results.md` (ผลตอบ · ผ่าน/ไม่ผ่าน · เวลาตอบ · ลิงก์ภาพหน้าจอ) · `qa/report/results/screenshots/` · `qa/report/results/x-fitness-ui-results.json`
 - **ไม่แตะโค้ดแชตบอท:** ไม่ import อะไรจาก `backend/` รู้จักเว็บจากสิ่งที่ลูกค้าเห็นเท่านั้น (id ของปุ่มและช่องพิมพ์) · ภาพทดสอบอ่านจาก `qa/test-images/`
 
 ```text
@@ -11,9 +11,9 @@ e2e/
 ├── playwright.config.js   ตั้งค่า: เว็บที่ทดสอบ · เปิด backend ให้ถ้ายังไม่เปิด · รันทีละกรณี
 ├── tests/chatbot.spec.js  หนึ่งกรณีต่อหนึ่ง test: ขั้นตอนที่ลูกค้าทำบนหน้าเว็บ + การตรวจผล
 └── lib/
-    ├── testcases.js       อ่านตารางใน qa/x-fitness-test-cases.md
+    ├── testcases.js       อ่านตารางใน qa/report/x-fitness-test-cases.md (หรือ E2E_CASES)
     ├── run-file.js        เก็บผลทีละกรณี แล้วสร้างรายงานตอนจบ
-    └── report.js          เขียน qa/results/x-fitness-ui-results.md
+    └── report.js          เขียน qa/report/results/x-fitness-ui-results.md
 ```
 
 ## รัน
@@ -30,8 +30,8 @@ npm test                        # 40 กรณี ~3 นาที · เปิ�
 | ต้องการ | คำสั่ง |
 |---|---|
 | ดูเบราว์เซอร์ทำงานจริง | `npm run test:headed` |
-| เฉพาะบางชุด | `E2E_SUITES=questions,images npm test` (ชุด: questions · images · safety · rules) |
-| สุ่มรายการต้องทำ/ห้ามทำ 10 ข้อ | `E2E_RULES=10 npm test` · รันชุดเดิมซ้ำด้วย `E2E_SEED=<เลขที่รายงานบอก>` |
+| เฉพาะบางชุด | `E2E_SUITES=questions,images npm test` (ชุด: questions · images · safety) |
+| สุ่มหมวดละ N ข้อ (เช่น ทั้งคลัง) | `E2E_CASES=../../qa E2E_SAMPLE=20 npm test` · รันชุดเดิมซ้ำด้วย `E2E_SEED=<เลขที่รายงานบอก>` |
 | ทดสอบเว็บที่ deploy แล้ว | `E2E_BASE_URL=https://x-fitness-chatbot.onrender.com npm test` |
 | ดูกรณีที่ไม่ผ่านแบบละเอียด | `npx playwright show-trace test-results/<โฟลเดอร์ของกรณีนั้น>/trace.zip` |
 
