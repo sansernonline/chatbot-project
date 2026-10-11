@@ -16,6 +16,7 @@ CORS_ORIGINS = os.getenv("XF_CORS_ORIGINS", "*").split(",")  # "*" lets the site
                                                              # deployed: the site's own address (render.yaml), so other websites cannot call the API
 WEB_DIR = PROJECT_ROOT / "frontend"  # copied from the root mockup/ folder
 TEST_IMAGES_DIR = PROJECT_ROOT / "qa"   # copied from the root qa/test-images folder
+DOCS_DIR = PROJECT_ROOT / "docs"   # copied from the root docs/ (decks + report), served at /documents (/docs is Swagger)
 KB_DIR = PROJECT_ROOT / "data" / "knowledge-base"
 DATA_DIR = PROJECT_ROOT / "data" / "db"
 GUARD_REPLIES = PROJECT_ROOT / "data" / "guard" / "replies.md"   # what the bot says when a guard fires — edited without code

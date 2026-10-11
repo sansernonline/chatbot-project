@@ -35,7 +35,8 @@ x-fitness/
 ├── frontend/      ← copy จาก ../mockup/      (หน้าเว็บลูกค้า + admin/)
 ├── data/          ← copy จาก ../data/        (knowledge-base/ + db/ + guard/replies.md ข้อความตอบของ guard)
 │   └── rag-index/  ดัชนี LightRAG ที่สร้างไว้แล้ว (สร้างที่นี่ ไม่มีที่ราก · commit ขึ้น git ให้ Render ไม่ต้องสร้างใหม่)
-└── qa/            ← copy จาก ../qa/test-images/ (ภาพทดสอบ เว็บเปิดที่ /qa/)
+├── qa/            ← copy จาก ../qa/test-images/ (ภาพทดสอบ เว็บเปิดที่ /qa/)
+└── docs/          ← copy จาก ../docs/ (สไลด์ 2 แบบ · PowerPoint · รายงาน) + index.html เว็บเปิดที่ /documents/ (/docs เป็นของ Swagger)
 ```
 
 `frontend/` `data/` `qa/` เป็นสำเนา ต้นฉบับอยู่ที่รากโปรเจกต์ แก้ที่รากแล้วคัดลอกมาทับ:
@@ -65,6 +66,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 | หน้าเว็บ + แชตลูกค้า | http://localhost:8000/ |
 | หลังบ้าน (admin / 1234) | http://localhost:8000/admin/ |
 | ตรวจสถานะ | http://localhost:8000/api/health |
+| เอกสารโครงงาน (เปิด/ดาวน์โหลด 4 ไฟล์) | http://localhost:8000/documents/ |
 | เอกสาร API (Swagger · ลองเรียกได้) | http://localhost:8000/docs · แบบอ่านอย่างเดียว `/redoc` · endpoint `/api/admin/*` เรียก `POST /api/admin/login` แล้วกด **Authorize** |
 | ลูกค้าเปิดจากมือถือ (Wi-Fi เดียวกัน) | `http://<IP เครื่องนี้>:8000/` |
 

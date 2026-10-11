@@ -50,4 +50,5 @@ app.include_router(line.router)
 
 # static files last so /api/* wins; ../qa is referenced by the site
 app.mount("/qa", StaticFiles(directory=config.TEST_IMAGES_DIR), name="qa")
+app.mount("/documents", StaticFiles(directory=config.DOCS_DIR, html=True), name="documents")
 app.mount("/", StaticFiles(directory=config.WEB_DIR, html=True), name="web")
