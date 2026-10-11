@@ -36,7 +36,7 @@ x-fitness/
 ├── data/          ← copy จาก ../data/        (knowledge-base/ + db/ + guard/replies.md ข้อความตอบของ guard)
 │   └── rag-index/  ดัชนี LightRAG ที่สร้างไว้แล้ว (สร้างที่นี่ ไม่มีที่ราก · commit ขึ้น git ให้ Render ไม่ต้องสร้างใหม่)
 ├── qa/            ← copy จาก ../qa/test-images/ (ภาพทดสอบ เว็บเปิดที่ /qa/)
-└── docs/          ← copy จาก ../docs/ (สไลด์ 2 แบบ · PowerPoint · รายงาน) + index.html เว็บเปิดที่ /documents/ (/docs เป็นของ Swagger)
+└── documents/     ← copy จาก ../docs/ (สไลด์ 2 แบบ · PowerPoint · รายงาน) + index.html เว็บเปิดที่ /documents/
 ```
 
 `frontend/` `data/` `qa/` เป็นสำเนา ต้นฉบับอยู่ที่รากโปรเจกต์ แก้ที่รากแล้วคัดลอกมาทับ:

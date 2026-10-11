@@ -16,3 +16,8 @@ def test_documents_files_download():
     client = TestClient(app)
     assert all(client.head(f"/documents/{name}").status_code == 200 for name in FILES)
     assert client.get("/docs").status_code == 200          # Swagger keeps its address
+
+
+def test_documents_without_slash_redirects():
+    r = TestClient(app).get("/documents", follow_redirects=False)
+    assert r.status_code == 307 and r.headers["location"] == "/documents/"

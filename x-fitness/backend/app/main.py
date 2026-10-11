@@ -7,6 +7,7 @@ import asyncio
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
@@ -48,7 +49,12 @@ app.include_router(chat.router)
 app.include_router(knowledge.router)
 app.include_router(line.router)
 
+@app.get("/documents", include_in_schema=False)   # without the trailing slash the folder mount below answers 404
+def documents_page():
+    return RedirectResponse("/documents/")
+
+
 # static files last so /api/* wins; ../qa is referenced by the site
 app.mount("/qa", StaticFiles(directory=config.TEST_IMAGES_DIR), name="qa")
-app.mount("/documents", StaticFiles(directory=config.DOCS_DIR, html=True), name="documents")
+app.mount("/documents", StaticFiles(directory=config.DOCUMENTS_DIR, html=True), name="documents")
 app.mount("/", StaticFiles(directory=config.WEB_DIR, html=True), name="web")
