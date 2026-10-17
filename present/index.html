@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>X Fitness Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* same tokens as x-fitness/frontend/index.html */
+:root{
+  --bg:#09090a; --bg-2:#101012; --bg-3:#17171a; --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.18);
+  --text:#f5f5f4; --muted:#a3a3a8; --dim:#6b6b72;
+  --red:#e10613; --red-hot:#ff2536; --ok:#22c55e; --warn:#f59e0b;
+  --display:"Chakra Petch","IBM Plex Sans Thai",system-ui,sans-serif;
+  --body:"IBM Plex Sans Thai",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --gutter:clamp(16px,3vw,40px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--red-hot);outline-offset:2px}
+.eyebrow{font:600 12px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--red-hot);display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:2px;background:var(--red)}
+
+header{padding:28px var(--gutter) 20px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:16px 32px;align-items:flex-end;justify-content:space-between}
+h1{font:700 clamp(28px,4vw,44px)/1.15 var(--display);margin-top:10px}
+h1 span{color:var(--red)}
+.facts{display:flex;gap:24px;font:500 13px/1.4 var(--mono);color:var(--muted)}
+.facts b{display:block;font:600 22px/1.2 var(--display);color:var(--text)}
+
+main{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;padding:24px var(--gutter) 40px;align-items:start}
+.stage{min-width:0}
+video{width:100%;aspect-ratio:16/9;background:#000;display:block;border:1px solid var(--line)}
+.now{margin-top:16px;padding:18px 20px;background:var(--bg-2);border-left:4px solid var(--red);min-height:132px}
+.now .where{font:500 13px/1.4 var(--mono);color:var(--muted)}
+.now h2{font:600 24px/1.3 var(--display);margin:4px 0 6px}
+.now p{font-size:18px;color:var(--text)}
+.keys{margin-top:10px;font-size:13px;color:var(--dim)}
+.keys kbd{font:500 12px var(--mono);border:1px solid var(--line-2);padding:1px 6px;color:var(--muted)}
+
+aside{background:var(--bg-2);border:1px solid var(--line);max-height:calc(100vh - 48px);overflow:auto;position:sticky;top:24px}
+aside h3{font:600 12px/1 var(--mono);letter-spacing:.18em;color:var(--red-hot);padding:16px 16px 8px;position:sticky;top:0;background:var(--bg-2)}
+aside h3.area{position:static;padding-top:14px;color:var(--muted)}
+.ch{display:grid;grid-template-columns:44px 1fr auto;gap:10px;width:100%;text-align:left;padding:9px 16px;border-left:3px solid transparent;align-items:baseline}
+.ch:hover{background:var(--bg-3)}
+.ch[aria-current="true"]{background:var(--bg-3);border-left-color:var(--red)}
+.ch time{font:500 12px var(--mono);color:var(--dim)}
+.ch b{font-weight:500;font-size:15px}
+.ch small{display:block;color:var(--muted);font-size:12px}
+.ch .ok{font:500 11px var(--mono);color:var(--ok)}
+.ch .bad{font:500 11px var(--mono);color:var(--warn)}
+.empty{padding:40px var(--gutter);color:var(--muted)}
+
+@media (max-width:900px){
+  main{grid-template-columns:1fr}
+  aside{position:static;max-height:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="eyebrow">KMITL · Final Project</div>
+    <h1>X Fitness <span>Chatbot</span> · สาธิตระบบ</h1>
+  </div>
+  <div class="facts" id="facts"></div>
+</header>
+<main id="main">
+  <section class="stage">
+    <video id="v" controls preload="metadata" playsinline></video>
+    <div class="now" aria-live="polite">
+      <div class="where" id="where"></div>
+      <h2 id="title"></h2>
+      <p id="say"></p>
+    </div>
+    <p class="keys"><kbd>Space</kbd> เล่น/หยุด · <kbd>←</kbd> <kbd>→</kbd> หัวข้อก่อนหน้า/ถัดไป · <kbd>F</kbd> เต็มจอ · กดหัวข้อทางขวาเพื่อข้ามไปตอนนั้น</p>
+  </section>
+  <aside><h3>หัวข้อในวิดีโอ</h3><nav id="list"></nav></aside>
+</main>
+
+<script src="demo-data.js"></script>
+<script>
+const D = window.DEMO, $ = s => document.querySelector(s);
+if (!D) {
+  $('#main').innerHTML = '<p class="empty">ยังไม่มีวิดีโอ — รัน <code>cd x-fitness/e2e && npm run demo</code> ก่อน</p>';
+} else {
+  const v = $('#v'), chapters = D.scenes.filter(s => s.start != null);
+  const clock = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+  v.src = D.video;
+  const passed = D.scenes.filter(s => s.pass).length;
+  $('#facts').innerHTML = `<div><b>${clock(D.duration)}</b>นาที</div><div><b>${chapters.length}</b>หัวข้อ</div><div><b>${passed}/${D.scenes.length}</b>ทดสอบผ่าน</div>`;
+
+  let lastArea = '';
+  $('#list').innerHTML = chapters.map((s, i) => {
+    const head = s.area !== lastArea ? `<h3 class="area">${s.area}</h3>` : ''; lastArea = s.area;
+    return `${head}<button class="ch" data-i="${i}"><time>${clock(s.start)}</time><span><b>${s.title}</b><small>${s.page}</small></span>
+      <span class="${s.pass ? 'ok' : 'bad'}">${s.pass ? 'ผ่าน' : 'ไม่ผ่าน'}</span></button>`;
+  }).join('');
+
+  let cur = -1;
+  const show = i => {
+    if (i === cur || i < 0) return; cur = i;
+    const s = chapters[i];
+    $('#where').textContent = `${String(i + 1).padStart(2, '0')}/${chapters.length} · ${s.area} · ${s.page}`;
+    $('#title').textContent = s.title; $('#say').textContent = s.say;
+    document.querySelectorAll('.ch').forEach(b => b.setAttribute('aria-current', b.dataset.i == i));
+    document.querySelector(`.ch[data-i="${i}"]`).scrollIntoView({ block: 'nearest' });
+  };
+  const at = t => { let i = 0; chapters.forEach((s, k) => { if (s.start <= t + .05) i = k; }); return i; };
+  const seek = i => { i = Math.max(0, Math.min(chapters.length - 1, i)); v.currentTime = chapters[i].start; show(i); };
+  v.addEventListener('timeupdate', () => show(at(v.currentTime)));
+  $('#list').onclick = e => { const b = e.target.closest('.ch'); if (b) { seek(+b.dataset.i); v.play(); } };
+  addEventListener('keydown', e => {
+    if (e.target.closest('input,textarea')) return;
+    if (e.key === ' ' && e.target !== v) { e.preventDefault(); v.paused ? v.play() : v.pause(); }
+    if (e.key === 'ArrowRight' && e.target !== v) seek(cur + 1);
+    if (e.key === 'ArrowLeft' && e.target !== v) seek(cur - 1);
+    if (e.key.toLowerCase() === 'f') document.fullscreenElement ? document.exitFullscreen() : v.requestFullscreen();
+  });
+  show(0);
+}
+</script>
+</body>
+</html>
