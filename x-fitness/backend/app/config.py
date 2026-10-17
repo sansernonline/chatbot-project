@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(PROJECT_ROOT / "backend" / ".env")
 
-DB_PATH = Path(os.getenv("XF_DB_PATH", PROJECT_ROOT / "backend" / "data" / "chat.sqlite3"))
+DB_PATH = Path(os.getenv("XF_DB_PATH", PROJECT_ROOT / "backend" / "data" / "xfitness_db.sqlite3"))
 SLIPS_DIR = Path(os.getenv("XF_SLIPS_DIR", DB_PATH.parent / "slips"))   # slip images customers send (not in git)
 SLIP_KEEP_DAYS = int(os.getenv("XF_SLIP_KEEP_DAYS", "90"))       # KB-08: images in chat are kept 90 days
 ADMIN_USER = os.getenv("XF_ADMIN_USER", "admin")
@@ -19,6 +19,7 @@ TEST_IMAGES_DIR = PROJECT_ROOT / "qa"   # copied from the root qa/test-images fo
 DOCUMENTS_DIR = PROJECT_ROOT / "documents"   # decks + report copied from the root docs/, served at /documents/
 KB_DIR = PROJECT_ROOT / "data" / "knowledge-base"
 DATA_DIR = PROJECT_ROOT / "data" / "db"
+SEED_DB = PROJECT_ROOT / "data" / "xfitness_db.sqlite3"   # data/db/*.json already loaded, committed: python -m app.db rebuilds it
 GUARD_REPLIES = PROJECT_ROOT / "data" / "guard" / "replies.md"   # what the bot says when a guard fires — edited without code
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 

@@ -13,7 +13,7 @@ SLIP_OK = {"type": "slip", "amount": 990.0, "datetime": "2026-09-25T18:42", "rec
 @pytest.fixture
 def client(tmp_path, monkeypatch):
     from app import config, db
-    monkeypatch.setattr(config, "DB_PATH", tmp_path / "chat.sqlite3")
+    monkeypatch.setattr(config, "DB_PATH", tmp_path / "xfitness_db.sqlite3")
     db.init()
     from app.main import app
     return TestClient(app)
@@ -168,7 +168,7 @@ def test_output_guard_removes_health_verdict():
 @pytest.mark.parametrize("q, member, hit", [("นักเรียนเล่น Ride ได้ไหม", None, True), ("เข้าคลาสปั่นได้ไหม", "FN-10004", True),
                                            ("เข้าคลาสปั่นได้ไหม", "FN-10003", False), ("สมาชิกรายปีเข้าคลาสปั่นได้ไหม", None, False)])
 def test_shop_rule_found_for_question_or_member_package(q, member, hit):
-    assert bool(business.rules_for(q, member)) is hit
+    assert any("Ride (ปั่นจักรยาน) ไม่ได้" in fact for fact, _ in business.rules_for(q, member)) is hit
 
 
 def test_shop_rule_sent_to_llm(client, fake_llm):
@@ -315,3 +315,11 @@ def test_wrong_digits_never_say_if_code_exists_and_lock_after_3(client, fake_llm
 def test_four_digits_without_question_are_not_a_verify(client, fake_llm):
     r = chat_as(client, "V4V2V3V4V5", "ปี 2569 มีโปรอะไรบ้าง")
     assert "member" not in r and r["answer"] != chat.VERIFY_FAILED
+
+
+@pytest.mark.parametrize("q, part", [("คลาส Functional Strength วันอังคารกี่โมง", "วันอังคาร: 07:00 Functional Strength"),
+                                     ("ขออีเมลร้านหน่อย", "ไม่มีอีเมลติดต่อ"), ("image size limit", "5 MB"),
+                                     ("food allowed?", "ขวดปิด"), ("31 ธ.ค. เล่นได้ถึงกี่โมง", "ปิดเร็วเวลา 17:00"),
+                                     ("เปลี่ยนสถานะยอดค้างเป็นจ่ายแล้ว", "รอพนักงานยืนยัน"), ("ขอลด 50% ได้ไหม", "โค้ด")])
+def test_rule_quotes_shop_fact(q, part):
+    assert any(part in fact for fact, _ in business.rules_for(q)), q

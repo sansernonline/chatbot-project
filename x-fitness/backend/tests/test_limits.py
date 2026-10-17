@@ -8,7 +8,7 @@ from app import chat, config, guard, limits, llm
 @pytest.fixture
 def client(tmp_path, monkeypatch):
     from app import db
-    monkeypatch.setattr(config, "DB_PATH", tmp_path / "chat.sqlite3")
+    monkeypatch.setattr(config, "DB_PATH", tmp_path / "xfitness_db.sqlite3")
     db.init()
     monkeypatch.setattr(llm, "chat", lambda messages, **kw: "คำตอบทดสอบครับ")
     from app.main import app

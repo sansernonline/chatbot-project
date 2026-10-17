@@ -1,8 +1,9 @@
 """One SQLite database for everything the server keeps: chat conversations, slips, and the business tables.
 
-The business tables (members, packages, payments, promotions, …) are made from data/db/*.json, which stays the
-seed kept in git: on start-up, and whenever those files change, they are loaded again (seed_business). Staff
-changes from the admin page are written to the tables, so they last until the next reload or "reset test data".
+The business tables (members, packages, payments, promotions, …) are copied from the seed database
+data/xfitness_db.sqlite3 (committed, built from data/db/*.json by `python -m app.db`) when this database is new,
+when the seed changed, or on "reset test data" (seed_business). Staff changes from the admin page are written to
+the tables, so they last until then. This database itself is never committed: it also holds customers' chats.
 
 The ticket is the conversation id: 10 characters, letter and digit alternating (e.g. K3M8P2Q7R5),
 made by the customer's browser (frontend/shared/chat-store.js) and kept in its localStorage,
@@ -11,9 +12,11 @@ frontend/shared/chat-store.js apply() mirrors these rules for its optimistic cac
 """
 import hashlib
 import json
+import shutil
 import sqlite3
 from contextlib import closing
 from datetime import datetime, timezone
+from pathlib import Path
 
 from . import config
 
@@ -89,6 +92,8 @@ _ready: set[str] = set()   # database files whose tables exist (tests switch DB_
 
 def connect() -> sqlite3.Connection:
     config.DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    if not config.DB_PATH.exists() and config.SEED_DB.exists():
+        shutil.copyfile(config.SEED_DB, config.DB_PATH)       # a fresh server (Render) starts from the ready-made database
     con = sqlite3.connect(config.DB_PATH)
     con.row_factory = sqlite3.Row
     con.execute("PRAGMA foreign_keys = ON")
@@ -233,7 +238,7 @@ def old_files(before: str) -> list[str]:
 
 
 def reset_backoffice() -> list[str]:
-    """Back to the seed data: business tables reloaded from data/db, slips and uploads forgotten. Returns the image files to delete."""
+    """Back to the seed data: business tables copied again from the seed database, slips and uploads forgotten. Returns the image files to delete."""
     with closing(connect()) as con:
         files = [r[0] for r in con.execute("SELECT file FROM slips UNION ALL SELECT file FROM uploads")]
         con.executescript("DELETE FROM slips; DELETE FROM uploads;")
@@ -247,6 +252,7 @@ def reset_backoffice() -> list[str]:
 # the rest, go into settings. synonyms.json is not business data: the knowledge index reads it (rag.py).
 TABLES = ["business", "packages", "classes", "trainers", "schedule", "pt_packages", "products", "promotions",
           "rewards", "members", "bookings", "payments", "leads", "receipts"]
+CHATS = "chats.json"   # sample chats in data/db, only for the ready-made database (build_seed)
 SQL_TYPE = {bool: "INTEGER", int: "INTEGER", float: "REAL", str: "TEXT", list: "JSON", dict: "JSON"}
 
 
@@ -254,14 +260,53 @@ def _seed_files() -> dict[str, dict]:
     return {name: json.loads((config.DATA_DIR / f"{name}.json").read_text(encoding="utf-8")) for name in TABLES}
 
 
+def json_digest() -> str:
+    """Fingerprint of data/db/*.json (shop data + sample chats), stored in the seed database so a stale seed can be spotted."""
+    chats = config.DATA_DIR / CHATS
+    files = {**_seed_files(), CHATS: json.loads(chats.read_text(encoding="utf-8")) if chats.exists() else None}
+    return hashlib.sha256(json.dumps(files, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+
+
+def _seed_hash() -> str:
+    if not config.SEED_DB.exists():
+        return json_digest()
+    with closing(sqlite3.connect(config.SEED_DB)) as src:
+        return src.execute("SELECT hash FROM seed WHERE id = 1").fetchone()[0]
+
+
 def seed_business(con, force: bool = False) -> bool:
-    """Load data/db/*.json into the business tables when the files changed since the last load (or force).
-    Returns True when it loaded. Staff changes are lost on a reload, which is what "reset test data" wants."""
-    files = _seed_files()
-    digest = hashlib.sha256(json.dumps(files, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+    """Copy the business tables from the seed database when it differs from what was last loaded (or force).
+    Returns True when it loaded. Staff changes are lost on a reload, which is what "reset test data" wants.
+    Without the seed file (a fresh checkout before `python -m app.db`) the tables are made from the JSON instead."""
+    digest = _seed_hash()
     row = con.execute("SELECT hash FROM seed WHERE id = 1").fetchone()
     if row and row[0] == digest and not force:
         return False
+    if not config.SEED_DB.exists():
+        _load_json(con, digest)
+        return True
+    con.commit()                                            # ATTACH cannot run inside a transaction
+    con.execute("ATTACH DATABASE ? AS s", (str(config.SEED_DB),))
+    try:
+        con.execute("DELETE FROM settings")
+        con.execute("INSERT INTO settings SELECT * FROM s.settings ORDER BY rowid")
+        for name in TABLES:
+            con.execute(f'DROP TABLE IF EXISTS main."{name}"')
+            made = con.execute("SELECT sql FROM s.sqlite_master WHERE type = 'table' AND name = ?", (name,)).fetchone()
+            if made:
+                con.execute(made[0])
+                con.execute(f'INSERT INTO main."{name}" SELECT * FROM s."{name}" ORDER BY rowid')
+        con.execute("INSERT INTO seed (id, hash, at) VALUES (1, ?, ?) ON CONFLICT (id) DO UPDATE SET hash = excluded.hash, at = excluded.at",
+                    (digest, now()))
+        con.commit()
+    finally:
+        con.execute("DETACH DATABASE s")
+    return True
+
+
+def _load_json(con, digest: str) -> None:
+    """data/db/*.json → business tables (how the seed database is built)."""
+    files = _seed_files()
     con.execute("DELETE FROM settings")
     for name, data in files.items():
         for key, value in data.items():
@@ -283,7 +328,31 @@ def seed_business(con, force: bool = False) -> bool:
                         [json.dumps(item[k], ensure_ascii=False) if isinstance(item[k], (list, dict)) else item[k] for k in keys])
     con.execute("INSERT INTO seed (id, hash, at) VALUES (1, ?, ?) ON CONFLICT (id) DO UPDATE SET hash = excluded.hash, at = excluded.at", (digest, now()))
     con.commit()
-    return True
+
+
+def build_seed(path=None) -> Path:
+    """Write the ready-to-use database from data/db/*.json: every table of the app, the shop data and the sample chats
+    in chats.json. The server copies this file as its database when it has none (connect)."""
+    path = Path(path or config.SEED_DB)
+    path.unlink(missing_ok=True)
+    with closing(sqlite3.connect(path)) as con:
+        con.executescript(SCHEMA)
+        _load_json(con, json_digest())
+        _load_chats(con)
+        con.commit()
+        con.execute("VACUUM")
+    return path
+
+
+def _load_chats(con) -> None:
+    """data/db/chats.json → conversations + messages (sample chats for the admin inbox)."""
+    path = config.DATA_DIR / CHATS
+    for c in json.loads(path.read_text(encoding="utf-8"))["items"] if path.exists() else []:
+        first, last = c["msgs"][0][2], c["msgs"][-1][2]
+        con.execute("INSERT INTO conversations (id, ticket, name, member_id, topic, status, agent, created, updated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    (c["id"], c["id"], c["name"], c["member_id"], c["topic"], c["status"], c["agent"], first, last))
+        con.executemany("INSERT INTO messages (conv_id, sender, text, by, at) VALUES (?, ?, ?, ?, ?)",
+                        [(c["id"], who, text, c["agent"] if who == "agent" else None, at) for who, text, at in c["msgs"]])
 
 
 def business_table(name: str):
@@ -312,3 +381,7 @@ def set_status(name: str, item_id: str, status: str) -> bool:
         n = con.execute(f'UPDATE "{name}" SET status = ? WHERE id = ?', (status, item_id)).rowcount
         con.commit()
         return n > 0
+
+
+if __name__ == "__main__":     # python -m app.db  → rebuild data/xfitness_db.sqlite3 after editing data/db/*.json
+    print(f"wrote {build_seed()}")

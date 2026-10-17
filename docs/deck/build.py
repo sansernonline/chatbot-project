@@ -70,7 +70,7 @@ def cases() -> tuple[dict, dict]:
         every[key] = play
         if cid[0] in "DN":
             continue
-        shot = re.search(r"\(screenshots/([^)]+)\)", line)
+        shot = re.search(r"screenshots/([^)\"\s]+\.png)", line)   # [ภาพ](screenshots/x.png) or <img src="screenshots/x.png">
         if shot:
             case["shot"] = data_uri(RESULTS.parent / "screenshots" / shot.group(1), 480)
         if cid[0] == "I":
@@ -111,6 +111,47 @@ def kb_docs() -> dict:
         docs[meta["doc_id"]] = dict(file=f.name, title=meta["title"], size=f"{f.stat().st_size / 1024:.1f} KB",
                                     excerpt="\n".join(body[:12]))
     return docs
+
+
+DB_FILE = ROOT / "x-fitness/data/xfitness_db.sqlite3"
+DB_DICT = ROOT / "x-fitness/data/db/datadict.json"
+DB_GROUP = {"shop": ("ข้อมูลร้าน", "red"), "chat": ("แชต", "blue"), "system": ("ระบบ", "")}
+
+
+def db_tables() -> list[dict]:
+    """Every table of the ready-made database with its data dictionary, row count and first row."""
+    import sqlite3
+    from contextlib import closing
+    d = json.loads(DB_DICT.read_text(encoding="utf-8"))
+    with closing(sqlite3.connect(DB_FILE)) as con:
+        out = []
+        for name, info in d["tables"].items():
+            cur = con.execute(f'SELECT * FROM "{name}" ORDER BY rowid LIMIT 1')
+            cols, first = [c[0] for c in cur.description], cur.fetchone()
+            types = {c[1]: c[2] for c in con.execute(f'PRAGMA table_info("{name}")')}
+            out.append(dict(name=name, rows=con.execute(f'SELECT COUNT(*) FROM "{name}"').fetchone()[0], cols=cols, types=types,
+                            first=dict(zip(cols, first)) if first else None, **info))
+    return out
+
+
+def db_cards(tables: list[dict]) -> dict:
+    def code(t):
+        w = max(len(c) for c in t["cols"])
+        lines = [f'{c:<{w}}  {t["types"][c] or "-":<7}  {t["columns"].get(c, "")}' for c in t["cols"]]
+        if t["first"]:
+            lines += ["", "ตัวอย่าง 1 แถว:"] + [f"{c:<{w}}  {str(v)[:60]}" for c, v in t["first"].items() if v is not None]
+        return "\n".join(lines)
+    return {t["name"]: dict(path=f'xfitness_db.sqlite3 › {t["name"]}', tags=[list(DB_GROUP[t["group"]]), [f'{t["rows"]} แถว · {len(t["cols"])} คอลัมน์', ""]],
+                            what=html_escape(f'{t["about"]} · ที่มา: {t["source"]}'), code=code(t)) for t in tables}
+
+
+def db_list(tables: list[dict]) -> str:
+    out = []
+    for g, (label, _) in DB_GROUP.items():
+        rows = [t for t in tables if t["group"] == g]
+        out.append(f'<h6>{label} · {len(rows)} ตาราง · {sum(t["rows"] for t in rows):,} แถว</h6>'
+                   + "".join(f'<div data-pick="db" data-key="{t["name"]}"><b>{t["name"]}</b><span>{t["rows"]}</span></div>' for t in rows))
+    return "".join(out)
 
 
 def kb_cards(docs: dict) -> dict:
@@ -440,8 +481,9 @@ def main() -> None:
         if not c["rules"]:
             c["rules"] = [r["tags"][0][0].split("-ยา")[0].split("-อาหาร")[0] for r in reply_cards.values()
                           if r["code"][:40] and c["a"].startswith(r["code"][:40])][:1]
+    tables = db_tables()
     data = dict(line=line_data(every), cards=dict(arch=cards({k: v | ({"code": excerpt(content.ARCH_CODE[k])} if k in content.ARCH_CODE else {}) for k, v in content.ARCH.items()}), rag=cards(content.RAG), tree=cards(content.TREE),
-                           kb=kb_cards(docs), graph=graph_cards, replies=reply_cards, rules20=rules20(every)),
+                           kb=kb_cards(docs), graph=graph_cards, replies=reply_cards, rules20=rules20(every), db=db_cards(tables)),
                 demo=demo, all=every, tour=tour(), flows={**flow_walks(every, canned()), "flow": flow_cases(every, canned())}, canned=canned(), kb={k: d["title"] for k, d in docs.items()})
     html = (HERE / "shell.html").read_text(encoding="utf-8")
     slides = (HERE / "slides.html").read_text(encoding="utf-8")
@@ -459,6 +501,7 @@ def main() -> None:
               .replace("<!--LINECHAT-->", line_chat(every)).replace("<!--SYSTEMPROMPT-->", html_escape((ROOT / "x-fitness/backend/app/prompts/system.md").read_text(encoding="utf-8")))
               .replace("<!--RULESLIST-->", "".join(f'<div data-pick="rules20" data-key="{k}"><b>{k}</b>{html_escape(c["q"])}</div>'
                                                    for k, c in every.items() if k[0] in "DN"))
+              .replace("<!--DBLIST-->", db_list(tables)).replace("<!--DBSIZE-->", f"{DB_FILE.stat().st_size // 1024} KB")
               .replace("<!--KBLIST-->", "".join(f'<div data-pick="kb" data-key="{k}"><b>{k}</b>{html_escape(d["title"])}</div>'
                                                 for k, d in docs.items()))
               .replace("<!--REPLYLIST-->", "".join(f'<div data-pick="replies" data-key="{k}"><b>{html_escape(r["tags"][0][0])}</b>{r["what"]}</div>'

@@ -53,7 +53,7 @@ function write(results, outDir, meta) {
       if (key === 'images' || key === 'safety') got = `**${cell(analysis(r))}** — ${got}`;
       const verdict = r.pass ? '✅ ผ่าน' : `❌ ไม่ผ่าน — ${cell(r.problems.join('; '))}`;
       const notes = r.notes.length ? ` (${cell(r.notes.join('; '))})` : '';
-      lines.push(`| ${r.id} | ${cell(input)} | ${cell(r.expected)} | ${got} | ${verdict}${notes} | ${r.seconds} | ${r.sources.join(' ')} | [ภาพ](screenshots/${r.shot}) |`);
+      lines.push(`| ${r.id} | ${cell(input)} | ${cell(r.expected)} | ${got} | ${verdict}${notes} | ${r.seconds} | ${r.sources.join(' ')} | <a href="screenshots/${r.shot}"><img src="screenshots/${r.shot}" width="240" alt="หน้าจอ ${r.id}"></a> |`);   // thumbnail, click for full size
     }
   }
   lines.push('', '## หมายเหตุ', '',

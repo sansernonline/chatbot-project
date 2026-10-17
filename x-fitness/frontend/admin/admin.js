@@ -52,6 +52,8 @@ $('#loginForm').onsubmit = async e => {
   const { token, error } = await ChatStore.login($('#lUser').value.trim(), $('#lPass').value);
   if (token) {
     try { sessionStorage.setItem(AUTH_KEY, token); } catch {}
+    const next = new URLSearchParams(location.search).get('next');   // came from a viewer page: go back there
+    if (/^(db|graph)viewer\.html$/.test(next || '')) return location.replace(next);
     $('#loginErr').textContent = ''; showApp();
   } else { $('#loginErr').textContent = error; $('#loginErr').classList.remove('info'); $('#lPass').value = ''; $('#lPass').focus(); }
 };
@@ -64,7 +66,9 @@ function renderNav() {
   $('#nav').innerHTML = NAV.map(([g, ids]) => `<h6>${g}</h6>` + ids.map(id => {
     const p = PAGES[id], b = p.badge?.() || 0;
     return `<a href="#${id}" class="${id === cur ? 'on' : ''}">${icon(id)}<span>${p.title}</span>${b ? `<b class="badge">${b}</b>` : ''}</a>`;
-  }).join('')).join('');
+  }).join('')).join('')
+    + `<h6>ดูข้อมูล (อ่านอย่างเดียว)</h6><a href="dbviewer.html">${icon('reports')}<span>ดูฐานข้อมูล</span></a>`
+    + `<a href="graphviewer.html">${icon('graph')}<span>ดูกราฟความรู้</span></a>`;   // own pages, same tab so the login carries over
 }
 function route() {
   const id = PAGES[location.hash.slice(1)] ? location.hash.slice(1) : 'dashboard', p = PAGES[id];

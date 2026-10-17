@@ -15,7 +15,7 @@ SECRET, USER = "test-secret", "U1234567890abcdef"
 
 @pytest.fixture
 def client(tmp_path, monkeypatch):
-    monkeypatch.setattr(config, "DB_PATH", tmp_path / "chat.sqlite3")
+    monkeypatch.setattr(config, "DB_PATH", tmp_path / "xfitness_db.sqlite3")
     monkeypatch.setattr(config, "LINE_CHANNEL_SECRET", SECRET)
     db.init()
     from app.main import app

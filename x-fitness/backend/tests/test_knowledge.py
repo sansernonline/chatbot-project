@@ -10,7 +10,7 @@ from app import config, rag
 
 @pytest.fixture
 def admin(tmp_path, monkeypatch):
-    monkeypatch.setattr(config, "DB_PATH", tmp_path / "chat.sqlite3")
+    monkeypatch.setattr(config, "DB_PATH", tmp_path / "xfitness_db.sqlite3")
     from app import db
     from app.main import app
     db.init()

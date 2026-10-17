@@ -15,44 +15,50 @@
 x-fitness/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py            เปิดแอป · สร้างดัชนีตอนเริ่ม · เสิร์ฟ frontend/
-│   │   ├── chat.py            ตัวบอท answer() · read_image() + POST /api/chat · /api/vision
-│   │   ├── line.py            LINE OA: POST /api/line/webhook · ส่งคำตอบพนักงานกลับ LINE
-│   │   ├── guard.py           guardrail ขาเข้า/ขาออก
-│   │   ├── rag.py             LightRAG (ไม่มี key → keyword_search.py)
-│   │   ├── knowledge.py       API หน้าคลังความรู้ของ admin
-│   │   ├── conversations.py   กล่องแชตลูกค้า/admin (SQLite)
-│   │   ├── db.py              ฐานข้อมูล SQLite เดียว: แชต สลิป และตารางข้อมูลร้านที่โหลดจาก data/db/*.json
-│   │   ├── backoffice.py      หลังบ้าน: สลิป · เปิด/ปิดการชำระ การจอง โปร · ภาพรวม · ข้อมูลให้หน้าเว็บ (/api/data)
-│   │   ├── business.py        ข้อมูลสมาชิก · ตรวจสลิป · กฎสำคัญที่โค้ดแนบให้ LLM (RULES)
-│   │   ├── llm.py · config.py · auth.py · db.py
-│   │   └── prompts/           system.md · vision.md
-│   ├── tests/              pytest (ไม่ต้องใช้ key)
-│   ├── eval/               ทดสอบผ่าน API กับ Typhoon จริง: อ่าน qa/report/x-fitness-test-cases.md → qa/report/results/x-fitness-api-results.md
+│   │   ├── main.py                     เปิดแอป · เสิร์ฟ frontend/ และ documents/
+│   │   ├── chat.py                     ตัวบอท answer() · read_image() · POST /api/chat /api/vision
+│   │   ├── line.py                     LINE OA: POST /api/line/webhook · ส่งคำตอบพนักงานกลับ LINE
+│   │   ├── guard.py                    guardrail ขาเข้า/ขาออก
+│   │   ├── rag.py                      LightRAG (ไม่มี key → keyword_search.py)
+│   │   ├── knowledge.py                API หน้าคลังความรู้ของ admin
+│   │   ├── conversations.py            กล่องแชตลูกค้า/admin
+│   │   ├── db.py                       ฐานข้อมูล SQLite เดียว · python -m app.db สร้างฐานข้อมูลพร้อมใช้
+│   │   ├── dbviewer.py                 API ดูฐานข้อมูลแบบอ่านอย่างเดียว (admin/dbviewer.html)
+│   │   ├── backoffice.py               หลังบ้าน: สลิป · การชำระ การจอง โปร · ภาพรวม · /api/data
+│   │   ├── business.py                 ข้อมูลสมาชิก · ตรวจสลิป · กฎที่โค้ดแนบให้ LLM
+│   │   ├── llm.py                      เรียก Typhoon (แชต · อ่านภาพ)
+│   │   ├── config.py                   ค่าตั้งทั้งหมด อ่านจาก .env
+│   │   ├── auth.py                     ล็อกอินหลังบ้าน
+│   │   ├── limits.py                   จำกัดจำนวนข้อความต่อนาที
+│   │   └── prompts/                    system.md · vision.md · ocr.md
+│   ├── tests/                          pytest (ไม่ต้องใช้ key)
+│   ├── eval/                           ทดสอบผ่าน API กับ Typhoon จริง → qa/report/results/
 │   ├── requirements.txt
-│   └── .env.example
-├── e2e/           ทดสอบผ่านหน้าเว็บด้วย Playwright (ไม่แตะโค้ดแชตบอท) — ดู e2e/README.md
-├── frontend/      ← copy จาก ../mockup/      (หน้าเว็บลูกค้า + admin/)
-├── data/          ← copy จาก ../data/        (knowledge-base/ + db/ + guard/replies.md ข้อความตอบของ guard)
-│   └── rag-index/  ดัชนี LightRAG ที่สร้างไว้แล้ว (สร้างที่นี่ ไม่มีที่ราก · commit ขึ้น git ให้ Render ไม่ต้องสร้างใหม่)
-├── qa/            ← copy จาก ../qa/test-images/ (ภาพทดสอบ เว็บเปิดที่ /qa/)
-└── documents/     ← copy จาก ../docs/ (สไลด์ 2 แบบ · PowerPoint · รายงาน) + index.html เว็บเปิดที่ /documents/
+│   └── .env.example                    ตัวอย่างค่าตั้ง คัดลอกเป็น .env
+├── tools/                              build_dist.py: คัดลอกจากราก + สร้างฐานข้อมูล (รันก่อน commit)
+├── e2e/                                ทดสอบผ่านหน้าเว็บด้วย Playwright · ดู e2e/README.md
+├── frontend/                           ← ../mockup/ (หน้าเว็บลูกค้า + admin/)
+├── data/                               ← ../data/ (knowledge-base/ · db/ · guard/)
+│   ├── xfitness_db.sqlite3             ฐานข้อมูลพร้อมใช้: ข้อมูลร้าน + แชตตัวอย่าง (commit)
+│   └── rag-index/                      ดัชนี LightRAG (มีเฉพาะที่นี่ · commit)
+├── qa/                                 ← ../qa/test-images/ (ภาพทดสอบ เว็บเปิดที่ /qa/)
+└── documents/                          ← ../docs/ เวอร์ชันล่าสุด + index.html (เว็บเปิดที่ /documents/)
 ```
 
-`frontend/` `data/` `qa/` เป็นสำเนา ต้นฉบับอยู่ที่รากโปรเจกต์ แก้ที่รากแล้วคัดลอกมาทับ:
+`frontend/` `data/` `qa/` `documents/` เป็นสำเนา ต้นฉบับอยู่ที่รากโปรเจกต์ แก้ที่รากแล้ว **รันคำสั่งเดียวก่อน commit**:
 
 ```bash
-# รันจากรากโปรเจกต์ (chatbot-project/)
-cp -r mockup/. x-fitness/frontend/
-cp -r data/. x-fitness/data/
-cp -r qa/test-images/. x-fitness/qa/
+python x-fitness/tools/build_dist.py          # รันจากที่ไหนในโปรเจกต์ก็ได้
 ```
+
+คำสั่งนี้ทำ 5 อย่างตามลำดับ: สร้าง `shared/db.js` → คัดลอก `mockup/` `data/` `qa/test-images/` มาทับ → คัดลอกเอกสารเวอร์ชันล่าสุดจาก `docs/` มาที่ `documents/` (ไม่สร้างสไลด์ใหม่) → สร้าง `data/xfitness_db.sqlite3` (ฐานข้อมูลพร้อมใช้) → เตือนถ้าคลังความรู้เปลี่ยนแต่ยังไม่ได้สร้างดัชนี LightRAG ใหม่ ไม่ลบไฟล์ที่มีเฉพาะใน `x-fitness/` เช่น `data/rag-index/`
 
 ## รันในเครื่อง
 
 ต้องมี Python 3.12 ขึ้นไป (ทดสอบกับ 3.13) และ API key ตัวเดียวของ Typhoon (https://playground.opentyphoon.ai)
 
 ```bash
+# เริ่มที่รากโปรเจกต์ (chatbot-project/) · requirements.txt และ .env.example อยู่ใน x-fitness/backend/
 cd x-fitness/backend
 python -m venv .venv
 .venv\Scripts\activate            # Windows  (macOS/Linux: source .venv/bin/activate)
@@ -65,6 +71,8 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 |---|---|
 | หน้าเว็บ + แชตลูกค้า | http://localhost:8000/ |
 | หลังบ้าน (admin / 1234) | http://localhost:8000/admin/ |
+| ดูฐานข้อมูล (อ่านอย่างเดียว) | http://localhost:8000/admin/dbviewer.html |
+| ดูกราฟความรู้ (อ่านอย่างเดียว) | http://localhost:8000/admin/graphviewer.html · หรือดับเบิลคลิกไฟล์แล้วกด "เปิดไฟล์ .graphml" ไม่ต้องรัน backend |
 | ตรวจสถานะ | http://localhost:8000/api/health |
 | เอกสารโครงงาน (เปิด/ดาวน์โหลด 4 ไฟล์) | http://localhost:8000/documents/ |
 | เอกสาร API (Swagger · ลองเรียกได้) | http://localhost:8000/docs · แบบอ่านอย่างเดียว `/redoc` · endpoint `/api/admin/*` เรียก `POST /api/admin/login` แล้วกด **Authorize** |
@@ -72,6 +80,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 **ครั้งแรกที่เปิด**
 
+0. ถ้ายังไม่มี `backend/data/xfitness_db.sqlite3` เซิร์ฟเวอร์คัดลอก `data/xfitness_db.sqlite3` (ฐานข้อมูลพร้อมใช้ที่ commit ไว้) มาใช้ทันที มีข้อมูลร้านครบและแชตตัวอย่าง 3 ห้อง · อยากเริ่มใหม่ให้ลบ `backend/data/xfitness_db.sqlite3` แล้วเปิดใหม่
 1. ถ้า `data/rag-index/` ยังไม่มี หรือสร้างด้วย embedding คนละตัว LightRAG จะให้ Typhoon อ่านเอกสาร 8 ไฟล์เพื่อสร้างกราฟความรู้ใหม่ ใช้เวลาไม่กี่นาที — ดูสถานะที่ admin → **คลังความรู้** (`กำลังสร้างดัชนี` → `พร้อมใช้`)
 2. ระหว่างนั้นบอทตอบได้ แต่ข้อมูลอาจไม่ครบจนดัชนีเสร็จ · เปิดครั้งต่อไปทำเฉพาะเอกสารที่เปลี่ยน
 
@@ -106,7 +115,7 @@ python -m eval.run --system --sample 100 --seed 1   # ทดสอบระบ�
 | `XF_RAG_CHUNK_TOKENS` / `XF_RAG_LLM_MAX_TOKENS` | `500` / `8192` | ขนาดท่อนเอกสาร และความยาวคำตอบตอน Typhoon ดึงความรู้ · เปลี่ยนขนาดท่อนแล้วดัชนีสร้างใหม่เอง |
 | `XF_RAG_MODE` | `mix` | โหมดค้นของ LightRAG: `naive` `local` `global` `hybrid` `mix` |
 | `XF_ADMIN_USER` / `XF_ADMIN_PASS` | `admin` / `1234` | บัญชีหลังบ้าน |
-| `XF_DB_PATH` | `backend/data/chat.sqlite3` | ฐานข้อมูลเดียวของระบบ: แชต สลิป และตารางข้อมูลร้าน |
+| `XF_DB_PATH` | `backend/data/xfitness_db.sqlite3` | ฐานข้อมูลเดียวของระบบ: แชต สลิป และตารางข้อมูลร้าน |
 | `XF_CORS_ORIGINS` | `*` | เว็บที่เรียก API ได้ · บน Render ตั้งใน `render.yaml` เป็นเว็บของร้านเท่านั้น |
 | `XF_RATE_LIMIT_PER_MIN` / `XF_VISION_LIMIT_PER_MIN` | `30` / `6` | ข้อความและภาพต่อนาที ต่อ IP (หน้าเว็บ) หรือต่อผู้ใช้ LINE · เกินแล้วตอบ 429 ไม่เรียก Typhoon |
 | `XF_VERIFY_MAX_FAILS` / `XF_VERIFY_LOCK_MIN` | `5` / `15` | ใส่เบอร์ 4 ตัวท้ายผิดกี่ครั้งต่อรหัสสมาชิก (รวมทุกแชต) แล้วล็อกรหัสนั้นกี่นาที |
@@ -114,7 +123,7 @@ python -m eval.run --system --sample 100 --seed 1   # ทดสอบระบ�
 
 ## หลังบ้าน: ข้อมูลทดสอบ สลิป และสวิตช์
 
-ข้อมูลร้านทั้งหมดอยู่ในฐานข้อมูล SQLite เดียวกับแชต (`backend/data/chat.sqlite3`) — 1 ตารางต่อ 1 ไฟล์ใน `data/db/` (members packages payments promotions bookings ฯลฯ) ค่าเดี่ยวอย่าง `business.json` อยู่ในตาราง `settings` · `data/db/*.json` เป็น**ข้อมูลตั้งต้น**ที่อยู่ใน git (มีข้อมูลทดสอบ `test_note` ปนอยู่): เซิร์ฟเวอร์โหลดเข้าตารางตอนเริ่ม และโหลดใหม่เมื่อไฟล์เปลี่ยน (`backend/app/db.py` `seed_business`) · สิ่งที่พนักงานเปลี่ยนในหลังบ้านเขียนลงตารางตรง ๆ บอท หน้าเว็บ (`GET /api/data`) และหลังบ้านอ่านค่าใหม่ทันที (`backend/app/backoffice.py`)
+ข้อมูลร้านทั้งหมดอยู่ในฐานข้อมูล SQLite เดียวกับแชต (`backend/data/xfitness_db.sqlite3`) — 1 ตารางต่อ 1 ไฟล์ใน `data/db/` (members packages payments promotions bookings ฯลฯ) ค่าเดี่ยวอย่าง `business.json` อยู่ในตาราง `settings` · `data/db/*.json` เป็น**ต้นฉบับที่แก้ได้** (มีข้อมูลทดสอบ `test_note` ปนอยู่) ส่วน `data/xfitness_db.sqlite3` เป็น**ฐานข้อมูลตั้งต้น**ที่เทจาก JSON ไว้แล้วและอยู่ใน git: เซิร์ฟเวอร์คัดลอกตารางจากไฟล์นี้ตอนฐานข้อมูลยังว่าง เมื่อไฟล์ตั้งต้นเปลี่ยน และตอนกดรีเซ็ตข้อมูลทดสอบ ไม่ต้องอ่าน JSON (`backend/app/db.py` `seed_business`) · สิ่งที่พนักงานเปลี่ยนในหลังบ้านเขียนลงตารางตรง ๆ บอท หน้าเว็บ (`GET /api/data`) และหลังบ้านอ่านค่าใหม่ทันที (`backend/app/backoffice.py`)
 
 | หน้า | ทำอะไรได้ | ทดสอบ |
 |---|---|---|
@@ -122,6 +131,8 @@ python -m eval.run --system --sample 100 --seed 1   # ทดสอบระบ�
 | การชำระเงิน | ดูสลิป (ภาพ + ผลตรวจ 5 ข้อ) · ยืนยันชำระ / ไม่ผ่าน / ย้อนสถานะ · กรองตามสถานะ | หน้าเว็บยืนยันตัวตน `FN-10012` เบอร์ `5670` ส่ง `01_slip_valid.png` → ขึ้นที่ PAY-2610-012 ผ่านครบ · `FN-10005` เบอร์ `1846` ส่ง `02_slip_amount_mismatch.png` → ขาด 600 |
 | การจองคลาส | สวิตช์เปิด/ยกเลิกการจอง | ยกเลิก BK-0013 แล้วให้ `FN-10003` ถามว่าจองคลาสไว้กี่รายการ |
 | โปรโมชัน | สวิตช์เปิด/ปิดโปร | เปิด `FREECLASS` แล้วถามบอท "มีโปรอะไรบ้าง" |
+| ดูฐานข้อมูล (`admin/dbviewer.html`) | ทุกตารางใน `xfitness_db.sqlite3` จำนวนแถว พจนานุกรมข้อมูล และดูแถวทีละหน้า **อ่านอย่างเดียว** (API `/api/admin/db` เปิดฐานข้อมูลแบบ read-only) | เปิดตาราง `messages` หลังคุยกับบอท |
+| ดูกราฟความรู้ (`admin/graphviewer.html`) | กราฟ LightRAG เต็มจอ ค้นจุด กรองตามชนิดหรือเอกสาร **อ่านอย่างเดียว** · เปิดไฟล์ `.graphml` จากเครื่องได้โดยไม่ต้องล็อกอิน | ค้น "นักเรียน/นักศึกษา" แล้วคลิก Ride |
 | กราฟความรู้ | ภาพกราฟ LightRAG ค้นหา entity กรองตามประเภทหรือเอกสาร KB คลิกดูความสัมพันธ์ | ค้น `Ride` จะเห็นความสัมพันธ์ "นักเรียน/นักศึกษา → prohibited_from" |
 
 ปุ่ม **รีเซ็ตข้อมูลทดสอบ** (หน้าการชำระ การจอง โปร) ล้างสถานะที่เปลี่ยนและสลิปทั้งหมด กลับเป็นข้อมูลตั้งต้น · ไม่รัน backend หน้าเหล่านี้ใช้ข้อมูลจาก `shared/db.js` และไม่บันทึก
@@ -130,7 +141,8 @@ python -m eval.run --system --sample 100 --seed 1   # ทดสอบระบ�
 
 | ที่อยู่ | คืออะไร | ลบได้ไหม |
 |---|---|---|
-| `backend/data/chat.sqlite3` | ฐานข้อมูลเดียว: แชต · รายการสลิป · ตารางข้อมูลร้าน 14 ตาราง (โหลดจาก `data/db/*.json` พร้อมสิ่งที่หลังบ้านแก้) · ดูด้วย `sqlite3 backend/data/chat.sqlite3 .tables` | ได้ — แชตหาย ข้อมูลร้านโหลดใหม่จาก `data/db/` ตอนเปิดครั้งต่อไป |
+| `backend/data/xfitness_db.sqlite3` | ฐานข้อมูลเดียว: แชต · รายการสลิป · ตารางข้อมูลร้าน 14 ตาราง (คัดลอกจาก `data/xfitness_db.sqlite3` พร้อมสิ่งที่หลังบ้านแก้) · ดูด้วย `sqlite3 backend/data/xfitness_db.sqlite3 .tables` | ได้ — แชตหาย ข้อมูลร้านคัดลอกใหม่จาก `data/xfitness_db.sqlite3` ตอนเปิดครั้งต่อไป |
+| `data/xfitness_db.sqlite3` (**commit**) | ฐานข้อมูลพร้อมใช้: ทุกตาราง ข้อมูลร้านจาก `data/db/*.json` แชตตัวอย่างจาก `data/db/chats.json` · คำอธิบายทุกคอลัมน์อยู่ที่ `data/db/datadict.json` · เปิดด้วย DBeaver ได้ | ไม่ควร — ลบแล้วเซิร์ฟเวอร์กลับไปอ่าน JSON เอง สร้างใหม่ด้วย `python x-fitness/tools/build_dist.py` |
 | `backend/data/slips/` (ไม่อยู่ใน git) | ภาพสลิปที่ลูกค้าส่ง (เก็บเฉพาะภาพที่อ่านแล้วเป็นสลิป) · ดูได้เฉพาะผู้ดูแล · ลบเองเมื่อเกิน 90 วัน | ได้ — หรือกด **รีเซ็ตข้อมูลทดสอบ** ในหลังบ้าน |
 | `data/rag-index/` (**commit**) | ดัชนี LightRAG + `manifest.json` (จำว่าสร้างด้วย embedding ตัวไหน) | ได้ — เปิดใหม่สร้างใหม่ (เรียก Typhoon อีกรอบ) |
 
@@ -200,6 +212,8 @@ winget install --id Cloudflare.cloudflared
 
 ใช้แผนฟรี (RAM 512 MB · แอปนี้ใช้ราว 160 MB เพราะ embedding เป็นสูตรคำนวณ ไม่ต้องโหลดโมเดล) · ไฟล์ตั้งค่าคือ `render.yaml` ที่**รากของ repo** (Render อ่านจากตรงนั้น)
 
+**0. build ก่อน commit** — รัน `python x-fitness/tools/build_dist.py` จากรากโปรเจกต์ (คัดลอกทุกอย่างจากรากเข้า `x-fitness/` และสร้าง `data/xfitness_db.sqlite3` ให้ Render ใช้ได้ทันทีโดยไม่ต้องโหลดอะไร) แล้วรัน `pytest` ในข้อ "ทดสอบ"
+
 **1. สร้างดัชนีในเครื่อง** (ตั้งค่า embedding ให้เหมือนบน Render — ปกติคือไม่ใส่ `XF_EMBED_API_KEY` ทั้งสองที่)
 
 ```bash
@@ -207,7 +221,7 @@ cd x-fitness/backend
 python -m app.rag          # สร้าง/อัปเดต ../data/rag-index/ แล้วพิมพ์สถานะ ต้องได้ 'ready' ครบ 8 เอกสาร
 ```
 
-**2. Commit และ push ขึ้น GitHub** — ต้องมี `render.yaml` และ `x-fitness/` (รวม `x-fitness/data/rag-index/`) · ห้ามมี `.env` (`.gitignore` กันไว้แล้ว)
+**2. Commit และ push ขึ้น GitHub** — ต้องมี `render.yaml` และ `x-fitness/` (รวม `x-fitness/data/rag-index/` และ `x-fitness/data/xfitness_db.sqlite3`) · ห้ามมี `.env` (`.gitignore` กันไว้แล้ว)
 
 **3. สร้างบริการบน Render**
 
@@ -221,10 +235,10 @@ python -m app.rag          # สร้าง/อัปเดต ../data/rag-inde
 | เรื่อง | ผล |
 |---|---|
 | ไม่มีคนใช้ 15 นาที เครื่องหลับ | คนแรกที่เข้ามาต้องรอเครื่องตื่นสักพัก |
-| ไฟล์ไม่ถาวร | ทุกครั้งที่หลับหรือ deploy ใหม่ **ฐานข้อมูล SQLite เริ่มใหม่**: แชตและสลิปหาย สิ่งที่หลังบ้านแก้กลับเป็นข้อมูลตั้งต้นจาก `data/db/` · ดัชนีไม่หายเพราะอยู่ใน git |
-| แก้ข้อความที่บอทตอบเมื่อ guard ทำงาน | แก้ `data/guard/replies.md` ที่ราก → copy มา `x-fitness/data/guard/` → restart แอป (รหัสหายหรือสะกดผิด แอปไม่เริ่มและบอกรหัสที่ขาด) |
-| แก้ข้อมูลร้านถาวร (`data/db/*.json`) | แก้ที่ราก → `python data/build_db_js.py` (สร้าง `shared/db.js` ของโหมดดูตัวอย่าง) → copy `data/db/` มา `x-fitness/data/db/` → restart · เซิร์ฟเวอร์เห็นว่าไฟล์เปลี่ยนแล้วโหลดเข้าตารางใหม่เอง (สิ่งที่แก้ในหลังบ้านก่อนหน้านี้กลับเป็นค่าในไฟล์) · แก้ชั่วคราวเพื่อทดสอบใช้หลังบ้านได้เลย |
-| แก้คลังความรู้ | แก้ `data/knowledge-base/` ที่ราก → copy มา `x-fitness/data/` → ทำข้อ 1–2 ใหม่ (อัปโหลดผ่านหน้า admin บน Render จะหายเมื่อเครื่องหลับ) |
+| ไฟล์ไม่ถาวร | ทุกครั้งที่หลับหรือ deploy ใหม่ **ฐานข้อมูล SQLite เริ่มใหม่**: แชตและสลิปหาย สิ่งที่หลังบ้านแก้กลับเป็นข้อมูลตั้งต้นจาก `data/xfitness_db.sqlite3` · ดัชนีไม่หายเพราะอยู่ใน git |
+| แก้ข้อความที่บอทตอบเมื่อ guard ทำงาน | แก้ `data/guard/replies.md` ที่ราก → `python x-fitness/tools/build_dist.py` → restart แอป (รหัสหายหรือสะกดผิด แอปไม่เริ่มและบอกรหัสที่ขาด) |
+| แก้ข้อมูลร้านถาวร (`data/db/*.json`) | แก้ที่ราก → `python x-fitness/tools/build_dist.py` (สร้าง `shared/db.js` คัดลอก และสร้างฐานข้อมูลพร้อมใช้ใหม่ · ลืมแล้ว pytest จะแจ้ง) → commit ทั้ง JSON และ `data/xfitness_db.sqlite3` → restart · เซิร์ฟเวอร์เห็นว่าไฟล์ตั้งต้นเปลี่ยนแล้วคัดลอกเข้าตารางใหม่เอง (สิ่งที่แก้ในหลังบ้านก่อนหน้านี้กลับเป็นค่าในไฟล์) · แก้ชั่วคราวเพื่อทดสอบใช้หลังบ้านได้เลย |
+| แก้คลังความรู้ | แก้ `data/knowledge-base/` ที่ราก → `python x-fitness/tools/build_dist.py` (เตือนว่าดัชนีต้องสร้างใหม่) → ทำข้อ 1–2 ใหม่ (อัปโหลดผ่านหน้า admin บน Render จะหายเมื่อเครื่องหลับ) |
 
 ## นำขึ้น Vercel
 

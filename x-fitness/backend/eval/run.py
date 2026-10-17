@@ -9,6 +9,7 @@ Report set: reads qa/report/x-fitness-test-cases.md → qa/report/results/x-fitn
 System test: reads the library qa/1-questions.md 2-images.md 3-safety.md → qa/system/results/x-fitness-system-api-results.md (+ .json).
 """
 import argparse
+import re
 import json
 import random
 import tempfile
@@ -24,6 +25,7 @@ from eval import testcases
 QA_DIR = config.PROJECT_ROOT.parent / "qa"
 CASES_FILE = QA_DIR / "report" / "x-fitness-test-cases.md"     # the report set (picked from the library)
 LIBRARY = QA_DIR                                                 # the central library qa/1-*.md 2-*.md 3-*.md — the system test runs all of it
+IMAGE_LINK = "../../test-images"                                 # from qa/<set>/results/ to the test images shown in the report
 
 
 def out_path(cases: Path) -> Path:
@@ -35,6 +37,14 @@ def out_path(cases: Path) -> Path:
     return QA_DIR / "system" / "results" / f"{name}-api-results"
 
 
+NEGATION = re.compile(r"ไม่|ห้าม|มิได้")
+
+
+def said(phrase: str, answer: str) -> bool:
+    """The answer states phrase, not denies it: "ไม่มีส่วนลด 90% ให้" does not say "ลด 90% ให้" (a negation up to 12 characters before)."""
+    return any(not NEGATION.search(answer[max(0, m.start() - 12):m.start()]) for m in re.finditer(re.escape(phrase), answer))
+
+
 def check(spec: dict, res: dict, vision: dict | None = None) -> list[str]:
     """Reasons the response fails the spec (empty list = pass)."""
     answer = (res.get("answer") or "").replace(",", "")
@@ -43,7 +53,7 @@ def check(spec: dict, res: dict, vision: dict | None = None) -> list[str]:
         bad.append(f"ไม่มี {', '.join(miss)}")
     if spec.get("any") and not any(s.replace(",", "") in answer for s in spec["any"]):
         bad.append(f"ไม่มีคำใดใน {spec['any']}")
-    if found := [s for s in spec.get("none", []) if s.replace(",", "") in answer]:
+    if found := [s for s in spec.get("none", []) if said(s.replace(",", ""), answer)]:
         bad.append(f"มีคำต้องห้าม {', '.join(found)}")
     if spec.get("rule") and spec["rule"] not in res.get("rules", []):
         bad.append(f"guard ไม่ทำงาน (ต้องมี {spec['rule']})")
@@ -84,7 +94,7 @@ class Bot:
 def run(cases_file: Path, seed: int, sample: int | None = None) -> dict:
     bot, results = Bot(), {}
 
-    def record(suite, cid, label, expected, ask, spec, vision=None, extra_secs=0.0):
+    def record(suite, cid, label, expected, ask, spec, vision=None, extra_secs=0.0, image=None):
         t = time.time()
         res = ask()
         secs = round(time.time() - t + extra_secs, 1)
@@ -92,7 +102,7 @@ def run(cases_file: Path, seed: int, sample: int | None = None) -> dict:
         results.setdefault(suite, []).append({"id": cid, "input": label, "expected": expected, "answer": res.get("answer", ""),
                                               "analysis": analysis(res, vision), "pass": not bad, "why": "; ".join(bad),
                                               "seconds": secs, "sources": res.get("sources", []), "rules": res.get("rules", []),
-                                              **({"vision": vision} if vision else {})})
+                                              **({"vision": vision} if vision else {}), **({"image": image} if image else {})})
         print(f"{'PASS' if not bad else 'FAIL'} {cid} {secs:>5}s {label[:50]}" + (f"  ← {'; '.join(bad)}" if bad else ""))
 
     cases = testcases.load(cases_file)
@@ -108,7 +118,7 @@ def run(cases_file: Path, seed: int, sample: int | None = None) -> dict:
             vision = bot.read(config.TEST_IMAGES_DIR / c["image"])               # response time includes reading the image
             extra, label = time.time() - t, f"ภาพ {c['image']} · " + label
         record(c["suite"], c["id"], label, c["expected"],
-               lambda: bot.ask(msg, member, None if not vision or vision.get("error") else vision), c["spec"], vision, extra)
+               lambda: bot.ask(msg, member, None if not vision or vision.get("error") else vision), c["spec"], vision, extra, c["image"])
     return results
 
 
@@ -170,7 +180,8 @@ def report(results: dict, seed: int, sample: int | None, cases_file: Path = CASE
             if key in ("images", "safety") and r["analysis"]:
                 got = f"**{cell(r['analysis'])}** — {got}"
             verdict = "✅ ผ่าน" if r["pass"] else f"❌ ไม่ผ่าน — {cell(r['why'])}"
-            lines.append(f"| {r['id']} | {cell(r['input'])} | {cell(r['expected'])} | {got} | {verdict} | {r['seconds']} | {' '.join(r['sources'])} |")
+            shown = (f'<img src="{IMAGE_LINK}/{r["image"]}" width="160" alt="{r["image"]}"><br>' if r.get("image") else "") + cell(r["input"])
+            lines.append(f"| {r['id']} | {shown} | {cell(r['expected'])} | {got} | {verdict} | {r['seconds']} | {' '.join(r['sources'])} |")
     lines += ["", "## หมายเหตุ", "",
               "- ผลตัดสินอัตโนมัติจากคำสำคัญ ควรให้ผู้ทดสอบอ่านคำตอบทวนก่อนสรุป",
               "- LLM และโมเดลอ่านภาพให้ผลต่างกันได้เล็กน้อยในแต่ละรอบ ควรรันซ้ำอย่างน้อย 2–3 รอบ",

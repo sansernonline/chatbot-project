@@ -142,19 +142,17 @@ def test_database_holds_every_json_table_unchanged():
     assert db.setting("payments", "slip_rule") and db.setting("pt_packages", "trial")
 
 
-def test_staff_change_stays_until_reset_and_seed_reloads_when_json_changes(client, admin, monkeypatch):
+def test_staff_change_stays_until_reset_and_seed_reloads_when_the_seed_changes(client, admin, monkeypatch):
     import json
     from contextlib import closing
     from app import db
     client.patch("/api/admin/promotions/PR-05", json={"status": "active"}, headers=admin)
     with closing(db.connect()) as con:
-        assert db.seed_business(con) is False                                   # files unchanged: staff change kept
+        assert db.seed_business(con) is False                                   # seed unchanged: staff change kept
     assert {p["id"]: p for p in business.table("promotions")}["PR-05"]["status"] == "active"
-    real = db._seed_files
-    monkeypatch.setattr(db, "_seed_files", lambda: {**real(), "rewards": {"earn": "changed"}})
+    monkeypatch.setattr(db, "_seed_hash", lambda: "a new seed")
     with closing(db.connect()) as con:
-        assert db.seed_business(con) is True                                    # a data/db file changed: reload
-    assert business.table("rewards") == {"earn": "changed"}
+        assert db.seed_business(con) is True                                    # the seed database changed: reload
     assert {p["id"]: p for p in business.table("promotions")}["PR-05"]["status"] == "inactive"
 
 
@@ -166,3 +164,32 @@ def test_website_data_comes_from_the_database_without_members(client, admin):
     assert client.get("/api/admin/data").status_code == 401
     a = client.get("/api/admin/data", headers=admin).json()
     assert len(a["members"]) == 20 and a["leads"]
+
+
+def test_seed_database_is_built_from_the_current_json():
+    """Edit data/db/*.json → run `python -m app.db` → commit data/xfitness_db.sqlite3 too, or this fails."""
+    import sqlite3
+    from contextlib import closing
+    from app import db
+    seed = config.PROJECT_ROOT / "data" / "xfitness_db.sqlite3"          # the committed file (tests use their own copy)
+    assert seed.exists(), "run: python -m app.db"
+    with closing(sqlite3.connect(seed)) as con:
+        assert con.execute("SELECT hash FROM seed").fetchone()[0] == db.json_digest(), "data/db changed: run python -m app.db"
+
+
+def test_without_seed_file_tables_come_from_json(tmp_path, monkeypatch):
+    from contextlib import closing
+    from app import db
+    monkeypatch.setattr(config, "SEED_DB", tmp_path / "missing.sqlite3")
+    monkeypatch.setattr(config, "DB_PATH", tmp_path / "fresh.sqlite3")
+    with closing(db.connect()) as con:
+        assert con.execute("SELECT COUNT(*) FROM members").fetchone()[0] > 0
+
+
+def test_fresh_server_copies_the_ready_made_database(tmp_path, monkeypatch):
+    """Render starts with no database file: it copies data/xfitness_db.sqlite3, shop data and sample chats included."""
+    from app import db
+    monkeypatch.setattr(config, "SEED_DB", config.PROJECT_ROOT / "data" / "xfitness_db.sqlite3")
+    monkeypatch.setattr(config, "DB_PATH", tmp_path / "new" / "xfitness_db.sqlite3")
+    assert db.get("S2L3P4X5Y6")["msgs"][-1]["text"] == "โอนเพิ่ม 300 แล้วครับ เดี๋ยวส่งสลิปให้"
+    assert len(db.business_table("members")) == 20

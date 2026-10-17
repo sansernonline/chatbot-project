@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ดูฐานข้อมูล · X Fitness Admin</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="viewer.css">
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="index.html" title="กลับหลังบ้าน" aria-label="กลับหลังบ้าน">X</a><h1>ฐานข้อมูล</h1><span class="pill mono" id="file">xfitness_db.sqlite3</span><span class="pill ro">อ่านอย่างเดียว</span>
+  <span class="sp"></span><a class="btn" href="graphviewer.html">ดูกราฟความรู้</a><a class="btn" href="index.html">กลับหลังบ้าน</a>
+</header>
+<div class="wrap" id="app"><div class="empty">กำลังโหลด…</div></div>
+<script src="viewer.js"></script>
+<script>
+const $ = s => document.querySelector(s), esc = Viewer.esc, PAGE = 50;
+let info, cur = null, tab = 'rows', offset = 0;
+
+async function start() {
+  try { info = await Viewer.withLogin($('#app'), () => Viewer.get('/api/admin/db')); }
+  catch (e) { $('#app').innerHTML = `<div class="empty">${esc(e.message.includes('fetch') ? 'ต่อ backend ไม่ได้ (ต้องรัน backend ก่อน)' : e.message)}</div>`; return; }
+  $('#file').textContent = `${info.file} · ${(info.size / 1024).toFixed(0)} KB`;
+  $('#app').innerHTML = `<nav class="tables" id="tables" aria-label="ตาราง"></nav><main class="main" id="main"></main>`;
+  const groups = [...new Set(info.tables.map(t => t.group))];
+  $('#tables').innerHTML = groups.map(g => `<h6 title="${esc(info.groups[g] || '')}">${esc({ shop: 'ข้อมูลร้าน', chat: 'แชต', system: 'ระบบ' }[g] || g)}</h6>` +
+    info.tables.filter(t => t.group === g).map(t => `<a data-t="${esc(t.name)}">${esc(t.name)}<span>${t.rows.toLocaleString()}</span></a>`).join('')).join('');
+  $('#tables').onclick = e => { const a = e.target.closest('[data-t]'); if (a) open(a.dataset.t, 'rows', 0); };
+  open(decodeURIComponent(location.hash.slice(1)) || info.tables[0].name, 'rows', 0);
+}
+
+async function open(name, t, off) {
+  const table = info.tables.find(x => x.name === name) || info.tables[0];
+  cur = table; tab = t; offset = off; history.replaceState(null, '', '#' + encodeURIComponent(table.name));
+  document.querySelectorAll('#tables a').forEach(a => a.classList.toggle('on', a.dataset.t === table.name));
+  $('#main').innerHTML = `<div><h2>${esc(table.name)}</h2><p class="muted">${esc(table.about || '—')}</p>
+      <p class="dim">ที่มา: ${esc(table.source || '—')} · ${table.rows.toLocaleString()} แถว · ${table.columns.length} คอลัมน์</p></div>
+    <div class="tabs"><button class="btn ${tab === 'rows' ? 'on' : ''}" data-tab="rows">ข้อมูล</button><button class="btn ${tab === 'dict' ? 'on' : ''}" data-tab="dict">พจนานุกรมข้อมูล</button></div>
+    <div id="body"><div class="empty">กำลังโหลด…</div></div>`;
+  $('#main .tabs').onclick = e => { const b = e.target.closest('[data-tab]'); if (b) open(cur.name, b.dataset.tab, 0); };
+  if (tab === 'dict') return dict(table);
+  try { rows(await Viewer.withLogin($('#body'), () => Viewer.get(`/api/admin/db/${encodeURIComponent(table.name)}?limit=${PAGE}&offset=${offset}`))); }
+  catch (e) { $('#body').innerHTML = `<div class="empty">${esc(e.message)}</div>`; }
+}
+
+function dict(t) {
+  $('#body').innerHTML = `<div class="grid"><table class="dict"><thead><tr><th>คอลัมน์</th><th>ชนิด</th><th>ความหมาย</th></tr></thead><tbody>` +
+    t.columns.map(c => `<tr><td>${esc(c.name)}</td><td>${esc(c.type)}</td><td>${esc(c.about || '—')}</td></tr>`).join('') + `</tbody></table></div>`;
+}
+
+function rows(p) {
+  const about = Object.fromEntries(cur.columns.map(c => [c.name, c.about]));
+  const cell = v => v === null ? '<td class="null">null</td>' : `<td title="${esc(v)}">${esc(v)}</td>`;
+  const last = Math.min(p.offset + p.rows.length, p.total);
+  $('#body').innerHTML = (p.rows.length ? `<div class="grid"><table><thead><tr>${p.columns.map(c => `<th title="${esc(about[c] || '')}">${esc(c)}</th>`).join('')}</tr></thead>
+      <tbody>${p.rows.map(r => `<tr>${r.map(cell).join('')}</tr>`).join('')}</tbody></table></div>` : '<div class="empty">ตารางนี้ยังไม่มีข้อมูล</div>') +
+    `<div class="pager"><button class="btn" id="prev" ${p.offset ? '' : 'disabled'}>ก่อนหน้า</button>
+      <span class="muted">แถว ${p.total ? p.offset + 1 : 0}–${last} จาก ${p.total.toLocaleString()}</span>
+      <button class="btn" id="next" ${last < p.total ? '' : 'disabled'}>ถัดไป</button></div>`;
+  $('#prev').onclick = () => open(cur.name, 'rows', Math.max(0, offset - PAGE));
+  $('#next').onclick = () => open(cur.name, 'rows', offset + PAGE);
+}
+start();
+</script>
+</body>
+</html>

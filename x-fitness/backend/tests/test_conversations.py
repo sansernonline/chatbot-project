@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 @pytest.fixture
 def client(tmp_path, monkeypatch):
     from app import config
-    monkeypatch.setattr(config, "DB_PATH", tmp_path / "chat.sqlite3")
+    monkeypatch.setattr(config, "DB_PATH", tmp_path / "xfitness_db.sqlite3")
     from app import db
     from app.main import app
     db.init()

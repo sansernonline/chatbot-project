@@ -31,7 +31,7 @@
  <a data-goto="div-arch"><span class="n">2</span><div><b>สถาปัตยกรรม</b><span>ไฟล์จริง · ทางเดินข้อความ · โค้ดหลัก</span><div class="tp"><em class="try">▶ ลองเล่น</em><i class="try" data-goto="play-flow"></i><em>กดดูได้</em><i data-goto="arch"></i><i data-goto="flow"></i></div></div><span class="p"></span></a>
  <a data-goto="div-rag"><span class="n">3</span><div><b>คลังความรู้ LightRAG</b><span>ไฟล์ต้นทาง → embedding → ไฟล์ปลายทาง</span><div class="tp"><em class="try">▶ ลองเล่น</em><i class="try" data-goto="play-rag"></i><em>กดดูได้</em><i data-goto="kb"></i><i data-goto="pipeline"></i><i data-goto="graph"></i></div></div><span class="p"></span></a>
  <a data-goto="div-guard"><span class="n">4</span><div><b>Guardrail · ภาพ · LINE</b><span>ด่านขาเข้า/ขาออก · ยืนยันสมาชิก · ภาพ · LINE</span><div class="tp"><em class="try">▶ ลองเล่น</em><i class="try" data-goto="play-guard"></i><i class="try" data-goto="play-verify"></i><i class="try" data-goto="play-vision"></i><em>กดดูได้</em><i data-goto="replies"></i><i data-goto="rules20"></i><i data-goto="vision"></i><i data-goto="line"></i></div></div><span class="p"></span></a>
- <a data-goto="div-files"><span class="n">5</span><div><b>โครงไฟล์และ deploy</b><span>โฟลเดอร์ · Render · ค่าตั้ง</span><div class="tp"><em>กดดูได้</em><i data-goto="tree"></i></div></div><span class="p"></span></a>
+ <a data-goto="div-files"><span class="n">5</span><div><b>โครงไฟล์และ deploy</b><span>โฟลเดอร์ · ฐานข้อมูล · Render · ค่าตั้ง</span><div class="tp"><em>กดดูได้</em><i data-goto="tree"></i><i data-goto="db"></i></div></div><span class="p"></span></a>
  <a data-goto="div-demo"><span class="n">6</span><div><b>สาธิตกับบอทจริง</b><span>คำถาม 10 · ภาพ 5 · ความปลอดภัย 5</span><div class="tp"><em class="try">▶ กดเล่นเคสจริง</em><i class="try" data-goto="demo-q"></i><i class="try" data-goto="demo-img"></i><i class="try" data-goto="demo-safe"></i><i class="try" data-goto="demo-line"></i></div></div><span class="p"></span></a>
  <a data-goto="div-results"><span class="n">7</span><div><b>ผลทดสอบ</b><span>คำถาม 10 · ภาพ 5 · ความปลอดภัย 5 · ผ่าน 20/20</span></div><span class="p"></span></a>
 </div>
@@ -439,6 +439,18 @@
 </section>
 
 <!-- 34 · deploy -->
+<!-- 35 · db -->
+<section data-at="6:51" class="slide" id="db" data-menu="ฐานข้อมูล">
+<div class="col" style="gap:10px"><p class="kicker">ฐานข้อมูล · xfitness_db.sqlite3 · คลิกตารางเพื่อดูพจนานุกรมข้อมูลและตัวอย่างแถว</p><h2>ข้อมูลร้านและแชตอยู่ในไฟล์ SQLite ไฟล์เดียว<br>build ไว้ก่อน commit เว็บจริงเปิดมาก็ใช้ได้ทันที</h2></div>
+<div class="dbflow"><span>data/db/*.json<i>ต้นฉบับที่แก้ได้</i></span><b>→</b><span>build_dist.py<i>เทลงฐานข้อมูล</i></span><b>→</b><span class="hot">xfitness_db.sqlite3<i><!--DBSIZE--> · commit ใน git</i></span><b>→</b><span>Render<i>คัดลอกตอนเปิด ไม่ต้องโหลดอะไร</i></span><b>·</b><span>graphml<i>ดัชนี LightRAG แยกเป็นไฟล์</i></span></div>
+<div class="row grow" style="min-height:0">
+ <div class="list dblist" style="width:520px;flex:none"><!--DBLIST--></div>
+ <div class="detail grow" id="d-db"></div>
+</div>
+<p class="foot">X FITNESS CHATBOT · ฐานข้อมูล · ดูทุกตารางได้ที่หลังบ้าน → ดูฐานข้อมูล (อ่านอย่างเดียว) · เปิดไฟล์ด้วย DBeaver ได้</p><p class="pg"></p>
+<aside><b>ถึงหน้านี้ 6:51</b>  ชี้ลูกศรด้านบน: แก้ JSON → build → commit ไฟล์ฐานข้อมูล → Render คัดลอกไปใช้ คลิก members ให้เห็นพจนานุกรมข้อมูลและแถวตัวอย่าง (เบอร์โทรเก็บ แต่บอทไม่เคยบอก) แล้วคลิก messages ให้เห็นว่าแชตเก็บอะไร ข้อมูลที่เกิดบนเว็บจริงหายเมื่อเครื่อง restart = ย้อนกลับไปข้อมูลตั้งต้น</aside>
+</section>
+
 <section data-at="6:57" class="slide" id="deploy" data-menu="deploy บน Render">
 <div class="col" style="gap:10px"><p class="kicker">deploy บน Render · render.yaml</p><h2>เว็บจริงอยู่บน Render แบบฟรี push แล้ว Render build ให้เอง<br>ส่วนค่าลับใส่ไว้ใน dashboard ไม่อยู่ใน git</h2></div>
 <div class="row" style="align-items:stretch">

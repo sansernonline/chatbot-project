@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ดูกราฟความรู้ · X Fitness Admin</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="viewer.css">
+<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="index.html" title="กลับหลังบ้าน" aria-label="กลับหลังบ้าน">X</a><h1>กราฟความรู้ LightRAG</h1><span class="pill mono" id="src">graph_chunk_entity_relation.graphml</span><span class="pill ro">อ่านอย่างเดียว</span>
+  <span class="sp"></span>
+  <input id="q" list="names" placeholder="ค้นจุด เช่น Ride" aria-label="ค้นจุดในกราฟ" style="width:180px"><datalist id="names"></datalist>
+  <select id="type" aria-label="กรองตามชนิด"><option value="">ทุกชนิด</option></select>
+  <select id="doc" aria-label="กรองตามเอกสาร"><option value="">ทุกเอกสาร</option></select>
+  <label class="btn" title="เปิดไฟล์ .graphml จากเครื่อง ไม่ต้องล็อกอิน">เปิดไฟล์ .graphml<input type="file" id="file" accept=".graphml,.xml" hidden></label>
+  <a class="btn" href="dbviewer.html">ดูฐานข้อมูล</a><a class="btn" href="index.html">กลับหลังบ้าน</a>
+</header>
+<div class="wrap" id="app">
+  <div class="net" id="net"><div class="canvas" id="canvas"></div><div class="empty" id="status">กำลังโหลด…</div><div class="drop" id="drop" hidden>วางไฟล์ .graphml ที่นี่</div></div>
+  <aside class="info" id="info"><p class="muted">คลิกจุดในกราฟเพื่อดูคำอธิบาย เอกสารที่มา และเรื่องที่โยงถึง</p></aside>
+</div>
+<script src="viewer.js"></script>
+<script>
+const $ = s => document.querySelector(s), esc = Viewer.esc;
+const PALETTE = ['#ff2536', '#60a5fa', '#22c55e', '#f59e0b', '#a78bfa', '#2dd4bf', '#f472b6', '#facc15', '#94a3b8', '#fb923c'];
+let G = null, net = null, nodesDS = null, colorOf = {};
+
+// .graphml (the file LightRAG writes) → {nodes, edges}, the same shape as GET /api/admin/kb/graph
+function parseGraphml(text) {
+  const xml = new DOMParser().parseFromString(text, 'application/xml');
+  if (xml.querySelector('parsererror')) throw new Error('อ่านไฟล์ไม่ได้ ไม่ใช่ไฟล์ .graphml');
+  const keys = Object.fromEntries([...xml.getElementsByTagName('key')].map(k => [k.getAttribute('id'), k.getAttribute('attr.name')]));
+  const fields = el => Object.fromEntries([...el.getElementsByTagName('data')].map(d => [keys[d.getAttribute('key')], d.textContent]));
+  const docs = f => [...new Set((f.file_path || '').split('<SEP>').filter(Boolean))].sort();
+  const joined = s => (s || '').split('<SEP>').join(' · ');   // LightRAG joins descriptions from several chunks with <SEP>
+  const edges = [...xml.getElementsByTagName('edge')].map(e => { const f = fields(e); return { source: e.getAttribute('source'), target: e.getAttribute('target'), keywords: f.keywords || '', description: joined(f.description).slice(0, 300), docs: docs(f) }; });
+  const degree = {}; edges.forEach(e => { degree[e.source] = (degree[e.source] || 0) + 1; degree[e.target] = (degree[e.target] || 0) + 1; });
+  const nodes = [...xml.getElementsByTagName('node')].map(n => { const f = fields(n); return { id: n.getAttribute('id'), type: f.entity_type || 'UNKNOWN', description: joined(f.description).slice(0, 300), docs: docs(f), degree: degree[n.getAttribute('id')] || 0 }; });
+  return { nodes, edges };
+}
+
+function show(g, label) {
+  G = g; $('#src').textContent = `${label} · ${g.nodes.length} จุด · ${g.edges.length} เส้น`; $('#status').hidden = true;
+  const types = Object.entries(g.nodes.reduce((a, n) => (a[n.type] = (a[n.type] || 0) + 1, a), {})).sort((a, b) => b[1] - a[1]);
+  colorOf = Object.fromEntries(types.map(([t], i) => [t, PALETTE[Math.min(i, PALETTE.length - 1)]]));
+  $('#type').innerHTML = '<option value="">ทุกชนิด</option>' + types.map(([t, n]) => `<option value="${esc(t)}">${esc(t)} (${n})</option>`).join('');
+  const docs = [...new Set(g.nodes.flatMap(n => n.docs))].sort();
+  $('#doc').innerHTML = '<option value="">ทุกเอกสาร</option>' + docs.map(d => `<option>${esc(d)}</option>`).join('');
+  $('#names').innerHTML = g.nodes.map(n => `<option value="${esc(n.id)}">`).join('');
+  nodesDS = new vis.DataSet(g.nodes.map(n => ({ id: n.id, label: n.id.length > 18 ? n.id.slice(0, 17) + '…' : n.id, value: n.degree + 1,
+    color: { background: colorOf[n.type], border: colorOf[n.type], highlight: { background: '#fff', border: '#ff2536' } } })));
+  const edgesDS = new vis.DataSet(g.edges.map((e, i) => ({ id: i, from: e.source, to: e.target, title: e.keywords })));
+  net?.destroy();
+  net = new vis.Network($('#canvas'), { nodes: nodesDS, edges: edgesDS }, {
+    nodes: { shape: 'dot', scaling: { min: 6, max: 34 }, font: { color: '#e5e5e5', face: 'IBM Plex Sans Thai', size: 13, strokeWidth: 3, strokeColor: '#09090a' } },
+    edges: { color: { color: 'rgba(160,160,170,.35)', highlight: '#ff2536' }, width: 1, selectionWidth: 2.5, smooth: false },
+    physics: { solver: 'forceAtlas2Based', stabilization: { iterations: 250 } }, interaction: { hover: true, tooltipDelay: 150 } });
+  net.once('stabilizationIterationsDone', () => net.setOptions({ physics: false }));
+  net.on('click', p => p.nodes[0] ? pick(p.nodes[0]) : null);
+  const top = [...g.nodes].sort((a, b) => b.degree - a.degree)[0];
+  $('#info').innerHTML = `<h3>${g.nodes.length} จุด · ${g.edges.length} เส้น</h3><p class="muted">จุดที่โยงมากที่สุดคือ <a data-go="${esc(top.id)}">${esc(top.id)}</a> (${top.degree} เส้น) · ขนาดจุดตามจำนวนเส้น · สีตามชนิด</p>
+    <div class="legend">${types.slice(0, 10).map(([t, n]) => `<span class="pill"><i style="background:${colorOf[t]}"></i>${esc(t)} ${n}</span>`).join('')}</div>`;
+}
+
+function pick(id) {
+  const n = G.nodes.find(x => x.id === id); if (!n) return;
+  net.selectNodes([id]); net.focus(id, { scale: 1.2, animation: { duration: 400 } });
+  const rel = G.edges.filter(e => e.source === id || e.target === id);
+  $('#info').innerHTML = `<span class="pill" style="color:${colorOf[n.type]}">${esc(n.type)}</span><h3>${esc(n.id)}</h3><p>${esc((n.description || '—').split('<SEP>').join(' · '))}</p>
+    <p class="dim">เอกสารที่มา: ${n.docs.map(esc).join(' · ') || '—'}</p><h3 style="font-size:15px">โยงกับ ${rel.length} เรื่อง</h3>
+    <ul>${rel.slice(0, 60).map(e => { const o = e.source === id ? e.target : e.source; return `<li><a data-go="${esc(o)}">${esc(o)}</a> <span class="dim">· ${esc(e.keywords)}</span><br><span class="muted">${esc((e.description || '').split('<SEP>').join(' · '))}</span></li>`; }).join('')}</ul>`;
+}
+$('#info').onclick = e => { const a = e.target.closest('[data-go]'); if (a) pick(a.dataset.go); };
+$('#q').onchange = () => pick($('#q').value.trim());
+
+function filter() {
+  if (!G) return;
+  const t = $('#type').value, d = $('#doc').value;
+  nodesDS.update(G.nodes.map(n => ({ id: n.id, hidden: (t && n.type !== t) || (d && !n.docs.includes(d)) })));
+}
+$('#type').onchange = filter; $('#doc').onchange = filter;
+
+async function openFile(f) {
+  try { show(parseGraphml(await f.text()), f.name); } catch (e) { $('#status').hidden = false; $('#status').textContent = e.message; }
+}
+$('#file').onchange = e => e.target.files[0] && openFile(e.target.files[0]);
+addEventListener('dragover', e => { e.preventDefault(); $('#drop').hidden = false; });
+addEventListener('dragleave', e => { if (!e.relatedTarget) $('#drop').hidden = true; });
+addEventListener('drop', e => { e.preventDefault(); $('#drop').hidden = true; e.dataTransfer.files[0] && openFile(e.dataTransfer.files[0]); });
+
+(async () => {
+  if (!window.vis) { $('#status').textContent = 'โหลดตัววาดกราฟ (vis-network) ไม่ได้ ต้องต่ออินเทอร์เน็ต'; return; }
+  try { show(await Viewer.withLogin($('#status'), () => Viewer.get('/api/admin/kb/graph')), 'graph_chunk_entity_relation.graphml'); }
+  catch (e) { $('#status').innerHTML = `${esc(e.message.includes('fetch') ? 'ต่อ backend ไม่ได้' : e.message)}<br><span class="dim">หรือกด "เปิดไฟล์ .graphml" แล้วเลือก x-fitness/data/rag-index/graph_chunk_entity_relation.graphml</span>`; }
+})();
+</script>
+</body>
+</html>
