@@ -1,11 +1,12 @@
 /* Back-office pages. With the backend running, the dashboard, payments, bookings and promotions come from /api/admin/*
    (backoffice.py): changes are saved and the bot uses them on the next message. Without it (preview) they use
-   ../shared/db.js and changes stay in memory. Members and leads are read-only (from /api/admin/data when online). */
+   ../shared/db.js and changes stay in memory. Leads are read-only; members are too, except website sign-ups (status pending)
+   that staff confirm or turn down. */
 const today = new Date().toISOString().slice(0, 10);
 const stat = (label, value, sub = '', kind = '') => `<div class="stat ${kind}"><span>${label}</span><b>${value}</b><small>${sub}</small></div>`;
 const linkStat = (href, label, value, sub = '', kind = '') => `<a href="${href}" class="stat ${kind}"><span>${label}</span><b>${value}</b><small>${sub}</small></a>`;
-const statusPill = s => pill({ active: 'ใช้งาน', inactive: 'ปิดอยู่', frozen: 'พักสมาชิก', expired: 'หมดอายุ', booked: 'จองแล้ว', cancelled: 'ยกเลิก', no_show: 'ไม่มา', awaiting_slip: 'ยังไม่ส่งสลิป', pending_slip: 'รอตรวจสลิป', paid: 'ชำระแล้ว', rejected: 'ไม่ผ่าน', upcoming: 'ยังไม่เริ่ม' }[s] || s,
-  { active: 'ok', booked: 'ok', paid: 'ok', frozen: 'warn', pending_slip: 'warn', no_show: 'bad', rejected: 'bad' }[s] || 'dim');
+const statusPill = s => pill({ pending: 'สมัครใหม่ รอยืนยัน', active: 'ใช้งาน', inactive: 'ปิดอยู่', frozen: 'พักสมาชิก', expired: 'หมดอายุ', booked: 'จองแล้ว', cancelled: 'ยกเลิก', no_show: 'ไม่มา', awaiting_slip: 'ยังไม่ส่งสลิป', pending_slip: 'รอตรวจสลิป', paid: 'ชำระแล้ว', rejected: 'ไม่ผ่าน', upcoming: 'ยังไม่เริ่ม' }[s] || s,
+  { active: 'ok', booked: 'ok', paid: 'ok', pending: 'warn', frozen: 'warn', pending_slip: 'warn', no_show: 'bad', rejected: 'bad' }[s] || 'dim');
 
 /* ---------- business data: backend when online, else db.js in memory ---------- */
 const TEST_IMG = location.protocol === 'file:' ? '../../qa/test-images/' : '../qa/';
@@ -50,6 +51,7 @@ function drawDashboard(v, d) {
       ${linkStat('#inbox', 'รอพนักงาน', d.waiting, 'ไปที่กล่องแชต →', d.waiting ? 'alert' : '')}
       ${linkStat('#payments', 'สลิปรอตรวจ', d.slips_pending.count, `${fmt(d.slips_pending.amount)} บาท · ยังไม่ส่งสลิป ${d.awaiting_slip}`, d.slips_pending.count ? 'warn' : '')}
       ${stat('สมาชิกใช้งาน', d.members_active, `จาก ${d.members_total} คน`)}
+      ${linkStat('#members', 'สมัครใหม่รอยืนยัน', d.signups_pending, 'สมัครจากหน้าเว็บ →', d.signups_pending ? 'warn' : '')}
       ${linkStat('#bookings', 'การจองที่จะถึง', d.bookings_upcoming, 'ตั้งแต่วันนี้ →')}
       ${linkStat('#promotions', 'โปรที่เปิดอยู่', d.promotions_active, 'เปิด/ปิดได้ →')}
     </div>
@@ -67,7 +69,7 @@ function sampleDashboard() {   // preview mode: sample numbers, shaped like GET 
     messages_by_hour: [3, 2, 1, 1, 2, 6, 11, 9, 7, 8, 12, 10, 6, 5, 7, 9, 14, 18, 15, 9, 5, 3, 2, 1],
     handoff_topics: [['ขอคืนเงิน', 5], ['สลิปไม่ผ่าน', 4], ['ขอส่วนลดพิเศษ', 3], ['ยกเลิกสมาชิก', 2]],
     slips_pending: { count: pend.length, amount: pend.reduce((s, p) => s + p.amount, 0) }, awaiting_slip: pays.filter(p => p.status === 'awaiting_slip').length,
-    members_active: DB.members.filter(m => m.status === 'active').length, members_total: DB.members.length,
+    members_active: DB.members.filter(m => m.status === 'active').length, members_total: DB.members.length, signups_pending: DB.members.filter(m => m.status === 'pending').length,
     bookings_upcoming: MEM.bookings.filter(b => b.status === 'booked' && b.date >= today).length, promotions_active: MEM.promotions.filter(p => p.status === 'active').length,
     classes_today: DB.schedule.filter(s => s.day === d).map((s, i) => ({ ...s, booked: Math.min(C(s.class_id).capacity, 8 + (i * 7) % 15) })) };
 }
@@ -83,12 +85,40 @@ PAGES.leads = {
 
 PAGES.members = {
   title: 'สมาชิก',
-  render(v) {
-    v.innerHTML = `<div class="toolbar"><input type="search" id="mSearch" placeholder="ค้นหารหัส ชื่อ หรือเบอร์"><button class="btn red sm" data-toast="ฟอร์มเพิ่มสมาชิก">+ เพิ่มสมาชิก</button></div><div id="mTable"></div>`;
-    const draw = q => $('#mTable').innerHTML = table(['รหัส', 'ชื่อ', 'โทร', 'แพ็กเกจ', 'หมดอายุ', 'แต้ม', 'PT คงเหลือ', 'สถานะ'],
-      DB.members.filter(m => !q || [m.member_id, m.first_name, m.last_name, m.phone].join(' ').includes(q)).map(m =>
-        `<tr><td class="mono">${m.member_id}</td><td>${m.first_name} ${m.last_name}</td><td class="mono">${m.phone}</td><td>${P(m.package_id).name_th}</td><td>${thDate(m.end_date)}</td><td>${fmt(m.points)}</td><td>${m.pt_sessions_left}</td><td>${statusPill(m.status)}</td></tr>`));
-    $('#mSearch').oninput = e => draw(e.target.value.trim()); draw('');
+  badge: () => DB.members.filter(m => m.status === 'pending').length,
+  async render(v) {
+    v.innerHTML = `<div class="toolbar"><input type="search" id="mSearch" placeholder="ค้นหารหัส ชื่อ หรือเบอร์"><select id="mFilter" style="max-width:220px"><option value="">ทุกสถานะ</option><option value="pending">สมัครใหม่ รอยืนยัน</option><option value="active">ใช้งาน</option><option value="frozen">พักสมาชิก</option><option value="expired">หมดอายุ</option><option value="cancelled">ยกเลิก (ไม่อนุมัติ)</option><option value="owing">มียอดค้างชำระ</option></select><button class="btn red sm" data-toast="ฟอร์มเพิ่มสมาชิก">+ เพิ่มสมาชิก</button></div>
+      <p class="hint">${liveNote()} ลูกค้าสมัครจากปุ่ม <b>สมัครสมาชิก</b> บนหน้าเว็บ → ขึ้นที่นี่สถานะ <b>สมัครใหม่ รอยืนยัน</b> พร้อมรายการชำระในหน้า <a href="#payments">การชำระเงิน</a> · ตรวจชื่อ เบอร์ และสลิป แล้วกด <b>ยืนยันสมาชิก</b> (จองคลาสได้ทันที) หรือ <b>ไม่อนุมัติ</b></p>
+      <div id="mTable"><div class="empty">กำลังโหลด…</div></div>`;
+    if (ChatStore.online) try { DB.members = await ChatStore.api('GET', '/api/admin/members'); MEM.payments = await ChatStore.api('GET', '/api/admin/payments'); } catch (e) { return left('members') || loadFail($('#mTable'), e); }
+    if (left('members')) return;
+    const owing = id => MEM.payments.filter(p => p.member_id === id && ['awaiting_slip', 'pending_slip'].includes(p.status));   // unpaid: no slip yet · slip waiting for staff (business.DUE)
+    const dupe = m => DB.members.find(x => x.member_id !== m.member_id && x.phone === m.phone && x.status !== 'cancelled');
+    const draw = () => {
+      const q = $('#mSearch').value.trim(), f = $('#mFilter').value;
+      const rows = DB.members.filter(m => (!q || [m.member_id, m.first_name, m.last_name, m.phone].join(' ').includes(q)) && (!f || (f === 'owing' ? owing(m.member_id).length : m.status === f)))
+        .sort((a, b) => (b.status === 'pending') - (a.status === 'pending'));
+      $('#mTable').innerHTML = table(['รหัส', 'ชื่อ', 'โทร', 'แพ็กเกจ', 'หมดอายุ', 'แต้ม', 'PT คงเหลือ', 'ยอดค้างชำระ', 'สถานะ', ''], rows.map(m => {
+        const due = owing(m.member_id), d = m.status === 'pending' && dupe(m);
+        const dueCell = due.length ? `<b>${fmt(due.reduce((t, p) => t + p.amount, 0))} บาท</b>${due.map(p => `<br><a href="#payments" class="dim"><small>${p.id} · ${fmt(p.amount)}</small></a> ${statusPill(p.status)}`).join('')}` : '<span class="dim">ไม่มี</span>';
+        const act = m.status === 'pending' ? `<button class="btn red sm" data-member="${m.member_id}" data-to="active">ยืนยันสมาชิก</button> <button class="btn ghost sm" data-member="${m.member_id}" data-to="cancelled">ไม่อนุมัติ</button>`
+          : m.status === 'cancelled' ? `<button class="btn ghost sm" data-member="${m.member_id}" data-to="pending">ย้อนสถานะ</button>` : '';
+        return `<tr><td class="mono">${m.member_id}</td><td>${esc(m.first_name)} ${esc(m.last_name)}${d ? `<br>${pill(`เบอร์ซ้ำกับ ${d.member_id}`, 'bad')}` : ''}</td><td class="mono">${esc(m.phone || '')}</td><td>${P(m.package_id).name_th}</td><td>${thDate(m.end_date)}</td><td>${fmt(m.points)}</td><td>${m.pt_sessions_left}</td><td>${dueCell}</td><td>${statusPill(m.status)}</td><td>${act}</td></tr>`;
+      }));
+    };
+    $('#mSearch').oninput = draw; $('#mFilter').onchange = draw;
+    if (DB.members.some(m => m.status === 'pending')) $('#mFilter').value = 'pending';
+    draw();
+    v.onclick = async e => {
+      const b = e.target.closest('[data-member]'); if (!b) return;
+      const m = DB.members.find(x => x.member_id === b.dataset.member);
+      try {
+        if (ChatStore.online) Object.assign(m, await ChatStore.api('PATCH', `/api/admin/members/${m.member_id}`, { status: b.dataset.to }));
+        else m.status = b.dataset.to;
+        if (!DB.members.some(x => x.status === 'pending') && $('#mFilter').value === 'pending') $('#mFilter').value = '';   // last sign-up done: show everyone
+        draw(); renderNav(); toast(b.dataset.to === 'active' ? `ยืนยัน ${m.member_id} เป็นสมาชิกแล้ว` : 'บันทึกแล้ว');
+      } catch (err) { toast('บันทึกไม่ได้ · ' + err.message); }
+    };
   }
 };
 
@@ -98,11 +128,11 @@ PAGES.payments = {
   async render(v) {
     const FILTER = [['', 'ทุกสถานะ'], ['pending_slip', 'รอตรวจสลิป'], ['awaiting_slip', 'ยังไม่ส่งสลิป'], ['paid', 'ชำระแล้ว'], ['rejected', 'ไม่ผ่าน']];
     v.innerHTML = `<div class="toolbar"><select id="payFilter" style="max-width:200px">${FILTER.map(([k, l]) => `<option value="${k}">${l}</option>`).join('')}</select><span>${liveNote()} ${resetBtn}</span></div>
-      <p class="hint">ทดสอบส่งสลิป: ที่หน้าเว็บยืนยันตัวตน <b>FN-10012</b> เบอร์ <b>5670</b> แล้วส่งภาพ 01_slip_valid.png → สลิปขึ้นที่ PAY-2610-012 และผ่านครบ · <b>FN-10005</b> เบอร์ <b>1846</b> ส่ง 02_slip_amount_mismatch.png → ไม่ผ่าน ขาด 600 บาท</p>
+      <p class="hint">ทดสอบส่งสลิป: ที่หน้าเว็บยืนยันตัวตน <b>FN-10003</b> เบอร์ <b>5531</b> แล้วส่งภาพ 01_slip_valid.png (ผู้โอน ภาคิน) → สลิปขึ้นที่ PAY-2609-003 และผ่านครบ 6 ข้อ · <b>FN-10005</b> เบอร์ <b>1846</b> ส่ง 02_slip_amount_mismatch.png → ไม่ผ่าน ขาด 600 บาท</p>
       <div id="payTable"><div class="empty">กำลังโหลด…</div></div>`;
     try { await BO.list('payments'); } catch (e) { return left('payments') || loadFail($('#payTable'), e); }
     if (left('payments')) return;
-    const verdict = s => s?.checks?.length ? pill(s.ok ? 'ตรวจผ่าน 5/5' : `ไม่ผ่าน ${s.checks.filter(c => !c.pass).length} ข้อ`, s.ok ? 'ok' : 'bad') : '';
+    const verdict = s => s?.checks?.length ? pill(s.ok ? `ตรวจผ่าน ${s.checks.length}/${s.checks.length}` : `ไม่ผ่าน ${s.checks.filter(c => !c.pass).length} ข้อ`, s.ok ? 'ok' : 'bad') : '';
     const draw = () => {
       const f = $('#payFilter').value;
       $('#payTable').innerHTML = table(['เลขรายการ', 'สมาชิก', 'รายการ', 'ยอด', 'ครบกำหนด', 'สลิป', 'สถานะ', ''], MEM.payments.filter(p => !f || p.status === f).map(p => {

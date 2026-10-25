@@ -11,7 +11,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from . import backoffice, chat, config, conversations, db, dbviewer, knowledge, line, rag
+from . import backoffice, chat, config, conversations, db, dbviewer, knowledge, line, members, rag
 
 @asynccontextmanager
 async def lifespan(_app):
@@ -46,6 +46,7 @@ app.include_router(conversations.admin)
 app.include_router(backoffice.router)
 app.include_router(backoffice.web)
 app.include_router(chat.router)
+app.include_router(members.router)
 app.include_router(knowledge.router)
 app.include_router(dbviewer.router)
 app.include_router(line.router)

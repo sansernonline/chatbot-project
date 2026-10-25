@@ -4,9 +4,9 @@
 
 What it does, in order:
   1. data/db/*.json → mockup/shared/db.js (the website's offline data, data/build_db_js.py)
-  2. mockup/ → frontend/ · data/db, knowledge-base, guard → data/ · qa/test-images → qa/
+  2. mockup/ → frontend/ · data/knowledge-base, guard → data/ · qa/test-images → qa/ (data/db/*.json is not copied: step 4 puts it in the database)
   3. the newest version of each deck/report in docs/ → documents/ (copied as they are)
-  4. data/db/*.json → data/xfitness_db.sqlite3 (every table, shop data, sample chats) — the server copies it on start
+  4. data/db/*.json at the project root → data/db/xfitness_db.sqlite3 (every table, shop data, sample chats, synonyms, data dictionary)
   5. warns when the knowledge base changed but data/rag-index/ was not rebuilt (that needs Typhoon: python -m app.rag)
 Nothing is deleted: files that exist only in x-fitness/ (data/rag-index/, documents/index.html) stay.
 """
@@ -20,7 +20,7 @@ APP = Path(__file__).resolve().parents[1]          # x-fitness/
 ROOT = APP.parent
 BACKEND = APP / "backend"
 PY = next((p for p in [BACKEND / ".venv/Scripts/python.exe", BACKEND / ".venv/bin/python"] if p.exists()), Path(sys.executable))
-COPIES = [("mockup", "frontend"), ("data/db", "data/db"), ("data/knowledge-base", "data/knowledge-base"),
+COPIES = [("mockup", "frontend"), ("data/knowledge-base", "data/knowledge-base"),
           ("data/guard", "data/guard"), ("qa/test-images", "qa")]
 VERSIONED = re.compile(r"XFitness-Chatbot_(.+?)-v(\d+(?:\.\d+)*)\.(html|pptx|docx)$")   # docs/XFitness-Chatbot_Presentation-v1.2.pptx
 

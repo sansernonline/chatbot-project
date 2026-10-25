@@ -1,7 +1,9 @@
 _to_delete/
 __pycache__/
 .pytest_cache/
-x-fitness/backend/data/
+x-fitness/data/db/slips/
+x-fitness/data/db/*.backup.sqlite3
+x-fitness/data/db/*.sqlite3-journal
 x-fitness/backend/.env
 .venv/
 qa/results/.ui-run.jsonl

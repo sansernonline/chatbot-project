@@ -118,35 +118,6 @@
       "KB-05-chunk-002"
     ]
   },
-  "KB-06": {
-    "status": "processed",
-    "content_summary": "[KB-06] การชำระเงิน การส่งสลิป และการออกใบเสร็จ\n\n\n# การชำระเงิน\n\n## ช่องทางชำระเงิน\n\n1. เงินสดหรือบัตรเครดิต/เดบิตที่เคาน์เตอร์ (บัตรเครดิตขั้นต่ำ 300 บาท)\n2. สแกนคิวอาร์พร้อมเพย์ที่เคาน์เตอร์\n3. โอนเงินเข้าบัญชีร้าน แล้วส่งสลิปผ่านแชตหรือ LINE Offic...",
-    "content_length": 1913,
-    "created_at": "2026-10-05T05:32:10.175157+00:00",
-    "updated_at": "2026-10-05T05:32:10.392489+00:00",
-    "file_path": "KB-06",
-    "track_id": "insert_20261005_123210_e079c9db",
-    "content_hash": "415826f83c8f3c791ad54ef2e628121e",
-    "metadata": {
-      "parse_start_time": 1791178330,
-      "parse_stage_skipped": true,
-      "parse_format": "raw",
-      "parse_engine": "legacy",
-      "analyzing_start_time": 1791178330,
-      "analyzing_stage_skipped": true,
-      "kg_write_state": "graph_mutation_started",
-      "process_start_time": 1791178330,
-      "process_end_time": 1791178330,
-      "chunk_method": "legacy_chunking_func",
-      "chunk_opts": "size=500, split_only=False, overlap=100"
-    },
-    "chunks_count": 3,
-    "chunks_list": [
-      "KB-06-chunk-000",
-      "KB-06-chunk-001",
-      "KB-06-chunk-002"
-    ]
-  },
   "KB-09": {
     "status": "processed",
     "content_summary": "[KB-09] บริการลูกค้า ติดต่อพนักงาน เช็กอิน และบัตรสมาชิก\n\n\n# บริการลูกค้า\n\n## ติดต่อพนักงานและเวลาตอบ\n\n- แชตบอท \"เอ็กซ์\" ตอบได้ตลอด 24 ชั่วโมง\n- พิมพ์ \"คุยกับพนักงาน\" ในแชตเพื่อส่งเรื่องให้พนักงาน ระหว่างนั้นบอทจะหยุดตอบจนพนักงานปิดเรื่อง\n- พนักงานตอ...",
@@ -279,6 +250,35 @@
       "KB-08-chunk-000",
       "KB-08-chunk-001",
       "KB-08-chunk-002"
+    ]
+  },
+  "KB-06": {
+    "status": "processed",
+    "content_summary": "[KB-06] การชำระเงิน การส่งสลิป และการออกใบเสร็จ\n\n\n# การชำระเงิน\n\n## ช่องทางชำระเงิน\n\n1. เงินสดหรือบัตรเครดิต/เดบิตที่เคาน์เตอร์ (บัตรเครดิตขั้นต่ำ 300 บาท)\n2. สแกนคิวอาร์พร้อมเพย์ที่เคาน์เตอร์\n3. โอนเงินเข้าบัญชีร้าน แล้วส่งสลิปผ่านแชตหรือ LINE Offic...",
+    "content_length": 2045,
+    "created_at": "2026-10-25T04:58:34.561309+00:00",
+    "updated_at": "2026-10-25T05:01:56.028680+00:00",
+    "file_path": "KB-06",
+    "track_id": "insert_20261025_115834_fe2d979a",
+    "content_hash": "99e0b543495bafcfe5d6f768db8f4843",
+    "metadata": {
+      "parse_start_time": 1792904314,
+      "parse_stage_skipped": true,
+      "parse_format": "raw",
+      "parse_engine": "legacy",
+      "analyzing_start_time": 1792904314,
+      "analyzing_stage_skipped": true,
+      "kg_write_state": "graph_mutation_started",
+      "process_start_time": 1792904314,
+      "process_end_time": 1792904516,
+      "chunk_method": "legacy_chunking_func",
+      "chunk_opts": "size=500, split_only=False, overlap=100"
+    },
+    "chunks_count": 3,
+    "chunks_list": [
+      "KB-06-chunk-000",
+      "KB-06-chunk-001",
+      "KB-06-chunk-002"
     ]
   }
 }

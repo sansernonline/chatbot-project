@@ -22,7 +22,7 @@ from lightrag.utils import EmbeddingFunc
 from pythainlp.corpus import thai_stopwords
 from pythainlp.tokenize import word_tokenize
 
-from . import config, keyword_search
+from . import config, db, keyword_search
 
 log = logging.getLogger(__name__)
 MIN_KEYWORD_SCORE = 0.08            # keyword fallback: below this a chunk is not cited (and the bot is likely unsure)
@@ -102,8 +102,8 @@ _STOPWORDS = frozenset(thai_stopwords()) | {"ค่ะ", "ครับ", "คะ
 
 @lru_cache(maxsize=None)
 def _synonyms() -> list[tuple[str, re.Pattern]]:
-    """(knowledge base term, pattern of the other names customers use) from data/db/synonyms.json."""
-    items = json.loads(config.SYNONYMS_FILE.read_text(encoding="utf-8"))["items"]
+    """(knowledge base term, pattern of the other names customers use) from synonyms.json, kept in the database (db.FILES)."""
+    items = json.loads(db.file_text("synonyms.json"))["items"]
     word = lambda v: rf"\b{re.escape(v)}\b" if v.isascii() else re.escape(v)     # "pt" must not match inside "prompt"
     return [(term.lower(), re.compile("|".join(map(word, names)), re.I)) for term, names in items.items()]
 
@@ -124,7 +124,7 @@ async def _get() -> LightRAG:
 
 def _embedder() -> str:
     """Settings an index is built with; when they change, the whole index is rebuilt (same hash on Windows CRLF and Linux LF)."""
-    synonyms = config.SYNONYMS_FILE.read_text(encoding="utf-8").replace("\r\n", "\n")
+    synonyms = db.file_text("synonyms.json")             # stored with LF line ends, so the hash is the file's
     synonyms = "" if config.EMBED_API_KEY else ":syn" + hashlib.md5(synonyms.encode()).hexdigest()[:8]
     return f"{config.EMBED_MODEL}:{config.EMBED_DIM}:chunk{config.RAG_CHUNK_TOKENS}{synonyms}"
 

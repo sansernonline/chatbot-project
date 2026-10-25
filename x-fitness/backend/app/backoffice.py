@@ -19,7 +19,8 @@ THAI = timezone(timedelta(hours=7))
 EXT = {"image/png": "png", "image/jpeg": "jpg"}
 STATUSES = {"payments": {"awaiting_slip", "pending_slip", "paid", "rejected"},
             "bookings": {"booked", "cancelled", "no_show"},
-            "promotions": {"active", "inactive", "expired"}}
+            "promotions": {"active", "inactive", "expired"},
+            "members": {"pending", "active", "cancelled"}}   # a website sign-up: confirm (active) or turn down (cancelled)
 
 router = APIRouter(prefix="/api/admin", tags=["back office"], dependencies=[Depends(auth.require_admin)])
 web = APIRouter(prefix="/api", tags=["web data"])
@@ -114,6 +115,24 @@ def promotions():
     return business.table("promotions")
 
 
+@router.get("/members", summary="สมาชิกทั้งหมด รวมผู้สมัครจากหน้าเว็บที่รอยืนยัน (pending)")
+def members():
+    return business.table("members")
+
+
+@router.patch("/members/{item_id}", summary="ผู้สมัครจากหน้าเว็บ: active = ยืนยันเป็นสมาชิก · cancelled = ไม่อนุมัติ · pending = ย้อนกลับ")
+def set_member(item_id: str, body: Status):
+    if body.status not in STATUSES["members"]:
+        raise HTTPException(422, f"สถานะต้องเป็น {', '.join(sorted(STATUSES['members']))}")
+    m = business.member(item_id)
+    if not m:
+        raise HTTPException(404, "ไม่พบสมาชิกนี้")
+    if m["status"] not in STATUSES["members"]:   # frozen / expired members are changed at the counter, not here
+        raise HTTPException(409, "เปลี่ยนสถานะได้เฉพาะผู้สมัครใหม่")
+    db.set_status("members", item_id, body.status)
+    return business.member(item_id)
+
+
 @router.patch("/payments/{item_id}", summary="สถานะการชำระ: awaiting_slip · pending_slip · paid · rejected")
 def set_payment(item_id: str, body: Status):
     return _set_status("payments", item_id, body)
@@ -165,6 +184,7 @@ def dashboard():
         "awaiting_slip": sum(p["status"] == "awaiting_slip" for p in pays),
         "members_active": sum(m["status"] == "active" for m in members),
         "members_total": len(members),
+        "signups_pending": sum(m["status"] == "pending" for m in members),
         "bookings_upcoming": sum(b["status"] == "booked" and b["date"] >= today.isoformat() for b in books),
         "promotions_active": sum(p["status"] == "active" for p in business.table("promotions")),
         "classes_today": [{"slot_id": s["id"], "start": s["start"], "class_id": s["class_id"], "trainer_id": s["trainer_id"],

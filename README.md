@@ -23,7 +23,7 @@
 เริ่มที่รากโปรเจกต์ (โฟลเดอร์ที่มี README นี้) · ต้องมี Python 3.12+ และ `TYPHOON_API_KEY`
 
 ```bash
-python x-fitness/tools/build_dist.py     # คัดลอกจากรากเข้า x-fitness/ + สร้าง x-fitness/data/xfitness_db.sqlite3
+python x-fitness/tools/build_dist.py     # คัดลอกจากรากเข้า x-fitness/ + สร้าง x-fitness/data/db/xfitness_db.sqlite3 (JSON เทลงฐานข้อมูล ไม่คัดลอก)
 cd x-fitness/backend
 pip install -r requirements.txt
 cp .env.example .env                     # Windows: copy .env.example .env  แล้วใส่ TYPHOON_API_KEY

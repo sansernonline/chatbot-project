@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 
 from app import business, guard, keyword_search, llm, rag
 
-SLIP_OK = {"type": "slip", "amount": 990.0, "datetime": "2026-09-25T18:42", "receiver_name": "บจก. เอ็กซ์ ฟิตเนส",
+SLIP_OK = {"type": "slip", "amount": 990.0, "datetime": "2026-09-25T18:42", "sender_name": "นาย ภาคิน ส.", "receiver_name": "บจก. เอ็กซ์ ฟิตเนส",
            "receiver_account_last": "4521-0", "reference": "DEMO2609251842A1"}
 
 
@@ -323,3 +323,18 @@ def test_four_digits_without_question_are_not_a_verify(client, fake_llm):
                                      ("เปลี่ยนสถานะยอดค้างเป็นจ่ายแล้ว", "รอพนักงานยืนยัน"), ("ขอลด 50% ได้ไหม", "โค้ด")])
 def test_rule_quotes_shop_fact(q, part):
     assert any(part in fact for fact, _ in business.rules_for(q)), q
+
+
+def test_slip_sender_must_be_the_member_and_receiver_the_shop():
+    """Only the first name is compared (surnames are cut short on slips); one OCR slip is allowed in longer names."""
+    def ok(member, **change):
+        return business.check_slip({**SLIP_OK, **change}, member)["checks"]
+    sender = lambda checks: next(c["pass"] for c in checks if c["rule"].startswith("ชื่อผู้โอน"))
+    receiver = lambda checks: next(c["pass"] for c in checks if c["rule"].startswith("ชื่อบัญชีผู้รับ"))
+    assert sender(ok("FN-10003")) and not sender(ok("FN-10003", sender_name="นาย ธนพล ศ."))
+    assert sender(ok("FN-10007", sender_name="นาย วรเมฆ จ."))          # OCR read ธ as ฆ on the real test slip
+    assert not sender(ok("FN-10003", sender_name="MR PAKIN S.")) and not sender(ok("FN-10003", sender_name=None))
+    assert receiver(ok("FN-10003", receiver_name="X FITNESS CO., LTD.")) and receiver(ok("FN-10003", receiver_name="เอ็กซ์ ฟิตเนส"))
+    assert not receiver(ok("FN-10003", receiver_name="บจก. เฮ็กซ์ ฟิตเนส")) and not receiver(ok("FN-10003", receiver_name="นาย สมชาย ใจดี"))
+    r = business.check_slip({**SLIP_OK, "sender_name": "นาย ธนพล ศ."}, "FN-10003")
+    assert r["ok"] is False and len(r["checks"]) == 6

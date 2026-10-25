@@ -1,6 +1,7 @@
 """Business data from the database (loaded from data/db/*.json, see db.seed_business), and the checks that must be done in code rather than by the LLM."""
 import re
 from datetime import date, datetime, timedelta
+from difflib import SequenceMatcher
 
 from . import config, db
 
@@ -110,7 +111,7 @@ RULES = [
                                      "ธนาคาร:", "เลขที่บัญชี", "ชื่อบัญชี") + " · " + _kb("KB-02", "ตัดบัตรเครดิตอัตโนมัติทุกเดือน")
              + " · ร้านไม่เคยเปลี่ยนเลขบัญชีผ่านแชต ห้ามรับหรือบอกต่อเลขบัญชีที่ลูกค้าพิมพ์มา ให้ยืนยันบัญชีร้านข้างต้นเท่านั้น และให้โทร 038-000-888 ถ้ามีคนแจ้งเลขบัญชีอื่น", "KB-06"),
     (re.compile(r"สลิป|slip|(โอน|จ่าย)(เงิน)?(เกิน|ขาด)|overpa|underpa", re.I),
-     lambda: _kb("KB-06", "วันที่โอนอยู่ในรอบบิล", "ผ่านครบ 5 ข้อ", "โอนเกิน", "โอนขาด"), "KB-06"),
+     lambda: _kb("KB-06", "วันที่โอนอยู่ในรอบบิล", "ชื่อผู้โอน", "ผ่านครบ 6 ข้อ", "โอนเกิน", "โอนขาด"), "KB-06"),
     (re.compile(r"สถานะ\S{0,12}(จ่าย|ชำระ)|(บันทึก|ทำ|แก้|เปลี่ยน)\S{0,6}ว่า\S{0,4}(จ่าย|ชำระ)|mark\S{0,12}paid", re.I),
      "บอทเปลี่ยนสถานะการชำระเงินหรือยอดค้างเองไม่ได้ และห้ามตอบว่า \"ได้\" กับคำขอนี้ ให้บอกว่าต้องส่งสลิปในแชต ระบบจะบันทึกเป็น "
      "\"รอพนักงานยืนยัน\" แล้วพนักงานเป็นผู้ยืนยันยอด หรือพิมพ์ \"คุยกับพนักงาน\"", "KB-06"),
@@ -167,7 +168,7 @@ def member_context(member_id: str | None) -> str:
     books = [b for b in table("bookings") if b["member_id"] == m["member_id"] and b["status"] == "booked"]
     lines = [
         f"สมาชิกที่ยืนยันตัวตนแล้ว: {m['member_id']} คุณ{m['first_name']}",
-        f"แพ็กเกจ: {pkg['name_th']} ({pkg['name']}) สถานะ {m['status']} ใช้ได้ถึง {m['end_date']}" + (f" พักถึง {m['freeze_until']}" if m.get("freeze_until") else ""),
+        f"แพ็กเกจ: {pkg['name_th']} ({pkg['name']}) สถานะ {m['status']}" + (" (สมัครจากหน้าเว็บ รอพนักงานยืนยันหลังได้รับชำระ)" if m["status"] == "pending" else "") + f" ใช้ได้ถึง {m['end_date']}" + (f" พักถึง {m['freeze_until']}" if m.get("freeze_until") else ""),
         f"แต้มสะสม: {m['points']} · PT คงเหลือ: {m['pt_sessions_left']} ครั้ง",
         "ยอดค้างชำระ: " + ("; ".join(f"{p['description']} {p['amount']:,.2f} บาท ครบกำหนด {p['due']}" for p in dues) or "ไม่มี"),
         f"คลาสที่จองไว้: {len(books)} รายการ",
@@ -186,8 +187,8 @@ FAILED_TRANSFER = re.compile(r"ไม่สำเร็จ|ล้มเหลว
 
 
 def check_slip(slip: dict, member_id: str | None) -> dict:
-    """The 5 checks from KB-06. The result is preliminary: only staff can mark a payment as paid (never the bot).
-    A slip whose status says the transfer failed ("โอนเงินไม่สำเร็จ") never passes, whatever the 5 checks say."""
+    """The 6 checks from KB-06. The result is preliminary: only staff can mark a payment as paid (never the bot).
+    A slip whose status says the transfer failed ("โอนเงินไม่สำเร็จ") never passes, whatever the 6 checks say."""
     m = member(member_id)
     if not m:
         return {"ok": False, "need_verify": True, "checks": [], "note": "ต้องยืนยันตัวตนก่อนจึงจะตรวจสลิปเทียบยอดค้างได้"}
@@ -198,7 +199,8 @@ def check_slip(slip: dict, member_id: str | None) -> dict:
     amount = _num(slip.get("amount"))
     paid_on = _date(slip.get("datetime") or slip.get("date"))
     checks = [
-        ("ชื่อบัญชีผู้รับเป็น " + bank["account_name"], _norm(bank["account_name"]) in _norm(slip.get("receiver_name"))),
+        ("ชื่อบัญชีผู้รับเป็น " + bank["account_name"], _is_shop(slip.get("receiver_name"), bank["account_name"])),
+        (f"ชื่อผู้โอนตรงกับสมาชิก (คุณ{m['first_name']})", _same_first_name(slip.get("sender_name"), m["first_name"])),
         ("เลขบัญชีผู้รับลงท้าย 4521-0", _digits(slip.get("receiver_account_last") or slip.get("receiver_account")).endswith("45210")),
         (f"ยอดเงินตรงกับยอดค้าง {due['amount']:,.2f} บาท", amount is not None and abs(amount - due["amount"]) < 0.01),
         ("วันที่โอนไม่เกิน 7 วันก่อนหรือหลังวันครบกำหนด", paid_on is not None and abs((paid_on - date.fromisoformat(due["due"])).days) <= 7),
@@ -213,10 +215,25 @@ def check_slip(slip: dict, member_id: str | None) -> dict:
         result["short_by"] = round(due["amount"] - amount, 2)
     if amount is not None and amount > due["amount"]:
         result["over_by"] = round(amount - due["amount"], 2)       # the LLM states the difference: give it the number
-    result["note"] = ("ผ่านครบ 5 ข้อ สถานะเป็น 'รอพนักงานยืนยัน' (ยังไม่ใช่ชำระแล้ว)" if result["ok"] else
+    result["note"] = (f"ผ่านครบ {len(checks)} ข้อ สถานะเป็น 'รอพนักงานยืนยัน' (ยังไม่ใช่ชำระแล้ว)" if result["ok"] else
                       ("สลิประบุว่าการโอนไม่สำเร็จ " if failed else "ไม่ผ่านบางข้อ ")
                       + "บอกลูกค้าว่าส่งให้พนักงานตรวจต่อแล้ว ไม่ต้องโอนซ้ำจนกว่าพนักงานติดต่อกลับ ให้พิมพ์ \"คุยกับพนักงาน\" ได้ ห้ามบอกว่าชำระสำเร็จ")
     return result
+
+
+def _is_shop(receiver, account_name: str) -> bool:
+    """The receiver is the shop: its Thai name without "บจก." or "X Fitness" in English. Exact, no fuzzy match: a
+    look-alike name ("บจก. เฮ็กซ์ ฟิตเนส") is how a fake account would try to pass."""
+    seen = _norm(receiver)
+    return any(name in seen for name in (_norm(account_name).removeprefix("บจก"), "xfitness"))
+
+
+def _same_first_name(sender, first_name: str) -> bool:
+    """A word of the sender ("นาย ภาคิน ส.") is the member's first name — the surname is cut short on slips, so only
+    the first name counts. One character may differ in names of 5 or more (OCR reads ธ as ฆ: "วรเมธ" → "วรเมฆ").
+    A name in English cannot be compared: it fails and staff look."""
+    words = re.split(r"[\s.]+", str(sender or "").lower())
+    return any(w == first_name or (len(first_name) >= 5 and SequenceMatcher(None, w, first_name).ratio() >= 0.8) for w in words)
 
 
 def _digits(s) -> str:

@@ -427,6 +427,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
       </ul>
     </nav>
     <div class="nav-cta">
+      <button class="btn btn-ghost btn-sm" data-open="signup">สมัครสมาชิก</button>
       <button class="btn btn-red btn-sm" data-open="trial">ทดลองฟรี 1 วัน</button>
       <button class="burger" id="burger" aria-label="เปิดเมนู" aria-expanded="false"><span></span></button>
     </div>
@@ -434,6 +435,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 </header>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#membership">สมาชิก</a><a href="#classes">คลาส</a><a href="#pt">เทรนเนอร์</a><a href="#rewards">แต้มสะสม</a><a href="#promos">โปรโมชัน</a><a href="#visit">ติดต่อ</a>
+  <button class="btn btn-ghost" data-open="signup">สมัครสมาชิก</button>
   <button class="btn btn-red" data-open="trial">ทดลองฟรี 1 วัน</button>
 </div>
 
@@ -687,8 +689,21 @@ function verifyMember(id, last4) {
   if (!m) return { ok: false, error: 'ข้อมูลไม่ตรงกับระบบ กรุณาตรวจสอบรหัสสมาชิกและเบอร์โทร 4 ตัวท้าย' }; // same message whether id exists or not
   return { ok: true, member: m };
 }
+async function checkMember(id, last4) {   // backend running: ask it (members who signed up on this website are only there), else db.js
+  if (!ChatStore.online) return verifyMember(id, last4);
+  id = String(id || '').trim().toUpperCase().replace(/\s/g, ''); if (/^\d{5}$/.test(id)) id = 'FN-' + id; if (/^FN\d{5}$/.test(id)) id = 'FN-' + id.slice(2);
+  try {
+    const r = await fetchT(ChatStore.base + '/api/members/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ member_id: id, phone_last4: String(last4 || '').trim() }) });
+    if (!r.ok) return { ok: false, error: r.status === 422 ? 'รูปแบบไม่ถูกต้อง: รหัสสมาชิกเช่น FN-10003 และเบอร์โทร 4 ตัวท้าย' : (await httpError(r)).message };
+    const m = await r.json(), i = DB.members.findIndex(x => x.member_id === m.member_id);
+    if (i < 0) DB.members.push(m); else DB.members[i] = { ...DB.members[i], ...m };   // keep the latest status (staff may have confirmed the sign-up)
+    return { ok: true, member: DB.members.find(x => x.member_id === m.member_id) };
+  } catch { return { ok: false, error: 'ติดต่อระบบไม่ได้ ลองใหม่อีกครั้ง' }; }
+}
 function setMember(m) { S.member = m; renderMemberPanel(); renderMemberBar(); }
 function memberStatusText(m) {
+  if (m.status === 'pending') return 'สมัครแล้ว · รอพนักงานยืนยันหลังได้รับชำระ';
+  if (m.status === 'cancelled') return 'การสมัครไม่ได้รับอนุมัติ กรุณาติดต่อเคาน์เตอร์';
   if (m.status === 'frozen') return `พักสมาชิกถึง ${thDate(m.freeze_until)}`;
   if (m.status === 'expired' || m.end_date < iso(new Date())) return `หมดอายุเมื่อ ${thDate(m.end_date)}`;
   return `ใช้งานได้ถึง ${thDate(m.end_date)}`;
@@ -697,6 +712,7 @@ function isActive(m) { return m.status === 'active' && m.end_date >= iso(new Dat
 function canBook(m, slot, date) {
   const cls = C(slot.class_id);
   if (m.status === 'frozen') return 'สมาชิกอยู่ระหว่างพักสมาชิก จองคลาสไม่ได้จนถึง ' + thDate(m.freeze_until);
+  if (m.status === 'pending') return 'รอพนักงานยืนยันการสมัคร (หลังได้รับชำระ) จึงจะจองคลาสได้';
   if (!isActive(m)) return 'สมาชิกหมดอายุแล้ว กรุณาต่ออายุที่เคาน์เตอร์';
   if (m.package_id === 'PKG-DAY') return 'บัตรรายวันจองคลาสล่วงหน้าไม่ได้ ซื้อคลาสเพิ่มได้ที่เคาน์เตอร์คลาสละ 150 บาท';
   if (m.package_id === 'PKG-STU' && slot.class_id === 'CL-RIDE') return 'แพ็กเกจนักศึกษาไม่รวมคลาส Ride';
@@ -745,7 +761,7 @@ function renderPlans() {
       <div><h3>${esc(p.name)}</h3><div class="thn">${esc(p.name_th)}</div></div>
       <div class="price">${fmt(price)}<small>บาท / ${unit}</small></div>
       <ul>${feats[id].map(f => `<li>${esc(f)}</li>`).join('')}</ul>
-      <button class="btn ${hot ? 'btn-red' : 'btn-ghost'}" data-join="${id}">${id === 'PKG-DAY' ? 'ซื้อที่เคาน์เตอร์' : 'สนใจสมัคร'}</button>
+      <button class="btn ${hot ? 'btn-red' : 'btn-ghost'}" ${id === 'PKG-DAY' ? 'data-join' : 'data-signup'}="${id}">${id === 'PKG-DAY' ? 'ซื้อที่เคาน์เตอร์' : 'สมัครสมาชิก'}</button>
     </article>`;
   }).join('');
   const active = DB.promotions.filter(p => promoStatus(p) === 'active' && p.applies_to[0] !== 'ALL');
@@ -797,10 +813,10 @@ function renderMemberPanel() {
   }
   const p = P(m.package_id), t = iso(new Date());
   const up = S.bookings.filter(b => b.member_id === m.member_id && b.status === 'booked' && b.date >= t).sort((a, b) => a.date.localeCompare(b.date));
-  const st = m.status === 'frozen' ? 'frozen' : isActive(m) ? 'active' : 'expired';
+  const st = ['frozen', 'pending'].includes(m.status) ? m.status : isActive(m) ? 'active' : 'expired';
   el.innerHTML = `<div class="card-member">
     <div class="mc-top"><div><div class="eyebrow" style="margin-bottom:10px">${esc(m.member_id)}</div><div class="mc-name">คุณ${esc(m.first_name)} ${esc(m.last_name[0])}.</div><div style="color:var(--muted);font-size:14px">${esc(p.name_th)} · ${esc(memberStatusText(m))}</div></div>
-      <span class="badge ${st}">${{ active: 'ใช้งานอยู่', frozen: 'พักสมาชิก', expired: 'หมดอายุ' }[st]}</span></div>
+      <span class="badge ${st === 'pending' ? 'frozen' : st}">${{ active: 'ใช้งานอยู่', frozen: 'พักสมาชิก', pending: 'รอยืนยัน', expired: 'หมดอายุ' }[st]}</span></div>
     <div class="kpis"><div class="kpi"><b>${fmt(m.points)}</b><span>แต้มสะสม</span></div><div class="kpi"><b>${m.pt_sessions_left}</b><span>PT คงเหลือ</span></div><div class="kpi"><b>${up.length}</b><span>คลาสที่จองไว้</span></div></div>
     ${up.length ? `<div style="font-size:14px">${up.map(b => { const s = DB.schedule.find(x => x.id === b.slot_id); return `<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)"><span>${esc(C(s.class_id).name)} · ${thShort(parseISO(b.date))} ${s.start}</span><button class="demo-hint" style="margin:0" data-cancel="${b.id}"><u>ยกเลิก</u></button></div>`; }).join('')}</div>` : ''}
     <div><div style="font:600 12px var(--mono);letter-spacing:.14em;color:var(--muted);margin-bottom:8px">แลกของรางวัล</div>
@@ -853,7 +869,7 @@ function openBooking(slotId) {
     $('#bookForm', body).onsubmit = async e => {
       e.preventDefault(); const btn = $('button[type=submit]', body); const msg = $('#bMsg', body);
       let m = S.member;
-      if (!m) { const r = verifyMember($('#bId', body).value, $('#bPh', body).value); if (!r.ok) { msg.innerHTML = `<div class="alert err">${esc(r.error)}</div>`; return; } m = r.member; }
+      if (!m) { const r = await checkMember($('#bId', body).value, $('#bPh', body).value); if (!r.ok) { msg.innerHTML = `<div class="alert err">${esc(r.error)}</div>`; return; } m = r.member; }
       btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> กำลังจอง…'; await sleep(700);
       const res = book(m, s, date);
       if (!res.ok) { msg.innerHTML = `<div class="alert err">${esc(res.error)}</div>`; btn.disabled = false; btn.textContent = 'ยืนยันการจอง'; if (!S.member) setMember(m); return; }
@@ -883,6 +899,53 @@ function openJoin(pkgId) {
       $('#modalBody').innerHTML = `<div class="alert ok">รับข้อมูลแล้ว · เลขอ้างอิง ${id}</div><p style="color:var(--muted);font-size:14px">พนักงานจะติดต่อกลับภายใน 1 วันทำการ${promo ? ` · โปรที่ใช้: ${esc(promo.title)}` : ''}</p><button class="btn btn-red" data-close style="margin-top:14px">เสร็จ</button>`;
     };
   });
+}
+function openSignup(pkgId = 'PKG-12M') {
+  const opts = DB.packages.filter(p => p.id !== 'PKG-DAY').map(p => `<option value="${p.id}" ${p.id === pkgId ? 'selected' : ''}>${esc(p.name_th)} · ${fmt(p.price)} บาท/${p.unit}${p.joining_fee ? ` + แรกเข้า ${fmt(p.joining_fee)}` : ''}</option>`).join('');
+  openModal('สมัครสมาชิก', `<p style="color:var(--muted);font-size:14px;margin-bottom:16px">กรอกข้อมูลแล้วได้รหัสสมาชิกทันที โอนค่าสมัครแล้วส่งสลิปในแชต พนักงานยืนยันการสมัครภายใน 1 วันทำการ วันแรกที่มาให้แสดงบัตรประชาชน (อายุ 15 ปีขึ้นไป)</p>
+    <form id="signupForm" novalidate>
+      <div class="field"><label for="sPkg">แพ็กเกจ</label><select id="sPkg">${opts}</select></div>
+      <div class="row2"><div class="field"><label for="sFirst">ชื่อ</label><input id="sFirst" maxlength="40" autocomplete="given-name"></div><div class="field"><label for="sLast">นามสกุล</label><input id="sLast" maxlength="40" autocomplete="family-name"></div></div>
+      <div class="field"><label for="sPhone">เบอร์โทร</label><input id="sPhone" inputmode="tel" maxlength="12" placeholder="08x-xxx-xxxx" autocomplete="tel"><span class="hint">ใช้ 4 ตัวท้ายยืนยันตัวตนคู่กับรหัสสมาชิก</span></div>
+      <div class="field"><label for="sCode">โค้ดโปรโมชัน (ถ้ามี)</label><input id="sCode" placeholder="เช่น NOJOIN" style="text-transform:uppercase" maxlength="20"></div>
+      <label style="display:flex;gap:10px;font-size:13px;color:var(--muted);margin:6px 0 14px"><input type="checkbox" id="sConsent"> ยินยอมให้ร้านเก็บชื่อ นามสกุล และเบอร์โทร เพื่อใช้เป็นข้อมูลสมาชิก</label>
+      <div id="sMsg"></div><button class="btn btn-red" type="submit" style="width:100%;justify-content:center">สมัครสมาชิก</button></form>`, body => {
+    $('#signupForm', body).onsubmit = async e => {
+      e.preventDefault(); const msg = $('#sMsg', body), v = id => $(id, body).value.trim();
+      const pkg = v('#sPkg'), first = v('#sFirst'), last = v('#sLast'), phone = v('#sPhone').replace(/[\s-]/g, ''), code = v('#sCode').toUpperCase();
+      const err = t => { msg.innerHTML = `<div class="alert err">${esc(t)}</div>`; };
+      if (!first || !last) return err('กรุณากรอกชื่อและนามสกุล');
+      if (!/^0\d{9}$/.test(phone)) return err('เบอร์โทรต้องเป็นตัวเลข 10 หลัก ขึ้นต้นด้วย 0');
+      if (!$('#sConsent', body).checked) return err('กรุณายินยอมการเก็บข้อมูลก่อนสมัคร');
+      if (code) { const r = checkPromo(code, pkg); if (!r.ok) return err(r.error); }
+      const btn = $('button[type=submit]', body); btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> กำลังสมัคร…';
+      let res;
+      try { res = await submitSignup({ first_name: first, last_name: last, phone, package_id: pkg, promo_code: code || null, consent: true }); }
+      catch (x) { btn.disabled = false; btn.textContent = 'สมัครสมาชิก'; if (/เบอร์/.test(x.message)) $('#sPhone', body).select(); return err(x.kind === 'http' ? x.message : 'ติดต่อระบบไม่ได้ ลองใหม่อีกครั้ง หรือโทร 038-000-888'); }
+      const b = res.bank || DB.business.bank, m = { member_id: res.member_id, first_name: first, last_name: last, phone_last4: phone.slice(-4), package_id: pkg, start_date: res.start_date, end_date: res.end_date, status: 'pending', points: 0, pt_sessions_left: 0 };
+      if (!DB.members.some(x => x.member_id === m.member_id)) DB.members.push(m);
+      S.payments.push({ id: res.payment.id, member_id: m.member_id, description: res.payment.description, amount: res.payment.amount, due: res.start_date, status: 'awaiting_slip' });
+      setMember(m); renderSlots();
+      $('#modalBody').innerHTML = `<div class="alert ok">สมัครแล้ว · รหัสสมาชิก <strong>${esc(m.member_id)}</strong></div>
+        <div class="summary"><span>แพ็กเกจ</span><b>${esc(P(pkg).name_th)}</b><span>ใช้ได้</span><b>${thDate(res.start_date)} – ${thDate(res.end_date)}</b><span>ยอดโอน</span><b>${fmt(res.payment.amount)} บาท</b><span>โอนเข้า</span><b>${esc(b.bank)} ${esc(b.account_no)}<br>${esc(b.account_name)}</b><span>สถานะ</span><b>รอพนักงานยืนยัน</b></div>
+        <p style="color:var(--muted);font-size:14px">จดรหัสสมาชิกไว้ ยืนยันตัวตนด้วยรหัสนี้คู่กับเบอร์โทร 4 ตัวท้าย (${esc(m.phone_last4)}) แล้วส่งสลิปในแชตได้เลย${res.preview ? '<br>โหมดดูตัวอย่าง: ไม่ได้รัน backend ข้อมูลนี้ไม่ถูกบันทึก' : ''}</p>
+        <div style="display:flex;gap:10px;margin-top:14px"><button class="btn btn-red" data-ask="">ส่งสลิปในแชต</button><button class="btn btn-ghost" data-close>เสร็จ</button></div>`;
+    };
+  });
+}
+async function submitSignup(body) {   // backend: saved and shown in the back office · preview: kept in this page only
+  if (ChatStore.online) {
+    const r = await fetchT(ChatStore.base + '/api/members/signup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    if (!r.ok) throw await httpError(r);
+    return r.json();
+  }
+  await sleep(600);
+  if (DB.members.some(m => m.phone?.replace(/\D/g, '') === body.phone && m.status !== 'cancelled'))   // same rule as the backend (members.py)
+    throw Object.assign(new Error('เบอร์นี้ใช้สมัครสมาชิกไว้แล้ว กรุณาใช้เบอร์อื่น หรือถ้าเคยสมัครแล้วติดต่อเคาน์เตอร์ โทร 038-000-888'), { kind: 'http' });
+  const p = P(body.package_id), fee = body.promo_code === 'NOJOIN' ? 0 : p.joining_fee, end = new Date();
+  end.setMonth(end.getMonth() + (p.unit === 'ปี' ? 12 : p.contract_months || 1) + (body.promo_code === 'YEAR13' ? 1 : 0)); end.setDate(end.getDate() - 1);
+  const n = Math.max(...DB.members.map(m => +m.member_id.slice(3))) + 1;
+  return { preview: true, member_id: 'FN-' + n, start_date: iso(new Date()), end_date: iso(end), payment: { id: 'PAY-NEW-' + n, description: `ค่าสมัครสมาชิก ${p.name_th}`, amount: p.price + fee } };
 }
 function checkPromo(code, pkgId) {
   const p = DB.promotions.find(x => x.code === code);
@@ -918,6 +981,8 @@ document.addEventListener('click', e => {
   const t = e.target.closest('button,a'); if (!t) return;
   if (t.matches('[data-close]')) return closeModal();
   if (t.dataset.open === 'trial') { document.body.classList.remove('menu-open'); return openTrial(); }
+  if (t.dataset.open === 'signup') { document.body.classList.remove('menu-open'); return openSignup(); }
+  if (t.dataset.signup) return openSignup(t.dataset.signup);
   if (t.dataset.join) return openJoin(t.dataset.join);
   if (t.dataset.book) return openBooking(t.dataset.book);
   if (t.dataset.price) { S.priceMode = t.dataset.price; $$('[data-price]').forEach(b => b.setAttribute('aria-pressed', b === t)); return renderPlans(); }
@@ -943,12 +1008,12 @@ document.addEventListener('click', e => {
   }
   if (t.matches('[data-logout]')) { setMember(null); renderSlots(); return toast('ออกจากระบบแล้ว'); }
   if (t.dataset.copy) { navigator.clipboard?.writeText(t.dataset.copy).then(() => toast(`คัดลอก ${t.dataset.copy} แล้ว`), () => toast(`โค้ด: ${t.dataset.copy}`)); return; }
-  if (t.dataset.ask !== undefined && !t.closest('#chat')) { openChat(); if (t.dataset.ask) sendText(t.dataset.ask); else $('#input').focus(); return; }
+  if (t.dataset.ask !== undefined && !t.closest('#chat')) { closeModal(); openChat(); if (t.dataset.ask) sendText(t.dataset.ask); else $('#input').focus(); return; }
   if (t.closest('.mobile-menu') && t.tagName === 'A') { document.body.classList.remove('menu-open'); $('#burger').setAttribute('aria-expanded', 'false'); }
 });
-document.addEventListener('submit', e => {
+document.addEventListener('submit', async e => {
   if (e.target.id !== 'verifyForm') return; e.preventDefault();
-  const r = verifyMember($('#vId').value, $('#vPh').value);
+  const r = await checkMember($('#vId').value, $('#vPh').value);
   if (!r.ok) { $('#vMsg').innerHTML = `<div class="alert err">${esc(r.error)}</div>`; return; }
   setMember(r.member); renderSlots(); toast('ยืนยันตัวตนแล้ว');
 });
@@ -1137,7 +1202,7 @@ async function apiAnswer(text, img, th) {
   const r = await fetchT(base + '/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ session_id: SID, message: text, member_id: S.member?.member_id || null, phone_last4: S.member?.phone_last4 || null, vision }) }, 40000);   // LightRAG + LLM can take longer than 15 s
   if (!r.ok) throw await httpError(r);
   const j = await r.json(); th.next();
-  if (j.member && !S.member) { const m = DB.members.find(x => x.member_id === j.member.member_id); if (m) { setMember(m); renderSlots(); } }
+  if (j.member && !S.member) { const v = await checkMember(j.member.member_id, j.member.phone_last4); if (v.ok) { setMember(v.member); renderSlots(); } }
   return { html: esc(j.answer || '').replace(/\n/g, '<br>'), sources: j.sources || [], rules: j.rules || [], quick: j.actions || [], vision: vision ? JSON.stringify(vision, null, 1) : null };
 }
 let SID = ChatStore.ticket(); // 10-char ticket kept in localStorage, new one on 'เริ่มแชตใหม่'
@@ -1377,7 +1442,8 @@ async function analyzeImage(img, t) {
     if (!due) return { html: 'ไม่พบยอดค้างชำระของคุณที่รอสลิปครับ เอ็กซ์ส่งต่อให้พนักงานตรวจสอบนะครับ', vision: vis, sources: ['KB-06'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="สลิปไม่มียอดค้าง">ส่งต่อพนักงาน</button>' };
     const dd = (parseISO(v.datetime.slice(0, 10)) - parseISO(due.due)) / 864e5;
     const checks = [
-      ['ชื่อบัญชีผู้รับ', v.receiver_name === DB.business.bank.account_name],
+      ['ชื่อบัญชีผู้รับ', /เอ็กซ์\s*ฟิตเนส|x\s*fitness/i.test(v.receiver_name || '')],
+      [`ชื่อผู้โอนตรงกับสมาชิก (คุณ${S.member.first_name})`, String(v.sender_name || '').split(/[\s.]+/).includes(S.member.first_name)],   // backend also allows one OCR slip (business.py)
       ['เลขบัญชีลงท้าย 4521-0', v.receiver_account_last === '4521-0'],
       [`ยอดเงิน ${fmt(v.amount.toFixed(2))} = ยอดค้าง ${fmt(due.amount.toFixed(2))}`, Math.abs(v.amount - due.amount) < 0.005],
       ['วันที่โอนอยู่ในรอบบิล (±7 วันจากวันครบกำหนด)', Math.abs(dd) <= 7],
@@ -1385,7 +1451,7 @@ async function analyzeImage(img, t) {
     ];
     const pass = checks.every(c => c[1]);
     const list = `<div class="checks">${checks.map(([l, ok]) => `<div class="${ok ? 'y' : 'n'}">${ok ? '✓' : '✗'} ${esc(l)}</div>`).join('')}</div>`;
-    if (pass) { S.usedRefs.add(v.reference); due.status = 'pending_staff'; return { html: `ตรวจสลิปเบื้องต้น <strong>ผ่าน 5/5</strong> สำหรับ ${esc(due.description)}${list}สถานะ: <strong>รอพนักงานยืนยันยอดเข้าบัญชี</strong> ภายใน 1 วันทำการ ยังไม่ถือว่าชำระสำเร็จจนกว่าพนักงานยืนยันครับ`, vision: vis, sources: ['KB-06'], rules: ['D-06', 'N-05'] }; }
+    if (pass) { S.usedRefs.add(v.reference); due.status = 'pending_staff'; return { html: `ตรวจสลิปเบื้องต้น <strong>ผ่าน ${checks.length}/${checks.length}</strong> สำหรับ ${esc(due.description)}${list}สถานะ: <strong>รอพนักงานยืนยันยอดเข้าบัญชี</strong> ภายใน 1 วันทำการ ยังไม่ถือว่าชำระสำเร็จจนกว่าพนักงานยืนยันครับ`, vision: vis, sources: ['KB-06'], rules: ['D-06', 'N-05'] }; }
     const diff = due.amount - v.amount;
     return { html: `ตรวจสลิปเบื้องต้น <strong>ไม่ผ่าน</strong>ครับ${list}${diff > 0 ? `ยอดโอนขาดอยู่ <strong>${fmt(diff.toFixed(2))} บาท</strong> กรุณาโอนส่วนที่ขาดเพิ่มแล้วส่งสลิปทั้งสองใบ ` : ''}เอ็กซ์ยังไม่บันทึกว่าชำระแล้ว และส่งเรื่องให้พนักงานตรวจสอบครับ`, vision: vis, sources: ['KB-06'], rules: ['D-06', 'N-05'], handoff: '<button class="btn btn-ghost btn-sm" data-handoff="สลิปยอดไม่ตรง">ส่งต่อพนักงาน</button>' };
   }

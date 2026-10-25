@@ -260,11 +260,11 @@
     </node>
     <node id="แพ็กเกจรายเดือน">
       <data key="d0">แพ็กเกจรายเดือน</data>
-      <data key="d1">concept</data>
-      <data key="d2">แผนบริการสมาชิกที่ต้องชำระรายเดือนผ่านการตัดบัตรอัตโนมัติหรือโอนเงิน พร้อมสิทธิ์เข้าคลาสได้ไม่จำกัด ยกเว้นคลาส Ride&lt;SEP&gt;แผนบริการที่ต้องชำระรายเดือน</data>
-      <data key="d3">KB-02-chunk-002&lt;SEP&gt;KB-06-chunk-001</data>
+      <data key="d1">artifact</data>
+      <data key="d2">แผนบริการสมาชิกที่ต้องชำระรายเดือนผ่านการตัดบัตรอัตโนมัติหรือโอนเงิน พร้อมสิทธิ์เข้าคลาสได้ไม่จำกัด ยกเว้นคลาส Ride&lt;SEP&gt;แผนบริการรายเดือนที่ผู้ใช้ต้องชำระเงินเป็นประจำเพื่อเข้าถึงฟีเจอร์ต่าง ๆ&lt;SEP&gt;บริการสมาชิกที่มีการชำระเงินรายเดือน</data>
+      <data key="d3">KB-02-chunk-002&lt;SEP&gt;KB-06-chunk-001&lt;SEP&gt;KB-06-chunk-002</data>
       <data key="d4">KB-02&lt;SEP&gt;KB-06</data>
-      <data key="d5">1791178330</data>
+      <data key="d5">1792904515</data>
       <data key="d6" />
     </node>
     <node id="แพ็กเกจรายปี">
@@ -297,10 +297,10 @@
     <node id="เคาน์เตอร์">
       <data key="d0">เคาน์เตอร์</data>
       <data key="d1">location</data>
-      <data key="d2">เคาน์เตอร์ เป็นจุดบริการภายในสถานที่ให้บริการของ X Fitness ที่ออกแบบมาเพื่อรองรับการดำเนินการทางธุรกรรมต่าง ๆ ของสมาชิกอย่างครบวงจร โดยเป็นสถานที่ให้บริการลูกค้าโดยตรงที่สามารถใช้ในการสมัครสมาชิก เปลี่ยนแปลงหรืออัปเกรดแพ็กเกจการใช้บริการ รวมถึงดำเนินการเปลี่ยนบัตรหรืออัปเดตข้อมูลติดต่อได้ ทั้งยังเป็นจุดสำหรับการจองคลาสผ่านการติดต่อโดยตรงกับเจ้าหน้าที่ พร้อมทั้งชำระเงินสำหรับคลาสต่าง ๆ ได้อย่างสะดวก นอกจากนี้ เคาน์เตอร์ยังเป็นศูนย์กลางในการให้บริการด้านเอกสาร เช่น การขอใบกำกับภาษี และการทำบัตรใหม่ ซึ่งสมาชิกสามารถเข้ามาดำเนินการได้ที่จุดบริการนี้ ทั้งยังมีบริการแลกคะแนนที่ตั้งอยู่ภายในร้าน X Fitness เพื่ออำนวยความสะดวกแก่ผู้ใช้บริการในการใช้ประโยชน์จากคะแนนสะสม ทั้งหมดนี้แสดงให้เห็นว่า เคาน์เตอร์มีบทบาทสำคัญในฐานะศูนย์กลางการให้บริการลูกค้าที่ครอบคลุมทุกด้านตั้งแต่การจอง การชำระเงิน การเปลี่ยนแปลงข้อมูล ไปจนถึงการแลกของรางวัล ทั้งนี้ ทุกบริการดังกล่าวดำเนินการภายในสถานที่ให้บริการโดยตรงภายใต้การสนับสนุนของเจ้าหน้าที่ที่มีความเชี่ยวชาญ</data>
-      <data key="d3">KB-02-chunk-002&lt;SEP&gt;KB-02-chunk-003&lt;SEP&gt;KB-03-chunk-003&lt;SEP&gt;KB-03-chunk-004&lt;SEP&gt;KB-04-chunk-001&lt;SEP&gt;KB-06-chunk-001&lt;SEP&gt;KB-09-chunk-000&lt;SEP&gt;KB-09-chunk-001&lt;SEP&gt;KB-07-chunk-002</data>
-      <data key="d4">KB-02&lt;SEP&gt;KB-03&lt;SEP&gt;KB-04&lt;SEP&gt;KB-06&lt;SEP&gt;KB-09&lt;SEP&gt;KB-07</data>
-      <data key="d5">1791191614</data>
+      <data key="d2">เคาน์เตอร์ เป็นจุดบริการภายในสถานที่ให้บริการ เช่น ยิมหรือร้าน X Fitness ที่ออกแบบมาเพื่อรองรับการดำเนินการทางธุรกรรมต่าง ๆ ของลูกค้าอย่างครบวงจร โดยลูกค้าสามารถเข้ามาใช้บริการที่เคาน์เตอร์เพื่อทำรายการสมัครสมาชิก เปลี่ยนแปลงหรืออัปเกรดแพ็กเกจการใช้บริการ รวมถึงดำเนินการเปลี่ยนบัตรหรืออัปเดตข้อมูลติดต่อได้อย่างสะดวก การบริการนี้ครอบคลุมทั้งการจองคลาส การชำระเงินสำหรับคลาสต่าง ๆ การสอบถามข้อมูลเพิ่มเติม และการแลกคะแนนสะสม ซึ่งทั้งหมดนี้ดำเนินการผ่านการติดต่อโดยตรงกับเจ้าหน้าที่ที่ประจำอยู่ที่เคาน์เตอร์ ทำให้เป็นศูนย์กลางการให้บริการลูกค้าแบบครบวงจร ทั้งในด้านข้อมูล การบริหารจัดการสมาชิก และการทำธุรกรรมที่เกี่ยวข้องกับการใช้บริการภายในสถานที่ โดยเฉพาะในบริบทของร้าน X Fitness เคาน์เตอร์ยังเป็นจุดสำคัญสำหรับการแลกคะแนน แสดงให้เห็นถึงบทบาทที่หลากหลายและมีความสำคัญต่อประสบการณ์การใช้บริการของลูกค้า</data>
+      <data key="d3">KB-02-chunk-002&lt;SEP&gt;KB-02-chunk-003&lt;SEP&gt;KB-03-chunk-003&lt;SEP&gt;KB-03-chunk-004&lt;SEP&gt;KB-04-chunk-001&lt;SEP&gt;KB-09-chunk-000&lt;SEP&gt;KB-09-chunk-001&lt;SEP&gt;KB-07-chunk-002</data>
+      <data key="d4">KB-02&lt;SEP&gt;KB-03&lt;SEP&gt;KB-04&lt;SEP&gt;KB-09&lt;SEP&gt;KB-07</data>
+      <data key="d5">1792904313</data>
       <data key="d6" />
     </node>
     <node id="แชต">
@@ -999,19 +999,19 @@
     <node id="รหัสสมาชิก">
       <data key="d0">รหัสสมาชิก</data>
       <data key="d1">data</data>
-      <data key="d2">รหัสประจำตัวสมาชิกที่ใช้ในการยืนยันตัวตนก่อนจองคลาส&lt;SEP&gt;รหัสประจำตัวสมาชิกที่ใช้ในการยืนยันตัวตน&lt;SEP&gt;รหัสประจำตัวสมาชิกที่ใช้ยืนยันตัวตนก่อนส่งสลิปการโอน&lt;SEP&gt;รหัสที่ขึ้นต้นด้วย FN- ตามด้วยตัวเลข 5 หลัก ปรากฏบนบัตรสมาชิก&lt;SEP&gt;รหัสประจำตัวสมาชิกที่ใช้ในการยืนยันตัวตนเมื่อแลกคะแนนผ่านแชตหรือหน้าเว็บ</data>
-      <data key="d3">KB-03-chunk-003&lt;SEP&gt;KB-03-chunk-004&lt;SEP&gt;KB-06-chunk-000&lt;SEP&gt;KB-09-chunk-000&lt;SEP&gt;KB-07-chunk-002</data>
-      <data key="d4">KB-03&lt;SEP&gt;KB-06&lt;SEP&gt;KB-09&lt;SEP&gt;KB-07</data>
-      <data key="d5">1791191604</data>
+      <data key="d2">รหัสประจำตัวสมาชิกที่ใช้ในการยืนยันตัวตนก่อนจองคลาส&lt;SEP&gt;รหัสประจำตัวสมาชิกที่ใช้ในการยืนยันตัวตน&lt;SEP&gt;รหัสที่ขึ้นต้นด้วย FN- ตามด้วยตัวเลข 5 หลัก ปรากฏบนบัตรสมาชิก&lt;SEP&gt;รหัสประจำตัวสมาชิกที่ใช้ในการยืนยันตัวตนเมื่อแลกคะแนนผ่านแชตหรือหน้าเว็บ</data>
+      <data key="d3">KB-03-chunk-003&lt;SEP&gt;KB-03-chunk-004&lt;SEP&gt;KB-09-chunk-000&lt;SEP&gt;KB-07-chunk-002</data>
+      <data key="d4">KB-03&lt;SEP&gt;KB-09&lt;SEP&gt;KB-07</data>
+      <data key="d5">1792904310</data>
       <data key="d6" />
     </node>
     <node id="เบอร์โทร 4 ตัวท้าย">
       <data key="d0">เบอร์โทร 4 ตัวท้าย</data>
       <data key="d1">data</data>
-      <data key="d2">เลขท้าย 4 ตัวของหมายเลขโทรศัพท์ที่ใช้ร่วมกับรหัสสมาชิกในการยืนยันตัวตน&lt;SEP&gt;เลขท้าย 4 หลักของหมายเลขโทรศัพท์ที่ใช้ในการยืนยันตัวตน&lt;SEP&gt;ตัวเลข 4 ตัวสุดท้ายของเบอร์โทรศัพท์สมาชิก ใช้ร่วมกับรหัสสมาชิกในการยืนยันตัวตน&lt;SEP&gt;ส่วนหนึ่งของหมายเลขโทรศัพท์ที่ใช้ยืนยันตัวตนในแชต&lt;SEP&gt;เลขท้าย 4 หลักของเบอร์โทรศัพท์ที่ใช้ในการยืนยันตัวตนเมื่อแลกคะแนนผ่านแชตหรือหน้าเว็บ</data>
-      <data key="d3">KB-03-chunk-003&lt;SEP&gt;KB-03-chunk-004&lt;SEP&gt;KB-06-chunk-000&lt;SEP&gt;KB-09-chunk-000&lt;SEP&gt;KB-07-chunk-002</data>
-      <data key="d4">KB-03&lt;SEP&gt;KB-06&lt;SEP&gt;KB-09&lt;SEP&gt;KB-07</data>
-      <data key="d5">1791191604</data>
+      <data key="d2">เลขท้าย 4 ตัวของหมายเลขโทรศัพท์ที่ใช้ร่วมกับรหัสสมาชิกในการยืนยันตัวตน&lt;SEP&gt;เลขท้าย 4 หลักของหมายเลขโทรศัพท์ที่ใช้ในการยืนยันตัวตน&lt;SEP&gt;ส่วนหนึ่งของหมายเลขโทรศัพท์ที่ใช้ยืนยันตัวตนในแชต&lt;SEP&gt;เลขท้าย 4 หลักของเบอร์โทรศัพท์ที่ใช้ในการยืนยันตัวตนเมื่อแลกคะแนนผ่านแชตหรือหน้าเว็บ</data>
+      <data key="d3">KB-03-chunk-003&lt;SEP&gt;KB-03-chunk-004&lt;SEP&gt;KB-09-chunk-000&lt;SEP&gt;KB-07-chunk-002</data>
+      <data key="d4">KB-03&lt;SEP&gt;KB-09&lt;SEP&gt;KB-07</data>
+      <data key="d5">1792904310</data>
       <data key="d6" />
     </node>
     <node id="การจองคลาส">
@@ -1025,11 +1025,11 @@
     </node>
     <node id="LINE">
       <data key="d0">LINE</data>
-      <data key="d1">organization</data>
-      <data key="d2">แพลตฟอร์มการแจ้งเตือนผ่านระบบแชท&lt;SEP&gt;แพลตฟอร์มการส่งข้อความที่ใช้ในการส่งใบเสร็จอิเล็กทรอนิกส์</data>
-      <data key="d3">KB-03-chunk-004&lt;SEP&gt;KB-06-chunk-001</data>
-      <data key="d4">KB-03&lt;SEP&gt;KB-06</data>
-      <data key="d5">1791178330</data>
+      <data key="d1">artifact</data>
+      <data key="d2">แพลตฟอร์มการแจ้งเตือนผ่านระบบแชท</data>
+      <data key="d3">KB-03-chunk-004</data>
+      <data key="d4">KB-03</data>
+      <data key="d5">1792904310</data>
       <data key="d6" />
     </node>
     <node id="7 วัน">
@@ -2022,463 +2022,49 @@
       <data key="d5">1791178330</data>
       <data key="d6" />
     </node>
-    <node id="การชำระเงิน">
-      <data key="d0">การชำระเงิน</data>
-      <data key="d1">concept</data>
-      <data key="d2">กระบวนการหรือการกระทำที่เกี่ยวข้องกับการจ่ายเงินเพื่อปฏิบัติตามหนี้สินหรือค่าใช้จ่ายต่าง ๆ&lt;SEP&gt;กระบวนการที่ลูกค้าใช้ในการจ่ายเงินให้กับร้านเพื่อแลกกับบริการหรือผลิตภัณฑ์ โดยมีหลายช่องทางที่สามารถใช้ได้ เช่น เงินสด บัตรเครดิต/เดบิต สแกนคิวอาร์โค้ด หรือโอนเงินผ่านบัญชีธนาคาร</data>
-      <data key="d3">KB-06-chunk-000&lt;SEP&gt;KB-06-chunk-002</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ช่องทางชำระเงิน">
-      <data key="d0">ช่องทางชำระเงิน</data>
-      <data key="d1">method</data>
-      <data key="d2">วิธีการต่าง ๆ ที่ลูกค้าสามารถใช้ในการชำระเงินให้กับร้าน ได้แก่ เงินสดหรือบัตรเครดิต/เดบิตที่เคาน์เตอร์ สแกนคิวอาร์พร้อมเพย์ โอนเงินเข้าบัญชีร้าน หรือตัดบัตรเครดิตอัตโนมัติรายเดือน</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="บัตรเครดิต/เดบิต">
-      <data key="d0">บัตรเครดิต/เดบิต</data>
-      <data key="d1">artifact</data>
-      <data key="d2">เครื่องมือการชำระเงินที่ใช้ในการทำธุรกรรมทางการเงิน โดยต้องมีวงเงินขั้นต่ำ 300 บาทเมื่อใช้ที่เคาน์เตอร์</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="คิวอาร์พร้อมเพย์">
-      <data key="d0">คิวอาร์พร้อมเพย์</data>
-      <data key="d1">artifact</data>
-      <data key="d2">ระบบการชำระเงินผ่านการสแกนคิวอาร์โค้ดที่เคาน์เตอร์ เพื่อโอนเงินโดยตรงจากบัญชีผู้ใช้ไปยังบัญชีร้าน</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="โอนเงินเข้าบัญชีร้าน">
-      <data key="d0">โอนเงินเข้าบัญชีร้าน</data>
-      <data key="d1">method</data>
-      <data key="d2">วิธีการชำระเงินที่ลูกค้าโอนเงินผ่านธนาคารเข้าบัญชีของร้าน โดยต้องส่งสลิปการโอนผ่านแชตหรือ LINE Official Account</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ตัดบัตรเครดิตอัตโนมัติรายเดือน">
-      <data key="d0">ตัดบัตรเครดิตอัตโนมัติรายเดือน</data>
-      <data key="d1">method</data>
-      <data key="d2">ระบบการชำระเงินอัตโนมัติที่ใช้บัตรเครดิตตัดเงินรายเดือนสำหรับสมาชิกทุกแพ็กเกจที่มีการสมัครรายเดือน</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="บัญชีธนาคาร">
-      <data key="d0">บัญชีธนาคาร</data>
-      <data key="d1">artifact</data>
-      <data key="d2">บัญชีที่ใช้รับเงินจากการโอนจากลูกค้า ซึ่งมีข้อมูลชัดเจนว่าเป็นบัญชีของ บจก. เอ็กซ์ ฟิตเนส ที่ธนาคารจำลอง (DemoBank)</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ธนาคารจำลอง">
-      <data key="d0">ธนาคารจำลอง</data>
-      <data key="d1">organization</data>
-      <data key="d2">สถาบันการเงินที่ให้บริการเปิดบัญชีและดำเนินการโอนเงิน ซึ่งเป็นธนาคารที่ใช้ในระบบการชำระเงินของร้าน</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="เลขที่บัญชี">
-      <data key="d0">เลขที่บัญชี</data>
-      <data key="d1">data</data>
-      <data key="d2">หมายเลขบัญชีธนาคารที่ระบุไว้คือ 123-4-54521-0 ซึ่งใช้สำหรับการโอนเงินเข้าร้าน</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ชื่อบัญชี">
-      <data key="d0">ชื่อบัญชี</data>
-      <data key="d1">data</data>
-      <data key="d2">ชื่อผู้รับเงินในบัญชีธนาคาร ซึ่งระบุว่าเป็น บจก. เอ็กซ์ ฟิตเนส</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="การส่งสลิปผ่านแชต">
-      <data key="d0">การส่งสลิปผ่านแชต</data>
-      <data key="d1">method</data>
-      <data key="d2">ขั้นตอนที่ลูกค้าส่งสลิปการโอนเงินผ่านแชต โดยต้องยืนยันตัวตนและส่งข้อมูลครบถ้วนตามเกณฑ์ที่กำหนด</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ภาพสลิป">
-      <data key="d0">ภาพสลิป</data>
-      <data key="d1">content</data>
-      <data key="d2">เอกสารแนบประกอบการโอนเงินที่แสดงยอดเงิน วันเวลา ชื่อบัญชีผู้รับ และเลขอ้างอิง</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="บอทตรวจเบื้องต้น">
-      <data key="d0">บอทตรวจเบื้องต้น</data>
-      <data key="d1">artifact</data>
-      <data key="d2">ระบบอัตโนมัติที่ตรวจสอบความถูกต้องของสลิปการโอนตามเกณฑ์ 5 ข้อก่อนส่งให้พนักงานตรวจสอบเพิ่มเติม</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="สถานะ &quot;รอพนักงานยืนยัน&quot;">
-      <data key="d0">สถานะ "รอพนักงานยืนยัน"</data>
-      <data key="d1">concept</data>
-      <data key="d2">สถานะระบบหลังจากผ่านการตรวจสอบ 5 ข้อ โดยรอให้พนักงานยืนยันยอดเงิน&lt;SEP&gt;สถานะของคำขอชำระเงินที่ผ่านการตรวจสอบเบื้องต้นโดยบอทแล้ว รอให้พนักงานยืนยันยอดเงินเข้าบัญชีจริง</data>
-      <data key="d3">KB-06-chunk-000&lt;SEP&gt;KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
     <node id="พนักงาน">
       <data key="d0">พนักงาน</data>
       <data key="d1">person</data>
-      <data key="d2">บุคคลที่รับผิดชอบในการตรวจสอบยอดเงินจริงหลังจากบอทตรวจเบื้องต้นผ่าน&lt;SEP&gt;บุคคลที่มีหน้าที่ยืนยันยอดเงินเข้าบัญชีจริง&lt;SEP&gt;บุคคลที่ให้บริการตอบแชตและจัดการเรื่องต่าง ๆ ของลูกค้า&lt;SEP&gt;บุคลากรของยิมที่ปฏิบัติงานในเคาน์เตอร์และให้ความช่วยเหลือในกรณีฉุกเฉิน&lt;SEP&gt;บุคคลที่ปฏิบัติงานในร้าน ไม่มีสิทธิ์เข้าถึงข้อมูลสมาชิกคนอื่น และต้องไม่เปิดเผยข้อมูลสมาชิกที่ไม่เกี่ยวข้อง</data>
-      <data key="d3">KB-06-chunk-000&lt;SEP&gt;KB-06-chunk-001&lt;SEP&gt;KB-09-chunk-000&lt;SEP&gt;KB-08-chunk-001&lt;SEP&gt;KB-08-chunk-002</data>
-      <data key="d4">KB-06&lt;SEP&gt;KB-09&lt;SEP&gt;KB-08</data>
-      <data key="d5">1791191902</data>
+      <data key="d2">บุคคลที่ให้บริการตอบแชตและจัดการเรื่องต่าง ๆ ของลูกค้า&lt;SEP&gt;บุคลากรของยิมที่ปฏิบัติงานในเคาน์เตอร์และให้ความช่วยเหลือในกรณีฉุกเฉิน&lt;SEP&gt;บุคคลที่ปฏิบัติงานในร้าน ไม่มีสิทธิ์เข้าถึงข้อมูลสมาชิกคนอื่น และต้องไม่เปิดเผยข้อมูลสมาชิกที่ไม่เกี่ยวข้อง&lt;SEP&gt;บุคคลที่รับผิดชอบในการยืนยันยอดเงินเข้าบัญชีจริง</data>
+      <data key="d3">KB-09-chunk-000&lt;SEP&gt;KB-08-chunk-001&lt;SEP&gt;KB-08-chunk-002&lt;SEP&gt;KB-06-chunk-001</data>
+      <data key="d4">KB-09&lt;SEP&gt;KB-08&lt;SEP&gt;KB-06</data>
+      <data key="d5">1792904515</data>
       <data key="d6" />
     </node>
     <node id="LINE Official Account">
       <data key="d0">LINE Official Account</data>
       <data key="d1">artifact</data>
-      <data key="d2">ช่องทางการสื่อสารทางการที่ร้านใช้รับสลิปการโอนจากลูกค้า&lt;SEP&gt;บัญชี LINE ทางการของเอ็กซ์ ฟิตเนส ที่ใช้ในการติดต่อและบริการลูกค้า ชื่อ: @xfitness.demo&lt;SEP&gt;ช่องทางการสื่อสารทางการของร้านที่ใช้ในการประกาศเวลาเปิด-ปิด วันหยุด และการปิดปรับปรุงชั่วคราว</data>
-      <data key="d3">KB-06-chunk-000&lt;SEP&gt;KB-01-chunk-000&lt;SEP&gt;KB-01-chunk-001</data>
-      <data key="d4">KB-06&lt;SEP&gt;KB-01</data>
-      <data key="d5">1791191800</data>
+      <data key="d2">บัญชี LINE ทางการของเอ็กซ์ ฟิตเนส ที่ใช้ในการติดต่อและบริการลูกค้า ชื่อ: @xfitness.demo&lt;SEP&gt;ช่องทางการสื่อสารทางการของร้านที่ใช้ในการประกาศเวลาเปิด-ปิด วันหยุด และการปิดปรับปรุงชั่วคราว</data>
+      <data key="d3">KB-01-chunk-000&lt;SEP&gt;KB-01-chunk-001</data>
+      <data key="d4">KB-01</data>
+      <data key="d5">1792904310</data>
       <data key="d6" />
     </node>
     <node id="ร้าน">
       <data key="d0">ร้าน</data>
       <data key="d1">organization</data>
-      <data key="d2">หน่วยงานที่ให้บริการฟิตเนสและรับชำระเงินจากลูกค้า ซึ่งมีชื่อว่า บจก. เอ็กซ์ ฟิตเนส&lt;SEP&gt;สถานประกอบการที่ให้บริการด้านฟิตเนสและสุขภาพ ดำเนินการเก็บข้อมูลสมาชิกตามกฎหมายคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)</data>
-      <data key="d3">KB-06-chunk-000&lt;SEP&gt;KB-01-chunk-001&lt;SEP&gt;KB-08-chunk-002&lt;SEP&gt;KB-08-chunk-001</data>
-      <data key="d4">KB-06&lt;SEP&gt;KB-08</data>
-      <data key="d5">1791191902</data>
-      <data key="d6" />
-    </node>
-    <node id="บจก. เอ็กซ์ ฟิตเนส">
-      <data key="d0">บจก. เอ็กซ์ ฟิตเนส</data>
-      <data key="d1">organization</data>
-      <data key="d2">บริษัทจำกัดที่ดำเนินธุรกิจฟิตเนสและเป็นเจ้าของบัญชีธนาคารที่ใช้รับชำระเงิน</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="แพ็กเกจรายเดือนไม่มีสัญญา Monthly Flex">
-      <data key="d0">แพ็กเกจรายเดือนไม่มีสัญญา Monthly Flex</data>
-      <data key="d1">concept</data>
-      <data key="d2">แผนบริการรายเดือนที่ไม่ต้องมีสัญญา สามารถชำระเงินผ่านช่องทางโอนเงินเข้าบัญชีร้านได้</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="แพ็กเกจรายเดือนทุกแบบ">
-      <data key="d0">แพ็กเกจรายเดือนทุกแบบ</data>
-      <data key="d1">concept</data>
-      <data key="d2">กลุ่มแผนบริการรายเดือนที่รองรับการตัดบัตรเครดิตอัตโนมัติรายเดือน</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="รอบบิล">
-      <data key="d0">รอบบิล</data>
-      <data key="d1">concept</data>
-      <data key="d2">ช่วงเวลาที่กำหนดสำหรับออกใบแจ้งหนี้ วันที่โอนต้องอยู่ในช่วงนี้&lt;SEP&gt;ช่วงเวลาที่กำหนดสำหรับการออกใบแจ้งหนี้และชำระเงิน ซึ่งวันที่โอนต้องอยู่ในช่วงไม่เกิน 7 วันก่อนหรือหลังวันครบกำหนดชำระ</data>
-      <data key="d3">KB-06-chunk-000&lt;SEP&gt;KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ยอดค้างชำระของสมาชิก">
-      <data key="d0">ยอดค้างชำระของสมาชิก</data>
-      <data key="d1">data</data>
-      <data key="d2">ยอดเงินที่ยังไม่ได้ชำระโดยสมาชิก ซึ่งต้องตรงกับยอดเงินที่โอน&lt;SEP&gt;จำนวนเงินที่สมาชิกยังไม่ได้ชำระ ซึ่งต้องตรงกับยอดเงินในสลิปการโอน</data>
-      <data key="d3">KB-06-chunk-000&lt;SEP&gt;KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="เลขอ้างอิง">
-      <data key="d0">เลขอ้างอิง</data>
-      <data key="d1">data</data>
-      <data key="d2">หมายเลขอ้างอิงที่ใช้ในการโอนเงิน ต้องไม่เคยถูกใช้มาก่อน&lt;SEP&gt;หมายเลขที่ใช้ระบุการโอนเงินแต่ละครั้ง ต้องไม่เคยใช้มาก่อน</data>
-      <data key="d3">KB-06-chunk-000&lt;SEP&gt;KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="นโยบายห้ามโอนเข้าบัญชีส่วนตัว">
-      <data key="d0">นโยบายห้ามโอนเข้าบัญชีส่วนตัว</data>
-      <data key="d1">concept</data>
-      <data key="d2">ข้อกำหนดของร้านที่ห้ามโอนเงินเข้าบัญชีส่วนตัวของพนักงานหรือโค้ชทุกกรณี</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ติดต่อร้าน">
-      <data key="d0">ติดต่อร้าน</data>
-      <data key="d1">method</data>
-      <data key="d2">ขั้นตอนที่ลูกค้าควรทำหากพบข้อมูลบัญชีที่ไม่ตรงกับที่ระบุ โดยต้องติดต่อศูนย์บริการลูกค้าที่เบอร์ 038-000-888 ก่อนดำเนินการโอน</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="เบอร์ 038-000-888">
-      <data key="d0">เบอร์ 038-000-888</data>
-      <data key="d1">data</data>
-      <data key="d2">หมายเลขโทรศัพท์ติดต่อศูนย์บริการลูกค้าของร้าน</data>
-      <data key="d3">KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ยอดเงิน">
-      <data key="d0">ยอดเงิน</data>
-      <data key="d1">data</data>
-      <data key="d2">จำนวนเงินที่ถูกโอนซึ่งต้องตรงกับยอดค้างชำระของสมาชิกตามเงื่อนไขการชำระ</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="วันที่โอน">
-      <data key="d0">วันที่โอน</data>
-      <data key="d1">data</data>
-      <data key="d2">วันที่ทำรายการโอนเงิน ต้องอยู่ในช่วง 7 วันก่อนหรือหลังวันครบกำหนดชำระ</data>
-      <data key="d3">KB-06-chunk-001&lt;SEP&gt;KB-06-chunk-000</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="บอท">
-      <data key="d0">บอท</data>
-      <data key="d1">artifact</data>
-      <data key="d2">ระบบอัตโนมัติที่ตรวจสอบความถูกต้องของการชำระเงินเบื้องต้น</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ยอดเข้าบัญชีจริง">
-      <data key="d0">ยอดเข้าบัญชีจริง</data>
-      <data key="d1">data</data>
-      <data key="d2">ยอดเงินที่พนักงานยืนยันว่าเข้าบัญชีเรียบร้อยแล้ว</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
+      <data key="d2">สถานประกอบการที่ให้บริการด้านฟิตเนสและสุขภาพ ดำเนินการเก็บข้อมูลสมาชิกตามกฎหมายคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)</data>
+      <data key="d3">KB-01-chunk-001&lt;SEP&gt;KB-08-chunk-002&lt;SEP&gt;KB-08-chunk-001</data>
+      <data key="d4">KB-08</data>
+      <data key="d5">1792904310</data>
       <data key="d6" />
     </node>
     <node id="1 วันทำการ">
       <data key="d0">1 วันทำการ</data>
       <data key="d1">concept</data>
-      <data key="d2">ระยะเวลาที่พนักงานต้องตรวจสอบยอดเงินเข้าบัญชีจริง ภายใน 24 ชั่วโมงหากร้านเปิดทุกวัน&lt;SEP&gt;ช่วงเวลา 24 ชั่วโมงที่ร้านเปิดทำการ ยกเว้นวันปิดทำการ</data>
-      <data key="d3">KB-06-chunk-001&lt;SEP&gt;KB-09-chunk-000</data>
-      <data key="d4">KB-06&lt;SEP&gt;KB-09</data>
-      <data key="d5">1791178330</data>
+      <data key="d2">ช่วงเวลา 24 ชั่วโมงที่ร้านเปิดทำการ ยกเว้นวันปิดทำการ</data>
+      <data key="d3">KB-09-chunk-000</data>
+      <data key="d4">KB-09</data>
+      <data key="d5">1792904310</data>
       <data key="d6" />
     </node>
     <node id="วันปิดทำการประจำปี">
       <data key="d0">วันปิดทำการประจำปี</data>
       <data key="d1">event</data>
-      <data key="d2">วันที่ร้านปิดทำการตามกำหนดประจำปี ไม่นับรวมในช่วงเวลา 1 วันทำการ&lt;SEP&gt;วันที่ร้านปิดทำการ ได้แก่ 1 มกราคม และ 13–14 เมษายน</data>
-      <data key="d3">KB-06-chunk-001&lt;SEP&gt;KB-09-chunk-000</data>
-      <data key="d4">KB-06&lt;SEP&gt;KB-09</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ผลตรวจจากบอท">
-      <data key="d0">ผลตรวจจากบอท</data>
-      <data key="d1">content</data>
-      <data key="d2">ผลการตรวจสอบเบื้องต้นจากบอทเกี่ยวกับการชำระเงิน</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="สถานะ &quot;ชำระแล้ว&quot;">
-      <data key="d0">สถานะ "ชำระแล้ว"</data>
-      <data key="d1">concept</data>
-      <data key="d2">สถานะที่เกิดขึ้นเมื่อพนักงานยืนยันยอดเงินเข้าบัญชีจริง</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="โอนขาด">
-      <data key="d0">โอนขาด</data>
-      <data key="d1">concept</data>
-      <data key="d2">สถานการณ์ที่ยอดเงินที่โอนยังไม่ครบตามยอดค้างชำระ</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="โอนเกิน">
-      <data key="d0">โอนเกิน</data>
-      <data key="d1">concept</data>
-      <data key="d2">สถานการณ์ที่ยอดเงินที่โอนเกินยอดค้างชำระ</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="เครดิตสำหรับเดือนถัดไป">
-      <data key="d0">เครดิตสำหรับเดือนถัดไป</data>
-      <data key="d1">concept</data>
-      <data key="d2">ส่วนที่เกินจากการโอนสามารถเก็บเป็นเครดิตเพื่อใช้ในเดือนถัดไป</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ขอคืนเงิน">
-      <data key="d0">ขอคืนเงิน</data>
-      <data key="d1">method</data>
-      <data key="d2">กระบวนการที่สมาชิกสามารถขอคืนเงินส่วนที่โอนเกินได้</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="14 วันทำการ">
-      <data key="d0">14 วันทำการ</data>
-      <data key="d1">concept</data>
-      <data key="d2">ระยะเวลาที่ใช้ในการดำเนินการขอคืนเงิน</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ใบเสร็จอิเล็กทรอนิกส์">
-      <data key="d0">ใบเสร็จอิเล็กทรอนิกส์</data>
-      <data key="d1">artifact</data>
-      <data key="d2">เอกสารยืนยันการชำระเงินที่ส่งทาง LINE หรืออีเมล</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="อีเมล">
-      <data key="d0">อีเมล</data>
-      <data key="d1">artifact</data>
-      <data key="d2">ช่องทางการสื่อสารที่ใช้ในการส่งใบเสร็จอิเล็กทรอนิกส์</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791191615</data>
-      <data key="d6" />
-    </node>
-    <node id="ใบกำกับภาษีเต็มรูปแบบ">
-      <data key="d0">ใบกำกับภาษีเต็มรูปแบบ</data>
-      <data key="d1">artifact</data>
-      <data key="d2">เอกสารภาษีที่สามารถขอได้ภายในเดือนที่ชำระเงิน</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ชื่อบริษัท">
-      <data key="d0">ชื่อบริษัท</data>
-      <data key="d1">data</data>
-      <data key="d2">ข้อมูลที่ต้องแจ้งเมื่อขอใบกำกับภาษีเต็มรูปแบบ</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="เลขประจำตัวผู้เสียภาษี">
-      <data key="d0">เลขประจำตัวผู้เสียภาษี</data>
-      <data key="d1">data</data>
-      <data key="d2">หมายเลขประจำตัวผู้เสียภาษีที่ต้องระบุเมื่อขอใบกำกับภาษีเต็มรูปแบบ</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ที่อยู่">
-      <data key="d0">ที่อยู่</data>
-      <data key="d1">location</data>
-      <data key="d2">ข้อมูลที่อยู่ที่ต้องแจ้งเมื่อขอใบกำกับภาษีเต็มรูปแบบ</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ชำระช้าเกิน 7 วัน">
-      <data key="d0">ชำระช้าเกิน 7 วัน</data>
-      <data key="d1">concept</data>
-      <data key="d2">สถานการณ์ที่การชำระเงินล่าช้าเกิน 7 วันจากกำหนด</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ระบบระงับการเข้าใช้ชั่วคราว">
-      <data key="d0">ระบบระงับการเข้าใช้ชั่วคราว</data>
-      <data key="d1">method</data>
-      <data key="d2">มาตรการที่ระบบใช้เมื่อการชำระเงินล่าช้าเกิน 7 วัน</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ไม่มีค่าปรับชำระล่าช้า">
-      <data key="d0">ไม่มีค่าปรับชำระล่าช้า</data>
-      <data key="d1">concept</data>
-      <data key="d2">นโยบายที่ระบุว่าไม่มีการเรียกเก็บค่าปรับสำหรับการชำระเงินล่าช้า</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ค่าปรับชำระล่าช้า">
-      <data key="d0">ค่าปรับชำระล่าช้า</data>
-      <data key="d1">concept</data>
-      <data key="d2">ค่าธรรมเนียมที่เรียกเก็บเมื่อมีการชำระเงินหลังจากกำหนดเวลาที่ระบุไว้</data>
-      <data key="d3">KB-06-chunk-002</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ส่งสลิป">
-      <data key="d0">ส่งสลิป</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d2">กรณีโอนขาด ต้องโอนส่วนที่ขาดเพิ่มแล้วส่งสลิปทั้งสองใบ</data>
-      <data key="d1">UNKNOWN</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
-      <data key="d6" />
-    </node>
-    <node id="ไม่เคยใช้มาก่อน">
-      <data key="d0">ไม่เคยใช้มาก่อน</data>
-      <data key="d3">KB-06-chunk-001</data>
-      <data key="d2">เลขอ้างอิงต้องไม่เคยถูกใช้มาก่อน</data>
-      <data key="d1">UNKNOWN</data>
-      <data key="d4">KB-06</data>
-      <data key="d5">1791178330</data>
+      <data key="d2">วันที่ร้านปิดทำการ ได้แก่ 1 มกราคม และ 13–14 เมษายน</data>
+      <data key="d3">KB-09-chunk-000</data>
+      <data key="d4">KB-09</data>
+      <data key="d5">1792904310</data>
       <data key="d6" />
     </node>
     <node id="แชตบอท">
@@ -4515,6 +4101,375 @@
       <data key="d5">1791191902</data>
       <data key="d6" />
     </node>
+    <node id="การชำระเงิน">
+      <data key="d0">การชำระเงิน</data>
+      <data key="d1">concept</data>
+      <data key="d2">กระบวนการที่สมาชิกใช้ในการจ่ายค่าบริการตามแพ็กเกจต่าง ๆ ที่ร้านเอ็กซ์ ฟิตเนส โดยมีหลายช่องทาง เช่น เงินสด บัตรเครดิต/เดบิต สแกนคิวอาร์พร้อมเพย์ โอนเงินผ่านบัญชีร้าน หรือตัดบัตรเครดิตอัตโนมัติรายเดือน</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ช่องทางชำระเงิน">
+      <data key="d0">ช่องทางชำระเงิน</data>
+      <data key="d1">method</data>
+      <data key="d2">วิธีการที่สมาชิกสามารถใช้ในการชำระเงิน ได้แก่ เงินสดหรือบัตรเครดิต/เดบิตที่เคาน์เตอร์ สแกนคิวอาร์พร้อมเพย์ โอนเงินเข้าบัญชีร้าน หรือตัดบัตรเครดิตอัตโนมัติรายเดือน</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="เงินสดหรือบัตรเครดิต/เดบิตที่เคาน์เตอร์">
+      <data key="d0">เงินสดหรือบัตรเครดิต/เดบิตที่เคาน์เตอร์</data>
+      <data key="d1">method</data>
+      <data key="d2">ช่องทางการชำระเงินที่สมาชิกสามารถใช้จ่ายเงินสดหรือใช้บัตรเครดิต/เดบิตที่เคาน์เตอร์ โดยบัตรเครดิตต้องมีจำนวนเงินขั้นต่ำ 300 บาท</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="สแกนคิวอาร์พร้อมเพย์ที่เคาน์เตอร์">
+      <data key="d0">สแกนคิวอาร์พร้อมเพย์ที่เคาน์เตอร์</data>
+      <data key="d1">method</data>
+      <data key="d2">ช่องทางการชำระเงินที่สมาชิกสามารถสแกนคิวอาร์โค้ดพร้อมเพย์ที่เคาน์เตอร์เพื่อทำรายการชำระเงิน</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="โอนเงินเข้าบัญชีร้าน">
+      <data key="d0">โอนเงินเข้าบัญชีร้าน</data>
+      <data key="d1">method</data>
+      <data key="d2">ช่องทางการชำระเงินที่สมาชิกสามารถโอนเงินเข้าบัญชีร้าน บจก. เอ็กซ์ ฟิตเนส ผ่านธนาคาร และส่งสลิปการโอนผ่านแชตหรือ LINE Official Account</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ตัดบัตรเครดิตอัตโนมัติรายเดือน">
+      <data key="d0">ตัดบัตรเครดิตอัตโนมัติรายเดือน</data>
+      <data key="d1">method</data>
+      <data key="d2">ช่องทางการชำระเงินที่ระบบจะตัดบัตรเครดิตอัตโนมัติในแต่ละเดือนสำหรับสมาชิกที่สมัครแพ็กเกจรายเดือนทุกแบบ</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ร้านไม่มีบริการผ่อนชำระ 0%">
+      <data key="d0">ร้านไม่มีบริการผ่อนชำระ 0%</data>
+      <data key="d1">concept</data>
+      <data key="d2">นโยบายของร้านที่ไม่ให้บริการผ่อนชำระดอกเบี้ย 0% สำหรับการชำระเงิน</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ร้านไม่รับเช็ค">
+      <data key="d0">ร้านไม่รับเช็ค</data>
+      <data key="d1">concept</data>
+      <data key="d2">นโยบายของร้านที่ไม่รับชำระเงินด้วยเช็ค</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="บัญชีสำหรับโอนเงิน">
+      <data key="d0">บัญชีสำหรับโอนเงิน</data>
+      <data key="d1">artifact</data>
+      <data key="d2">บัญชีธนาคารที่ใช้สำหรับการโอนเงินเพื่อชำระค่าบริการ โดยมีข้อมูลธนาคาร เลขที่บัญชี และชื่อบัญชีระบุชัดเจน</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ธนาคารจำลอง (DemoBank)">
+      <data key="d0">ธนาคารจำลอง (DemoBank)</data>
+      <data key="d1">organization</data>
+      <data key="d2">ธนาคารที่ให้บริการเป็นตัวอย่างในระบบ ชื่อเต็มคือ DemoBank ใช้สำหรับโอนเงินไปยังบัญชีร้าน</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="เลขที่บัญชี">
+      <data key="d0">เลขที่บัญชี</data>
+      <data key="d1">data</data>
+      <data key="d2">หมายเลขบัญชีธนาคารที่ใช้สำหรับโอนเงิน คือ 123-4-54521-0</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ชื่อบัญชี">
+      <data key="d0">ชื่อบัญชี</data>
+      <data key="d1">data</data>
+      <data key="d2">ชื่อบัญชีที่ใช้สำหรับรับเงินจากการโอน คือ บจก. เอ็กซ์ ฟิตเนส</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ร้านไม่มีนโยบายให้โอนเข้าบัญชีส่วนตัว">
+      <data key="d0">ร้านไม่มีนโยบายให้โอนเข้าบัญชีส่วนตัว</data>
+      <data key="d1">concept</data>
+      <data key="d2">นโยบายของร้านที่ห้ามโอนเงินเข้าบัญชีส่วนตัวของพนักงานหรือโค้ชภายใต้กรณีใด ๆ</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ติดต่อร้านที่ 038-000-888">
+      <data key="d0">ติดต่อร้านที่ 038-000-888</data>
+      <data key="d1">artifact</data>
+      <data key="d2">เบอร์โทรศัพท์ติดต่อร้านเพื่อยืนยันข้อมูลบัญชีก่อนโอนเงินหากมีการแจ้งเลขบัญชีอื่น</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="การส่งสลิปผ่านแชต">
+      <data key="d0">การส่งสลิปผ่านแชต</data>
+      <data key="d1">method</data>
+      <data key="d2">กระบวนการที่สมาชิกส่งสลิปการโอนเงินผ่านแชต โดยต้องยืนยันตัวตนและส่งภาพสลิปที่มีข้อมูลครบถ้วน</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ยืนยันตัวตนด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้าย">
+      <data key="d0">ยืนยันตัวตนด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้าย</data>
+      <data key="d1">method</data>
+      <data key="d2">ขั้นตอนการยืนยันตัวตนของสมาชิกก่อนส่งสลิป ด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้าย</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ส่งภาพสลิปที่เห็นยอดเงิน วันเวลา ชื่อผู้โอน ชื่อบัญชีผู้รับ และเลขอ้างอิงครบ">
+      <data key="d0">ส่งภาพสลิปที่เห็นยอดเงิน วันเวลา ชื่อผู้โอน ชื่อบัญชีผู้รับ และเลขอ้างอิงครบ</data>
+      <data key="d1">method</data>
+      <data key="d2">ขั้นตอนการส่งสลิปการโอนที่ต้องมีข้อมูลครบถ้วน เช่น ยอดเงิน วันเวลา ชื่อผู้โอน ชื่อบัญชีผู้รับ และเลขอ้างอิง</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="บอทตรวจเบื้องต้น 6 ข้อ">
+      <data key="d0">บอทตรวจเบื้องต้น 6 ข้อ</data>
+      <data key="d1">method</data>
+      <data key="d2">กระบวนการตรวจสอบเบื้องต้นโดยบอทที่ตรวจสอบข้อมูลสลิปการโอน 6 ประการ</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ชื่อบัญชีผู้รับเป็น บจก. เอ็กซ์ ฟิตเนส (X Fitness)">
+      <data key="d0">ชื่อบัญชีผู้รับเป็น บจก. เอ็กซ์ ฟิตเนส (X Fitness)</data>
+      <data key="d1">concept</data>
+      <data key="d2">เงื่อนไขการตรวจสอบที่ชื่อบัญชีผู้รับต้องตรงกับ บจก. เอ็กซ์ ฟิตเนส (X Fitness)</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ชื่อผู้โอนตรงกับชื่อสมาชิกที่ยืนยันตัวตน">
+      <data key="d0">ชื่อผู้โอนตรงกับชื่อสมาชิกที่ยืนยันตัวตน</data>
+      <data key="d1">concept</data>
+      <data key="d2">เงื่อนไขการตรวจสอบที่ชื่อผู้โอนต้องตรงกับชื่อสมาชิกที่ยืนยันตัวตน โดยดูเฉพาะชื่อ ไม่รวมนามสกุล</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="เลขบัญชีผู้รับลงท้าย 4521-0">
+      <data key="d0">เลขบัญชีผู้รับลงท้าย 4521-0</data>
+      <data key="d1">concept</data>
+      <data key="d2">เงื่อนไขการตรวจสอบที่เลขบัญชีผู้รับต้องลงท้ายด้วย 4521-0</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ยอดเงินตรงกับยอดค้างชำระของสมาชิก">
+      <data key="d0">ยอดเงินตรงกับยอดค้างชำระของสมาชิก</data>
+      <data key="d1">concept</data>
+      <data key="d2">เงื่อนไขการตรวจสอบที่ยอดเงินที่โอนต้องตรงกับยอดค้างชำระของสมาชิก</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="วันที่โอนอยู่ในรอบบิล">
+      <data key="d0">วันที่โอนอยู่ในรอบบิล</data>
+      <data key="d1">concept</data>
+      <data key="d2">เงื่อนไขการตรวจสอบที่วันที่โอนต้องอยู่ในช่วงเวลาไม่เกิน 7 วันก่อนหรือหลังวันครบกำหนดชำระ</data>
+      <data key="d3">KB-06-chunk-000</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ชื่อสมาชิกที่ยืนยันตัวตน">
+      <data key="d0">ชื่อสมาชิกที่ยืนยันตัวตน</data>
+      <data key="d1">person</data>
+      <data key="d2">บุคคลที่ต้องยืนยันตัวตนผ่านชื่อ โดยไม่รวมนามสกุล</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="เลขบัญชีผู้รับ">
+      <data key="d0">เลขบัญชีผู้รับ</data>
+      <data key="d1">artifact</data>
+      <data key="d2">หมายเลขบัญชีปลายทางที่ลงท้ายด้วย 4521-0</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ยอดเงิน">
+      <data key="d0">ยอดเงิน</data>
+      <data key="d1">data</data>
+      <data key="d2">จำนวนเงินที่โอนต้องตรงกับยอดค้างชำระของสมาชิก</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="วันที่โอน">
+      <data key="d0">วันที่โอน</data>
+      <data key="d1">event</data>
+      <data key="d2">วันที่ทำรายการโอนเงินต้องอยู่ในช่วง 7 วันก่อนหรือหลังวันครบกำหนดชำระ</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="เลขอ้างอิง">
+      <data key="d0">เลขอ้างอิง</data>
+      <data key="d1">artifact</data>
+      <data key="d2">รหัสอ้างอิงที่ไม่เคยใช้มาก่อนในการโอนเงิน</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="บอท">
+      <data key="d0">บอท</data>
+      <data key="d1">artifact</data>
+      <data key="d2">ระบบอัตโนมัติที่ตรวจสอบความถูกต้องของการโอนเงินเบื้องต้น</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="สถานะ &quot;รอพนักงานยืนยัน&quot;">
+      <data key="d0">สถานะ "รอพนักงานยืนยัน"</data>
+      <data key="d1">concept</data>
+      <data key="d2">สถานะระบบหลังจากบอทผ่านการตรวจสอบ 6 ข้อ</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="สถานะ &quot;ชำระแล้ว&quot;">
+      <data key="d0">สถานะ "ชำระแล้ว"</data>
+      <data key="d1">concept</data>
+      <data key="d2">สถานะที่เกิดขึ้นเมื่อพนักงานยืนยันยอดเงินเข้าบัญชีจริง</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="โอนขาด">
+      <data key="d0">โอนขาด</data>
+      <data key="d1">method</data>
+      <data key="d2">กระบวนการโอนเงินที่มีจำนวนน้อยกว่ายอดที่ต้องชำระ</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="โอนเกิน">
+      <data key="d0">โอนเกิน</data>
+      <data key="d1">method</data>
+      <data key="d2">กระบวนการโอนเงินที่มีจำนวนเกินยอดที่ต้องชำระ</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="เครดิตสำหรับเดือนถัดไป">
+      <data key="d0">เครดิตสำหรับเดือนถัดไป</data>
+      <data key="d1">concept</data>
+      <data key="d2">ส่วนของเงินที่เกินจะถูกเก็บเป็นเครดิตไว้ใช้ในเดือนถัดไป</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ขอคืนเงิน">
+      <data key="d0">ขอคืนเงิน</data>
+      <data key="d1">method</data>
+      <data key="d2">กระบวนการขอคืนเงินส่วนที่เกินจากการโอน</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ใบเสร็จอิเล็กทรอนิกส์">
+      <data key="d0">ใบเสร็จอิเล็กทรอนิกส์</data>
+      <data key="d1">content</data>
+      <data key="d2">เอกสารยืนยันการชำระเงินที่ส่งทาง LINE หรืออีเมล</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ใบกำกับภาษีเต็มรูปแบบ">
+      <data key="d0">ใบกำกับภาษีเต็มรูปแบบ</data>
+      <data key="d1">content</data>
+      <data key="d2">เอกสารภาษีที่สามารถขอได้ภายในเดือนที่ชำระเงิน</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ระบบระงับการเข้าใช้ชั่วคราว">
+      <data key="d0">ระบบระงับการเข้าใช้ชั่วคราว</data>
+      <data key="d1">method</data>
+      <data key="d2">กระบวนการที่ระบบดำเนินการเพื่อจำกัดการเข้าถึงบริการชั่วคราวเมื่อการชำระเงินล่าช้าเกินกำหนด&lt;SEP&gt;มาตรการที่ระบบใช้เมื่อชำระล่าช้าเกิน 7 วัน</data>
+      <data key="d3">KB-06-chunk-001&lt;SEP&gt;KB-06-chunk-002</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ไม่มีค่าปรับชำระล่าช้า">
+      <data key="d0">ไม่มีค่าปรับชำระล่าช้า</data>
+      <data key="d1">concept</data>
+      <data key="d2">นโยบายที่ระบุว่าไม่มีการเรียกเก็บค่าปรับหากชำระล่าช้า</data>
+      <data key="d3">KB-06-chunk-001</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="การชำระเงินล่าช้า">
+      <data key="d0">การชำระเงินล่าช้า</data>
+      <data key="d1">event</data>
+      <data key="d2">เหตุการณ์ที่ผู้ใช้ไม่ได้ชำระค่าบริการตามกำหนดเวลา</data>
+      <data key="d3">KB-06-chunk-002</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
+    <node id="ไม่มีค่าปรับ">
+      <data key="d0">ไม่มีค่าปรับ</data>
+      <data key="d1">concept</data>
+      <data key="d2">หลักการหรือนโยบายที่ระบุว่าไม่มีการเรียกเก็บค่าปรับสำหรับการชำระเงินล่าช้า</data>
+      <data key="d3">KB-06-chunk-002</data>
+      <data key="d4">KB-06</data>
+      <data key="d5">1792904515</data>
+      <data key="d6" />
+    </node>
     <edge source="เอ็กซ์ ฟิตเนส" target="บัตรรายวัน">
       <data key="d7">1.0</data>
       <data key="d8">เอ็กซ์ ฟิตเนส เป็นผู้ให้บริการแพ็กเกจ "บัตรรายวัน" ที่มีราคา 150 บาทต่อครั้ง</data>
@@ -5568,15 +5523,6 @@
       <data key="d12">1791178277</data>
       <data key="d13" />
     </edge>
-    <edge source="แพ็กเกจรายเดือน" target="ระบบระงับการเข้าใช้ชั่วคราว">
-      <data key="d7">1.0</data>
-      <data key="d8">หากชำระช้าเกิน 7 วัน ระบบจะระงับการเข้าใช้ชั่วคราว</data>
-      <data key="d9">กระตุ้น</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
     <edge source="แพ็กเกจรายปี" target="การวัดองค์ประกอบร่างกาย">
       <data key="d7">1.0</data>
       <data key="d8">ผู้ถือแพ็กเกจรายปีได้รับบริการวัดองค์ประกอบร่างกายฟรีเดือนละ 1 ครั้ง</data>
@@ -5683,15 +5629,6 @@
       <data key="d10">KB-04-chunk-001</data>
       <data key="d11">KB-04</data>
       <data key="d12">1791178278</data>
-      <data key="d13" />
-    </edge>
-    <edge source="เคาน์เตอร์" target="ใบกำกับภาษีเต็มรูปแบบ">
-      <data key="d7">1.0</data>
-      <data key="d8">สามารถแจ้งข้อมูลเพื่อขอใบกำกับภาษีเต็มรูปแบบที่เคาน์เตอร์</data>
-      <data key="d9">สามารถขอได้ที่</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
       <data key="d13" />
     </edge>
     <edge source="เคาน์เตอร์" target="บริการลูกค้า">
@@ -6990,15 +6927,6 @@
       <data key="d12">1791178278</data>
       <data key="d13" />
     </edge>
-    <edge source="รหัสสมาชิก" target="การส่งสลิปผ่านแชต">
-      <data key="d7">1.0</data>
-      <data key="d8">การส่งสลิปผ่านแชตต้องใช้รหัสสมาชิกและเบอร์โทร 4 ตัวท้ายเพื่อยืนยันตัวตน</data>
-      <data key="d9">ต้องใช้,ยืนยันตัวตนด้วย</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
     <edge source="รหัสสมาชิก" target="บริการลูกค้า">
       <data key="d7">1.0</data>
       <data key="d8">รหัสสมาชิกใช้ร่วมกับบริการลูกค้าเพื่อระบุตัวตน</data>
@@ -7078,15 +7006,6 @@
       <data key="d10">KB-03-chunk-004</data>
       <data key="d11">KB-03</data>
       <data key="d12">1791178278</data>
-      <data key="d13" />
-    </edge>
-    <edge source="LINE" target="ใบเสร็จอิเล็กทรอนิกส์">
-      <data key="d7">1.0</data>
-      <data key="d8">ใบเสร็จอิเล็กทรอนิกส์ส่งทาง LINE หลังพนักงานยืนยันยอด</data>
-      <data key="d9">ส่งผ่าน</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
       <data key="d13" />
     </edge>
     <edge source="no-show" target="ระงับสิทธิ์จองคลาส">
@@ -7737,186 +7656,6 @@
       <data key="d12">1791178360</data>
       <data key="d13" />
     </edge>
-    <edge source="การชำระเงิน" target="ช่องทางชำระเงิน">
-      <data key="d7">1.0</data>
-      <data key="d8">การชำระเงินมีช่องทางการชำระเงินหลายวิธี เช่น เงินสด บัตรเครดิต/เดบิต สแกนคิวอาร์พร้อมเพย์ โอนเงินเข้าบัญชีร้าน และตัดบัตรเครดิตอัตโนมัติรายเดือน</data>
-      <data key="d9">ประกอบด้วย,มีช่องทาง</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="การชำระเงิน" target="ค่าปรับชำระล่าช้า">
-      <data key="d7">1.0</data>
-      <data key="d8">ไม่มีการเรียกเก็บค่าปรับสำหรับการชำระเงินล่าช้า</data>
-      <data key="d9">ไม่มีความสัมพันธ์</data>
-      <data key="d10">KB-06-chunk-002</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="บัตรเครดิต/เดบิต" target="ตัดบัตรเครดิตอัตโนมัติรายเดือน">
-      <data key="d7">1.0</data>
-      <data key="d8">ระบบตัดบัตรเครดิตอัตโนมัติรายเดือนใช้บัตรเครดิต/เดบิตของสมาชิก</data>
-      <data key="d9">ตัดอัตโนมัติ,ใช้บัตร</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="โอนเงินเข้าบัญชีร้าน" target="บัญชีธนาคาร">
-      <data key="d7">1.0</data>
-      <data key="d8">การโอนเงินเข้าบัญชีร้านต้องใช้บัญชีธนาคารที่มีชื่อว่า บจก. เอ็กซ์ ฟิตเนส และเลขที่บัญชี 123-4-54521-0</data>
-      <data key="d9">รับเงินจาก,ใช้บัญชี</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="โอนเงินเข้าบัญชีร้าน" target="การส่งสลิปผ่านแชต">
-      <data key="d7">1.0</data>
-      <data key="d8">การโอนเงินเข้าบัญชีร้านต้องส่งสลิปการโอนผ่านแชตหรือ LINE Official Account</data>
-      <data key="d9">ต้องส่ง,ต้องใช้</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="โอนเงินเข้าบัญชีร้าน" target="แพ็กเกจรายเดือนไม่มีสัญญา Monthly Flex">
-      <data key="d7">1.0</data>
-      <data key="d8">แพ็กเกจนี้รองรับการชำระเงินผ่านช่องทางโอนเงินเข้าบัญชีร้าน</data>
-      <data key="d9">รองรับ,ใช้ได้</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ตัดบัตรเครดิตอัตโนมัติรายเดือน" target="แพ็กเกจรายเดือนทุกแบบ">
-      <data key="d7">1.0</data>
-      <data key="d8">แพ็กเกจรายเดือนทุกแบบรองรับการตัดบัตรเครดิตอัตโนมัติรายเดือน</data>
-      <data key="d9">รองรับ,ใช้ได้</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="บัญชีธนาคาร" target="ธนาคารจำลอง">
-      <data key="d7">1.0</data>
-      <data key="d8">บัญชีธนาคารถูกเปิดและจัดการโดยธนาคารจำลอง (DemoBank)</data>
-      <data key="d9">จัดการ,เปิดบัญชี</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="บัญชีธนาคาร" target="ชื่อบัญชี">
-      <data key="d7">1.0</data>
-      <data key="d8">บัญชีธนาคารมีชื่อบัญชีผู้รับคือ บจก. เอ็กซ์ ฟิตเนส</data>
-      <data key="d9">มีชื่อ,เป็น</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="บัญชีธนาคาร" target="เลขที่บัญชี">
-      <data key="d7">1.0</data>
-      <data key="d8">บัญชีธนาคารมีเลขที่บัญชีคือ 123-4-54521-0</data>
-      <data key="d9">มีเลข,เป็น</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="การส่งสลิปผ่านแชต" target="ภาพสลิป">
-      <data key="d7">1.0</data>
-      <data key="d8">การส่งสลิปผ่านแชตต้องส่งภาพสลิปที่แสดงยอดเงิน วันเวลา ชื่อบัญชีผู้รับ และเลขอ้างอิงครบถ้วน</data>
-      <data key="d9">ต้องส่ง,ประกอบด้วย</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="การส่งสลิปผ่านแชต" target="LINE Official Account">
-      <data key="d7">1.0</data>
-      <data key="d8">การส่งสลิปผ่านแชตสามารถทำได้ผ่าน LINE Official Account</data>
-      <data key="d9">ส่งผ่าน,ใช้ช่องทาง</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ภาพสลิป" target="บอทตรวจเบื้องต้น">
-      <data key="d7">1.0</data>
-      <data key="d8">บอทตรวจเบื้องต้นตรวจสอบภาพสลิปตามเกณฑ์ 5 ข้อ เช่น ชื่อบัญชีผู้รับ เลขบัญชี ยอดเงิน วันที่โอน และเลขอ้างอิง</data>
-      <data key="d9">ตรวจสอบ,ประเมิน</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ภาพสลิป" target="ยอดค้างชำระของสมาชิก">
-      <data key="d7">1.0</data>
-      <data key="d8">ยอดเงินในภาพสลิปต้องตรงกับยอดค้างชำระของสมาชิก</data>
-      <data key="d9">ตรวจสอบ,ต้องตรงกับ</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ภาพสลิป" target="เลขอ้างอิง">
-      <data key="d7">1.0</data>
-      <data key="d8">เลขอ้างอิงในภาพสลิปต้องไม่เคยใช้มาก่อน</data>
-      <data key="d9">ตรวจสอบ,ต้องไม่ซ้ำ</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="บอทตรวจเบื้องต้น" target="สถานะ &quot;รอพนักงานยืนยัน&quot;">
-      <data key="d7">1.0</data>
-      <data key="d8">เมื่อบอทตรวจเบื้องต้นผ่านทั้ง 5 ข้อ จะเปลี่ยนสถานะเป็น "รอพนักงานยืนยัน"</data>
-      <data key="d9">สร้าง,เปลี่ยนสถานะ</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="สถานะ &quot;รอพนักงานยืนยัน&quot;" target="พนักงาน">
-      <data key="d7">1.0</data>
-      <data key="d8">พนักงานต้องตรวจสอบยอดเงินเข้าบัญชีจริงภายใน 1 วันทำการหลังจากสถานะเปลี่ยนเป็น "รอพนักงานยืนยัน"</data>
-      <data key="d9">ต้องตรวจสอบ,ยืนยัน</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="สถานะ &quot;รอพนักงานยืนยัน&quot;" target="บอท">
-      <data key="d7">1.0</data>
-      <data key="d8">บอทจะบันทึกสถานะ "รอพนักงานยืนยัน" เมื่อผ่านการตรวจสอบ 5 ข้อ</data>
-      <data key="d9">สร้าง</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="พนักงาน" target="ยอดเข้าบัญชีจริง">
-      <data key="d7">1.0</data>
-      <data key="d8">พนักงานต้องยืนยันยอดเงินเข้าบัญชีจริงภายใน 1 วันทำการ</data>
-      <data key="d9">ยืนยัน</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="พนักงาน" target="1 วันทำการ">
-      <data key="d7">1.0</data>
-      <data key="d8">พนักงานต้องตรวจสอบยอดเงินเข้าบัญชีจริงภายใน 1 วันทำการ</data>
-      <data key="d9">ต้องดำเนินการภายใน</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
     <edge source="พนักงาน" target="บริการลูกค้า">
       <data key="d7">1.0</data>
       <data key="d8">พนักงานให้บริการตอบแชตในช่วงเวลา 09:00–20:00 น. ภายใต้บริการลูกค้า</data>
@@ -7978,24 +7717,6 @@
       <data key="d10">KB-01-chunk-001</data>
       <data key="d11">KB-01</data>
       <data key="d12">1791191800</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ร้าน" target="บจก. เอ็กซ์ ฟิตเนส">
-      <data key="d7">1.0</data>
-      <data key="d8">ร้านมีชื่อว่า บจก. เอ็กซ์ ฟิตเนส</data>
-      <data key="d9">มีชื่อ,เป็น</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ร้าน" target="นโยบายห้ามโอนเข้าบัญชีส่วนตัว">
-      <data key="d7">1.0</data>
-      <data key="d8">ร้านมีนโยบายห้ามโอนเงินเข้าบัญชีส่วนตัวของพนักงานหรือโค้ชทุกกรณี</data>
-      <data key="d9">มีนโยบาย,ห้าม</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
       <data key="d13" />
     </edge>
     <edge source="ร้าน" target="วันที่ 31 ธันวาคม">
@@ -8097,42 +7818,6 @@
       <data key="d12">1791191902</data>
       <data key="d13" />
     </edge>
-    <edge source="รอบบิล" target="วันที่โอน">
-      <data key="d7">2.0</data>
-      <data key="d8">วันที่โอนต้องอยู่ในช่วงรอบบิล คือไม่เกิน 7 วันก่อนหรือหลังวันครบกำหนดชำระ</data>
-      <data key="d9">ตรวจสอบ,ต้องอยู่ในช่วง,อยู่ในช่วง</data>
-      <data key="d10">KB-06-chunk-000&lt;SEP&gt;KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ยอดค้างชำระของสมาชิก" target="ยอดเงิน">
-      <data key="d7">1.0</data>
-      <data key="d8">ยอดเงินที่โอนต้องตรงกับยอดค้างชำระของสมาชิก</data>
-      <data key="d9">ตรงกัน</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="เลขอ้างอิง" target="ไม่เคยใช้มาก่อน">
-      <data key="d7">1.0</data>
-      <data key="d8">เลขอ้างอิงต้องไม่เคยถูกใช้มาก่อน</data>
-      <data key="d9">ไม่ซ้ำซ้อน</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ติดต่อร้าน" target="เบอร์ 038-000-888">
-      <data key="d7">1.0</data>
-      <data key="d8">หากพบข้อมูลบัญชีที่ไม่ตรง ต้องติดต่อร้านผ่านเบอร์ 038-000-888 ก่อนดำเนินการโอน</data>
-      <data key="d9">ติดต่อ,ใช้เบอร์</data>
-      <data key="d10">KB-06-chunk-000</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
     <edge source="1 วันทำการ" target="บริการลูกค้า">
       <data key="d7">1.0</data>
       <data key="d8">1 วันทำการหมายถึงช่วงเวลา 24 ชั่วโมงที่ร้านเปิดทำการ</data>
@@ -8149,96 +7834,6 @@
       <data key="d10">KB-09-chunk-000</data>
       <data key="d11">KB-09</data>
       <data key="d12">1791178338</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ผลตรวจจากบอท" target="สถานะ &quot;ชำระแล้ว&quot;">
-      <data key="d7">1.0</data>
-      <data key="d8">ผลตรวจจากบอทเป็นการตรวจสอบเบื้องต้น สถานะ "ชำระแล้ว" เกิดขึ้นเมื่อพนักงานยืนยันยอดเงินเข้าบัญชีจริง</data>
-      <data key="d9">นำไปสู่</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="โอนขาด" target="ส่งสลิป">
-      <data key="d7">1.0</data>
-      <data key="d8">กรณีโอนขาด ต้องโอนส่วนที่ขาดเพิ่มแล้วส่งสลิปทั้งสองใบ</data>
-      <data key="d9">ต้องทำตาม</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="โอนเกิน" target="เครดิตสำหรับเดือนถัดไป">
-      <data key="d7">1.0</data>
-      <data key="d8">ส่วนที่เกินจากการโอนสามารถเก็บเป็นเครดิตสำหรับเดือนถัดไป</data>
-      <data key="d9">นำไปสู่</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="โอนเกิน" target="ขอคืนเงิน">
-      <data key="d7">1.0</data>
-      <data key="d8">สมาชิกสามารถขอคืนเงินส่วนที่โอนเกินได้ภายใน 14 วันทำการ</data>
-      <data key="d9">สามารถทำได้</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ใบเสร็จอิเล็กทรอนิกส์" target="อีเมล">
-      <data key="d7">1.0</data>
-      <data key="d8">ใบเสร็จอิเล็กทรอนิกส์ส่งทางอีเมลหลังพนักงานยืนยันยอด</data>
-      <data key="d9">ส่งผ่าน</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="อีเมล" target="ใบกำกับภาษีเต็มรูปแบบ">
-      <data key="d7">1.0</data>
-      <data key="d8">สามารถแจ้งข้อมูลเพื่อขอใบกำกับภาษีเต็มรูปแบบทางอีเมล</data>
-      <data key="d9">สามารถขอได้ผ่าน</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ใบกำกับภาษีเต็มรูปแบบ" target="ชื่อบริษัท">
-      <data key="d7">1.0</data>
-      <data key="d8">ต้องแจ้งชื่อบริษัทเมื่อขอใบกำกับภาษีเต็มรูปแบบ</data>
-      <data key="d9">ต้องระบุ</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ใบกำกับภาษีเต็มรูปแบบ" target="เลขประจำตัวผู้เสียภาษี">
-      <data key="d7">1.0</data>
-      <data key="d8">ต้องแจ้งเลขประจำตัวผู้เสียภาษีเมื่อขอใบกำกับภาษีเต็มรูปแบบ</data>
-      <data key="d9">ต้องระบุ</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ใบกำกับภาษีเต็มรูปแบบ" target="ที่อยู่">
-      <data key="d7">1.0</data>
-      <data key="d8">ต้องแจ้งที่อยู่เมื่อขอใบกำกับภาษีเต็มรูปแบบ</data>
-      <data key="d9">ต้องระบุ</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
-      <data key="d13" />
-    </edge>
-    <edge source="ชำระช้าเกิน 7 วัน" target="ไม่มีค่าปรับชำระล่าช้า">
-      <data key="d7">1.0</data>
-      <data key="d8">ไม่มีการเรียกเก็บค่าปรับสำหรับการชำระเงินล่าช้าเกิน 7 วัน</data>
-      <data key="d9">ไม่มีค่าปรับ</data>
-      <data key="d10">KB-06-chunk-001</data>
-      <data key="d11">KB-06</data>
-      <data key="d12">1791178330</data>
       <data key="d13" />
     </edge>
     <edge source="แชตบอท" target="เอ็กซ์">
@@ -9472,6 +9067,168 @@
       <data key="d10">KB-08-chunk-002</data>
       <data key="d11">KB-08</data>
       <data key="d12">1791191902</data>
+      <data key="d13" />
+    </edge>
+    <edge source="การชำระเงิน" target="ช่องทางชำระเงิน">
+      <data key="d7">1.0</data>
+      <data key="d8">การชำระเงินมีช่องทางการชำระเงินหลายวิธี เช่น เงินสด บัตรเครดิต/เดบิต สแกนคิวอาร์พร้อมเพย์ โอนเงินเข้าบัญชีร้าน หรือตัดบัตรเครดิตอัตโนมัติรายเดือน</data>
+      <data key="d9">มีช่องทาง</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="การชำระเงิน" target="ร้านไม่มีบริการผ่อนชำระ 0%">
+      <data key="d7">1.0</data>
+      <data key="d8">ร้านไม่มีบริการผ่อนชำระ 0% ซึ่งขัดแย้งกับการชำระเงินแบบผ่อนชำระ</data>
+      <data key="d9">ขัดแย้งกับ</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="การชำระเงิน" target="ร้านไม่รับเช็ค">
+      <data key="d7">1.0</data>
+      <data key="d8">ร้านไม่รับเช็ค ซึ่งขัดแย้งกับการชำระเงินด้วยเช็ค</data>
+      <data key="d9">ขัดแย้งกับ</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="ช่องทางชำระเงิน" target="เงินสดหรือบัตรเครดิต/เดบิตที่เคาน์เตอร์">
+      <data key="d7">1.0</data>
+      <data key="d8">ช่องทางชำระเงินรวมถึงการชำระด้วยเงินสดหรือบัตรเครดิต/เดบิตที่เคาน์เตอร์ โดยบัตรเครดิตต้องมียอดขั้นต่ำ 300 บาท</data>
+      <data key="d9">รวมถึง</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="ช่องทางชำระเงิน" target="สแกนคิวอาร์พร้อมเพย์ที่เคาน์เตอร์">
+      <data key="d7">1.0</data>
+      <data key="d8">ช่องทางชำระเงินรวมถึงการสแกนคิวอาร์พร้อมเพย์ที่เคาน์เตอร์</data>
+      <data key="d9">รวมถึง</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="ช่องทางชำระเงิน" target="โอนเงินเข้าบัญชีร้าน">
+      <data key="d7">1.0</data>
+      <data key="d8">ช่องทางชำระเงินรวมถึงการโอนเงินเข้าบัญชีร้าน แล้วส่งสลิปผ่านแชตหรือ LINE Official Account</data>
+      <data key="d9">รวมถึง</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="ช่องทางชำระเงิน" target="ตัดบัตรเครดิตอัตโนมัติรายเดือน">
+      <data key="d7">1.0</data>
+      <data key="d8">ช่องทางชำระเงินรวมถึงการตัดบัตรเครดิตอัตโนมัติรายเดือนสำหรับแพ็กเกจรายเดือนทุกแบบ</data>
+      <data key="d9">รวมถึง</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="บัญชีสำหรับโอนเงิน" target="ธนาคารจำลอง (DemoBank)">
+      <data key="d7">1.0</data>
+      <data key="d8">บัญชีสำหรับโอนเงินเป็นบัญชีของธนาคารจำลอง (DemoBank)</data>
+      <data key="d9">เป็นธนาคารของ</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="บัญชีสำหรับโอนเงิน" target="เลขที่บัญชี">
+      <data key="d7">1.0</data>
+      <data key="d8">บัญชีสำหรับโอนเงินมีเลขที่บัญชี 123-4-54521-0</data>
+      <data key="d9">มีเลขบัญชี</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="บัญชีสำหรับโอนเงิน" target="ชื่อบัญชี">
+      <data key="d7">1.0</data>
+      <data key="d8">บัญชีสำหรับโอนเงินมีชื่อบัญชี บจก. เอ็กซ์ ฟิตเนส</data>
+      <data key="d9">มีชื่อบัญชี</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="ร้านไม่มีนโยบายให้โอนเข้าบัญชีส่วนตัว" target="ติดต่อร้านที่ 038-000-888">
+      <data key="d7">1.0</data>
+      <data key="d8">หากมีการแจ้งเลขบัญชีอื่นนอกเหนือจากบัญชีร้าน ต้องติดต่อร้านที่ 038-000-888 ก่อนโอน</data>
+      <data key="d9">ต้องติดต่อเพื่อยืนยัน</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="การส่งสลิปผ่านแชต" target="ยืนยันตัวตนด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้าย">
+      <data key="d7">1.0</data>
+      <data key="d8">การส่งสลิปผ่านแชตต้องเริ่มจากการยืนยันตัวตนด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้าย</data>
+      <data key="d9">ต้องทำก่อน</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="การส่งสลิปผ่านแชต" target="ส่งภาพสลิปที่เห็นยอดเงิน วันเวลา ชื่อผู้โอน ชื่อบัญชีผู้รับ และเลขอ้างอิงครบ">
+      <data key="d7">1.0</data>
+      <data key="d8">การส่งสลิปผ่านแชตต้องส่งภาพสลิปที่มีข้อมูลครบถ้วน เช่น ยอดเงิน วันเวลา ชื่อผู้โอน ชื่อบัญชีผู้รับ และเลขอ้างอิง</data>
+      <data key="d9">ต้องทำก่อน</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="บอทตรวจเบื้องต้น 6 ข้อ" target="ชื่อบัญชีผู้รับเป็น บจก. เอ็กซ์ ฟิตเนส (X Fitness)">
+      <data key="d7">1.0</data>
+      <data key="d8">บอทตรวจเบื้องต้นตรวจสอบว่าชื่อบัญชีผู้รับเป็น บจก. เอ็กซ์ ฟิตเนส (X Fitness)</data>
+      <data key="d9">ตรวจสอบว่า</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="บอทตรวจเบื้องต้น 6 ข้อ" target="ชื่อผู้โอนตรงกับชื่อสมาชิกที่ยืนยันตัวตน">
+      <data key="d7">1.0</data>
+      <data key="d8">บอทตรวจเบื้องต้นตรวจสอบว่าชื่อผู้โอนตรงกับชื่อสมาชิกที่ยืนยันตัวตน โดยดูเฉพาะชื่อ ไม่รวมนามสกุล</data>
+      <data key="d9">ตรวจสอบว่า</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="บอทตรวจเบื้องต้น 6 ข้อ" target="เลขบัญชีผู้รับลงท้าย 4521-0">
+      <data key="d7">1.0</data>
+      <data key="d8">บอทตรวจเบื้องต้นตรวจสอบว่าเลขบัญชีผู้รับลงท้ายด้วย 4521-0</data>
+      <data key="d9">ตรวจสอบว่า</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="บอทตรวจเบื้องต้น 6 ข้อ" target="ยอดเงินตรงกับยอดค้างชำระของสมาชิก">
+      <data key="d7">1.0</data>
+      <data key="d8">บอทตรวจเบื้องต้นตรวจสอบว่ายอดเงินที่โอนตรงกับยอดค้างชำระของสมาชิก</data>
+      <data key="d9">ตรวจสอบว่า</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
+      <data key="d13" />
+    </edge>
+    <edge source="บอทตรวจเบื้องต้น 6 ข้อ" target="วันที่โอนอยู่ในรอบบิล">
+      <data key="d7">1.0</data>
+      <data key="d8">บอทตรวจเบื้องต้นตรวจสอบว่าวันที่โอนอยู่ในช่วงเวลาไม่เกิน 7 วันก่อนหรือหลังวันครบกำหนดชำระ</data>
+      <data key="d9">ตรวจสอบว่า</data>
+      <data key="d10">KB-06-chunk-000</data>
+      <data key="d11">KB-06</data>
+      <data key="d12">1792904515</data>
       <data key="d13" />
     </edge>
   </graph>

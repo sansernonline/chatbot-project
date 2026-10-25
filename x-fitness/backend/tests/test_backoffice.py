@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 
 from app import business, chat, config, llm
 
-SLIP = {"type": "slip", "amount": 990.0, "datetime": "2026-09-25T18:42", "receiver_name": "บจก. เอ็กซ์ ฟิตเนส",
+SLIP = {"type": "slip", "amount": 990.0, "datetime": "2026-09-25T18:42", "sender_name": "น.ส. ปวีณา พ.", "receiver_name": "บจก. เอ็กซ์ ฟิตเนส",
         "receiver_account_last": "4521-0", "reference": "DEMO2609251842A1"}
 SID = "K3M8P2Q7R5"
 
@@ -167,11 +167,11 @@ def test_website_data_comes_from_the_database_without_members(client, admin):
 
 
 def test_seed_database_is_built_from_the_current_json():
-    """Edit data/db/*.json → run `python -m app.db` → commit data/xfitness_db.sqlite3 too, or this fails."""
+    """Edit data/db/*.json → run build_dist.py (python -m app.db) → commit x-fitness/data/db/xfitness_db.sqlite3 too, or this fails."""
     import sqlite3
     from contextlib import closing
     from app import db
-    seed = config.PROJECT_ROOT / "data" / "xfitness_db.sqlite3"          # the committed file (tests use their own copy)
+    seed = config.DB_FILE                                                  # the committed file (tests use their own copy)
     assert seed.exists(), "run: python -m app.db"
     with closing(sqlite3.connect(seed)) as con:
         assert con.execute("SELECT hash FROM seed").fetchone()[0] == db.json_digest(), "data/db changed: run python -m app.db"
@@ -187,9 +187,31 @@ def test_without_seed_file_tables_come_from_json(tmp_path, monkeypatch):
 
 
 def test_fresh_server_copies_the_ready_made_database(tmp_path, monkeypatch):
-    """Render starts with no database file: it copies data/xfitness_db.sqlite3, shop data and sample chats included."""
+    """A database at another XF_DB_PATH starts as a copy of data/db/xfitness_db.sqlite3, shop data and sample chats included."""
     from app import db
-    monkeypatch.setattr(config, "SEED_DB", config.PROJECT_ROOT / "data" / "xfitness_db.sqlite3")
+    monkeypatch.setattr(config, "SEED_DB", config.DB_FILE)
     monkeypatch.setattr(config, "DB_PATH", tmp_path / "new" / "xfitness_db.sqlite3")
     assert db.get("S2L3P4X5Y6")["msgs"][-1]["text"] == "โอนเพิ่ม 300 แล้วครับ เดี๋ยวส่งสลิปให้"
     assert len(db.business_table("members")) == 20
+
+
+def test_server_needs_no_json_synonyms_and_data_dictionary_are_in_the_database(client, admin, monkeypatch, tmp_path):
+    """Only the database is deployed: x-fitness/ has no data/db/*.json, so the server must not read any."""
+    import json
+    from app import db, rag
+    monkeypatch.setattr(config, "DATA_DIR", tmp_path / "no-json-here")
+    rag._synonyms.cache_clear()
+    assert rag._synonyms() and json.loads(db.file_text("datadict.json"))["tables"]
+    assert client.get("/api/admin/db", headers=admin).json()["tables"]
+    manifest = json.loads((config.RAG_DIR / "manifest.json").read_text(encoding="utf-8"))
+    if not config.EMBED_API_KEY:
+        assert rag._embedder() == manifest["embedder"], "synonyms changed: the knowledge index would be rebuilt"
+
+
+def test_reset_makes_the_tables_again_from_the_json_kept_in_the_database(client, admin, monkeypatch, tmp_path):
+    client.patch("/api/admin/promotions/PR-05", json={"status": "active"}, headers=admin)
+    client.post("/api/members/signup", json={"first_name": "ก", "last_name": "ข", "phone": "0811111111", "package_id": "PKG-FLEX", "consent": True})
+    monkeypatch.setattr(config, "DATA_DIR", tmp_path / "no-json-here")
+    assert client.post("/api/admin/test-data/reset", headers=admin).status_code == 204
+    assert {p["id"]: p for p in business.table("promotions")}["PR-05"]["status"] == "inactive"
+    assert len(business.table("members")) == 20

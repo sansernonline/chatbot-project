@@ -1,7 +1,7 @@
 """Read-only view of the database for admin/dbviewer.html: every table with its data dictionary, and its rows page by page.
 
 The connection is opened with mode=ro, so nothing here can change the data. Table names are checked against the
-database's own list before they reach SQL. The data dictionary is data/db/datadict.json.
+database's own list before they reach SQL. The data dictionary is datadict.json, kept in the database (db.FILES).
 """
 import json
 import sqlite3
@@ -21,8 +21,8 @@ def _read_only() -> sqlite3.Connection:
 
 
 def _dictionary() -> dict:
-    path = config.DATA_DIR / "datadict.json"
-    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else {"groups": {}, "tables": {}}
+    text = db.file_text("datadict.json")
+    return json.loads(text) if text else {"groups": {}, "tables": {}}
 
 
 def _tables(con) -> list[str]:

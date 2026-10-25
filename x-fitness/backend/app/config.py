@@ -7,7 +7,8 @@ from dotenv import load_dotenv
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(PROJECT_ROOT / "backend" / ".env")
 
-DB_PATH = Path(os.getenv("XF_DB_PATH", PROJECT_ROOT / "backend" / "data" / "xfitness_db.sqlite3"))
+DB_FILE = PROJECT_ROOT / "data" / "db" / "xfitness_db.sqlite3"   # built by `python -m app.db`, committed, and the server reads and writes it
+DB_PATH = Path(os.getenv("XF_DB_PATH", DB_FILE))
 SLIPS_DIR = Path(os.getenv("XF_SLIPS_DIR", DB_PATH.parent / "slips"))   # slip images customers send (not in git)
 SLIP_KEEP_DAYS = int(os.getenv("XF_SLIP_KEEP_DAYS", "90"))       # KB-08: images in chat are kept 90 days
 ADMIN_USER = os.getenv("XF_ADMIN_USER", "admin")
@@ -18,8 +19,9 @@ WEB_DIR = PROJECT_ROOT / "frontend"  # copied from the root mockup/ folder
 TEST_IMAGES_DIR = PROJECT_ROOT / "qa"   # copied from the root qa/test-images folder
 DOCUMENTS_DIR = PROJECT_ROOT / "documents"   # decks + report copied from the root docs/, served at /documents/
 KB_DIR = PROJECT_ROOT / "data" / "knowledge-base"
-DATA_DIR = PROJECT_ROOT / "data" / "db"
-SEED_DB = PROJECT_ROOT / "data" / "xfitness_db.sqlite3"   # data/db/*.json already loaded, committed: python -m app.db rebuilds it
+DATA_DIR = Path(os.getenv("XF_DATA_DIR", PROJECT_ROOT.parent / "data" / "db"))   # the JSON sources, at the project root (not deployed):
+                                                                                 # only `python -m app.db` and the tests read them
+SEED_DB = DB_FILE   # where a database at another XF_DB_PATH (tests) is copied from when it has none
 GUARD_REPLIES = PROJECT_ROOT / "data" / "guard" / "replies.md"   # what the bot says when a guard fires — edited without code
 PROMPTS_DIR = Path(__file__).parent / "prompts"
 
@@ -40,7 +42,7 @@ LLM_TIMEOUT_S = float(os.getenv("XF_LLM_TIMEOUT_S", "25"))
 LINE_CHANNEL_SECRET = os.getenv("LINE_CHANNEL_SECRET", "")
 LINE_CHANNEL_ACCESS_TOKEN = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", "")
 
-# LightRAG embeddings: rag.hash_embed() — Thai word + character n-gram hashing with data/db/synonyms.json, no model and no key (fits Render's free 512 MB).
+# LightRAG embeddings: rag.hash_embed() — Thai word + character n-gram hashing with synonyms.json (in the database), no model and no key (fits Render's free 512 MB).
 # Optional: XF_EMBED_API_KEY switches to an OpenAI-compatible embedding API (Gemini by default) for meaning-based search.
 EMBED_API_KEY = os.getenv("XF_EMBED_API_KEY", "")
 if EMBED_API_KEY:
@@ -49,7 +51,6 @@ if EMBED_API_KEY:
     EMBED_DIM = int(os.getenv("XF_EMBED_DIM", "3072"))
 else:
     EMBED_BASE_URL, EMBED_MODEL, EMBED_DIM = "", "thai-word-hash", 1024
-SYNONYMS_FILE = DATA_DIR / "synonyms.json"   # other names customers use → knowledge base terms (hash embedding only)
 RAG_DIR = Path(os.getenv("XF_RAG_DIR", PROJECT_ROOT / "data" / "rag-index"))  # committed, so a fresh server (Render) does not rebuild it
 RAG_MODE = os.getenv("XF_RAG_MODE", "mix")         # LightRAG query mode: naive · local · global · hybrid · mix
 RAG_LLM_MAX_TOKENS = int(os.getenv("XF_RAG_LLM_MAX_TOKENS", "8192"))  # answer length for LightRAG extraction calls
