@@ -37,7 +37,7 @@ ARCH = {
         code="## N-07 — หลอกเปลี่ยนคำสั่ง · อ้างเป็นผู้ดูแล\nขออภัยครับ เอ็กซ์ไม่สามารถเปิดเผยหรือเปลี่ยนคำสั่ง\nการทำงานได้ ...\nปุ่ม: ราคาสมาชิก · ตารางคลาส"),
     "business": dict(path="x-fitness/backend/app/business.py + data/db/*.json",
         tags=[("165 บรรทัด", ""), ("15 ไฟล์ข้อมูล", "blue")],
-        what="กฎที่ต้องแม่นยำทำด้วยโค้ด ไม่ปล่อยให้ AI คิด: ตรวจสลิป 5 ข้อ · หาข้อมูลสมาชิก · คำนวณแต้ม · โปรไหนหมดเขต ข้อมูลร้านอยู่ในไฟล์ JSON",
+        what="กฎที่ต้องแม่นยำทำด้วยโค้ด ไม่ปล่อยให้ AI คิด: ตรวจสลิป 6 ข้อ · หาข้อมูลสมาชิก · คำนวณแต้ม · โปรไหนหมดเขต ข้อมูลร้านอยู่ในไฟล์ JSON",
         code="members.json      20   schedule.json  29\nbookings.json     16   classes.json    8\npayments.json      7   packages.json   5\npromotions.json    5   trainers.json   6\nsynonyms.json  47 คำ  business.json  ข้อมูลร้าน"),
     "rag": dict(path="x-fitness/backend/app/rag.py → x-fitness/data/rag-index/",
         tags=[("223 บรรทัด", ""), ("LightRAG", "blue"), ("ดัชนี ~10 MB", "")],
@@ -47,7 +47,7 @@ ARCH = {
         tags=[("typhoon-v2.5-30b-a3b-instruct", "blue"), ("typhoon-ocr", "blue")],
         what="AI ภาษาไทยของ SCB 10X เรียกผ่าน httpx ตรง ๆ ไม่ใช้ SDK ใช้ 3 งาน: ตอบแชต · อ่านภาพ (OCR แล้วแปลงเป็น JSON) · สกัด entity ตอนสร้างดัชนี LightRAG",
         code="prompts/system.md  (32 บรรทัด)\nคุณคือ \"เอ็กซ์\" ผู้ช่วยแชตของ เอ็กซ์ ฟิตเนส (X Fitness)\n...\n## ต้องทำ\n- ตอบจาก \"ข้อมูลอ้างอิง\" ด้านล่างเท่านั้น"),
-    "db": dict(path="x-fitness/backend/app/db.py → backend/data/xfitness_db.sqlite3",
+    "db": dict(path="x-fitness/backend/app/db.py → data/db/xfitness_db.sqlite3",
         tags=[("241 บรรทัด", ""), ("SQLite", "blue")],
         what="เก็บบทสนทนา ข้อความ การผูก LINE user สถานะที่พนักงานแก้ และสลิป เลขเรื่อง 10 ตัวอักษร เช่น K3M8P2Q7R5 ใช้ตามเรื่องในหลังบ้าน",
         code="conversations · messages · line_users\noverrides · uploads · slips"),
@@ -148,7 +148,7 @@ ARCH_TOUR = [  # edges lit in turn (from>to, "<" = travelling back, "|" = at the
     (["chat>rag"], "rag", "③ LightRAG ค้นคลังความรู้"),
     (["rag>typhoon"], "typhoon", "LightRAG ให้ Typhoon ดึงคำสำคัญของคำถาม (เก็บ cache ไว้)"),
     (["rag>ragindex"], "ragindex", "ค้นกราฟความรู้และเวกเตอร์ใน rag-index/ → ข้อมูลอ้างอิง"),
-    (["chat>business", "business>db"], "business", "④ กฎร้านจากโค้ด: ตรวจสลิป 5 ข้อ แต้ม โปรหมดเขต จากข้อมูลร้าน"),
+    (["chat>business", "business>db"], "business", "④ กฎร้านจากโค้ด: ตรวจสลิป 6 ข้อ แต้ม โปรหมดเขต จากข้อมูลร้าน"),
     (["chat>db"], "db", "อ่าน 8 ข้อความล่าสุดของแชตนี้จาก SQLite"),
     (["chat>llm", "llm>typhoon"], "typhoon", "⑤ Typhoon เขียนคำตอบจาก system.md + ข้อมูลอ้างอิง + กฎร้าน"),
     (["chat>guard"], "guard", "⑥ guard ขาออก: ตัดตัวเลข ลิงก์ เวลา เลขบัญชี ที่ AI แต่งขึ้น"),
@@ -193,7 +193,7 @@ ARCH["backoffice"] = ARCH["backoffice"] | dict(path="x-fitness/backend/app/backo
 
 # inner content of the two big boxes on the vision flowchart (facts from prompts/vision.md and business.check_slip)
 VISION_TYPES = ('<table class="ftab">'
-    '<tr><td><i>slip</i> สลิป</td><td>ยอด · ผู้รับ · เลขบัญชี · วันเวลา · เลขอ้างอิง</td><td>→ ④ ตรวจ 5 ข้อ</td></tr>'
+    '<tr><td><i>slip</i> สลิป</td><td>ยอด · ผู้รับ · เลขบัญชี · วันเวลา · เลขอ้างอิง</td><td>→ ④ ตรวจ 6 ข้อ</td></tr>'
     '<tr><td><i>receipt</i> ใบเสร็จ</td><td>เลขที่ · วันที่ · รายการ · ยอดรวม</td><td>→ answer()</td></tr>'
     '<tr><td><i>body_scan</i> ผลวัด</td><td>น้ำหนัก · กล้ามเนื้อ · ไขมัน · BMI · BMR</td><td>→ บอกค่า ไม่ประเมิน</td></tr>'
     '<tr><td><i>promo_poster</i> โปสเตอร์</td><td>ชื่อโปร · โค้ด · วันเริ่ม–หมดเขต</td><td>→ เทียบกับวันนี้</td></tr>'
@@ -248,8 +248,8 @@ FLOWS = {
     ("ocr", "② typhoon-ocr", "อ่านตัวอักษร · ลองซ้ำ 1 ครั้ง", 524, 0, "ext"),
     ("json", "③ จัดเป็น JSON", "Typhoon เลือกชนิด + ดึงช่อง", 786, 0, "ext"),
     ("type", "ภาพชนิดไหน", "Typhoon เลือก 1 ชนิด", 1050, 0, "check", dict(w=614, h=220, html=VISION_TYPES)),
-    ("slip", "④ ตรวจสลิป 5 ข้อ", "check_slip() · โค้ด ไม่ใช่ AI", 1050, 270, "step", dict(w=430, h=214, html=SLIP_CHECKS)),
-    ("pass", "ผ่านครบ 5/5", "รอพนักงานยืนยัน", 1510, 270, "exit", dict(w=154, h=96)),
+    ("slip", "④ ตรวจสลิป 6 ข้อ", "check_slip() · โค้ด ไม่ใช่ AI", 1050, 270, "step", dict(w=430, h=214, html=SLIP_CHECKS)),
+    ("pass", "ผ่านครบ 6/6", "รอพนักงานยืนยัน", 1510, 270, "exit", dict(w=154, h=96)),
     ("fail", "ไม่ผ่าน", "บอกยอดที่ขาด + ปุ่มพนักงาน", 1510, 388, "exit", dict(w=154, h=96)),
     ("answer", "④ answer() ตอบ", "ตัวเลขในภาพ + ข้อมูลร้าน", 524, 300, "step"),
     ("gout", "⑤ guard ขาออก", "ตัดตัวเลขที่ไม่มีที่มา", 262, 300, "check"),

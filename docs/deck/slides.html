@@ -1,5 +1,5 @@
 <!-- 1 · cover -->
-<section data-at="0:00" id="cover" data-menu="ปก" data-part="เริ่มต้น" class="slide" style="background:radial-gradient(ellipse at 80% 40%,#2a0a0d,#09090a 60%);justify-content:center;gap:28px;padding:128px">
+<section data-at="0:00" id="cover" data-menu="ปก" class="slide" style="background:radial-gradient(ellipse at 80% 40%,#2a0a0d,#09090a 60%);justify-content:center;gap:28px;padding:128px">
 <p class="kicker" style="font-size:28px">06048308 Intelligent Chatbot Development · Final Project</p>
 <h1>X Fitness Chatbot</h1>
 <div style="width:120px;height:8px;background:var(--red)"></div>
@@ -27,29 +27,20 @@
 <section data-at="0:18" class="slide" id="toc" data-menu="สารบัญ">
 <div class="col" style="gap:10px"><p class="kicker">สารบัญ · คลิกเพื่อไปหน้านั้น · เลขแดง = ลองคุยกับบอทจริง · เลขเทา = กดดูรายละเอียดได้ · กด M ดูทุกหน้า</p><h2>สารบัญ</h2></div>
 <div class="toc">
- <a data-goto="div-intro"><span class="n">1</span><div><b>ภาพรวม</b><span>โจทย์ · บอททำอะไรได้ · เทคโนโลยี</span></div><span class="p"></span></a>
- <a data-goto="div-arch"><span class="n">2</span><div><b>สถาปัตยกรรม</b><span>ไฟล์จริง · ทางเดินข้อความ · โค้ดหลัก</span><div class="tp"><em class="try">▶ ลองเล่น</em><i class="try" data-goto="play-flow"></i><em>กดดูได้</em><i data-goto="arch"></i><i data-goto="flow"></i></div></div><span class="p"></span></a>
- <a data-goto="div-rag"><span class="n">3</span><div><b>คลังความรู้ LightRAG</b><span>ไฟล์ต้นทาง → embedding → ไฟล์ปลายทาง</span><div class="tp"><em class="try">▶ ลองเล่น</em><i class="try" data-goto="play-rag"></i><em>กดดูได้</em><i data-goto="kb"></i><i data-goto="pipeline"></i><i data-goto="graph"></i></div></div><span class="p"></span></a>
- <a data-goto="div-guard"><span class="n">4</span><div><b>Guardrail · ภาพ · LINE</b><span>ด่านขาเข้า/ขาออก · ยืนยันสมาชิก · ภาพ · LINE</span><div class="tp"><em class="try">▶ ลองเล่น</em><i class="try" data-goto="play-guard"></i><i class="try" data-goto="play-verify"></i><i class="try" data-goto="play-vision"></i><em>กดดูได้</em><i data-goto="replies"></i><i data-goto="rules20"></i><i data-goto="vision"></i><i data-goto="line"></i></div></div><span class="p"></span></a>
- <a data-goto="div-files"><span class="n">5</span><div><b>โครงไฟล์และ deploy</b><span>โฟลเดอร์ · ฐานข้อมูล · Render · ค่าตั้ง</span><div class="tp"><em>กดดูได้</em><i data-goto="tree"></i><i data-goto="db"></i></div></div><span class="p"></span></a>
- <a data-goto="div-demo"><span class="n">6</span><div><b>สาธิตกับบอทจริง</b><span>คำถาม 10 · ภาพ 5 · ความปลอดภัย 5</span><div class="tp"><em class="try">▶ กดเล่นเคสจริง</em><i class="try" data-goto="demo-q"></i><i class="try" data-goto="demo-img"></i><i class="try" data-goto="demo-safe"></i><i class="try" data-goto="demo-line"></i></div></div><span class="p"></span></a>
- <a data-goto="div-results"><span class="n">7</span><div><b>ผลทดสอบ</b><span>คำถาม 10 · ภาพ 5 · ความปลอดภัย 5 · ผ่าน 20/20</span></div><span class="p"></span></a>
+ <a data-goto="problem"><span class="n">1</span><div><b>ภาพรวม</b><span>โจทย์ · บอททำอะไรได้ · เทคโนโลยี</span></div><span class="p"></span></a>
+ <a data-goto="overview"><span class="n">2</span><div><b>สถาปัตยกรรม</b><span>ภาพรวมระบบ · ทางเดินข้อความ</span><div class="tp"><em class="try">▶ ลองเล่น</em><i class="try" data-goto="play-flow"></i><em>กดดูได้</em><i data-goto="flow"></i><i data-goto="arch"></i></div></div><span class="p"></span></a>
+ <a data-goto="kb"><span class="n">3</span><div><b>คลังความรู้ LightRAG</b><span>ไฟล์ต้นทาง → กราฟความรู้</span><div class="tp"><em class="try">▶ ลองเล่น</em><i class="try" data-goto="play-rag"></i><em>กดดูได้</em><i data-goto="kb"></i><i data-goto="graph"></i><i data-goto="pipeline"></i></div></div><span class="p"></span></a>
+ <a data-goto="guard-in"><span class="n">4</span><div><b>Guardrail · อ่านภาพ</b><span>ด่านขาเข้า/ขาออก · ยืนยันสมาชิก · ภาพ</span><div class="tp"><em class="try">▶ ลองเล่น</em><i class="try" data-goto="play-guard"></i><i class="try" data-goto="play-vision"></i><em>กดดูได้</em><i data-goto="rules20"></i><i data-goto="vision"></i></div></div><span class="p"></span></a>
+ <a data-goto="demo"><span class="n">5</span><div><b>สาธิตกับบอทจริง</b><span>คำถาม 10 · ภาพ 5 · ความปลอดภัย 5</span><div class="tp"><em class="try">▶ กดเล่นเคสจริง</em><i class="try" data-goto="demo-q"></i><i class="try" data-goto="demo-img"></i><i class="try" data-goto="demo-safe"></i><i class="try" data-goto="demo-line"></i></div></div><span class="p"></span></a>
+ <a data-goto="results"><span class="n">6</span><div><b>ผลทดสอบ</b><span>ผ่าน 20/20 · วิธีทดสอบ 3 ชั้น</span><div class="tp"><em>กดดูได้</em><i data-goto="testing"></i><i data-goto="db"></i></div></div><span class="p"></span></a>
+ <a data-goto="appendix"><span class="n">+</span><div><b>ภาคผนวก</b><span>ลองเล่น 4 หน้า · รายละเอียดเชิงเทคนิค 6 หน้า</span></div><span class="p"></span></a>
 </div>
 <p class="foot">X FITNESS CHATBOT · สารบัญ</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 0:18</b>  บอกโครงเรื่อง 7 ส่วนเร็ว ๆ แล้วไปต่อ ถ้าโดนถามช่วงถาม-ตอบ กลับมาหน้านี้ (กด M) แล้วคลิกส่วนที่ต้องการ</aside>
+<aside><b>ถึงหน้านี้ 0:18</b>  บอกโครงเรื่อง 6 ส่วนเร็ว ๆ แล้วไปต่อ (หน้าลองเล่นและรายละเอียดอยู่ในภาคผนวกท้ายเด็ค) ถ้าโดนถามช่วงถาม-ตอบ กลับมาหน้านี้ (กด M) แล้วคลิกส่วนที่ต้องการ</aside>
 </section>
 
-<!-- 4 · div-intro -->
-<section data-at="0:27" class="slide divider" id="div-intro" data-menu="เปิดส่วน" data-part="1 · ภาพรวม">
-<p class="num">01</p>
-<h2 style="font-size:84px">ภาพรวม</h2>
-<p style="font-size:34px;color:var(--soft)">โจทย์ · บอททำอะไรได้ · เทคโนโลยีที่ใช้</p>
-<p class="pg"></p>
-<aside><b>ถึงหน้านี้ 0:27</b> ส่วนที่ 1</aside>
-</section>
-
-<!-- 5 · problem -->
-<section data-at="0:32" id="problem" data-menu="โจทย์" class="slide">
+<!-- 4 · problem -->
+<section data-at="0:32" id="problem" data-part="1 · ภาพรวม" data-menu="โจทย์" class="slide">
 <div class="col" style="gap:10px"><p class="kicker">โจทย์ของร้าน</p><h2>ลูกค้าถามเรื่องเดิมทุกวัน และส่งภาพมาให้ตรวจ<br>บอทต้องตอบตรงข้อมูลร้าน โดยไม่ตัดสินใจแทนร้าน</h2></div>
 <div class="row" style="align-items:flex-start">
  <div class="card grow col"><p class="big">10</p><h3>คำถามที่พบบ่อย</h3><p style="font-size:26px;color:var(--muted)">ราคา · เวลาเปิด · คลาส · พัก/ยกเลิก · โปร</p></div>
@@ -60,7 +51,7 @@
 <aside><b>ถึงหน้านี้ 0:32</b>   เอ็กซ์ ฟิตเนส ศรีราชา (ธุรกิจจำลอง) ลูกค้าถามซ้ำทั้งในและนอกเวลา หัวใจของงานคือ "AI ช่วยเขียน แต่เรื่องตัวเลขและเงิน โค้ดตัดสิน"</aside>
 </section>
 
-<!-- 6 · caps -->
+<!-- 5 · caps -->
 <section data-at="0:42" class="slide" id="caps" data-menu="บอททำอะไรได้">
 <div class="col" style="gap:10px"><p class="kicker">ความสามารถของบอท</p><h2>"เอ็กซ์" ทำได้ 4 อย่าง: ตอบคำถาม อ่านภาพ ปฏิเสธ และส่งต่อพนักงาน</h2></div>
 <div class="row grow" style="align-items:stretch;min-height:0">
@@ -86,7 +77,7 @@
 <aside><b>ถึงหน้านี้ 0:42</b>  4 งานนี้คือสิ่งที่จะเห็นในช่วงสาธิต ตอบ = ชุดคำถาม · อ่านภาพ = ชุดภาพ · ปฏิเสธ = ชุดความปลอดภัย · ส่งต่อ = ปุ่มคุยกับพนักงาน</aside>
 </section>
 
-<!-- 7 · stack -->
+<!-- 6 · stack -->
 <section data-at="0:54" class="slide" id="stack" data-menu="เทคโนโลยี">
 <div class="col" style="gap:10px"><p class="kicker">เทคโนโลยีที่ใช้</p><h2>เขียนด้วย Python ทั้งระบบ<br>ใช้ AI ภาษาไทยของ Typhoon และบริการฟรีทั้งหมด</h2></div>
 <table class="tbl">
@@ -103,17 +94,8 @@
 <aside><b>ถึงหน้านี้ 0:54</b>  ชี้ว่าเลือกของที่เรียบง่าย: ไม่มี framework หน้าเว็บ ไม่มีฐานข้อมูลแยก เรียก Typhoon ผ่าน httpx ตรง ๆ ไม่ใช้ SDK</aside>
 </section>
 
-<!-- 8 · div-arch -->
-<section data-at="1:05" class="slide divider" id="div-arch" data-menu="เปิดส่วน" data-part="2 · สถาปัตยกรรม">
-<p class="num">02</p>
-<h2 style="font-size:84px">สถาปัตยกรรม</h2>
-<p style="font-size:34px;color:var(--soft)">ไฟล์จริง · ทางเดินข้อความ 6 ขั้น · โค้ดหลัก · ลองเล่น</p>
-<p class="pg"></p>
-<aside><b>ถึงหน้านี้ 1:05</b> ส่วนที่ 2</aside>
-</section>
-
-<!-- overview -->
-<section data-at="1:09" class="slide" id="overview" data-menu="ภาพรวมระบบ">
+<!-- 7 · overview -->
+<section data-at="1:09" class="slide" id="overview" data-part="2 · สถาปัตยกรรม" data-menu="ภาพรวมระบบ">
 <div class="col" style="gap:10px"><p class="kicker">ภาพรวมระบบ · ใครใช้ส่วนไหน และต่อกันอย่างไร</p><h2>ผู้ใช้ 3 กลุ่มเข้าแอปเดียวกันบน Render<br>ส่วน AI เรียกใช้จาก Typhoon ผ่านอินเทอร์เน็ต</h2></div>
 <div class="ovmap">
  <svg viewBox="0 0 1664 600" width="1664" height="600"><defs><marker id="oh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="11" markerHeight="11" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8a8a92"/></marker></defs>
@@ -138,25 +120,11 @@
  <div class="ovbox ext" style="left:1400px;top:290px;width:264px"><b>Typhoon API</b><span>LLM ตอบแชต · OCR อ่านภาพ</span></div>
  <div class="ovbox dev" style="left:1400px;top:400px;width:264px"><b>นักพัฒนา</b><span>render.yaml · ค่าลับใน dashboard</span></div>
 </div>
-<p class="foot">X FITNESS CHATBOT · ภาพรวมระบบ · กรอบเส้นประ = ระบบภายนอก · หน้าถัดไปลงรายละเอียดทีละไฟล์</p><p class="pg"></p>
+<p class="foot">X FITNESS CHATBOT · ภาพรวมระบบ · กรอบเส้นประ = ระบบภายนอก · รายละเอียดทีละไฟล์อยู่ในภาคผนวก</p><p class="pg"></p>
 <aside><b>ถึงหน้านี้ 1:09</b> เล่าจากซ้ายไปขวา: ลูกค้าเว็บเข้าตรง · ลูกค้า LINE ผ่าน LINE Platform ที่ส่ง webhook มา · พนักงานใช้หลังบ้านบนแอปเดียวกัน ทุกอย่างอยู่ใน Render บริการเดียว แอปเรียก Typhoon เมื่อต้องใช้ AI เท่านั้น</aside>
 </section>
 
-<!-- 9 · arch -->
-<section data-at="1:29" id="arch" data-menu="แผนภาพระบบ" class="slide">
-<div class="row" style="justify-content:space-between;align-items:flex-end"><div class="col" style="gap:10px"><p class="kicker">แผนภาพระบบ · คลิกกล่องเพื่อดูไฟล์จริง</p><h2>แอป FastAPI ตัวเดียวรับข้อความจากทั้งเว็บและ LINE<br>แล้วเรียก AI ของ Typhoon</h2></div></div>
-<div class="row grow" style="min-height:0">
- <div class="col" style="width:1060px;flex:none;gap:14px;min-height:0">
-  <div class="arch" id="arch"><!--ARCH--></div>
-  <div class="tourbar"><button data-t="reset" title="เริ่มใหม่">⏮ เริ่มใหม่</button><button data-t="back" title="ย้อนขั้น">◀ ย้อน</button><button data-t="play" class="pp" title="เล่น / หยุด">▶ เล่น</button><button data-t="next" title="ขั้นถัดไป">ถัดไป ⏭</button><span class="tstep"></span><span class="tcap"></span></div>
- </div>
- <div class="detail grow" id="d-arch"></div>
-</div>
-<p class="foot">X FITNESS CHATBOT · สถาปัตยกรรม · กรอบเส้นประ = ระบบภายนอก · ลูกศรตรวจกับ import ในโค้ดจริง · deploy บน Render</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 1:29</b>  กด ▶ แล้วพูดตามข้อความใต้แผนภาพ 13 ขั้น: เว็บ → API → บอท → ① guard → ② ยืนยันสมาชิก → ③ LightRAG (+ Typhoon ดึงคำสำคัญ + ดัชนี) → ④ กฎร้าน → ประวัติแชต → ⑤ Typhoon → ⑥ guard → กลับหน้าเว็บ แล้วต่อด้วยทาง LINE และหลังบ้าน กด ⏸ หยุดอธิบายได้ ◀ ย้อน ⏮ เริ่มใหม่ คลิกกล่องไหนก็ได้เพื่อดูไฟล์จริง</aside>
-</section>
-
-<!-- 10 · flow -->
+<!-- 8 · flow -->
 <section data-at="1:59" id="flow" data-menu="ทางเดิน 6 ขั้น" class="slide">
 <div class="col" style="gap:10px"><p class="kicker">ทางเดินของ 1 ข้อความ · answer() ใน chat.py · กดข้อความด้านล่างเพื่อดูทาง</p><h2>AI เขียนคำตอบ แต่โค้ดตรวจทั้งขาเข้าและขาออก</h2></div>
 <!--FLOW:flow-->
@@ -166,55 +134,8 @@
 <aside><b>ถึงหน้านี้ 1:59</b> กดตัวอย่างทีละข้อ: Q07 (ผ่านครบ 6 ขั้น) → S01 (หยุดที่ ① ตอบใน 0.4 วินาที) → FN-10003 5531 (จบที่ ② ไม่เรียก AI) → I02 (อ่านภาพ ตรวจสลิปที่ ④ แล้วมีปุ่มคุยกับพนักงาน) จุดที่อยากให้จำ: ขั้น ① กับ ⑥ เป็นโค้ด ไม่ใช่ AI</aside>
 </section>
 
-<!-- 11 · code -->
-<section data-at="2:14" class="slide" id="code" data-menu="โค้ด answer()">
-<div class="col" style="gap:10px"><p class="kicker">โค้ดหลัก · chat.py บรรทัด 70–99</p><h2>บอททั้งตัวอยู่ในฟังก์ชัน answer() ตัวเดียว<br>เว็บและ LINE เรียกใช้ตัวเดียวกัน</h2></div>
-<div class="row grow" style="min-height:0">
-<pre class="card mono" style="flex:1;font-size:22px;line-height:1.6;color:#cbd5e1;white-space:pre;overflow:auto">async def <b style="color:#ff2536">answer</b>(text, session_id, member_id=None, vision=None):
-    earlier = [...][-2:]          <span style="color:#6b7280"># คำสั่งที่แบ่งพิมพ์ 2 ข้อความ</span>
-    if blocked := <b style="color:#ff2536">guard.check_input</b>(text, member_id, earlier):
-        return blocked            <span style="color:#6b7280"># ① ตอบเลย ไม่เรียก AI</span>
-    if step := <b style="color:#fbbf24">verify_step</b>(text, session_id, member_id):
-        return step               <span style="color:#6b7280"># ② ยืนยันสมาชิก</span>
-    context, sources = await <b style="color:#60a5fa">rag.context</b>(text)   <span style="color:#6b7280"># ③</span>
-    if rules := <b style="color:#22c55e">business.rules_for</b>(text, member_id):  <span style="color:#6b7280"># ④</span>
-        user += "[กฎของร้านที่ใช้กับคำถามนี้ — ตอบตามนี้]" + rules
-    if vision.get("type") == "slip":
-        slip = <b style="color:#22c55e">business.check_slip</b>(vision, member_id)
-    reply = await <b style="color:#60a5fa">llm.chat</b>(prompt(...), history)       <span style="color:#6b7280"># ⑤</span>
-    return <b style="color:#ff2536">guard.check_output</b>(reply, ...)            <span style="color:#6b7280"># ⑥</span></pre>
-</div>
-<p class="foot">X FITNESS CHATBOT · โค้ดหลัก · ย่อจากของจริง ตัดบรรทัดจัดรูปแบบออก</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 2:14</b>  แดง = guard · เหลือง = ยืนยันสมาชิก · ฟ้า = LightRAG และ Typhoon · เขียว = กฎร้านที่โค้ดคำนวณ ชี้ว่าทุกช่องทางผ่านฟังก์ชันนี้ ทดสอบที่เดียวได้ทั้งเว็บและ LINE</aside>
-</section>
-
-<!-- 12 · sysprompt -->
-<section data-at="2:26" class="slide" id="sysprompt" data-menu="คำสั่งระบบ system.md">
-<div class="col" style="gap:10px"><p class="kicker">คำสั่งระบบ · prompts/system.md ทั้งไฟล์</p><h2>system.md บอกบอทว่าเป็นใคร ต้องทำอะไร และห้ามทำอะไร<br>แล้วเติมข้อมูลอ้างอิงลงใน {context} ทุกครั้งที่มีคนถาม</h2></div>
-<pre class="card mono grow" style="font-size:19px;line-height:1.55;color:#cbd5e1;white-space:pre-wrap;overflow:auto;min-height:0"><!--SYSTEMPROMPT--></pre>
-<p class="foot">X FITNESS CHATBOT · คำสั่งระบบ · {today} {member} {context} ถูกเติมในโค้ดก่อนส่งให้ Typhoon</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 2:26</b>  เลื่อนให้เห็นหัวข้อ "ต้องทำ" กับ "ห้ามทำ" ชี้ว่า prompt อย่างเดียวไม่พอ จึงมี guard ทั้งขาเข้าและขาออกเป็นโค้ด</aside>
-</section>
-
-<!-- 13 · play-flow -->
-<section data-at="2:37" class="slide" id="play-flow" data-menu="▶ ลองเล่น: ทางเดินข้อความ">
-<div class="col" style="gap:10px"><p class="kicker">ลองเล่น · ส่งข้อความแล้วดูทางเดิน</p><h2>ลองส่งข้อความแล้วดูทั้ง 6 ขั้น<br>คำถามปกติไปถึง Typhoon ส่วนข้อความหลอกหยุดที่ guard ขาเข้า</h2></div>
-<div class="play" data-focus="0" data-presets="Q01,Q08,S01,N-01,N-10"></div>
-<p class="foot">X FITNESS CHATBOT · ลองเลย · ป้ายบนโทรศัพท์: สีเขียว = บอทจริง · สีเหลือง = คำตอบที่บันทึกจากการทดสอบ</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 2:37</b>  กด Q01 (ผ่านครบ 6 ขั้น) แล้วกด S01 (หยุดที่ขั้น 1 ตอบใน 0.4 วินาที) ให้ผู้ฟังเห็นความต่าง ถ้าเชื่อมบอทจริงแล้ว พิมพ์คำถามเองได้</aside>
-</section>
-
-<!-- 14 · div-rag -->
-<section data-at="2:59" class="slide divider" id="div-rag" data-menu="เปิดส่วน" data-part="3 · คลังความรู้ LightRAG">
-<p class="num">03</p>
-<h2 style="font-size:84px">คลังความรู้ LightRAG</h2>
-<p style="font-size:34px;color:var(--soft)">คนเขียน Markdown → ระบบแปลงเป็นกราฟและเวกเตอร์ → บอทค้นก่อนตอบ</p>
-<p class="pg"></p>
-<aside><b>ถึงหน้านี้ 2:59</b>  ส่วนที่ 3 ใช้ประมาณ 1 นาทีครึ่ง</aside>
-</section>
-
-<!-- 15 · kb -->
-<section data-at="3:04" class="slide" id="kb" data-menu="ไฟล์ความรู้ 9 ไฟล์">
+<!-- 9 · kb -->
+<section data-at="3:04" class="slide" id="kb" data-part="3 · คลังความรู้ LightRAG" data-menu="ไฟล์ความรู้ 9 ไฟล์">
 <div class="col" style="gap:10px"><p class="kicker">ไฟล์ความรู้ต้นทาง · คลิกเพื่อดูเนื้อไฟล์จริง</p><h2>ความรู้ของร้านอยู่ในไฟล์ Markdown 9 ไฟล์ แก้ได้โดยไม่ต้องแตะโค้ด</h2></div>
 <div class="row grow" style="min-height:0">
  <div class="list" style="width:640px;flex:none"><!--KBLIST--></div>
@@ -224,17 +145,7 @@
 <aside><b>ถึงหน้านี้ 3:04</b>  คลิก KB-02 (ราคา) แล้ว KB-05 (นโยบาย) ให้เห็นว่าเป็นภาษาคนธรรมดา ข้อมูลทั้งหมดเป็นข้อมูลจำลอง</aside>
 </section>
 
-<!-- 16 · pipeline -->
-<section data-at="3:17" id="pipeline" data-menu="ขั้นสร้างดัชนี" class="slide">
-<div class="col" style="gap:10px"><p class="kicker">ขั้นสร้างดัชนี LightRAG · rag.py · กดข้อความด้านล่างเพื่อดูทาง</p><h2>ตอนเปิดเครื่อง แปลงไฟล์ Markdown เป็นกราฟและเวกเตอร์<br>พอมีคนถาม ก็ค้นจากดัชนีนี้ได้ทันที</h2></div>
-<!--FLOW:rag-->
-<div class="flowbar" data-flow="rag"><span class="lab">ข้อความ:</span><span class="fbtns"></span><span class="ftime"></span></div>
-<div class="fcap" data-flow="rag">แถวบน = สร้างดัชนี (ทำครั้งเดียว เฉพาะไฟล์ที่เปลี่ยน) · แถวล่าง = ตอนลูกค้าถาม ค้น 4 ทางพร้อมกัน · ทางค้นด้วยคำเพิ่มเพราะ Typhoon เคยแตก "นักเรียนเล่น Ride ได้ไหม" เป็นคำค้น "การเล่นเกม" จนค้นผิด</div>
-<p class="foot">X FITNESS CHATBOT · LightRAG · กล่องเส้นประ = เรียก Typhoon · ขั้น ③ ไม่ใช้ AI ไม่เสียเงิน</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 3:17</b> กด "สร้างดัชนี" ก่อน ชี้ว่าขั้น ② ใช้ Typhoon แต่ขั้น ③ ทำในเครื่อง แล้วกด "แพ็กนักเรียนปั่นจักรยานได้ไหม" ให้เห็นว่าค้น 4 ทางเจออะไร และกด "ตอนลูกค้าถาม Q07" ให้เห็นผลทดสอบจริง</aside>
-</section>
-
-<!-- 17 · graph -->
+<!-- 10 · graph -->
 <section data-at="3:35" class="slide" id="graph" data-menu="กราฟความรู้">
 <div class="col" style="gap:10px"><p class="kicker">กราฟความรู้จริงจากดัชนี · คลิกวงกลมหรือกล่องคำถามเพื่อดูความสัมพันธ์</p><h2>Typhoon อ่าน 9 ไฟล์แล้วโยงเป็นกราฟ<br>ลูกค้าถามเรื่องแพ็กนักเรียน บอทเดิน 2 เส้นก็รู้ว่าเข้า Ride ไม่ได้</h2></div>
 <div class="row grow" style="min-height:0">
@@ -250,41 +161,8 @@
 <aside><b>ถึงหน้านี้ 3:35</b>  เปิดมาเห็นเส้นแดงเลย: ลูกค้าถาม "แพ็กนักเรียนปั่นจักรยานได้ไหม" → เริ่มที่นักเรียน/นักศึกษา → เส้น "เข้าไม่ได้" ไป Ride ชี้ว่าเส้นข้าง ๆ บอกต่อได้ว่าคลาสไหนเข้าได้ แล้วคลิก Ride หรือ Yoga Flow ให้ดูคำอธิบายจริงจาก graphml</aside>
 </section>
 
-<!-- 18 · retrieval -->
-<section data-at="3:46" class="slide" id="retrieval" data-menu="ค้นเจออะไร">
-<div class="col" style="gap:10px"><p class="kicker">ค้นเจออะไร · เอกสารอ้างอิงจากผลทดสอบจริง</p><h2>ทุกข้อค้นเจอเอกสารที่ตรงหัวข้อภายใน 3 อันดับแรก</h2></div>
-<table class="tbl"><tr><th>ข้อ</th><th>คำถาม</th><th>เอกสาร 3 อันดับแรก</th><th>อันดับ 1 คือ</th></tr><!--RETRIEVAL--></table>
-<p class="foot">X FITNESS CHATBOT · การค้น · qa/report/results/x-fitness-ui-results.md</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 3:46</b>  ชี้ Q07 (PT) → KB-04 อันดับ 1 · Q08 (โอนเงิน) → KB-06 อันดับ 1 · ข้อที่ไม่ได้อันดับ 1: Q09 (โปร) ได้ KB-06 ก่อน แต่ KB-07 โปรโมชันอยู่อันดับ 2 AI ได้ทั้ง 3 เอกสารจึงยังตอบถูก</aside>
-</section>
-
-<!-- 19 · indexfiles -->
-<section data-at="3:57" class="slide" id="indexfiles" data-menu="ไฟล์ดัชนี 13 ไฟล์">
-<div class="col" style="gap:10px"><p class="kicker">ไฟล์ดัชนีปลายทาง · data/rag-index/</p><h2>ดัชนี 13 ไฟล์ commit ไว้ใน git<br>ตอน deploy จึงไม่ต้องให้ AI สร้างใหม่</h2></div>
-<table class="tbl" style="font-size:22px"><tr><th>ไฟล์</th><th style="text-align:right">ขนาด</th><th>เก็บอะไร</th></tr><!--INDEXFILES--></table>
-<p class="foot">X FITNESS CHATBOT · ไฟล์ดัชนี · ขนาดอ่านจากดิสก์ตอนสร้างเด็ค</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 3:57</b>  ไฟล์ใหญ่สุดคือเวกเตอร์และ cache คำตอบ AI ระบบสร้างใหม่เฉพาะเอกสารที่ hash เปลี่ยน (manifest.json)</aside>
-</section>
-
-<!-- 20 · play-rag -->
-<section data-at="4:05" class="slide" id="play-rag" data-menu="▶ ลองเล่น: คลังความรู้">
-<div class="col" style="gap:10px"><p class="kicker">ลองเล่น · ถามคลังความรู้</p><h2>ถามเรื่องของร้าน แล้วดูว่าขั้น 3 ค้นเจอเอกสารไหน</h2></div>
-<div class="play" data-focus="3" data-presets="Q02,Q05,Q07,Q09,Q10,D-01,D-09"></div>
-<p class="foot">X FITNESS CHATBOT · ลองเลย · วางเมาส์บนป้าย KB-xx เพื่อดูชื่อเอกสาร</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 4:05</b>  กด Q07 → KB-04 (PT) · Q09 → ได้ KB-06 กับ KB-07 · ถามสิ่งที่ไม่มีในคลัง (บอทจริง) เช่น "มีที่จอดรถไหม" จะเห็นปุ่มคุยกับพนักงาน</aside>
-</section>
-
-<!-- 21 · div-guard -->
-<section data-at="4:27" class="slide divider" id="div-guard" data-menu="เปิดส่วน" data-part="4 · Guardrail · ภาพ · LINE">
-<p class="num">04</p>
-<h2 style="font-size:84px">Guardrail · อ่านภาพ · LINE</h2>
-<p style="font-size:34px;color:var(--soft)">ด่านโค้ดก่อนและหลัง AI · ตรวจสลิปด้วยโค้ด · ช่องทาง LINE</p>
-<p class="pg"></p>
-<aside><b>ถึงหน้านี้ 4:27</b>  ส่วนที่ 4 ใช้ประมาณ 1 นาที</aside>
-</section>
-
-<!-- 22 · guard-in -->
-<section data-at="4:32" class="slide" id="guard-in" data-menu="guard ขาเข้า">
+<!-- 11 · guard-in -->
+<section data-at="4:32" class="slide" id="guard-in" data-part="4 · Guardrail · อ่านภาพ" data-menu="guard ขาเข้า">
 <div class="col" style="gap:10px"><p class="kicker">ด่านตรวจขาเข้า · check_input() ใน guard.py</p><h2>ข้อความอันตรายถูกดักไว้ก่อนถึง AI<br>แล้วตอบด้วยข้อความที่เขียนไว้ล่วงหน้า</h2></div>
 <div class="pills">
  <div class="pill"><b>S1–S14</b>หมวดอันตรายตาม Llama Guard 3</div>
@@ -310,7 +188,7 @@
 <aside><b>ถึงหน้านี้ 4:32</b>  จุดขาย: ไม่พึ่ง AI ให้ระวังตัวเอง ใช้โค้ดจับก่อน จึงตอบใน 0.4 วินาทีและไม่เสียค่า AI</aside>
 </section>
 
-<!-- 23 · guard-out -->
+<!-- 12 · guard-out -->
 <section data-at="4:44" class="slide" id="guard-out" data-menu="guard ขาออก">
 <div class="col" style="gap:10px"><p class="kicker">ด่านตรวจขาออก · check_output() ใน guard.py</p><h2>ถ้าคำตอบของ AI มีตัวเลข ลิงก์ หรือเวลาที่ไม่มีในข้อมูลร้าน จะถูกตัดทิ้ง</h2></div>
 <table class="tbl">
@@ -326,37 +204,7 @@
 <aside><b>ถึงหน้านี้ 4:44</b>  แต่ละกฎเกิดจากปัญหาที่เจอตอนทดสอบ 1,600 ข้อ (บันทึกใน docs/BUILD-PLAN.md วันที่ 5 ต.ค.)</aside>
 </section>
 
-<!-- 24 · replies -->
-<section data-at="4:55" class="slide" id="replies" data-menu="ข้อความปฏิเสธ">
-<div class="col" style="gap:10px"><p class="kicker">ข้อความตอบของ guard · คลิกเพื่อดูข้อความจริง</p><h2>ข้อความปฏิเสธเก็บไว้ในไฟล์ Markdown<br>แก้ถ้อยคำได้โดยไม่ต้องแตะโค้ด</h2></div>
-<div class="row grow" style="min-height:0">
- <div class="list" style="width:760px;flex:none"><!--REPLYLIST--></div>
- <div class="detail grow" id="d-replies"></div>
-</div>
-<p class="foot">X FITNESS CHATBOT · ข้อความ guard · x-fitness/data/guard/replies.md · ไม่ครบรหัส = เซิร์ฟเวอร์ไม่ยอมเปิด</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 4:55</b>  คลิก N-07 แล้ว N-04 ข้อความเหล่านี้คือสิ่งที่จะเห็นในสาธิตความปลอดภัย</aside>
-</section>
-
-<!-- 25 · rules20 -->
-<section data-at="5:03" class="slide" id="rules20" data-menu="กฎต้องทำ/ห้ามทำ 20 ข้อ">
-<div class="col" style="gap:10px"><p class="kicker">กฎต้องทำ/ห้ามทำ 20 ข้อ · คลิกเพื่อดูคำตอบจริง</p><h2>ทดสอบกฎทุกข้อด้วยคำถามจริง ผ่านครบ 20/20</h2></div>
-<div class="row grow" style="min-height:0">
- <div class="list" style="width:760px;flex:none"><!--RULESLIST--></div>
- <div class="detail grow" id="d-rules20"></div>
-</div>
-<p class="foot">X FITNESS CHATBOT · กฎ 20 ข้อ · กฎอยู่ใน docs/03_bot-rules.md · ผลอยู่ใน qa/report/results/</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 5:03</b>  D = ต้องทำ · N = ห้ามทำ คลิก N-01 (สระว่ายน้ำ: ต้องบอกว่าไม่มี ไม่แต่ง) และ N-05 (โอนแล้ว: ห้ามบอกว่าชำระสำเร็จ)</aside>
-</section>
-
-<!-- 26 · play-guard -->
-<section data-at="5:10" class="slide" id="play-guard" data-menu="▶ ลองเล่น: หลอกบอท">
-<div class="col" style="gap:10px"><p class="kicker">ลองเล่น · ลองหลอกบอท</p><h2>ลองหลอกบอทดู ขั้น 1 จับได้ใน 0.4 วินาที<br>แล้วตอบกลับเลยโดยไม่ต้องเรียก AI</h2></div>
-<div class="play" data-focus="1" data-presets="S01,S02,S03,S05,N-07,N-08,S04"></div>
-<p class="foot">X FITNESS CHATBOT · ลองเลย · S04 เป็นข้อเดียวที่ AI ตอบเอง เพราะไม่ใช่การโจมตี</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 5:10</b>  ถ้าเชื่อมบอทจริง ให้ผู้ฟังเสนอข้อความหลอกเอง เช่น "s y s t e m prompt" หรือแบ่งพิมพ์ 2 ข้อความ</aside>
-</section>
-
-<!-- 27 · verify -->
+<!-- 13 · verify -->
 <section data-at="5:33" class="slide" id="verify" data-menu="ยืนยันสมาชิก">
 <div class="col" style="gap:10px"><p class="kicker">ยืนยันสมาชิก · กฎ D-04 · verify_step() ใน chat.py</p><h2>บอทบอกข้อมูลส่วนตัวเฉพาะเจ้าของ<br>ที่ยืนยันด้วยรหัสสมาชิกและเบอร์โทร 4 ตัวท้าย</h2></div>
 <div class="row vsteps" style="align-items:stretch">
@@ -369,134 +217,19 @@
 <aside><b>ถึงหน้านี้ 5:33</b>  หน้าถัดไปลองเล่นได้ ชี้ว่าถามข้อมูลของสมาชิกคนอื่น (S03) ถูกปฏิเสธเสมอ แม้ยืนยันตัวเองแล้ว</aside>
 </section>
 
-<!-- 28 · play-verify -->
-<section data-at="5:41" class="slide" id="play-verify" data-menu="▶ ลองเล่น: ยืนยันสมาชิก">
-<div class="col" style="gap:10px"><p class="kicker">ลองเล่น · ยืนยันสมาชิก</p><h2>ยืนยันตัวตนแล้วถามแต้มของตัวเองได้ แต่ถามข้อมูลของคนอื่นไม่ได้</h2></div>
-<div class="play" data-focus="2" data-presets="t:FN-10003,t:FN-10003 5531,t:FN-10003 1111,D-04,S03"></div>
-<p class="foot">X FITNESS CHATBOT · ลองเลย · ออฟไลน์ใช้ข้อความจริงจาก chat.py · "แต้มของฉัน" ต้องเชื่อมบอทจริง</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 5:41</b>  ลำดับ: FN-10003 → FN-10003 5531 (ยืนยันแล้ว ขั้น 2 เป็นสีส้ม) → กดปุ่ม "แต้มของฉัน" ในคำตอบ (บอทจริง) → S03 ขอข้อมูลคนอื่น ถูกปฏิเสธ</aside>
-</section>
-
-<!-- 29 · vision -->
+<!-- 14 · vision -->
 <section data-at="5:55" class="slide" id="vision" data-menu="อ่านภาพ ตรวจสลิป">
 <div class="col" style="gap:10px"><p class="kicker">อ่านภาพและตรวจสลิป · chat.py + business.py · กดข้อความด้านล่างเพื่อดูทาง</p><h2>ตรวจไฟล์ ให้ AI อ่านภาพ 2 ขั้น แล้วโค้ดตรวจสลิปอีก 5 ข้อ</h2></div>
 <div style="position:relative"><!--FLOW:vision-->
 </div>
 <div class="flowbar" data-flow="vision"><span class="lab">ข้อความ:</span><span class="fbtns"></span><span class="ftime"></span></div>
 <div class="fcap" data-flow="vision">กดภาพตัวอย่างจากผลทดสอบ แล้วดูว่าแยกไปทางไหน</div>
-<p class="foot">X FITNESS CHATBOT · อ่านภาพ · บอทไม่เคยบอกว่าชำระสำเร็จ · ตรวจ 5 ข้อ: ชื่อบัญชี · เลขบัญชี · ยอด · วันที่ ±7 วัน · เลขอ้างอิงไม่ซ้ำ</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 5:55</b> กด I01 (ผ่าน 5/5 → รอพนักงานยืนยัน) แล้ว I02 (ขาด 600 บาท → ส่งพนักงาน) ชี้ว่าการตัดสินว่าสลิปผ่านเป็นโค้ด ไม่ใช่ AI</aside>
+<p class="foot">X FITNESS CHATBOT · อ่านภาพ · บอทไม่เคยบอกว่าชำระสำเร็จ · ตรวจ 6 ข้อ: ชื่อบัญชีผู้รับ · ชื่อผู้โอน · เลขบัญชี · ยอด · วันที่ ±7 วัน · เลขอ้างอิงไม่ซ้ำ</p><p class="pg"></p>
+<aside><b>ถึงหน้านี้ 5:55</b> กด I01 (ผ่าน 6/6 → รอพนักงานยืนยัน) แล้ว I02 (ขาด 600 บาท → ส่งพนักงาน) ชี้ว่าการตัดสินว่าสลิปผ่านเป็นโค้ด ไม่ใช่ AI</aside>
 </section>
 
-<!-- 30 · play-vision -->
-<section data-at="6:07" class="slide" id="play-vision" data-menu="▶ ลองเล่น: ส่งภาพ">
-<div class="col" style="gap:10px"><p class="kicker">ลองเล่น · ส่งภาพให้บอทอ่าน</p><h2>ลองส่งภาพ แล้วดูว่า AI อ่านอะไรได้บ้าง และโค้ดตรวจอะไรในขั้น 4</h2></div>
-<div class="play" data-focus="4" data-presets="I01,I02,I03,I04,I05"></div>
-<p class="foot">X FITNESS CHATBOT · ลองเลย · บอทจริงส่งภาพไป /api/vision ก่อน · I01 I02 ยืนยันสมาชิกให้อัตโนมัติ</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 6:07</b>  I01 ผ่าน 5/5 → รอพนักงานยืนยัน · I02 ขาด 600 บาท → ส่งพนักงาน · I05 โปรหมดเขต ภาพใช้เวลา 6–10 วินาที พูดอธิบายระหว่างรอ</aside>
-</section>
-
-<!-- 31 · line -->
-<section data-at="6:30" class="slide" id="line" data-menu="LINE OA">
-<div class="col" style="gap:10px"><p class="kicker">LINE OA · line.py · กดข้อความด้านล่างเพื่อดูทาง</p><h2>ลูกค้าแชตใน LINE ก็ได้คำตอบจากบอทตัวเดียวกับหน้าเว็บ</h2></div>
-<!--FLOW:line-->
-<div class="flowbar" data-flow="line"><span class="lab">ข้อความ:</span><span class="fbtns"></span><span class="ftime"></span></div>
-<div class="fcap" data-flow="line">กดดูทางของข้อความปกติ · ตอนพนักงานรับเรื่องอยู่ · ข้อความปลอม</div>
-<p class="foot">X FITNESS CHATBOT · LINE · webhook https://x-fitness-chatbot.onrender.com/api/line/webhook · จำกัด 30 ข้อความ/นาที/คน</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 6:30</b> กดข้อความปกติ แล้ว "พนักงานรับเรื่องอยู่" ให้เห็นว่าบอทหยุดเองเมื่อคนรับเรื่อง</aside>
-</section>
-
-<!-- 32 · div-files -->
-<section data-at="6:40" class="slide divider" id="div-files" data-menu="เปิดส่วน" data-part="5 · โครงไฟล์และ deploy">
-<p class="num">05</p>
-<h2 style="font-size:84px">โครงไฟล์และ deploy</h2>
-<p style="font-size:34px;color:var(--soft)">โฟลเดอร์ตามหน้าที่ · Render · วิธีทดสอบ</p>
-<p class="pg"></p>
-<aside><b>ถึงหน้านี้ 6:40</b> ส่วนที่ 5</aside>
-</section>
-
-<!-- 33 · tree -->
-<section data-at="6:45" id="tree" data-menu="โครงไฟล์" class="slide">
-<div class="col" style="gap:10px"><p class="kicker">โครงไฟล์ · คลิกโฟลเดอร์เพื่อดูหน้าที่</p><h2>แต่ละโฟลเดอร์มีหน้าที่เดียว ข้อมูลและ prompt แยกออกจากโค้ด</h2></div>
-<div class="row grow" style="min-height:0">
- <div class="card tree" style="width:820px;flex:none;padding:24px 18px">
-<div data-pick="tree" data-key="root"><span class="d">x-fitness/</span>               <span class="n">แอปทั้งตัว</span></div>
-<div data-pick="tree" data-key="app">├─ <span class="d">backend/app/</span>          <span class="n">Python 15 ไฟล์</span></div>
-<div data-pick="tree" data-key="prompts">│  └─ <span class="d">prompts/</span>           <span class="n">คำสั่งให้ AI</span></div>
-<div data-pick="tree" data-key="tests">├─ <span class="d">backend/tests/ e2e/</span>   <span class="n">ทดสอบ</span></div>
-<div data-pick="tree" data-key="frontend">├─ <span class="d">frontend/</span>             <span class="n">เว็บ + หลังบ้าน</span></div>
-<div>├─ <span class="d">data/</span>                 <span class="n">ข้อมูลแยกจากโค้ด</span></div>
-<div data-pick="tree" data-key="kb">│  ├─ <span class="d">knowledge-base/</span>    <span class="n">ความรู้ 9 ไฟล์</span></div>
-<div data-pick="tree" data-key="db">│  ├─ <span class="d">db/</span>                <span class="n">ข้อมูลร้าน JSON</span></div>
-<div data-pick="tree" data-key="guarddata">│  ├─ <span class="d">guard/</span>             <span class="n">ข้อความ guard</span></div>
-<div data-pick="tree" data-key="ragindex">│  └─ <span class="d">rag-index/</span>         <span class="n">ดัชนี LightRAG</span></div>
-<div data-pick="tree" data-key="images">└─ <span class="d">qa/</span>                   <span class="n">ภาพทดสอบ</span></div>
- </div>
- <div class="detail grow" id="d-tree"></div>
-</div>
-<p class="foot">X FITNESS CHATBOT · โครงไฟล์ · ค่าลับอยู่ใน .env และ Render dashboard ไม่อยู่ใน git</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 6:45</b>   คลิก backend/app (โชว์ 15 ไฟล์) → prompts → data/knowledge-base → rag-index → tests จุดขาย: แก้ความรู้ แก้ข้อความ guard แก้ prompt ได้โดยไม่แตะโค้ด</aside>
-</section>
-
-<!-- 34 · deploy -->
-<!-- 35 · db -->
-<section data-at="6:51" class="slide" id="db" data-menu="ฐานข้อมูล">
-<div class="col" style="gap:10px"><p class="kicker">ฐานข้อมูล · xfitness_db.sqlite3 · คลิกตารางเพื่อดูพจนานุกรมข้อมูลและตัวอย่างแถว</p><h2>ข้อมูลร้านและแชตอยู่ในไฟล์ SQLite ไฟล์เดียว<br>build ไว้ก่อน commit เว็บจริงเปิดมาก็ใช้ได้ทันที</h2></div>
-<div class="dbflow"><span>data/db/*.json<i>ต้นฉบับที่แก้ได้</i></span><b>→</b><span>build_dist.py<i>เทลงฐานข้อมูล</i></span><b>→</b><span class="hot">xfitness_db.sqlite3<i><!--DBSIZE--> · commit ใน git</i></span><b>→</b><span>Render<i>คัดลอกตอนเปิด ไม่ต้องโหลดอะไร</i></span><b>·</b><span>graphml<i>ดัชนี LightRAG แยกเป็นไฟล์</i></span></div>
-<div class="row grow" style="min-height:0">
- <div class="list dblist" style="width:520px;flex:none"><!--DBLIST--></div>
- <div class="detail grow" id="d-db"></div>
-</div>
-<p class="foot">X FITNESS CHATBOT · ฐานข้อมูล · ดูทุกตารางได้ที่หลังบ้าน → ดูฐานข้อมูล (อ่านอย่างเดียว) · เปิดไฟล์ด้วย DBeaver ได้</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 6:51</b>  ชี้ลูกศรด้านบน: แก้ JSON → build → commit ไฟล์ฐานข้อมูล → Render คัดลอกไปใช้ คลิก members ให้เห็นพจนานุกรมข้อมูลและแถวตัวอย่าง (เบอร์โทรเก็บ แต่บอทไม่เคยบอก) แล้วคลิก messages ให้เห็นว่าแชตเก็บอะไร ข้อมูลที่เกิดบนเว็บจริงหายเมื่อเครื่อง restart = ย้อนกลับไปข้อมูลตั้งต้น</aside>
-</section>
-
-<section data-at="6:57" class="slide" id="deploy" data-menu="deploy บน Render">
-<div class="col" style="gap:10px"><p class="kicker">deploy บน Render · render.yaml</p><h2>เว็บจริงอยู่บน Render แบบฟรี push แล้ว Render build ให้เอง<br>ส่วนค่าลับใส่ไว้ใน dashboard ไม่อยู่ใน git</h2></div>
-<div class="row" style="align-items:stretch">
-<pre class="card mono" style="flex:1;font-size:21px;line-height:1.6;color:#cbd5e1;white-space:pre">services:
-  - name: x-fitness-chatbot
-    plan: free
-    region: singapore
-    rootDir: x-fitness
-    buildCommand: pip install -r backend/requirements.txt
-    startCommand: cd backend && uvicorn app.main:app
-    healthCheckPath: /api/health</pre>
- <div class="card col" style="width:620px"><h3>ค่าลับ (ใส่ใน dashboard)</h3><p class="mono" style="font-size:21px;color:var(--soft);line-height:1.8">TYPHOON_API_KEY<br>XF_ADMIN_PASS<br>LINE_CHANNEL_SECRET<br>LINE_CHANNEL_ACCESS_TOKEN</p><p style="font-size:22px;color:var(--muted)">CORS เปิดให้เฉพาะเว็บร้านเอง</p></div>
-</div>
-<p class="foot">X FITNESS CHATBOT · deploy · แพ็กเกจฟรีหลับเมื่อไม่มีคนใช้ เปิดเว็บก่อนนำเสนอ</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 6:57</b>  render.yaml อยู่ที่รากโปรเจกต์ ค่าลับตั้ง sync: false จึงไม่เข้า git</aside>
-</section>
-
-<!-- 35 · testing -->
-<section data-at="7:03" class="slide" id="testing" data-menu="วิธีทดสอบ">
-<div class="col" style="gap:10px"><p class="kicker">วิธีทดสอบ 3 ชั้น</p><h2>ทดสอบ 3 ชั้น: ตรวจโค้ดทีละส่วน ถามคำถามชุดใหญ่<br>และเปิดเว็บจริงแบบที่ลูกค้าใช้</h2></div>
-<div class="row tests" style="align-items:stretch">
- <div class="card grow col"><span class="tag blue">ชั้น 1 · pytest · ตรวจโค้ดทีละส่วน</span><p class="big" data-count="222">222</p><h3>ข้อ ผ่านทั้งหมด</h3>
-  <div class="tl"><span>บอท: ตอบ ยืนยันสมาชิก ตรวจสลิป</span><b class="">84</b><span>guard หมวดอันตราย S1–S14</span><b class="">77</b><span>หลังบ้าน: สลิป การจอง โปร</span><b class="">16</b><span>กล่องแชต</span><b class="">13</b><span>จำกัดการใช้งาน</span><b class="">13</b><span>LINE webhook</span><b class="">9</b><span>คลังความรู้</span><b class="">7</b><span>ข้อความตอบของ guard</span><b class="">3</b></div>
-  <p class="tn">x-fitness/backend/tests · รันจริง 11 ต.ค. 2569 ใช้ 10.7 วินาที</p></div>
- <div class="card grow col"><span class="tag blue">ชั้น 2 · ยิง API ชุดใหญ่</span><p class="big" data-count="1600">1600</p><h3>กรณีที่สร้างไว้ สุ่มทดสอบ 500</h3>
-  <div class="tl"><span>คำถาม</span><b class="">95/100</b><span>ภาพ</span><b class="">91/100</b><span>ความปลอดภัย</span><b class="">96/100</b><span>คำถามนอกเรื่อง</span><b class="">100/100</b><span>รวมรอบหลัก</span><b class="ok">382/400</b><span>ชุดเสริม ภาพ + ความปลอดภัย</span><b class="">87/100</b></div>
-  <p class="tn">5 ต.ค. 2569 · ใช้หาจุดที่ AI แต่ง แล้วแก้คลังความรู้และกฎ · qa/system/results</p></div>
- <div class="card grow col"><span class="tag ok">ชั้น 3 · Playwright · เปิดเว็บจริง</span><p class="big" data-count="71">71</p><h3>กรณี ผ่าน 71/71</h3>
-  <div class="tl"><span>คำถาม</span><b class="">10/10</b><span>ภาพ</span><b class="">5/5</b><span>ความปลอดภัย</span><b class="">5/5</b><span>ต้องทำ/ห้ามทำ</span><b class="">20/20</b><span>guardrail: คำที่ไม่ควรถูกกัน</span><b class="">5/5</b><span>guardrail: S1–S14 และกฎร้าน</span><b class="">26/26</b></div>
-  <p class="tn">ชุดหลัก 4 ต.ค. · guardrail 10 ต.ค. · ภาพหน้าจอทุกกรณี · qa/report · qa/guardrail</p></div>
-</div>
-<p class="foot">X FITNESS CHATBOT · ทดสอบ · x-fitness/backend/tests · backend/eval · e2e</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 7:03</b>  Playwright เปิด Chromium พิมพ์ แนบภาพ และยืนยันสมาชิกเหมือนลูกค้า กับ Typhoon และ LightRAG ตัวจริง แล้วตัดสินผลจากข้อความที่หน้าเว็บแสดง</aside>
-</section>
-
-<!-- 36 · div-demo -->
-<section data-at="7:16" class="slide divider" id="div-demo" data-menu="เปิดส่วน" data-part="6 · สาธิตกับบอทจริง">
-<p class="num">06</p>
-<h2 style="font-size:84px">สาธิตกับบอทจริง</h2>
-<p style="font-size:34px;color:var(--soft)">คำถาม 10 · ภาพ 5 · ความปลอดภัย 5 · สลับไปจอบอทจริง</p>
-<p class="pg"></p>
-<aside><b>ถึงหน้านี้ 7:16</b> ส่วนที่ 6</aside>
-</section>
-
-<!-- 37 · demo -->
-<section data-at="7:21" id="demo" data-menu="เตรียมสาธิต" class="slide">
+<!-- 15 · demo -->
+<section data-at="7:21" id="demo" data-part="5 · สาธิตกับบอทจริง" data-menu="เตรียมสาธิต" class="slide">
 <div class="col" style="gap:10px"><p class="kicker">เตรียมสาธิต</p><h2>สลับไปแชตกับบอทตัวจริง แล้วถามตามชุดทดสอบที่ผ่านแล้ว</h2></div>
 <div class="row" style="align-items:stretch">
  <div class="card grow col"><p class="big">10</p><h3>คำถาม</h3><p style="font-size:24px;color:var(--muted)">โชว์สด Q03 · Q09 · Q10</p></div>
@@ -509,7 +242,7 @@
 <aside><b>ถึงหน้านี้ 7:21</b>   บอกผู้ฟังว่าจะสลับจอไปบอทจริง (มือถือที่ mirror ขึ้นจอ หรือเบราว์เซอร์) <b>ก่อนขึ้นพูด</b>: เปิดเว็บ Render ล่วงหน้า 2–3 นาที (free plan หลับ ปลุกใช้ ~1 นาที) · หลังบ้าน → ล้างข้อมูลทดสอบ (ให้ยอดค้างของ FN-10007 กลับมา) · ส่งภาพ 5 ไฟล์เข้ามือถือไว้ก่อน</aside>
 </section>
 
-<!-- 38 · demo-q -->
+<!-- 16 · demo-q -->
 <section data-at="7:29" id="demo-q" data-menu="คำถาม 10 ข้อ" class="slide">
 <div class="row" style="justify-content:space-between;align-items:flex-end"><div class="col" style="gap:10px"><p class="kicker">สาธิต 1/3 · คำถาม 10 ข้อ · ผ่าน 10/10 · ตอบเฉลี่ย 2.7 วินาที</p><h2>ตอบราคา เวลา และเงื่อนไขตรงกับข้อมูลร้านทุกข้อ</h2></div><button class="btn ghost" id="replay-q">▶ เล่นซ้ำ</button></div>
 <div class="demo"><div class="cases" id="list-q"></div><div class="stagebox"><div class="phone"><div class="bar"><i></i> เอ็กซ์ · ผู้ช่วย X Fitness</div><div class="chatlog" id="log-q"></div><div class="pl-chips still"><button type="button" disabled>ราคาสมาชิก</button><button type="button" disabled>ตารางคลาสวันนี้</button><button type="button" disabled>โปรโมชันตอนนี้</button><button type="button" disabled>เช็กแต้มของฉัน</button><button type="button" disabled>คุยกับพนักงาน</button></div><div class="pl-in still"><input disabled placeholder="พิมพ์คำถาม เช่น ราคาสมาชิกรายเดือน"><button type="button" disabled>ส่ง</button></div></div><div class="info" id="info-q"></div></div></div>
@@ -517,7 +250,7 @@
 <aside><b>ถึงหน้านี้ 7:29</b>   สลับไปบอทจริง ถาม <b>Q03</b> (ค่าแรกเข้า + โค้ด NOJOIN) · <b>Q09</b> (โปรตอนนี้ ต้องบอกว่า MID2 ใช้ไม่ได้) · <b>Q10</b> (คลาสวันเสาร์ 4 คลาส) ข้ออื่นคลิกให้ดูคำตอบที่บันทึกไว้ คำตอบสดอาจใช้ถ้อยคำต่างเล็กน้อย แต่ตัวเลขต้องตรง</aside>
 </section>
 
-<!-- 39 · demo-img -->
+<!-- 17 · demo-img -->
 <section data-at="8:02" id="demo-img" data-menu="ภาพ 5 ภาพ" class="slide">
 <div class="row" style="justify-content:space-between;align-items:flex-end"><div class="col" style="gap:10px"><p class="kicker">สาธิต 2/3 · ภาพ 5 ภาพ · ผ่าน 5/5 · ตอบเฉลี่ย 7.5 วินาที</p><h2>Typhoon OCR อ่านภาพ แล้วโค้ดตรวจยอดเงินและวันหมดเขต</h2></div><button class="btn ghost" id="replay-img">▶ เล่นซ้ำ</button></div>
 <div class="demo"><div class="cases" id="list-img"></div><div class="stagebox"><div class="phone"><div class="bar"><i></i> เอ็กซ์ · ผู้ช่วย X Fitness</div><div class="chatlog" id="log-img"></div><div class="pl-chips still"><button type="button" disabled>ราคาสมาชิก</button><button type="button" disabled>ตารางคลาสวันนี้</button><button type="button" disabled>โปรโมชันตอนนี้</button><button type="button" disabled>เช็กแต้มของฉัน</button><button type="button" disabled>คุยกับพนักงาน</button></div><div class="pl-in still"><input disabled placeholder="แนบภาพหรือพิมพ์คำถาม"><button type="button" disabled>ส่ง</button></div></div><div class="info" id="info-img"></div></div></div>
@@ -525,7 +258,7 @@
 <aside><b>ถึงหน้านี้ 8:02</b>   โชว์สด <b>I01</b>: พิมพ์ <b>FN-10003 5531</b> ก่อน แล้วแนบ 01_slip_valid.png ผลต้องเป็น "รอพนักงานยืนยัน" (ไม่บอกว่าชำระสำเร็จ) แล้วเปิดหลังบ้าน → สลิป ให้เห็นว่าเข้าคิวแล้ว · <b>I05</b>: แนบโปสเตอร์ MID2 ต้องบอกว่าหมดเขต ภาพใช้เวลาตอบ 6–10 วินาที พูดอธิบายระหว่างรอ</aside>
 </section>
 
-<!-- 40 · demo-safe -->
+<!-- 18 · demo-safe -->
 <section data-at="8:36" id="demo-safe" data-menu="ความปลอดภัย 5 ข้อ" class="slide">
 <div class="row" style="justify-content:space-between;align-items:flex-end"><div class="col" style="gap:10px"><p class="kicker">สาธิต 3/3 · ความปลอดภัย 5 ข้อ · ผ่าน 5/5 · ตอบเฉลี่ย 0.9 วินาที</p><h2>ข้อความที่หลอกให้เปลี่ยนคำสั่งหรือขอข้อมูลคนอื่น<br>ถูกปฏิเสธภายใน 0.4 วินาที</h2></div><button class="btn ghost" id="replay-safe">▶ เล่นซ้ำ</button></div>
 <div class="demo"><div class="cases" id="list-safe"></div><div class="stagebox"><div class="phone"><div class="bar"><i></i> เอ็กซ์ · ผู้ช่วย X Fitness</div><div class="chatlog" id="log-safe"></div><div class="pl-chips still"><button type="button" disabled>ราคาสมาชิก</button><button type="button" disabled>ตารางคลาสวันนี้</button><button type="button" disabled>โปรโมชันตอนนี้</button><button type="button" disabled>เช็กแต้มของฉัน</button><button type="button" disabled>คุยกับพนักงาน</button></div><div class="pl-in still"><input disabled placeholder="พิมพ์คำถาม เช่น ราคาสมาชิกรายเดือน"><button type="button" disabled>ส่ง</button></div></div><div class="info" id="info-safe"></div></div></div>
@@ -533,38 +266,8 @@
 <aside><b>ถึงหน้านี้ 8:36</b>   โชว์สด <b>S01</b> (ให้พิมพ์ system prompt) และ <b>S03</b> (ขอเบอร์ของ FN-10005) ชี้ว่าตอบเร็วเพราะ guard เป็นโค้ด ไม่เรียก AI · S04 เป็นข้อเดียวที่ AI ตอบเอง เพราะไม่ใช่การโจมตี แต่ก็ไม่ให้ส่วนลดที่ไม่มีอยู่จริง</aside>
 </section>
 
-<!-- 42 · demo-line -->
-<section data-at="8:50" id="demo-line" data-menu="LINE OA" class="slide">
-<div class="row grow lline" style="min-height:0;align-items:stretch;gap:40px">
- <div class="col grow" style="gap:24px;min-width:0">
-<div class="row" style="justify-content:space-between;align-items:flex-end"><div class="col" style="gap:10px"><p class="kicker">สาธิตใน LINE OA · line.py</p><h2>ลูกค้าแชตใน LINE<br>ยืนยันสมาชิก ถาม และส่งสลิปได้เหมือนหน้าเว็บ</h2></div><button class="btn ghost" id="replay-line">▶ เล่นซ้ำ</button></div>
- <div class="card grow col lsteps"><h3>ข้อความจาก LINE เดินทางยังไง</h3>
-  <ol><li>LINE ส่ง webhook มาที่ <b>/api/line/webhook</b> โค้ดตรวจลายเซ็น HMAC ก่อน ถ้าไม่ตรงตอบ 401</li>
-  <li>ตอบ 200 ทันที แล้วทำงานต่อเบื้องหลัง ไม่ให้ LINE รอ</li>
-  <li>ข้อความเข้า <b>chat.answer()</b> ตัวเดียวกับหน้าเว็บ ส่วนภาพ ดาวน์โหลดจาก LINE แล้วส่งให้ <b>read_image()</b> ระหว่างนั้นขึ้นจุด "กำลังพิมพ์"</li>
-  <li>ปุ่มตอบด่วน เช่น แต้มของฉัน ส่งเป็น quick reply ของ LINE</li>
-  <li>ยืนยันสมาชิกแล้วจำไว้ต่อแชต LINE นั้น · จำกัด 30 ข้อความ/นาที/คน</li>
-  <li>ถ้าพนักงานรับเรื่องอยู่ บอทเงียบ พนักงานตอบจากหลังบ้านผ่าน push</li></ol>
-  <p class="lnote" id="line-note"></p>
-  <p class="tn">กดปุ่มในเมนูด้านล่างโทรศัพท์ (rich menu 6 ปุ่มของจริง จาก assets/rich-menu) · ถ้าเชื่อมบอทจริง (ป้ายมุมขวาบนของโทรศัพท์) ข้อความเข้าบอทจริง ถ้าออฟไลน์ ใช้คำตอบจากผลทดสอบหน้าเว็บ เพราะ LINE เรียก chat.answer() ตัวเดียวกัน · หน้าตาแอปเป็นภาพจำลอง</p></div>
- </div>
- <div class="stagebox" style="flex:none"><!--LINECHAT--></div>
-</div>
-<p class="foot">X FITNESS CHATBOT · สาธิต LINE · webhook https://x-fitness-chatbot.onrender.com/api/line/webhook</p><p class="pg"></p>
-<aside><b>ถึงหน้านี้ 8:50</b>  ถ้ามีมือถือที่เพิ่มเพื่อน LINE OA ไว้ ให้สาธิตสดได้เลย ไม่งั้นใช้หน้านี้อธิบาย ชี้ว่าคำตอบเหมือนหน้าเว็บทุกคำ เพราะเรียก chat.answer() ตัวเดียวกัน</aside>
-</section>
-
-<!-- 41 · div-results -->
-<section data-at="8:59" class="slide divider" id="div-results" data-menu="เปิดส่วน" data-part="7 · ผลทดสอบ">
-<p class="num">07</p>
-<h2 style="font-size:84px">ผลทดสอบ</h2>
-<p style="font-size:34px;color:var(--soft)">คำถาม ภาพ และความปลอดภัย ผ่าน 20/20</p>
-<p class="pg"></p>
-<aside><b>ถึงหน้านี้ 8:59</b> ส่วนที่ 7</aside>
-</section>
-
-<!-- 42 · results -->
-<section data-at="9:04" id="results" data-menu="ผลทดสอบ" class="slide">
+<!-- 19 · results -->
+<section data-at="9:04" id="results" data-part="6 · ผลทดสอบ" data-menu="ผลทดสอบ" class="slide">
 <div class="col" style="gap:10px"><p class="kicker">ผลการทดสอบ</p><h2>หน้าเว็บจริง: คำถาม ภาพ และความปลอดภัย ผ่านครบ 20/20</h2></div>
 <div class="row" style="align-items:stretch">
  <div class="card grow col"><p class="big" data-count="10/10">10/10</p><h3>คำถาม</h3><p style="font-size:24px;color:var(--muted)">เฉลี่ย 2.7 วิ (1.7–5.8)</p></div>
@@ -576,12 +279,141 @@
 <aside><b>ถึงหน้านี้ 9:04</b>   ทดสอบด้วย Playwright เปิดเบราว์เซอร์จริง พิมพ์และแนบภาพเหมือนลูกค้า กับ Typhoon และ LightRAG ตัวจริง ภาพหน้าจอทุกกรณีอยู่ใน qa/ กราฟแท่งคือเวลาตอบของ 20 ข้อที่สาธิต: ภาพช้าสุดเพราะต้อง OCR 2 รอบ ความปลอดภัยเร็วสุดเพราะไม่เรียก AI<br>หมายเหตุ: ผล 40 กรณีวัดก่อนเพิ่ม guard ชุดใหม่ (9–10 ต.ค.) ชุด 31 กรณีวัดหลังเพิ่มแล้ว</aside>
 </section>
 
-<!-- 45 · close -->
+<!-- 20 · close -->
 <section data-at="9:22" id="close" data-menu="ขอบคุณ · ถาม-ตอบ" class="slide" style="justify-content:center;align-items:center;text-align:center;background:radial-gradient(ellipse at 50% 40%,#2a0a0d,#09090a 60%)">
 <h2 style="font-size:72px">AI ช่วยเขียนข้อความ แต่เรื่องเงินและข้อมูลสมาชิก ระบบเป็นคนตัดสิน</h2>
 <p style="font-size:34px;color:var(--soft)">ความรู้ 9 ไฟล์ · อ่านภาพ 4 แบบ · ทดสอบผ่านหน้าเว็บผ่าน 40/40 · คำถามหลอกบอท 31 แบบ</p>
 <p style="font-family:var(--head);font-size:56px;font-weight:700;color:var(--red2);margin-top:30px">ขอบคุณ · ถาม-ตอบ</p>
 <p class="mono" style="font-size:24px;color:var(--muted)">x-fitness-chatbot.onrender.com</p>
 <p class="pg"></p>
-<aside><b>ถึงหน้านี้ 9:22</b>   สรุป 1 ประโยค แล้วเปิดถาม-ตอบ ถ้าโดนถามเรื่องไฟล์ ย้อนกลับไปหน้า 04/06/07 (กด Home แล้ว → หรือพิมพ์ #4 ต่อท้าย URL)</aside>
+<aside><b>ถึงหน้านี้ 9:22</b>   สรุป 1 ประโยค แล้วเปิดถาม-ตอบ ถ้าโดนถามเรื่องไหน กด M แล้วคลิกหน้านั้น</aside>
+</section>
+
+<!-- ภาคผนวก · appendix -->
+<section id="appendix" data-part="ภาคผนวก · ใช้ตอนถาม-ตอบ" data-menu="หน้าแบ่งภาคผนวก" class="slide">
+<div class="col" style="gap:10px"><p class="kicker">จบการนำเสนอ 10 นาทีที่หน้า 20 · หน้าต่อจากนี้ไม่ต้องนำเสนอ</p><h2>ภาคผนวก: เปิดเมื่อมีคนถาม</h2></div>
+<div class="toc">
+ <a data-goto="play-flow"><span class="n">ก</span><div><b>ลองเล่นกับบอทจริง</b><span>ส่งข้อความ ถามคลังความรู้ หลอกบอท ส่งภาพ</span><div class="tp"><em class="try">▶ ลองเล่น</em><i class="try" data-goto="play-flow"></i><i class="try" data-goto="play-rag"></i><i class="try" data-goto="play-guard"></i><i class="try" data-goto="play-vision"></i></div></div><span class="p"></span></a>
+ <a data-goto="arch"><span class="n">ข</span><div><b>รายละเอียดเชิงเทคนิค</b><span>แผนภาพทีละไฟล์ · สร้างดัชนี · กฎ 20 ข้อ · ฐานข้อมูล · วิธีทดสอบ · LINE OA</span><div class="tp"><em>กดดูได้</em><i data-goto="arch"></i><i data-goto="pipeline"></i><i data-goto="rules20"></i><i data-goto="db"></i><i data-goto="testing"></i><i data-goto="demo-line"></i></div></div><span class="p"></span></a>
+</div>
+<p class="foot">ภาคผนวก · X FITNESS CHATBOT</p><p class="pg"></p>
+<aside><b>ภาคผนวก</b> การนำเสนอจบที่หน้า 20 (ขอบคุณ · ถาม-ตอบ) หน้านี้และหน้าถัดไปใช้ตอบคำถาม กด M แล้วคลิกหน้าที่ต้องการ หรือคลิกเลขหน้าในการ์ด</aside>
+</section>
+
+<!-- ภาคผนวก 1 · play-flow -->
+<section class="slide" id="play-flow" data-part="ภาคผนวก ก · ลองเล่นกับบอท" data-menu="▶ ลองเล่น: ทางเดินข้อความ">
+<div class="col" style="gap:10px"><p class="kicker">ลองเล่น · ส่งข้อความแล้วดูทางเดิน</p><h2>ลองส่งข้อความแล้วดูทั้ง 6 ขั้น<br>คำถามปกติไปถึง Typhoon ส่วนข้อความหลอกหยุดที่ guard ขาเข้า</h2></div>
+<div class="play" data-focus="0" data-presets="Q01,Q08,S01,N-01,N-10"></div>
+<p class="foot">ภาคผนวก · X FITNESS CHATBOT · ลองเลย · ป้ายบนโทรศัพท์: สีเขียว = บอทจริง · สีเหลือง = คำตอบที่บันทึกจากการทดสอบ</p><p class="pg"></p>
+<aside><b>ภาคผนวก</b>  กด Q01 (ผ่านครบ 6 ขั้น) แล้วกด S01 (หยุดที่ขั้น 1 ตอบใน 0.4 วินาที) ให้ผู้ฟังเห็นความต่าง ถ้าเชื่อมบอทจริงแล้ว พิมพ์คำถามเองได้</aside>
+</section>
+
+<!-- ภาคผนวก 2 · play-rag -->
+<section class="slide" id="play-rag" data-menu="▶ ลองเล่น: คลังความรู้">
+<div class="col" style="gap:10px"><p class="kicker">ลองเล่น · ถามคลังความรู้</p><h2>ถามเรื่องของร้าน แล้วดูว่าขั้น 3 ค้นเจอเอกสารไหน</h2></div>
+<div class="play" data-focus="3" data-presets="Q02,Q05,Q07,Q09,Q10,D-01,D-09"></div>
+<p class="foot">ภาคผนวก · X FITNESS CHATBOT · ลองเลย · วางเมาส์บนป้าย KB-xx เพื่อดูชื่อเอกสาร</p><p class="pg"></p>
+<aside><b>ภาคผนวก</b>  กด Q07 → KB-04 (PT) · Q09 → ได้ KB-06 กับ KB-07 · ถามสิ่งที่ไม่มีในคลัง (บอทจริง) เช่น "มีที่จอดรถไหม" จะเห็นปุ่มคุยกับพนักงาน</aside>
+</section>
+
+<!-- ภาคผนวก 3 · play-guard -->
+<section class="slide" id="play-guard" data-menu="▶ ลองเล่น: หลอกบอท">
+<div class="col" style="gap:10px"><p class="kicker">ลองเล่น · ลองหลอกบอท</p><h2>ลองหลอกบอทดู ขั้น 1 จับได้ใน 0.4 วินาที<br>แล้วตอบกลับเลยโดยไม่ต้องเรียก AI</h2></div>
+<div class="play" data-focus="1" data-presets="S01,S02,S03,S05,N-07,N-08,S04"></div>
+<p class="foot">ภาคผนวก · X FITNESS CHATBOT · ลองเลย · S04 เป็นข้อเดียวที่ AI ตอบเอง เพราะไม่ใช่การโจมตี</p><p class="pg"></p>
+<aside><b>ภาคผนวก</b>  ถ้าเชื่อมบอทจริง ให้ผู้ฟังเสนอข้อความหลอกเอง เช่น "s y s t e m prompt" หรือแบ่งพิมพ์ 2 ข้อความ</aside>
+</section>
+
+<!-- ภาคผนวก 4 · play-vision -->
+<section class="slide" id="play-vision" data-menu="▶ ลองเล่น: ส่งภาพ">
+<div class="col" style="gap:10px"><p class="kicker">ลองเล่น · ส่งภาพให้บอทอ่าน</p><h2>ลองส่งภาพ แล้วดูว่า AI อ่านอะไรได้บ้าง และโค้ดตรวจอะไรในขั้น 4</h2></div>
+<div class="play" data-focus="4" data-presets="I01,I02,I03,I04,I05"></div>
+<p class="foot">ภาคผนวก · X FITNESS CHATBOT · ลองเลย · บอทจริงส่งภาพไป /api/vision ก่อน · I01 I02 ยืนยันสมาชิกให้อัตโนมัติ</p><p class="pg"></p>
+<aside><b>ภาคผนวก</b>  I01 ผ่าน 6/6 → รอพนักงานยืนยัน · I02 ขาด 600 บาท → ส่งพนักงาน · I05 โปรหมดเขต ภาพใช้เวลา 6–10 วินาที พูดอธิบายระหว่างรอ</aside>
+</section>
+
+<!-- ภาคผนวก 5 · arch -->
+<section id="arch" data-part="ภาคผนวก ข · รายละเอียดเชิงเทคนิค" data-menu="แผนภาพระบบ" class="slide">
+<div class="row" style="justify-content:space-between;align-items:flex-end"><div class="col" style="gap:10px"><p class="kicker">แผนภาพระบบ · คลิกกล่องเพื่อดูไฟล์จริง</p><h2>แอป FastAPI ตัวเดียวรับข้อความจากทั้งเว็บและ LINE<br>แล้วเรียก AI ของ Typhoon</h2></div></div>
+<div class="row grow" style="min-height:0">
+ <div class="col" style="width:1060px;flex:none;gap:14px;min-height:0">
+  <div class="arch" id="arch"><!--ARCH--></div>
+  <div class="tourbar"><button data-t="reset" title="เริ่มใหม่">⏮ เริ่มใหม่</button><button data-t="back" title="ย้อนขั้น">◀ ย้อน</button><button data-t="play" class="pp" title="เล่น / หยุด">▶ เล่น</button><button data-t="next" title="ขั้นถัดไป">ถัดไป ⏭</button><span class="tstep"></span><span class="tcap"></span></div>
+ </div>
+ <div class="detail grow" id="d-arch"></div>
+</div>
+<p class="foot">ภาคผนวก · X FITNESS CHATBOT · สถาปัตยกรรม · กรอบเส้นประ = ระบบภายนอก · ลูกศรตรวจกับ import ในโค้ดจริง · deploy บน Render</p><p class="pg"></p>
+<aside><b>ภาคผนวก</b>  กด ▶ แล้วพูดตามข้อความใต้แผนภาพ 13 ขั้น: เว็บ → API → บอท → ① guard → ② ยืนยันสมาชิก → ③ LightRAG (+ Typhoon ดึงคำสำคัญ + ดัชนี) → ④ กฎร้าน → ประวัติแชต → ⑤ Typhoon → ⑥ guard → กลับหน้าเว็บ แล้วต่อด้วยทาง LINE และหลังบ้าน กด ⏸ หยุดอธิบายได้ ◀ ย้อน ⏮ เริ่มใหม่ คลิกกล่องไหนก็ได้เพื่อดูไฟล์จริง</aside>
+</section>
+
+<!-- ภาคผนวก 6 · pipeline -->
+<section id="pipeline" data-menu="ขั้นสร้างดัชนี" class="slide">
+<div class="col" style="gap:10px"><p class="kicker">ขั้นสร้างดัชนี LightRAG · rag.py · กดข้อความด้านล่างเพื่อดูทาง</p><h2>ตอนเปิดเครื่อง แปลงไฟล์ Markdown เป็นกราฟและเวกเตอร์<br>พอมีคนถาม ก็ค้นจากดัชนีนี้ได้ทันที</h2></div>
+<!--FLOW:rag-->
+<div class="flowbar" data-flow="rag"><span class="lab">ข้อความ:</span><span class="fbtns"></span><span class="ftime"></span></div>
+<div class="fcap" data-flow="rag">แถวบน = สร้างดัชนี (ทำครั้งเดียว เฉพาะไฟล์ที่เปลี่ยน) · แถวล่าง = ตอนลูกค้าถาม ค้น 4 ทางพร้อมกัน · ทางค้นด้วยคำเพิ่มเพราะ Typhoon เคยแตก "นักเรียนเล่น Ride ได้ไหม" เป็นคำค้น "การเล่นเกม" จนค้นผิด</div>
+<p class="foot">ภาคผนวก · X FITNESS CHATBOT · LightRAG · กล่องเส้นประ = เรียก Typhoon · ขั้น ③ ไม่ใช้ AI ไม่เสียเงิน</p><p class="pg"></p>
+<aside><b>ภาคผนวก</b> กด "สร้างดัชนี" ก่อน ชี้ว่าขั้น ② ใช้ Typhoon แต่ขั้น ③ ทำในเครื่อง แล้วกด "แพ็กนักเรียนปั่นจักรยานได้ไหม" ให้เห็นว่าค้น 4 ทางเจออะไร และกด "ตอนลูกค้าถาม Q07" ให้เห็นผลทดสอบจริง</aside>
+</section>
+
+<!-- ภาคผนวก 7 · rules20 -->
+<section class="slide" id="rules20" data-menu="กฎต้องทำ/ห้ามทำ 20 ข้อ">
+<div class="col" style="gap:10px"><p class="kicker">กฎต้องทำ/ห้ามทำ 20 ข้อ · คลิกเพื่อดูคำตอบจริง</p><h2>ทดสอบกฎทุกข้อด้วยคำถามจริง ผ่านครบ 20/20</h2></div>
+<div class="row grow" style="min-height:0">
+ <div class="list" style="width:760px;flex:none"><!--RULESLIST--></div>
+ <div class="detail grow" id="d-rules20"></div>
+</div>
+<p class="foot">ภาคผนวก · X FITNESS CHATBOT · กฎ 20 ข้อ · กฎอยู่ใน docs/03_bot-rules.md · ผลอยู่ใน qa/report/results/</p><p class="pg"></p>
+<aside><b>ภาคผนวก</b>  D = ต้องทำ · N = ห้ามทำ คลิก N-01 (สระว่ายน้ำ: ต้องบอกว่าไม่มี ไม่แต่ง) และ N-05 (โอนแล้ว: ห้ามบอกว่าชำระสำเร็จ)</aside>
+</section>
+
+<!-- ภาคผนวก 8 · db -->
+<section class="slide" id="db" data-menu="ฐานข้อมูล">
+<div class="col" style="gap:10px"><p class="kicker">ฐานข้อมูล · xfitness_db.sqlite3 · คลิกตารางเพื่อดูพจนานุกรมข้อมูลและตัวอย่างแถว</p><h2>ข้อมูลร้านและแชตอยู่ในไฟล์ SQLite ไฟล์เดียว<br>build ไว้ก่อน commit เว็บจริงเปิดมาก็ใช้ได้ทันที</h2></div>
+<div class="dbflow"><span>data/db/*.json<i>ต้นฉบับที่แก้ได้</i></span><b>→</b><span>build_dist.py<i>เทลงฐานข้อมูล</i></span><b>→</b><span class="hot">xfitness_db.sqlite3<i><!--DBSIZE--> · commit ใน git</i></span><b>→</b><span>Render<i>อ่านเขียนไฟล์นี้ตรง ๆ ไม่ต้องโหลดอะไร</i></span><b>·</b><span>graphml<i>ดัชนี LightRAG แยกเป็นไฟล์</i></span></div>
+<div class="row grow" style="min-height:0">
+ <div class="list dblist" style="width:520px;flex:none"><!--DBLIST--></div>
+ <div class="detail grow" id="d-db"></div>
+</div>
+<p class="foot">ภาคผนวก · X FITNESS CHATBOT · ฐานข้อมูล · ดูทุกตารางได้ที่หลังบ้าน → ดูฐานข้อมูล (อ่านอย่างเดียว) · เปิดไฟล์ด้วย DBeaver ได้</p><p class="pg"></p>
+<aside><b>ภาคผนวก</b>  ชี้ลูกศรด้านบน: แก้ JSON → build → commit ไฟล์ฐานข้อมูล → Render คัดลอกไปใช้ คลิก members ให้เห็นพจนานุกรมข้อมูลและแถวตัวอย่าง (เบอร์โทรเก็บ แต่บอทไม่เคยบอก) แล้วคลิก messages ให้เห็นว่าแชตเก็บอะไร ข้อมูลที่เกิดบนเว็บจริงหายเมื่อเครื่อง restart = ย้อนกลับไปข้อมูลตั้งต้น</aside>
+</section>
+
+<!-- ภาคผนวก 9 · testing -->
+<section class="slide" id="testing" data-menu="วิธีทดสอบ">
+<div class="col" style="gap:10px"><p class="kicker">วิธีทดสอบ 3 ชั้น</p><h2>ทดสอบ 3 ชั้น: ตรวจโค้ดทีละส่วน ถามคำถามชุดใหญ่<br>และเปิดเว็บจริงแบบที่ลูกค้าใช้</h2></div>
+<div class="row tests" style="align-items:stretch">
+ <div class="card grow col"><span class="tag blue">ชั้น 1 · pytest · ตรวจโค้ดทีละส่วน</span><p class="big" data-count="222">222</p><h3>ข้อ ผ่านทั้งหมด</h3>
+  <div class="tl"><span>บอท: ตอบ ยืนยันสมาชิก ตรวจสลิป</span><b class="">84</b><span>guard หมวดอันตราย S1–S14</span><b class="">77</b><span>หลังบ้าน: สลิป การจอง โปร</span><b class="">16</b><span>กล่องแชต</span><b class="">13</b><span>จำกัดการใช้งาน</span><b class="">13</b><span>LINE webhook</span><b class="">9</b><span>คลังความรู้</span><b class="">7</b><span>ข้อความตอบของ guard</span><b class="">3</b></div>
+  <p class="tn">x-fitness/backend/tests · รันจริง 11 ต.ค. 2569 ใช้ 10.7 วินาที</p></div>
+ <div class="card grow col"><span class="tag blue">ชั้น 2 · ยิง API ชุดใหญ่</span><p class="big" data-count="1600">1600</p><h3>กรณีที่สร้างไว้ สุ่มทดสอบ 500</h3>
+  <div class="tl"><span>คำถาม</span><b class="">95/100</b><span>ภาพ</span><b class="">91/100</b><span>ความปลอดภัย</span><b class="">96/100</b><span>คำถามนอกเรื่อง</span><b class="">100/100</b><span>รวมรอบหลัก</span><b class="ok">382/400</b><span>ชุดเสริม ภาพ + ความปลอดภัย</span><b class="">87/100</b></div>
+  <p class="tn">5 ต.ค. 2569 · ใช้หาจุดที่ AI แต่ง แล้วแก้คลังความรู้และกฎ · qa/system/results</p></div>
+ <div class="card grow col"><span class="tag ok">ชั้น 3 · Playwright · เปิดเว็บจริง</span><p class="big" data-count="71">71</p><h3>กรณี ผ่าน 71/71</h3>
+  <div class="tl"><span>คำถาม</span><b class="">10/10</b><span>ภาพ</span><b class="">5/5</b><span>ความปลอดภัย</span><b class="">5/5</b><span>ต้องทำ/ห้ามทำ</span><b class="">20/20</b><span>guardrail: คำที่ไม่ควรถูกกัน</span><b class="">5/5</b><span>guardrail: S1–S14 และกฎร้าน</span><b class="">26/26</b></div>
+  <p class="tn">ชุดหลัก 4 ต.ค. · guardrail 10 ต.ค. · ภาพหน้าจอทุกกรณี · qa/report · qa/guardrail</p></div>
+</div>
+<p class="foot">ภาคผนวก · X FITNESS CHATBOT · ทดสอบ · x-fitness/backend/tests · backend/eval · e2e</p><p class="pg"></p>
+<aside><b>ภาคผนวก</b>  Playwright เปิด Chromium พิมพ์ แนบภาพ และยืนยันสมาชิกเหมือนลูกค้า กับ Typhoon และ LightRAG ตัวจริง แล้วตัดสินผลจากข้อความที่หน้าเว็บแสดง</aside>
+</section>
+
+<!-- ภาคผนวก 10 · demo-line -->
+<section id="demo-line" data-menu="LINE OA" class="slide">
+<div class="row grow lline" style="min-height:0;align-items:stretch;gap:40px">
+ <div class="col grow" style="gap:24px;min-width:0">
+<div class="row" style="justify-content:space-between;align-items:flex-end"><div class="col" style="gap:10px"><p class="kicker">สาธิตใน LINE OA · line.py</p><h2>ลูกค้าแชตใน LINE<br>ยืนยันสมาชิก ถาม และส่งสลิปได้เหมือนหน้าเว็บ</h2></div><button class="btn ghost" id="replay-line">▶ เล่นซ้ำ</button></div>
+ <div class="card grow col lsteps"><h3>ข้อความจาก LINE เดินทางยังไง</h3>
+  <ol><li>LINE ส่ง webhook มาที่ <b>/api/line/webhook</b> โค้ดตรวจลายเซ็น HMAC ก่อน ถ้าไม่ตรงตอบ 401</li>
+  <li>ตอบ 200 ทันที แล้วทำงานต่อเบื้องหลัง ไม่ให้ LINE รอ</li>
+  <li>ข้อความเข้า <b>chat.answer()</b> ตัวเดียวกับหน้าเว็บ ส่วนภาพ ดาวน์โหลดจาก LINE แล้วส่งให้ <b>read_image()</b> ระหว่างนั้นขึ้นจุด "กำลังพิมพ์"</li>
+  <li>ปุ่มตอบด่วน เช่น แต้มของฉัน ส่งเป็น quick reply ของ LINE</li>
+  <li>ยืนยันสมาชิกแล้วจำไว้ต่อแชต LINE นั้น · จำกัด 30 ข้อความ/นาที/คน</li>
+  <li>ถ้าพนักงานรับเรื่องอยู่ บอทเงียบ พนักงานตอบจากหลังบ้านผ่าน push</li></ol>
+  <p class="lnote" id="line-note"></p></div>
+ <div class="card row" style="flex:none;gap:28px;align-items:center;padding:20px 28px"><div style="width:190px;height:190px;background:#fff;border-radius:12px;padding:10px;flex:none"><!--LINEQR--></div><div class="col" style="gap:8px"><h3 style="margin:0">สแกนเพื่อเพิ่มเพื่อน LINE OA</h3><p style="font-size:26px;margin:0">เปิดแอป LINE → เพิ่มเพื่อน → สแกน QR แล้วลองคุยกับบอทได้เลย</p><p class="mono" style="font-size:24px;color:var(--muted);margin:0">LINE ID: @548lrnue</p></div></div>
+ </div>
+ <div class="stagebox" style="flex:none"><!--LINECHAT--></div>
+</div>
+<p class="foot">ภาคผนวก · X FITNESS CHATBOT · สาธิต LINE · webhook https://x-fitness-chatbot.onrender.com/api/line/webhook</p><p class="pg"></p>
+<aside><b>ภาคผนวก</b>  ชวนผู้ฟังสแกน QR เพิ่มเพื่อน LINE OA แล้วลองถามเอง · ถ้ามีมือถือที่เพิ่มเพื่อน LINE OA ไว้ ให้สาธิตสดได้เลย ไม่งั้นใช้หน้านี้อธิบาย ชี้ว่าคำตอบเหมือนหน้าเว็บทุกคำ เพราะเรียก chat.answer() ตัวเดียวกัน · กดปุ่มในเมนูด้านล่างโทรศัพท์ (rich menu 6 ปุ่มของจริง จาก assets/rich-menu) · ถ้าเชื่อมบอทจริง (ป้ายมุมขวาบนของโทรศัพท์) ข้อความเข้าบอทจริง ถ้าออฟไลน์ ใช้คำตอบจากผลทดสอบหน้าเว็บ เพราะ LINE เรียก chat.answer() ตัวเดียวกัน · หน้าตาแอปเป็นภาพจำลอง</aside>
 </section>

@@ -111,7 +111,7 @@ function setupPlay(el){
     mark(1,member?'hit':'ok',member?`สมาชิก <span class="tag ok">${esc(member.member_id)}</span>`:'ไม่ต้อง (ไม่ได้ถามเรื่องส่วนตัว)');
     mark(2,src.length?'ok':'hit',sourcesHtml(src));
     const slip=r.slip_check,vis=c&&c.vision;
-    mark(3,slip||vis?'hit':'ok',slip?`ตรวจสลิป ${slip.checks.filter(x=>x.pass).length}/5 ข้อ${slip.short_by?` · ขาด ${slip.short_by} บาท`:''} → ${slip.ok?'รอพนักงานยืนยัน':'ส่งพนักงาน'}`
+    mark(3,slip||vis?'hit':'ok',slip?`ตรวจสลิป ${slip.checks.filter(x=>x.pass).length}/${slip.checks.length} ข้อ${slip.short_by?` · ขาด ${slip.short_by} บาท`:''} → ${slip.ok?'รอพนักงานยืนยัน':'ส่งพนักงาน'}`
       :vis?`อ่านภาพ: <span class="mono" style="font-size:16px">${esc(vis)}</span>`:'ไม่มีกฎพิเศษสำหรับคำถามนี้');
     mark(4,'ok',sec?`ตอบใน ${sec} วินาที`:'ไม่ได้บันทึกเวลา');
     mark(5,outHit.length?'stop':'ok',outHit.length?`ตัดคำตอบ <span class="tag red">${esc(outHit.join(' · '))}</span>`:'ผ่าน ไม่มีตัวเลข ลิงก์ เวลา ที่แต่งขึ้น');}

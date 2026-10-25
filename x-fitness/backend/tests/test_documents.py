@@ -2,7 +2,7 @@ from fastapi.testclient import TestClient
 
 from app.main import app
 
-FILES = ["XFitness-Chatbot_Presentation-Deck.html", "XFitness-Chatbot_Presentation_Summary.html",
+FILES = ["XFitness-Chatbot_Presentation-Deck.html",
          "XFitness-Chatbot_Presentation.pptx", "XFitness-Chatbot_Project-Report.docx"]
 
 

@@ -4,7 +4,7 @@
 
 Reads slides.html + shell.html + content.py, takes the 20 demo cases (10 questions, 5 images, 5 safety)
 from qa/report/results/x-fitness-ui-results.md, embeds the test images and screenshots, and writes
-docs/XFitness-Chatbot_Presentation-Deck-v1.5.html. Needs Pillow."""
+docs/XFitness-Chatbot_Presentation-Deck-v1.8.html. Needs Pillow."""
 import base64, io, json, math, re, sys
 from html import escape as html_escape, unescape
 from pathlib import Path
@@ -15,7 +15,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 RESULTS = ROOT / "qa/report/results/x-fitness-ui-results.md"
 IMAGES = ROOT / "x-fitness/qa"
-OUT = ROOT / "docs/XFitness-Chatbot_Presentation-Deck-v1.5.html"
+OUT = ROOT / "docs/XFitness-Chatbot_Presentation-Deck-v1.8.html"
 KB = ROOT / "x-fitness/data/knowledge-base"
 RAG_INDEX = ROOT / "x-fitness/data/rag-index"
 REPLIES = ROOT / "x-fitness/data/guard/replies.md"
@@ -90,7 +90,7 @@ def canned() -> dict:
     code = (ROOT / "x-fitness/backend/app/chat.py").read_text(encoding="utf-8")
     const = lambda name: re.search(rf'^{name} = "(.*)"$', code, re.M).group(1)
     done = re.search(r'f"(ยืนยันตัวตนแล้วครับ[^"]*)"', code).group(1)
-    members = json.loads((ROOT / "x-fitness/data/db/members.json").read_text(encoding="utf-8"))["items"]
+    members = json.loads((ROOT / "data/db/members.json").read_text(encoding="utf-8"))["items"]
     out = {}
     for mid, last4 in (("FN-10003", "5531"), ("FN-10007", "3364")):
         m = next(x for x in members if x["member_id"] == mid)
@@ -113,8 +113,8 @@ def kb_docs() -> dict:
     return docs
 
 
-DB_FILE = ROOT / "x-fitness/data/xfitness_db.sqlite3"
-DB_DICT = ROOT / "x-fitness/data/db/datadict.json"
+DB_FILE = ROOT / "x-fitness/data/db/xfitness_db.sqlite3"
+DB_DICT = ROOT / "data/db/datadict.json"   # the source: x-fitness/ keeps it inside the database
 DB_GROUP = {"shop": ("ข้อมูลร้าน", "red"), "chat": ("แชต", "blue"), "system": ("ระบบ", "")}
 
 
@@ -407,7 +407,7 @@ def flow_walks(every: dict, canned_: dict) -> dict:
                  ("json-type", "type", "hit", f"ชนิด {kind}")]
         if kind == "slip":
             ok = "ผ่านทุกเกณฑ์" in c["a"] or "ผ่านครบ" in c["a"]
-            steps += [("type-slip", "slip", "hit", "ตรวจ 5 ข้อด้วยโค้ด", {"slip": "ผ่านครบ 5 ข้อ" if ok else "ไม่ผ่านข้อ 3: ยอดเงินไม่ตรงยอดค้าง"}),
+            steps += [("type-slip", "slip", "hit", "ตรวจ 6 ข้อด้วยโค้ด", {"slip": "ผ่านครบ 6 ข้อ" if ok else "ไม่ผ่านข้อ 3: ยอดเงินไม่ตรงยอดค้าง"}),
                       ("slip-pass", "pass", "ok", "ผ่าน → รอพนักงานยืนยัน") if ok else ("slip-fail", "fail", "stop", "ยอดไม่ตรง → บอกยอดที่ขาด + ปุ่มคุยกับพนักงาน")]
         else:
             steps += [("type-answer", "answer", "ok", "ส่งตัวเลขในภาพไปให้ answer() ตอบคู่กับข้อมูลร้าน"),
@@ -443,7 +443,7 @@ def flow_cases(every: dict, canned_: dict) -> list:
                       step("g1-g2", "g2", "hit" if c.get("hint") else "ok",
                            "ยืนยัน FN-" + c["hint"].split("FN-")[1].split(" ")[0] + " แล้ว" if c.get("hint") else "ไม่ได้ถามเรื่องส่วนตัว ไม่ต้องยืนยัน"),
                       step("g2-rag", "rag", "ok", "ค้นเจอ " + " ".join(src[:3])), step("idx-rag", "idx", "ok", "อ่านกราฟและเวกเตอร์"),
-                      step("rag-rules", "rules", "hit" if seen else "ok", f"อ่านภาพได้ {seen} → ตรวจสลิป 5 ข้อ" if seen else "ตรวจกฎร้านที่เกี่ยวกับคำถาม"),
+                      step("rag-rules", "rules", "hit" if seen else "ok", f"อ่านภาพได้ {seen} → ตรวจสลิป 6 ข้อ" if seen else "ตรวจกฎร้านที่เกี่ยวกับคำถาม"),
                       step("db-rules", "db", "ok", "อ่านข้อมูลร้านและยอดค้าง" if seen else "อ่านข้อมูลร้าน"),
                       step("rules-llm", "llm", "ok", "เขียนคำตอบจากข้อมูลอ้างอิง"), step("ty-llm", "ty", "ok", "เรียก Typhoon")]
             steps += ([step("llm-g6", "g6", "stop", "ตัด " + " ".join(cut)), step("g6-x6", "x6", "hit", "ตอบข้อความปลอดภัย"), step("x6-out", "out", "ok", "ส่งคำตอบ")]
@@ -498,7 +498,7 @@ def main() -> None:
     slides = re.sub(r"<!--FLOW:(\w+)-->", lambda m: flow_diagram(m.group(1)), slides)
     slides = (slides.replace("<!--GRAPH-->", svg).replace("<!--ARCH-->", arch_diagram()).replace("<!--INDEXFILES-->", index_table())
               .replace("<!--RETRIEVAL-->", retrieval_table(demo["q"], docs))
-              .replace("<!--LINECHAT-->", line_chat(every)).replace("<!--SYSTEMPROMPT-->", html_escape((ROOT / "x-fitness/backend/app/prompts/system.md").read_text(encoding="utf-8")))
+              .replace("<!--LINECHAT-->", line_chat(every)).replace("<!--LINEQR-->", f'<img src="{png_uri(ROOT / "assets/x-fitness-line-qr.png")}" alt="QR เพิ่มเพื่อน LINE OA" style="width:100%;height:100%;display:block">').replace("<!--SYSTEMPROMPT-->", html_escape((ROOT / "x-fitness/backend/app/prompts/system.md").read_text(encoding="utf-8")))
               .replace("<!--RULESLIST-->", "".join(f'<div data-pick="rules20" data-key="{k}"><b>{k}</b>{html_escape(c["q"])}</div>'
                                                    for k, c in every.items() if k[0] in "DN"))
               .replace("<!--DBLIST-->", db_list(tables)).replace("<!--DBSIZE-->", f"{DB_FILE.stat().st_size // 1024} KB")
